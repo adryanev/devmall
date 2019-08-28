@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%verifikasi_user}}`.
+ * Handles the creation of table `{{%kategori}}`.
  */
-class m190827_124005_create_verifikasi_user_table extends Migration
+class m190828_131357_create_kategori_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,17 +17,14 @@ class m190827_124005_create_verifikasi_user_table extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%verifikasi_user}}', [
-            'id' => $this->primaryKey(),
-            'id_user'=>$this->integer()->unique(),
-            'nama_file'=>$this->string(),
-            'jenis_verifikasi'=>$this->string(),
-            'status'=>$this->tinyInteger(),
-            'created_at'=>$this->integer(),
-            'updated_at'=>$this->integer(),
-        ],$tableOptions);
 
-        $this->addForeignKey('fk-verifikasi_user-user','{{%verifikasi_user}}','id_user','{{%user}}','id','cascade','cascade');
+        $this->createTable('{{%kategori}}', [
+            'id' => $this->primaryKey(),
+            'nama'=>$this->string()->unique(),
+            'deskripsi'=>$this->string(),
+            'created_at'=>$this->integer(),
+            'updated_at'=>$this->integer()
+        ],$tableOptions);
     }
 
     /**
@@ -35,6 +32,6 @@ class m190827_124005_create_verifikasi_user_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%verifikasi_user}}');
+        $this->dropTable('{{%kategori}}');
     }
 }
