@@ -24,7 +24,7 @@ use yii\web\IdentityInterface;
  *
  * @property Booth $booth
  * @property Favorit[] $favorits
- * @property ProfilUser[] $profilUsers
+ * @property ProfilUser $profilUser
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
  */
@@ -99,9 +99,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProfilUsers()
+    public function getProfilUser()
     {
-        return $this->hasMany(ProfilUser::className(), ['id_user' => 'id']);
+        return $this->hasOne(ProfilUser::className(), ['id_user' => 'id']);
     }
 
     /**

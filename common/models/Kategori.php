@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "kategori".
@@ -34,6 +35,13 @@ class Kategori extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'integer'],
             [['nama', 'deskripsi'], 'string', 'max' => 255],
             [['nama'], 'unique'],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class
         ];
     }
 

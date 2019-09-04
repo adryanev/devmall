@@ -27,7 +27,7 @@ $menuItems = [
 </svg>',
         'url' => 'javascript:;',
         'items' => [
-            ['label' => 'Kategori', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/unit/index'],],
+            ['label' => 'Kategori', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/kategori/index'],],
             ['label' => 'Produk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/fakultas-akademi/index'],],
             [
                 'label' => 'Promo',

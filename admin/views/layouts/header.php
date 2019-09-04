@@ -1,13 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-//$namaLengkap = Html::encode(Yii::$app->user->identity->profilUser->nama_lengkap);
-$namaLengkap = "Admiiin";
+$namaLengkap = Html::encode(Yii::$app->user->identity->profilUser->getNamaLengkap());
 $inisial = strtoupper(substr(Html::encode($namaLengkap),0 ,1));
-//$inisial = mb_strtoupper(mb_substr(Html::encode(Yii::$app->user->identity->profilUser->nama_lengkap), 0, 1));
-//$roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
-$role = 'Admin';
-//$role = ucfirst(array_keys($roles)[0]);
+$roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId());
+$role = ucfirst(array_keys($roles)[0]);
 ?>
 <!-- begin:: Header -->
 <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
