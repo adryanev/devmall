@@ -23,6 +23,8 @@ class m190828_134821_create_ulasan_table extends Migration
             'id_user'=>$this->integer(),
             'nilai'=>$this->float(),
             'komentar'=>$this->string(),
+            'created_at'=>$this->integer(),
+            'updated_at'=>$this->integer()
         ],$tableOptions);
 
         $this->addForeignKey('fk-ulasan-produk','{{%ulasan}}','id_produk','{{%produk}}','id','cascade','cascade');

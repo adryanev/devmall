@@ -24,7 +24,9 @@ class m190828_140126_create_promo_table extends Migration
             'persentase'=>$this->float(),
             'waktu_mulai'=>$this->integer(),
             'waktu_selesai'=>$this->integer(),
-            'kode_promo'=>$this->string(20)
+            'kode_promo'=>$this->string(20),
+            'created_at'=>$this->integer(),
+            'updated_at'=>$this->integer()
         ],$tableOptions);
 
         $this->addForeignKey('fk-promo-booth','{{%promo}}','id_booth','{{%booth}}','id','cascade','cascade');

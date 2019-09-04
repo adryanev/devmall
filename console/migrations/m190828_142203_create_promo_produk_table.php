@@ -21,6 +21,8 @@ class m190828_142203_create_promo_produk_table extends Migration
             'id' => $this->primaryKey(),
             'id_promo'=>$this->integer(),
             'id_produk'=>$this->integer(),
+            'created_at'=>$this->integer(),
+            'updated_at'=>$this->integer()
         ],$tableOptions);
 
         $this->addForeignKey('fk-promo_produk-promo','{{%promo_produk}}','id_promo','{{%promo}}','id','cascade','cascade');

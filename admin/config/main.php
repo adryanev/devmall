@@ -1,4 +1,7 @@
 <?php
+
+use mdm\admin\Module;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -11,7 +14,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'admin'=>[
+            'class'=>Module::class,
+            'layout' => 'left-menu'
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-admin',

@@ -5,6 +5,7 @@ use mdm\admin\models\AuthItem;
 use mdm\admin\models\Route;
 use Yii;
 use yii\console\Controller;
+use yii\console\ExitCode;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,7 @@ class AuthController extends Controller
         }
 
 
-        return true;
+        return ExitCode::OK;
     }
 
     public function actionDown(){

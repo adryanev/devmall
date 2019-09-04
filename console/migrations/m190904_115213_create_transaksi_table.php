@@ -3,30 +3,37 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%favorit}}`.
+ * Handles the creation of table `{{%transaksi}}`.
  */
-class m190828_135831_create_favorit_table extends Migration
+class m190904_115213_create_transaksi_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
+
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%favorit}}', [
+        $this->createTable('{{%transaksi}}', [
             'id' => $this->primaryKey(),
-            'id_produk'=>$this->integer(),
             'id_user'=>$this->integer(),
+            'waktu'=>$this->integer(),
+            'total'=>$this->bigInteger(),
+            'status'=>$this->tinyInteger(),
+            'expire'=>$this->integer(),
+            'metode_pembayaran'=>$this->string(6),
             'created_at'=>$this->integer(),
             'updated_at'=>$this->integer()
+
         ],$tableOptions);
 
-        $this->addForeignKey('fk-favorit-produk','{{%favorit}}','id_produk','{{%produk}}','id','cascade','cascade');
-        $this->addForeignKey('fk-favorit-user','{{%favorit}}','id_user','{{%user}}','id','cascade','cascade');
+        $this->addForeignKey('fk-transaksi-user','{{%transaksi}}','id_user','{{%user}}','id','cascade','cascade');
+
+
     }
 
     /**
@@ -34,6 +41,6 @@ class m190828_135831_create_favorit_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%favorit}}');
+        $this->dropTable('{{%transaksi}}');
     }
 }
