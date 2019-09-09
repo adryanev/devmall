@@ -6,6 +6,7 @@
 namespace frontend\models\forms\user;
 use common\models\ProfilUser;
 use common\models\User;
+use Yii;
 use yii\base\Model;
 
 /**
@@ -73,6 +74,23 @@ class UserSignupForm extends Model
         $user->save(false);
         $profil->save(false);
 
+        $this->sendEmailVerification($user);
+
         return $user;
     }
+
+    protected function sendEmailVerification($user)
+    {
+        return Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['user' => $user]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setTo($this->email)
+            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->send();
+    }
+
 }
