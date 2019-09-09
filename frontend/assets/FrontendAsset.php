@@ -11,6 +11,7 @@ namespace frontend\assets;
 
 
 use yii\bootstrap\BootstrapAsset;
+use yii\bootstrap\BootstrapPluginAsset;
 use yii\web\AssetBundle;
 use yii\web\JqueryAsset;
 use yii\web\YiiAsset;
@@ -33,6 +34,10 @@ class FrontendAsset extends AssetBundle
         'https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700'
     ];
 
+
+
+
+
     public $js = [
         'js/owl.carousel.min.js',
         'js/slick.min.js',
@@ -40,10 +45,8 @@ class FrontendAsset extends AssetBundle
         'js/main.js'
     ];
 
-
-
     public $depends = [
+        BootstrapPluginAsset::class,
         YiiAsset::class,
-        BootstrapAsset::class,
     ];
 }

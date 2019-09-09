@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\View;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -49,6 +52,20 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ],
+        ],
+        'assetManager'=>[
+            'bundles'=>[
+                'yii\web\JqueryAsset'=>[
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js'=>['js/jquery.js'],
+                    'jsOptions'=>[
+
+                        'position'=>View::POS_HEAD
+                    ]
+                ]
+            ]
         ],
     ],
     'params' => $params,

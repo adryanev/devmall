@@ -34,6 +34,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE= 0;
     const STATUS_NOT_VERIFIED = 2;
+    const STATUS_BANNED = 5;
     /**
      * {@inheritdoc}
      */
