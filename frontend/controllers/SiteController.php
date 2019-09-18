@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\forms\user\UserLoginForm;
+use frontend\models\forms\user\UserSignupForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -75,6 +77,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'main-index';
         return $this->render('index');
     }
 
@@ -85,10 +88,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $model = new UserLoginForm();
 
         if(Yii::$app->request->isPost){
-            $model = new \frontend\models\forms\user\UserLoginForm();
-
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
@@ -96,8 +98,10 @@ class SiteController extends Controller
                 }
             }
         }
+        return $this->render('/common-forms/user-login-form',[
+            'model'=>$model
+        ]);
 
-       throw new MethodNotAllowedHttpException('Harus lewat method POST');
 
     }
 
@@ -153,13 +157,13 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        $model = new \frontend\models\forms\user\UserSignupForm();
+        $model = new UserSignupForm();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $model->signup();
             }
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            Yii::$app->session->setFlash('success', 'Terima kasih sudah mendaftar, silahkan cek email anda.');
             return $this->goHome();
         }
 

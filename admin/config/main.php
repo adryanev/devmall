@@ -62,9 +62,8 @@ return [
         'assetManager'=>[
             'bundles'=>[
                 'yii\bootstrap4\BootstrapAsset'=>[
-                    'sourcePath' => null,
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
+                    'sourcePath' => '@common/assets/metronic/assets',
+
                     'css'=>['css/style.bundle.css']
                 ]
             ]

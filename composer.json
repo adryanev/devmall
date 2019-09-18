@@ -33,7 +33,11 @@
         "phpoffice/phpword": "^0.16.0",
         "dompdf/dompdf": "^0.8.3",
         "2amigos/yii2-tinymce-widget": "~1.1",
-        "yii2mod/yii2-bootstrap-notify": "*"
+        "yii2mod/yii2-bootstrap-notify": "*",
+        "yiisoft/yii2-jui": "^2.0",
+        "2amigos/yii2-chartjs-widget": "~2.0"
+
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

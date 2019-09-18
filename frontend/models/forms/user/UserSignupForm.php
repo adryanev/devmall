@@ -40,8 +40,6 @@ class UserSignupForm extends Model
             [['email'],'unique','targetClass' => User::class,'message' => 'Email sudah digunakan'],
 
             ['password','string','min' => 8],
-            ['password','match','pattern' => '/^.*(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/','message' => 'Password harus berisi huruf kecil, huruf besar, angka, dan simbol'],
-
             [['nama_depan','nama_belakang'],'string','max' => 20]
         ];
     }

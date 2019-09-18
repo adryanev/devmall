@@ -3,7 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use common\assets\MetronicErrorPageAsset;
+use common\assets\metronic\MetronicErrorPageAsset;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;

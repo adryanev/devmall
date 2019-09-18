@@ -7,416 +7,358 @@
  * Time: 21.00
  */
 
-use yii\bootstrap\Html;
-use yii\bootstrap\Modal; ?>
-<?php echo \yii2mod\notify\BootstrapNotify::widget(); ?>
+use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal; ?>
+<?= common\widgets\BootstrapNotify::widget([
+        'clientOptions' => [
+            'animate'=>['enter'=>'animated bounce','exit'=>'animated fadeOut'],
+        ]
+]); ?>
 
-
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">SEARCH HERE</h4>
-            </div>
-            <div class="modal-body">
-                <div class="input-group">
-                    <form method="get" class="searchform" action="/search" role="search">
-                        <input type="hidden" name="type" value="product">
-                        <input type="text" name="q" class="form-control control-search">
-                        <span class="input-group-btn">
-                              <button class="btn btn-default button_search" type="button"><i data-toggle="dropdown" class="ion-ios-search"></i></button>
-                            </span>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<header>
-    <div class="topbar-mobile hidden-lg hidden-md">
-        <div class="active-mobile">
-            <div class="language-popup dropdown">
-                <a id="label" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="icon"><i class="ion-ios-world-outline" aria-hidden="true"></i></span>
-                    <span>English</span>
-                    <span class="ion-chevron-down"></span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="label">
-                    <li><a href="#">English</a></li>
-                    <li><a href="#">Vietnamese</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="right-nav">
-            <div class="active-mobile">
-                <div class="header_user_info popup-over e-scale hidden-lg hidden-md dropdown">
-                    <div data-toggle="dropdown" class="popup-title dropdown-toggle" title="Account">
-                        <i class="ion-android-person"></i><span> Account</span>
-                    </div>
-                    <ul class="links dropdown-menu list-unstyled">
-                        <li>
-                            <?php Modal::begin([
-                                'header' => '<h3>Login</h3>',
-                                'id' => 'modalLoginMobile',
-                                'size' => 'modal-lg',
-                                'toggleButton' => ['label' => '<i class="fa fa-sign-in"></i> Login</a>','tag'=>'a'],
-                            ])?>
-                            <?=$this->render('/common-forms/user-login-form',['model'=>$modelLogin])?>
-                            <?php Modal::end()?></li>
-                        </li>
-                        <li>
-                            <?php Modal::begin([
-                                'header' => '<h3>Daftar Akun</h3>',
-                                'id' => 'modalRegisterMobile',
-                                'size' => 'modal-lg',
-                                'toggleButton' => ['label' => '<i class="fa fa-user-plus"></i> Register</a>','tag'=>'a'],
-                            ])?>
-                            <?=$this->render('/common-forms/user-signup-form',['model'=>$modelSignup])?>
-                            <?php Modal::end()?></li>
-                        </li>
-                        <li>
-                            <a class="account" rel="nofollow" href="#" title="My account"><i class="ion-ios-person"></i> My account</a>
-                        </li>
-<!--                        <li>-->
-<!--                            <a id="wishlist-total" title="Wishlist" href="#"><i class="ion-ios-heart"></i> Wishlist</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="#" title="Check out"><i class="ion-ios-cart"></i> Check out</a>-->
-<!--                        </li>-->
-                    </ul>
-                </div>
-            </div>
-            <div class="active-mobile search-popup pull-right">
-                <div class="search-popup dropdown" data-toggle="modal" data-target="#myModal">
-                    <i class="ion-search fa-3a"></i>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <div class="top-nav hidden-xs hidden-sm">
+<!--================================
+     START MENU AREA
+ =================================-->
+<!-- start menu-area -->
+<div class="menu-area">
+    <!-- start .top-menu-area -->
+    <div class="top-menu-area">
+        <!-- start .container -->
         <div class="container">
+            <!-- start .row -->
             <div class="row">
-                <div class="col-md-5 col-sm-5 col-xs-12">
-                    <div class="left-nav">
-                        <div class="location dropdown">
-                            <a id="label1" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="icon"><i class="ion-ios-location" aria-hidden="true"></i></span>
-                                <span>Our Store</span>
-                                <span class="ion-chevron-down"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="label1">
-                                <li><a href="#">New York</a></li>
-                                <li><a href="#">California</a></li>
+                <!-- start .col-md-3 -->
+                <div class="col-lg-3 col-md-3 col-6 v_middle">
+                    <div class="logo">
+                        <?=Html::a(Html::img('@web/images/logo-devmall.png', ['class' => 'img-fluid']),['site/index'])?>
+                    </div>
+                </div>
+                <!-- end /.col-md-3 -->
+
+                <!-- start .col-md-5 -->
+                <div class="col-lg-8 offset-lg-1 col-md-9 col-6 v_middle">
+                    <!-- start .author-area -->
+                    <div class="author-area">
+                        <?php if (Yii::$app->user->isGuest): ?>
+                            <?= Html::a('<i class="fa fa-sign-in"></i> Log in',['site/login'],['class'=>'author-area__seller-btn inline'])?>
+                        <?php else: ?>
+
+                            <a href="signup.html" class="author-area__seller-btn inline">Menjadi Booth</a>
+
+                        <?php endif; ?>
+                        <div class="author__notification_area">
+                            <ul>
+
+                                <li class="has_dropdown">
+                                    <?php if (!Yii::$app->user->isGuest): ?>
+
+                                        <div class="icon_wrap">
+                                            <span class="lnr lnr-alarm"></span>
+                                            <span class="notification_count noti">25</span>
+                                        </div>
+
+                                        <div class="dropdowns notification--dropdown">
+
+                                            <div class="dropdown_module_header">
+                                                <h4>My Notifications</h4>
+                                                <a href="notification.html">View All</a>
+                                            </div>
+
+                                            <div class="notifications_module">
+                                                <div class="notification">
+                                                    <div class="notification__info">
+                                                        <div class="info_avatar">
+                                                            <?= Html::img('@web/images/notification_head.png') ?>
+                                                        </div>
+                                                        <div class="info">
+                                                            <p>
+                                                                <span>Anderson</span> added to Favourite
+                                                                <a href="#">Mccarther Coffee Shop</a>
+                                                            </p>
+                                                            <p class="time">Just now</p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+
+                                                    <div class="notification__icons ">
+                                                        <span class="lnr lnr-heart loved noti_icon"></span>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification">
+                                                    <div class="notification__info">
+                                                        <div class="info_avatar">
+                                                            <?= Html::img('@web/images/notification_head2.png') ?>                                                    </div>
+                                                        <div class="info">
+                                                            <p>
+                                                                <span>Michael</span> commented on
+                                                                <a href="#">MartPlace Extension Bundle</a>
+                                                            </p>
+                                                            <p class="time">Just now</p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+
+                                                    <div class="notification__icons ">
+                                                        <span class="lnr lnr-bubble commented noti_icon"></span>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification">
+                                                    <div class="notification__info">
+                                                        <div class="info_avatar">
+                                                            <?= Html::img('@web/images/notification_head3.png') ?>                                                    </div>
+                                                        <div class="info">
+                                                            <p>
+                                                                <span>Khamoka </span>purchased
+                                                                <a href="#"> Visibility Manager Subscriptions</a>
+                                                            </p>
+                                                            <p class="time">Just now</p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+
+                                                    <div class="notification__icons ">
+                                                        <span class="lnr lnr-cart purchased noti_icon"></span>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+                                                </div>
+                                                <!-- end /.notifications -->
+
+                                                <div class="notification">
+                                                    <div class="notification__info">
+                                                        <div class="info_avatar">
+                                                            <?= Html::img('@web/images/notification_head4.png') ?>                                                    </div>
+                                                        <div class="info">
+                                                            <p>
+                                                                <span>Anderson</span> added to Favourite
+                                                                <a href="#">Mccarther Coffee Shop</a>
+                                                            </p>
+                                                            <p class="time">Just now</p>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+
+                                                    <div class="notification__icons ">
+                                                        <span class="lnr lnr-star reviewed noti_icon"></span>
+                                                    </div>
+                                                    <!-- end /.notifications -->
+                                                </div>
+                                                <!-- end /.notifications -->
+                                            </div>
+                                            <!-- end /.dropdown -->
+                                        </div>
+                                    <?php endif; ?>
+
+                                </li>
+
                             </ul>
                         </div>
-                        <div class="language dropdown">
-                            <a id="label2" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <span class="icon"><i class="ion-ios-world-outline" aria-hidden="true"></i></span>
-                                <span>English</span>
-                                <span class="ion-chevron-down"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="label2">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Vietnamese</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7 col-sm-7 col-xs-12">
-                    <div class="right-nav">
-                        <ul>
-<!--                            <li><a href="#"><i class="ion-ios-heart fa-1a" aria-hidden="true"></i>wishlist</a></li>-->
-<!--                            <li><a href="#"><i class="ion-arrow-swap fa-1a" aria-hidden="true"></i>compare</a></li>-->
-                            <li> <?php Modal::begin([
-                                    'header' => '<h3>Daftar Akun</h3>',
-                                    'id' => 'modalRegisterWeb',
-                                    'size' => 'modal-lg',
-                                    'toggleButton' => ['label' => '<i class="fa fa-user-plus"></i> Register</a>','tag'=>'a'],
-                                ])?>
-                               <?=$this->render('/common-forms/user-signup-form',['model'=>$modelSignup])?>
-                                <?php Modal::end()?></li>
-                            <li> <?php Modal::begin([
-                                    'header' => '<h3>Login</h3>',
-                                    'id' => 'modalLoginWeb',
-                                    'size' => 'modal-lg',
-                                    'toggleButton' => ['label' => '<i class="fa fa-sign-in"></i> Login</a>','tag'=>'a'],
-                                ])?>
-                                <?=$this->render('/common-forms/user-login-form',['model'=>$modelLogin])?>
-                                <?php Modal::end()?></li>
-                        </ul>
-                        <span class="phone">800-123-6789</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-8 col-xs-7 logo">
-                    <a href="#" title="Clickbuy"><?=Html::img('@web/img/logo.png',['class'=>'img-responsive'])?>
-                    </a>
-                </div>
-                <div class="col-md-9 col-sm-4 col-xs-5 nextlogo">
-                    <div class="block block-2">
-                        <div class="cart">
-                            <a href="#" title="" id="label3" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <div class="photo photo-cart">
-                                    <?=Html::img('@web/img/cart.png',['class'=>'img-responsive'])?>
-                                    <span class="lbl">05</span>
+                        <!--start .author__notification_area -->
+
+                        <!--start .author-author__info-->
+                        <div class="author-author__info inline has_dropdown">
+                            <?php if (!Yii::$app->user->isGuest): ?>
+
+                                <div class="author__avatar">
+
+                                    <?= Html::img('@web/images/usr_avatar.png') ?>
                                 </div>
-                                <p class="inform inform-cart">
-                                    <span class="strong">CART<br></span>
-                                    <span class="price-cart">$1150.69</span>
-                                </p>
-                            </a>
-                            <div class="dropdown-menu dropdown-cart" aria-labelledby="label3">
-                                <ul>
-                                    <li>
-                                        <div class="item-order">
-                                            <div class="item-photo">
-                                                <a href="#"><?=Html::img('@web/img/cart1.png',['class'=>'img-responsive'])?></a>
-                                            </div>
-                                            <div class="item-content">
-                                                <h3><a href="#" title="">iPad Pro MLMX2CL/A</a></h3>
-                                                <p class="price black">$199.69</p>
-                                                <p class="quantity">x1</p>
-                                            </div>
-                                        </div>
-                                        <div class="btn-delete"><a href="#" title="" class="btndel">x</a></div>
-                                    </li>
-                                    <li>
-                                        <div class="item-order">
-                                            <div class="item-photo">
-                                                <a href="#"><?=Html::img('@web/img/cart1.png',['class'=>'img-responsive'])?></a>
-                                            </div>
-                                            <div class="item-content">
-                                                <h3><a href="#" title="">iPad Pro MLMX2CL/A</a></h3>
-                                                <p class="price black">$199.69</p>
-                                                <p class="quantity">x1</p>
-                                            </div>
-                                        </div>
-                                        <div class="btn-delete"><a href="#" title="" class="btndel">x</a></div>
-                                    </li>
-                                </ul>
-                                <div class="content-1">
-                                    <span class="total">Total: <strong class="price black">$399.00</strong></span>
-                                    <span class="quantity"><strong class="number">02</strong> products</span>
+                                <div class="autor__info">
+                                    <p class="name">
+                                        Jhon Doe
+                                    </p>
+                                    <p class="ammount">$20.45</p>
                                 </div>
-                                <div class="content-2">
-                                    <a href="#" class="addcart">ADD TO CART</a>
-                                    <a href="#" class="viewcart">View Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-1">
-                        <div class="protect">
-                            <div class="photo">
-                                <svg width="28" height="33" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180.05 214.27">
-                                    <title>security</title>
-                                    <path d="M196.93,55.17c-.11-5.78-.21-11.25-.21-16.54a7.5,7.5,0,0,0-7.5-7.5c-32.07,0-56.5-9.22-76.85-29a7.5,7.5,0,0,0-10.46,0c-20.35,19.79-44.77,29-76.84,29a7.5,7.5,0,0,0-7.5,7.5c0,5.29-.1,10.76-.22,16.54-1,53.84-2.44,127.57,87.33,158.68a7.49,7.49,0,0,0,4.91,0C199.36,182.74,198,109,196.93,55.17ZM107.13,198.81c-77-28-75.82-89.23-74.79-143.35.06-3.25.12-6.4.16-9.48,30-1.27,54.06-10.37,74.63-28.28,20.57,17.91,44.59,27,74.63,28.28,0,3.08.1,6.23.16,9.48C183,109.58,184.12,170.84,107.13,198.81Z" transform="translate(-17.11 0)" />
-                                    <path d="M133,81.08l-36.2,36.2L81.31,101.83a7.5,7.5,0,0,0-10.61,10.61l20.75,20.75a7.5,7.5,0,0,0,10.61,0l41.5-41.5A7.5,7.5,0,1,0,133,81.08Z" transform="translate(-17.11 0)" />
-                                </svg>
-                            </div>
-                            <p class="inform">
-                                <span class="strong">Infomation<br></span> Protected
-                            </p>
-                        </div>
-                        <div class="return">
-                            <div class="photo">
-                                <svg width="30" height="30" id="Capa_2" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612.85">
-                                    <title>update-arrows</title>
-                                    <path d="M600.48,221.79c-14.43-50.5-40.14-94.33-77.94-132.13a300.48,300.48,0,0,0-100-66.57C385,7.84,346.58,0,306.78,0V37.47c69.91,0,138.93,27,190,78.28A264.15,264.15,0,0,1,564.7,231.16c12.55,43.87,14.38,88,4.68,132.47A261.77,261.77,0,0,1,509.83,482l-52.18-51.18V558.33l130.13,2-52.18-52.18Q587.78,448.93,604.84,373A301.45,301.45,0,0,0,600.48,221.79Z" transform="translate(-0.43)" />
-                                    <path d="M47.85,382A267.44,267.44,0,0,1,43.5,249.56,263.58,263.58,0,0,1,103.38,130.8l52.18,51.85V54.53L25.44,53.19l51.85,51.52Q25.11,163.92,8,239.85a301.82,301.82,0,0,0,4.35,151.54c14.34,50.2,40.14,94,77.95,131.81a300.35,300.35,0,0,0,100,66.57,306.59,306.59,0,0,0,116.42,23.08v-36.8a267,267,0,0,1-190.35-78.94C83.54,464.09,60.41,425.9,47.85,382Z" transform="translate(-0.43)" />
-                                </svg>
-                            </div>
-                            <p class="inform">
-                                <span class="strong">Free<br></span> Return
-                            </p>
-                        </div>
-                    </div>
-                    <div class="search hidden-xs hidden-sm">
-                        <form action="#" class="search-form">
-                            <input type="text" name="s" class="form-control" placeholder="Search entrie store here">
-                            <button type="submit" class="search-icon"></button>
-                        </form>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-4 col-xs-6 column-left">
-                    <aside id="column-left">
-                        <nav class="navbar-default">
-                            <div class="menu-heading js-nav-menu">ALL CATEGORIES</div>
-                            <div class="vertical-wrapper v3 js-dropdown-menu">
-                                <ul class="level0">
-                                    <li><a href="#">camera</a><span class="icon icon-camera"></span></li>
-                                    <li><a href="#">laptop</a><span class="icon"></span></li>
-                                    <li><a href="#">mobile phone</a><span class="icon"></span></li>
-                                    <li class="game">
-                                        <a href="#">game control</a>
-                                        <div class="dropdown-content">
-                                            <ul class="level1">
-                                                <li class="sub-menu col-3">
-                                                    <a href="#">ACCESSORIES</a>
-                                                    <ul class="level2">
-                                                        <li class="col-inner"><a href="#">Maybellin Face Power</a></li>
-                                                        <li class="col-inner"><a href="#">Chanel Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Mascara For Full Lashes Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom Maybellin Face</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom</a></li>
-                                                        <li class="col-inner"><a href="#">Lady Dior Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Mirinda</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-menu col-3">
-                                                    <a href="#">Electronic</a>
-                                                    <ul class="level2">
-                                                        <li class="col-inner"><a href="#">Maybellin Face Power</a></li>
-                                                        <li class="col-inner"><a href="#">Chanel Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Mascara For Full Lashes Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom Maybellin Face</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom</a></li>
-                                                        <li class="col-inner"><a href="#">Lady Dior Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Casopia</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="sub-menu col-3">
-                                                    <a href="#">COMPUTER & OTHERS</a>
-                                                    <ul class="level2">
-                                                        <li class="col-inner"><a href="#">Maybellin Face Power</a></li>
-                                                        <li class="col-inner"><a href="#">Chanel Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Mascara For Full Lashes Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom Maybellin Face</a></li>
-                                                        <li class="col-inner"><a href="#">Offical Cosme-Decom</a></li>
-                                                        <li class="col-inner"><a href="#">Lady Dior Mascara</a></li>
-                                                        <li class="col-inner"><a href="#">Draven</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                            <div class="banner">
-                                                <a href="#"><?=Html::img('@web/img/megamenubanner.png',['class'=>'img-responsive'])?></a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li><a href="#">headphone</a></li>
-                                    <li><a href="#">mouse</a></li>
-                                    <li><a href="#">washing machine</a></li>
-                                    <li><a href="#">air conditional</a></li>
-                                    <li><a href="#">accessories</a></li>
-                                    <li><a href="#">others</a></li>
-                                    <li class="sub-form-li">
-                                        <div>
-                                            Subscribe
-                                        </div>
-                                        <form action="#" class="sub-form">
-                                            <input type="text" name="e" class="form-control" placeholder="Your email here...">
-                                            <button type="submit" class="btn btn-sub">Send Now <span class="ion-chevron-right"></span></button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
-                    </aside>
-                </div>
-                <div class="col-md-9 col-sm-8 col-xs-6 column-right">
-                    <div class="deal">
-                        <a href="#" class="btn-deal">Hot Deal</a>
-                    </div>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="menu-title">MENU</span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="menubar js-menubar">
-                            <li class=" menu-homepage menu-item-has-child dropdown">
-                                <a href="#" title="Home"><i class="fa fa-home"></i>home</a>
-                                <span class="plus js-plus-icon"></span>
-                                <ul class="dropdown-menu menu-level">
-                                    <li><a href="index.html" title="home 1">Home 1</a></li>
-                                    <li><a href="home-2.html" title="home 2">Home 2</a></li>
-                                    <li><a href="home-3.html" title="home 3">Home 3</a></li>
-                                    <li><a href="home-4.html" title="home 4">Home 4</a></li>
-                                    <li><a href="home-5.html" title="home 5">Home 5</a></li>
-                                    <li><a href="home-6.html" title="home 6">Home 6</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-collection-page menu-item-has-child dropdown">
-                                <a href="#" title="Marketplace">marketplace</a>
-                                <span class="plus js-plus-icon"></span>
-                                <ul class="dropdown-menu menu-level">
-                                    <li><a href="product-collection.html" title="shop collection">Shop Collection</a></li>
-                                    <li><a href="shop-list-v2.html" title="shop list v1">Shop List V1</a></li>
-                                    <li><a href="shop-list-v3.html" title="shop list v2">Shop List V2</a></li>
-                                    <li><a href="#" title="shoplist v3">Shop List V3</a></li>
-                                </ul>
-                            </li>
-                            <li class=" menu-demo-page menu-item-has-child dropdown">
-                                <a href="#" title="Sellerdemo">SELLER DEMO</a>
-                                <span class="plus js-plus-icon"></span>
-                                <div class="dropdown-menu dropdown-menu-bg">
-                                    <ul class="level1">
-                                        <li class="sub-menu col-3">
-                                            <a href="#">Cart pages</a>
-                                            <ul class="level2">
-                                                <li class="col-inner"><a href="checkout-1.html" title="">Shopping Cart</a></li>
-                                                <li class="col-inner"><a href="checkout-2.html" title="">Check Out</a></li>
-                                                <li class="col-inner"><a href="checkout-3.html" title="">Order</a></li>
-                                            </ul>
+
+                                <div class="dropdowns dropdown--author">
+                                    <ul>
+                                        <li>
+                                            <a href="author.html">
+                                                <span class="lnr lnr-user"></span>Profile</a>
                                         </li>
-                                        <li class="sub-menu col-3">
-                                            <a href="#">Product Pages</a>
-                                            <ul class="level2">
-                                                <li class="col-inner"><a href="shop-single.html" title="">Shop Single V1</a></li>
-                                                <li class="col-inner"><a href="shop-single-v2.html" title="">Shop Single V2</a></li>
-                                                <li class="col-inner"><a href="#" title="">Shop Single V3</a></li>
-                                            </ul>
+                                        <li>
+                                            <a href="dashboard.html">
+                                                <span class="lnr lnr-home"></span> Dashboard</a>
                                         </li>
-                                        <li class="sub-menu col-3">
-                                            <a href="#">NEW Arrival</a>
-                                            <ul class="level2">
-                                                <li class="text-center"><a href="comming-soon.html"><?=Html::img('@web/img/megaimg.png',['class'=>'img-responsive'])?></a></li>
-                                            </ul>
+                                        <li>
+                                            <a href="dashboard-setting.html">
+                                                <span class="lnr lnr-cog"></span> Setting</a>
+                                        </li>
+                                        <li>
+                                            <a href="cart.html">
+                                                <span class="lnr lnr-cart"></span>Purchases</a>
+                                        </li>
+                                        <li>
+                                            <a href="favourites.html">
+                                                <span class="lnr lnr-heart"></span> Favourite</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-add-credit.html">
+                                                <span class="lnr lnr-dice"></span>Add Credits</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-statement.html">
+                                                <span class="lnr lnr-chart-bars"></span>Sale Statement</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-upload.html">
+                                                <span class="lnr lnr-upload"></span>Upload Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-manage-item.html">
+                                                <span class="lnr lnr-book"></span>Manage Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-withdrawal.html">
+                                                <span class="lnr lnr-briefcase"></span>Withdrawals</a>
+                                        </li>
+                                        <li>
+                                            <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>',['site/logout'],['data'=>[
+                                                    'confirm'=>'Apakah anda ingin keluar?',
+                                                    'method'=>'POST',
+                                            ]]) ?>
+
                                         </li>
                                     </ul>
-                                    <div class="clearfix"></div>
                                 </div>
-                            </li>
-                            <li class="dropdown menu-contact-page menu-item-has-child">
-                                <a href="#" title="ContactUs">CONTACT US</a>
-                                <span class="plus js-plus-icon"></span>
-                                <ul class="dropdown-menu menu-level">
-                                    <li><a href="contact_us.html" title="contact us">Contact Us </a></li>
-                                    <li><a href="about-us.html" title="about us">About Us</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown menu-blog-page menu-item-has-child">
-                                <a href="#" title="Blog">blog</a>
-                                <span class="plus js-plus-icon"></span>
-                                <ul class="dropdown-menu menu-level menu-level-last">
-                                    <li><a href="blog-v1.html" title="blog">Blog</a></li>
-                                    <li><a href="blog-single-v1.html" title="blog-single">Blog Single</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown menu-others-page menu-item-has-child"><a href="#" title="Others">others</a>
-                                <span class="plus js-plus-icon"></span>
-                                <ul class="dropdown-menu menu-level menu-level-last">
-                                    <li><a href="404.html" title="error page">404</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                            <?php endif; ?>
+
+                        </div>
+                        <!--end /.author-author__info-->
                     </div>
+                    <!-- end .author-area -->
+
+                    <!-- author area restructured for mobile -->
+                    <div class="mobile_content ">
+                        <span class="lnr lnr-user menu_icon"></span>
+
+                        <!-- offcanvas menu -->
+                        <div class="offcanvas-menu closed">
+                            <span class="lnr lnr-cross close_menu"></span>
+                            <?php if (!Yii::$app->user->isGuest): ?>
+                                <div class="author-author__info">
+                                    <div class="author__avatar v_middle">
+                                        <?= Html::img('@web/images/usr_avatar.png') ?>
+                                    </div>
+                                    <div class="autor__info v_middle">
+                                        <p class="name">
+                                            Jhon Doe
+                                        </p>
+                                        <p class="ammount">$20.45</p>
+                                    </div>
+                                </div>
+                                <!--end /.author-author__info-->
+
+                                <div class="author__notification_area">
+                                    <ul>
+                                        <li>
+                                            <a href="notification.html">
+                                                <div class="icon_wrap">
+                                                    <span class="lnr lnr-alarm"></span>
+                                                    <span class="notification_count noti">25</span>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="message.html">
+                                                <div class="icon_wrap">
+                                                    <span class="lnr lnr-envelope"></span>
+                                                    <span class="notification_count msg">6</span>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="cart.html">
+                                                <div class="icon_wrap">
+                                                    <span class="lnr lnr-cart"></span>
+                                                    <span class="notification_count purch">2</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--start .author__notification_area -->
+
+                                <div class="dropdowns dropdown--author">
+                                    <ul>
+                                        <li>
+                                            <a href="author.html">
+                                                <span class="lnr lnr-user"></span>Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard.html">
+                                                <span class="lnr lnr-home"></span> Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-setting.html">
+                                                <span class="lnr lnr-cog"></span> Setting</a>
+                                        </li>
+                                        <li>
+                                            <a href="cart.html">
+                                                <span class="lnr lnr-cart"></span>Purchases</a>
+                                        </li>
+                                        <li>
+                                            <a href="favourites.html">
+                                                <span class="lnr lnr-heart"></span> Favourite</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-add-credit.html">
+                                                <span class="lnr lnr-dice"></span>Add Credits</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-statement.html">
+                                                <span class="lnr lnr-chart-bars"></span>Sale Statement</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-upload.html">
+                                                <span class="lnr lnr-upload"></span>Upload Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-manage-item.html">
+                                                <span class="lnr lnr-book"></span>Manage Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="dashboard-withdrawal.html">
+                                                <span class="lnr lnr-briefcase"></span>Withdrawals</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="lnr lnr-exit"></span>Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            <?php endif; ?>
+
+                            <div class="text-center">
+                                <?php if (Yii::$app->user->isGuest): ?>
+                                    <a href="signup.html" class="author-area__seller-btn inline">Become a Seller</a>
+                                    <a href="signup.html" class="author-area__seller-btn inline">Become a Seller</a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end /.mobile_content -->
                 </div>
+                <!-- end /.col-md-5 -->
             </div>
+            <!-- end /.row -->
         </div>
+        <!-- end /.container -->
     </div>
-</header>
+    <!-- end  -->
+
+    <!-- start .mainmenu_area -->
+    <?= $this->render('menu') ?>
+    <!-- end /.mainmenu-->
+</div>
+<!-- end /.menu-area -->
+<!--================================
+    END MENU AREA
+=================================-->

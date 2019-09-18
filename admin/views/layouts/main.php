@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use admin\assets\AppAsset;
+use common\assets\metronic\MetronicDashboardAsset;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
@@ -11,7 +12,7 @@ use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
-\common\assets\MetronicDashboardAsset::register($this);
+MetronicDashboardAsset::register($this);
 $counterUp = <<<JS
  $('.counter').counterUp({
         delay: 10,

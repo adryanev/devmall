@@ -2,1442 +2,1938 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Welcome to Devmall';
 
-use yii\bootstrap\Html; ?>
-<?=$this->render('/layouts/slide')?>
+use yii\bootstrap4\Html; ?>
 
-<section class="bigdeal">
-    <div class="container">
-        <div class="label label-1">ONSALE</div>
-        <div class="sale-list">
+<!--================================
+START HERO AREA
+=================================-->
+<section class="hero-area bgimage">
+    <div class="bg_image_holder">
+        <?=Html::img('@web/images/hero_area_bg1.jpg')?>
+    </div>
+    <!-- start hero-content -->
+    <div class="hero-content content_above">
+        <!-- start .contact_wrapper -->
+        <div class="content-wrapper">
+            <!-- start .container -->
+            <div class="container">
+                <!-- start row -->
+                <div class="row">
+                    <!-- start col-md-12 -->
+                    <div class="col-md-12">
+                        <div class="hero__content__title">
+                            <h1>
+                                <span class="light">Create Your Own</span>
+                                <span class="bold">Digital Product Marketplace</span>
+                            </h1>
+                            <p class="tagline">MartPlace is the most powerful, & customizable template for Easy Digital Downloads Products</p>
+                        </div>
+
+                        <!-- start .hero__btn-area-->
+                        <div class="hero__btn-area">
+                            <a href="all-products.html" class="btn btn--round btn--lg">View All Products</a>
+                            <a href="all-products.html" class="btn btn--round btn--lg">Popular Products</a>
+                        </div>
+                        <!-- end .hero__btn-area-->
+                    </div>
+                    <!-- end /.col-md-12 -->
+                </div>
+                <!-- end /.row -->
+            </div>
+            <!-- end /.container -->
+        </div>
+        <!-- end .contact_wrapper -->
+    </div>
+    <!-- end hero-content -->
+
+    <!--start search-area -->
+    <div class="search-area">
+        <!-- start .container -->
+        <div class="container">
+            <!-- start .container -->
             <div class="row">
-                <div class="col-md-7 col-sm-12">
-                    <div class="product-item ver4 top-inner">
-                        <div class="prod-item-img">
-                            <a href="#">
-                                <?=Html::img('@web/img/products/iwatch.jpg',['class'=>'img-responsive'])?>
-                            </a>
-                            <div class="prod-choose">
-                                <div class="prod-color">
-                                    <span class="dot"></span>
-                                    <span class="dot yellow"></span>
-                                    <span class="dot green"></span>
-                                </div>
-                                <div class="prod-price">
-                                    <span class="price old">$200.50</span>
-                                    <span class="price-ver2 price-lg">$125.00</span>
-                                    <span class="productPriceDiscount">Save<br><span class="strong">$75.5</span></span>
-                                </div>
+                <!-- start .col-sm-12 -->
+                <div class="col-sm-12">
+                    <!-- start .search_box -->
+                    <div class="search_box">
+                        <form action="#">
+                            <input type="text" class="text_field" placeholder="Search your products...">
+                            <div class="search__select select-wrap">
+                                <select name="category" class="select--field" id="blah">
+                                    <option value="">All Categories</option>
+                                    <option value="">PSD</option>
+                                    <option value="">HTML</option>
+                                    <option value="">WordPress</option>
+                                    <option value="">All Categories</option>
+                                </select>
+                                <span class="lnr lnr-chevron-down"></span>
+                            </div>
+                            <button type="submit" class="search-btn btn--lg">Search Now</button>
+                        </form>
+                    </div>
+                    <!-- end ./search_box -->
+                </div>
+                <!-- end /.col-sm-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </div>
+    <!--start /.search-area -->
+</section>
+<!--================================
+END HERO AREA
+=================================-->
+
+<!--================================
+START FEATURE AREA
+=================================-->
+<section class="features section--padding">
+    <!-- start container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start search-area -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature">
+                    <div class="feature__img">
+                        <?=Html::img('@web/images/feature1.png')?>
+                    </div>
+                    <div class="feature__title">
+                        <h3>Best UX Research</h3>
+                    </div>
+                    <div class="feature__desc">
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                </div>
+                <!-- end /.feature -->
+            </div>
+            <!-- end /.col-lg-4 col-md-6 -->
+
+            <!-- start search-area -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature">
+                    <div class="feature__img">
+                        <?=Html::img('@web/images/feature2.png')?>
+                    </div>
+                    <div class="feature__title">
+                        <h3>Fully Responsive</h3>
+                    </div>
+                    <div class="feature__desc">
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                </div>
+                <!-- end /.feature -->
+            </div>
+            <!-- end /.col-lg-4 col-md-6 -->
+
+            <!-- start search-area -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature">
+                    <div class="feature__img">
+                        <?=Html::img('@web/images/feature3.png')?>
+                    </div>
+                    <div class="feature__title">
+                        <h3>Buy & Sell Easily</h3>
+                    </div>
+                    <div class="feature__desc">
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                </div>
+                <!-- end /.feature -->
+            </div>
+            <!-- end /.col-lg-4 col-md-6 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END FEATURE AREA
+=================================-->
+
+
+<!--================================
+START FEATURED PRODUCT AREA
+=================================-->
+<section class="featured-products bgcolor  section--padding">
+    <!-- start /.container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="product-title-area ">
+                    <div class="product__title">
+                        <h2>Weekly Featured Products</h2>
+                    </div>
+
+                    <div class="product__slider-nav rounded">
+                        <span class="lnr lnr-chevron-left nav_left"></span>
+                        <span class="lnr lnr-chevron-right nav_right"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+
+    <!-- start .featured-product-slider -->
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 no0-padding">
+                <div class="featured-product-slider prod-slider1">
+                    <div class="featured__single-slider">
+                        <div class="featured__preview-img">
+                            <?=Html::img('@web/images/featprod.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
                             </div>
                         </div>
-                        <div class="prod-info">
-                            <h3><a class="prod-name" href="#" title="">Sony Smartwatch 3 - 2016</a></h3>
-                            <p class="brand">SONY</p>
-                            <div class="ratingstar">
-                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                <span class="number">(12)</span>
-                            </div>
-                            <div class="prod-description">
-                                <ul>
-                                    <li>Plays all your music, fomat type (WAV, MP4, ...)</li>
-                                    <li>Fills the room with immersive</li>
-                                    <li>Allows hands-free</li>
-                                    <li>Controls lights, switches</li>
+                        <!-- end /.featured__preview-img -->
+
+                        <div class="featured__product-description">
+                            <div class="product-desc desc--featured">
+                                <a href="single-product.html" class="product_title">
+                                    <h4>Rida - vCard, Portfolio / Resume Template</h4>
+                                </a>
+                                <ul class="titlebtm">
+                                    <li>
+                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <p>
+                                            <a href="#">AazzTech</a>
+                                        </p>
+                                    </li>
+                                    <li class="product_cat">
+                                        <a href="#">
+                                            <span class="lnr lnr-book"></span> WordPress</a>
+                                    </li>
                                 </ul>
+                                <!-- end /.titlebtm -->
+
+                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
                             </div>
-                            <div class="countdown" data-countdown="countdown" data-date="08-31-2018-00-00-00">
+                            <!-- end /.product-desc -->
+
+                            <div class="product_data">
+                                <div class="tags tags--round">
+                                    <ul>
+                                        <li>
+                                            <a href="#">website</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">plugin</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">landing page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end /.tags -->
+                                <div class="product-purchase featured--product-purchase">
+                                    <div class="price_love">
+                                        <span>$10 - $50</span>
+                                        <p>
+                                            <span class="lnr lnr-heart"></span> 90</p>
+                                    </div>
+                                    <div class="sell">
+                                        <p>
+                                            <span class="lnr lnr-cart"></span>
+                                            <span>16</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="rating product--rating">
+                                        <ul>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- end /.product-purchase -->
                             </div>
                         </div>
+                        <!-- end /.featured__product-description -->
                     </div>
-                </div>
-                <div class="col-md-5 col-sm-12 ">
-                    <div class="product-item ver1 padding--bottom margin-r">
-                        <div class="prod-item-img set--width">
-                            <a class="image" href="#"><?=Html::img('@web/img/products/ipad.jpg',['class'=>'img-responsive'])?></a>
-                        </div>
-                        <div class="prod-info ver1">
-                            <h3><a href="#" title="">iPad Pro MLMX2CL/A (MLMX2LL/A) 9.7-inch</a></h3>
-                            <div class="ratingstar sm">
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <span class="number">(12)</span>
-                            </div>
-                            <div class="prod-price">
-                                <span class="price old">$299.6</span>
-                                <span class="price">$210.25</span>
+                    <!--end /.featured__single-slider-->
+
+                    <div class="featured__single-slider">
+                        <div class="featured__preview-img">
+                            <?=Html::img('@web/images/featprod.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
                             </div>
                         </div>
-                        <div class="label label-2 blue">New</div>
+                        <!-- end /.featured__preview-img -->
+
+                        <div class="featured__product-description">
+                            <div class="product-desc desc--featured">
+                                <a href="single-product.html" class="product_title">
+                                    <h4>One Page Resume Template</h4>
+                                </a>
+                                <ul class="titlebtm">
+                                    <li>
+                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <p>
+                                            <a href="#">AazzTech</a>
+                                        </p>
+                                    </li>
+                                    <li class="product_cat">
+                                        <a href="#">
+                                            <span class="lnr lnr-book"></span> WordPress</a>
+                                    </li>
+                                </ul>
+                                <!-- end /.titlebtm -->
+
+                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                            </div>
+                            <!-- end /.product-desc -->
+
+                            <div class="product_data">
+                                <div class="tags tags--round">
+                                    <ul>
+                                        <li>
+                                            <a href="#">website</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">plugin</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">landing page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end /.tags -->
+                                <div class="product-purchase featured--product-purchase">
+                                    <div class="price_love">
+                                        <span>$10 - $50</span>
+                                        <p>
+                                            <span class="lnr lnr-heart"></span> 90</p>
+                                    </div>
+                                    <div class="sell">
+                                        <p>
+                                            <span class="lnr lnr-cart"></span>
+                                            <span>16</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="rating product--rating">
+                                        <ul>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- end /.product-purchase -->
+                            </div>
+                        </div>
+                        <!-- end /.featured__product-description -->
                     </div>
-                    <div class="product-item ver1 margin-r ">
-                        <div class="prod-item-img set--width">
-                            <a class="image" href="#"><?=Html::img('@web/img/products/seiko.jpg',['class'=>'img-responsive'])?></a>
-                        </div>
-                        <div class="prod-info ver1">
-                            <h3><a href="#" title="">Motorola Moto 360 Sport - 45mm, Black</a></h3>
-                            <div class="ratingstar sm">
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                <span class="number">(12)</span>
-                            </div>
-                            <div class="prod-price">
-                                <span class="price old">$399.6</span>
-                                <span class="price">$327.50</span>
+                    <!--end /.featured__single-slider-->
+
+                    <div class="featured__single-slider">
+                        <div class="featured__preview-img">
+                            <img src="images/featprod.jpg" alt="Featured products">
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
                             </div>
                         </div>
-                        <div class="label label-2 red">Hot</div>
+                        <!-- end /.featured__preview-img -->
+
+                        <div class="featured__product-description">
+                            <div class="product-desc desc--featured">
+                                <a href="single-product.html" class="product_title">
+                                    <h4>AppsPress App Landing</h4>
+                                </a>
+                                <ul class="titlebtm">
+                                    <li>
+                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <p>
+                                            <a href="#">AazzTech</a>
+                                        </p>
+                                    </li>
+                                    <li class="product_cat">
+                                        <a href="#">
+                                            <span class="lnr lnr-book"></span> WordPress</a>
+                                    </li>
+                                </ul>
+                                <!-- end /.titlebtm -->
+
+                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                            </div>
+                            <!-- end /.product-desc -->
+
+                            <div class="product_data">
+                                <div class="tags tags--round">
+                                    <ul>
+                                        <li>
+                                            <a href="#">website</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">plugin</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">landing page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end /.tags -->
+                                <div class="product-purchase featured--product-purchase">
+                                    <div class="price_love">
+                                        <span>$10 - $50</span>
+                                        <p>
+                                            <span class="lnr lnr-heart"></span> 90</p>
+                                    </div>
+                                    <div class="sell">
+                                        <p>
+                                            <span class="lnr lnr-cart"></span>
+                                            <span>16</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="rating product--rating">
+                                        <ul>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- end /.product-purchase -->
+                            </div>
+                        </div>
+                        <!-- end /.featured__product-description -->
                     </div>
+                    <!--end /.featured__single-slider-->
+
+                    <div class="featured__single-slider">
+                        <div class="featured__preview-img">
+                            <img src="images/featprod.jpg" alt="Featured products">
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                        </div>
+                        <!-- end /.featured__preview-img -->
+
+                        <div class="featured__product-description">
+                            <div class="product-desc desc--featured">
+                                <a href="single-product.html" class="product_title">
+                                    <h4>MartPlace - Digital Marketplace</h4>
+                                </a>
+                                <ul class="titlebtm">
+                                    <li>
+                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <p>
+                                            <a href="#">AazzTech</a>
+                                        </p>
+                                    </li>
+                                    <li class="product_cat">
+                                        <a href="#">
+                                            <span class="lnr lnr-book"></span> WordPress</a>
+                                    </li>
+                                </ul>
+                                <!-- end /.titlebtm -->
+
+                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                            </div>
+                            <!-- end /.product-desc -->
+
+                            <div class="product_data">
+                                <div class="tags tags--round">
+                                    <ul>
+                                        <li>
+                                            <a href="#">website</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">plugin</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">landing page</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- end /.tags -->
+                                <div class="product-purchase featured--product-purchase">
+                                    <div class="price_love">
+                                        <span>$10 - $50</span>
+                                        <p>
+                                            <span class="lnr lnr-heart"></span> 90</p>
+                                    </div>
+                                    <div class="sell">
+                                        <p>
+                                            <span class="lnr lnr-cart"></span>
+                                            <span>16</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="rating product--rating">
+                                        <ul>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- end /.product-purchase -->
+                            </div>
+                        </div>
+                        <!-- end /.featured__product-description -->
+                    </div>
+                    <!--end /.featured__single-slider-->
                 </div>
             </div>
         </div>
+        <!-- end /.featured__preview-img -->
     </div>
+    <!-- end /.featured-product-slider -->
 </section>
-<section class="featured-product">
+<!--================================
+END FEATURED PRODUCT AREA
+=================================-->
+
+
+<!--================================
+START PRODUCTS AREA
+=================================-->
+<section class="products section--padding">
+    <!-- start container -->
     <div class="container">
-        <div class="heading-v1">
-            <h3 class="pull-left">featured products</h3>
-            <ul class="otherr-link pull-right">
-                <li class="active"><a data-toggle="pill" href="#all">all</a></li>
-                <li><a data-toggle="pill" href="#elec">Electronic</a></li>
-                <li><a data-toggle="pill" href="#fashion">Fashion        </a></li>
-                <li><a data-toggle="pill" href="#it">IT        </a></li>
-                <li><a data-toggle="pill" href="#food">Food & Drink</a></li>
-            </ul>
-            <div class="clearfix"></div>
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="product-title-area">
+                    <div class="product__title">
+                        <h2>Newest Release Products</h2>
+                    </div>
+
+                    <div class="filter__menu">
+                        <p>Filter by:</p>
+                        <div class="filter__menu_icon">
+                            <a href="#" id="drop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="svg" src="images/svg/menu.svg" alt="menu icon">
+                            </a>
+
+                            <ul class="filter_dropdown dropdown-menu" aria-labelledby="drop1">
+                                <li>
+                                    <a href="#">Trending items</a>
+                                </li>
+                                <li>
+                                    <a href="#">Best seller</a>
+                                </li>
+                                <li>
+                                    <a href="#">Best rating</a>
+                                </li>
+                                <li>
+                                    <a href="#">Low price</a>
+                                </li>
+                                <li>
+                                    <a href="#">High price</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
         </div>
-        <div class="tab-content">
-            <div id="all" class="tab-pane fade in active">
-                <div class="prod-fea-list">
-                    <div class="row">
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
+        <!-- end /.row -->
+
+        <!-- start row -->
+        <div class="row">
+            <!-- start .col-md-12 -->
+            <div class="col-md-12">
+                <div class="sorting">
+                    <ul>
+                        <li>
+                            <a href="#">Plugins</a>
+                        </li>
+                        <li>
+                            <a href="#">WordPress</a>
+                        </li>
+                        <li>
+                            <a href="#">Site Template</a>
+                        </li>
+                        <li>
+                            <a href="#">PSD Template</a>
+                        </li>
+                        <li>
+                            <a href="#">Joomla</a>
+                        </li>
+                        <li>
+                            <a href="#">User Interface</a>
+                        </li>
+                        <li>
+                            <a href="#">Landing Page</a>
+                        </li>
+                        <li>
+                            <a href="#">Software</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start .row -->
+        <div class="row">
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p1.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>MartPlace Extension Bundle</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>Plugin</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>$10 - $50</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 90</p>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>16</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p2.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>Mccarther Coffee Shop</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>Plugin</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>$10</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 48</p>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>50</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p3.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>Visibility Manager Subscriptions</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <img class="auth-img" src="images/auth3.jpg" alt="author image">
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>Plugin</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>Free</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 24</p>
+                        </div>
+                        <div class="rating product--rating">
+                            <ul>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>27</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p4.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>Ajax Live Search</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>Plugin</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>$10 - $50</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 90</p>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>16</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p5.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>Mccarther Coffee Shop</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>Plugin</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>$10</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 48</p>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>50</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .single-product -->
+                <div class="product product--card">
+
+                    <div class="product__thumbnail">
+                        <?=Html::img('@web/images/p6.jpg')?>
+                        <div class="prod_btn">
+                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        </div>
+                        <!-- end /.prod_btn -->
+                    </div>
+                    <!-- end /.product__thumbnail -->
+
+                    <div class="product-desc">
+                        <a href="single-product.html" class="product_title">
+                            <h4>Visibility Manager Subscriptions</h4>
+                        </a>
+                        <ul class="titlebtm">
+                            <li>
+                                <?=Html::img('@web/images/auth3.jpg',['class'=>'auth-img'])?>
+                                <p>
+                                    <a href="#">AazzTech</a>
+                                </p>
+                            </li>
+                            <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span>WordPress</a>
+                            </li>
+                        </ul>
+
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <!-- end /.product-desc -->
+
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <span>Free</span>
+                            <p>
+                                <span class="lnr lnr-heart"></span> 24</p>
+                        </div>
+                        <div class="rating product--rating">
+                            <ul>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fa-star-half-o"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sell">
+                            <p>
+                                <span class="lnr lnr-cart"></span>
+                                <span>27</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end /.product-purchase -->
+                </div>
+                <!-- end /.single-product -->
+            </div>
+            <!-- end /.col-md-4 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start .row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="more-product">
+                    <a href="all-products.html" class="btn btn--lg btn--round">All New Products</a>
+                </div>
+            </div>
+            <!-- end ./col-md-12 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END PRODUCTS AREA
+=================================-->
+
+
+<!--================================
+START FOLLOWERS FEED AREA
+=================================-->
+<section class="followers-feed section--padding">
+    <!-- start .container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="product-title-area">
+                    <div class="product__title">
+                        <h2>Your Followers Feed</h2>
+                    </div>
+
+                    <div class="product__slider-nav follow_feed_nav rounded">
+                        <span class="lnr lnr-chevron-left nav_left"></span>
+                        <span class="lnr lnr-chevron-right nav_right"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product_slider">
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p4.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Ajax Live Search</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
                                     <a href="#">
-                                        <?=Html::img('@web/img/products/smarphone.jpg',['class'=>'img-responsive'])?>
-                                    </a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony Xperia X Compact - Unlocked Smartphone...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="prod-price">
-                                        <span class="price black">$212.20</span>
-                                    </div>
-                                </div>
+                                        <span class="lnr lnr-book"></span>Plugin</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>$10 - $50</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 90</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>16</span>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sound3.jpg',['class'=>'img-responsive'])?>
-                                    </a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony MDRXB950BT/B Ex .fa-1tra Bass Bluetooth Headphones...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price old">$699.6</span>
-                                        <span class="price">$510.02</span>
-                                    </div>
-                                </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p2.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Mccarther Coffee Shop</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <a href="#">
+                                        <span class="lnr lnr-book"></span>Plugin</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>$10</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 48</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>50</span>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/tivi.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Samsung UN65KS8000 65-Inch 4K Ultra HD Smart LED TV...</a></h3>
-                                    <div class="ratingstar sm" style="display:none;">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$399.6</span>
-                                        <span class="price">$299.69</span>
-                                    </div>
-                                </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p6.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Visibility Manager Subscriptions</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <img class="auth-img" src="images/auth3.jpg" alt="author image">
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <a href="#">
+                                        <span class="lnr lnr-book"></span>WordPress</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>Free</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 24</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>27</span>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sony.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony a7 Full-Frame Mirrorless Digital Camera...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price black">$199.69</span>
-                                    </div>
-                                </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p4.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Ajax Live Search</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <a href="#">
+                                        <span class="lnr lnr-book"></span>Plugin</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>$10 - $50</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 90</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>16</span>
+                                </p>
                             </div>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/macbook.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Apple iPad 4 16GB 9.7" Retina Display WiFi Bluetooth...</a></h3>
-                                    <div class="ratingstar" style="display:none;"><span class="number">(12)</span></div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$299.6</span>
-                                        <span class="price">$109.69</span>
-                                    </div>
-                                </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p2.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
                             </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Mccarther Coffee Shop</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <a href="#">
+                                        <span class="lnr lnr-book"></span>Plugin</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>$10</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 48</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>50</span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+
+                    <!-- start .single-product -->
+                    <div class="product product--card">
+
+                        <div class="product__thumbnail">
+                            <?=Html::img('@web/images/p6.jpg')?>
+                            <div class="prod_btn">
+                                <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
+                                <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                            </div>
+                            <!-- end /.prod_btn -->
+                        </div>
+                        <!-- end /.product__thumbnail -->
+
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4>Visibility Manager Subscriptions</h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <img class="auth-img" src="images/auth3.jpg" alt="author image">
+                                    <p>
+                                        <a href="#">AazzTech</a>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <a href="#">
+                                        <span class="lnr lnr-book"></span>WordPress</a>
+                                </li>
+                            </ul>
+
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet congue.</p>
+                        </div>
+                        <!-- end /.product-desc -->
+
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span>Free</span>
+                                <p>
+                                    <span class="lnr lnr-heart"></span> 24</p>
+                            </div>
+                            <div class="sell">
+                                <p>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>27</span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- end /.product-purchase -->
+                    </div>
+                    <!-- end /.single-product -->
+                </div>
+            </div>
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- start /.container -->
+</section>
+<!--================================
+END FOLLOWERS FEED AREA
+=================================-->
+
+<!--================================
+START COUNTER UP AREA
+=================================-->
+<section class="counter-up-area bgimage">
+    <div class="bg_image_holder">
+        <?=Html::img('@web/images/countbg.jpg')?>
+    </div>
+    <!-- start .container -->
+    <div class="container content_above">
+        <!-- start .col-md-12 -->
+        <div class="col-md-12">
+            <div class="counter-up">
+                <div class="counter mcolor2">
+                    <span class="lnr lnr-briefcase"></span>
+                    <span class="count">38,436</span>
+                    <p>items for sale</p>
+                </div>
+                <div class="counter mcolor3">
+                    <span class="lnr lnr-cloud-download"></span>
+                    <span class="count">38,436</span>
+                    <p>total Sales</p>
+                </div>
+                <div class="counter mcolor1">
+                    <span class="lnr lnr-smile"></span>
+                    <span class="count">38,436</span>
+                    <p>appy customers</p>
+                </div>
+                <div class="counter mcolor4">
+                    <span class="lnr lnr-users"></span>
+                    <span class="count">38,436</span>
+                    <p>members</p>
+                </div>
+            </div>
+        </div>
+        <!-- end /.col-md-12 -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END COUNTER UP AREA
+=================================-->
+
+
+<section class="why_choose section--padding">
+    <!-- start container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h1>Why Choose
+                        <span class="highlighted">MartPlace</span>
+                    </h1>
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                        est laborum dolo rumes fugats untras.</p>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start row -->
+        <div class="row">
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .reason -->
+                <div class="feature2">
+                    <span class="feature2__count">01</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-license pcolor"></span>
+                        <h3 class="feature2-title">One Time Payment</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .feature2 -->
+                <div class="feature2">
+                    <span class="feature2__count">02</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-magic-wand scolor"></span>
+                        <h3 class="feature2-title">Quality Products</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .feature2 -->
+                <div class="feature2">
+                    <span class="feature2__count">03</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-lock mcolor1"></span>
+                        <h3 class="feature2-title">100% Secure Paymentt</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .feature2 -->
+                <div class="feature2">
+                    <span class="feature2__count">04</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-chart-bars mcolor2"></span>
+                        <h3 class="feature2-title">Well Organized Code</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .feature2 -->
+                <div class="feature2">
+                    <span class="feature2__count">05</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-leaf mcolor3"></span>
+                        <h3 class="feature2-title">Life Time Free Update</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <!-- start .feature2 -->
+                <div class="feature2">
+                    <span class="feature2__count">06</span>
+                    <div class="feature2__content">
+                        <span class="lnr lnr-phone mcolor4"></span>
+                        <h3 class="feature2-title">Fast and Friendly Support</h3>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                    </div>
+                    <!-- end /.feature2__content -->
+                </div>
+                <!-- end /.feature2 -->
+            </div>
+            <!-- end /.col-md-4 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END COUNTER UP AREA
+=================================-->
+
+<!--================================
+START SELL BUY
+=================================-->
+<section class="proposal-area">
+
+    <!-- start container-fluid -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 no-padding">
+                <div class="proposal proposal--left bgimage">
+                    <div class="bg_image_holder">
+                        <?=Html::img('@web/images/bbg.png')?>
+                    </div>
+                    <div class="content_above">
+                        <div class="proposal__icon ">
+                            <?=Html::img('@web/images/buy.png')?>
+                        </div>
+                        <div class="proposal__content ">
+                            <h1 class="text--white">Sell Your Products</h1>
+                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diamcongue is laoreet elit metus.</p>
+                        </div>
+                        <a href="#" class="btn--round btn btn--lg btn--white">Become an Author</a>
+                    </div>
+                </div>
+                <!-- end /.proposal -->
+            </div>
+
+            <div class="col-md-6 no-padding">
+                <div class="proposal proposal--right">
+                    <div class="bg_image_holder">
+                        <?=Html::img('@web/images/sbg.png')?>
+                    </div>
+                    <div class="content_above">
+                        <div class="proposal__icon">
+                            <?=Html::img('@web/images/sell.png')?>
+                        </div>
+                        <div class="proposal__content ">
+                            <h1 class="text--white">Start Shopping Today</h1>
+                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diamcongue is laoreet elit metus.</p>
+                        </div>
+                        <a href="#" class="btn--round btn btn--lg btn--white">Start Shopping</a>
+                    </div>
+                </div>
+                <!-- end /.proposal -->
+            </div>
+        </div>
+    </div>
+    <!-- start container-fluid -->
+</section>
+<!--================================
+END SELL BUY
+=================================-->
+
+<!--================================
+START TESTIMONIAL
+=================================-->
+<section class="testimonial-area section--padding">
+    <!-- start .container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h1>Our Clients
+                        <span class="highlighted">Feedback</span>
+                    </h1>
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                        est laborum dolo rumes fugats untras.</p>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start row -->
+        <div class="row">
+            <!-- start .col-md-12 -->
+            <div class="col-md-12">
+                <div class="testimonial-slider">
+                    <div class="testimonial">
+                        <div class="testimonial__about">
+                            <div class="avatar v_middle">
+                                <?=Html::img('@web/images/test1.jpg')?>
+                            </div>
+                            <div class="name-designation v_middle">
+                                <h4 class="name">Tubeda Pagla</h4>
+                                <span class="desig">Product Designer</span>
+                            </div>
+                            <span class="lnr lnr-bubble quote-icon"></span>
+                        </div>
+                        <div class="testimonial__text">
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                                is mollis. Praesent the pharetra, justo ut scelerisque.</p>
+                        </div>
+                    </div>
+                    <!-- end /.testimonial -->
+
+                    <div class="testimonial">
+                        <div class="testimonial__about">
+                            <div class="avatar v_middle">
+                                <?=Html::img('@web/images/test2.jpg')?>
+                            </div>
+                            <div class="name-designation v_middle">
+                                <h4 class="name">Tarashi Hamada</h4>
+                                <span class="desig">Quality Ninja</span>
+                            </div>
+                            <span class="lnr lnr-bubble quote-icon"></span>
+                        </div>
+                        <div class="testimonial__text">
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                                is mollis. Praesent the pharetra, justo ut scelerisque.</p>
+                        </div>
+                    </div>
+                    <!-- end /.testimonial -->
+
+                    <div class="testimonial">
+                        <div class="testimonial__about">
+                            <div class="avatar v_middle">
+                                <?=Html::img('@web/images/test1.jpg')?>
+                            </div>
+                            <div class="name-designation v_middle">
+                                <h4 class="name">Tubeda Pagla</h4>
+                                <span class="desig">Product Designer</span>
+                            </div>
+                            <span class="lnr lnr-bubble quote-icon"></span>
+                        </div>
+                        <div class="testimonial__text">
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                                is mollis. Praesent the pharetra, justo ut scelerisque.</p>
+                        </div>
+                    </div>
+                    <!-- end /.testimonial -->
+
+                    <div class="testimonial">
+                        <div class="testimonial__about">
+                            <div class="avatar v_middle">
+                                <?=Html::img('@web/images/test2.jpg')?>
+                            </div>
+                            <div class="name-designation v_middle">
+                                <h4 class="name">Tarashi Hamada</h4>
+                                <span class="desig">Quality Ninja</span>
+                            </div>
+                            <span class="lnr lnr-bubble quote-icon"></span>
+                        </div>
+                        <div class="testimonial__text">
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                                is mollis. Praesent the pharetra, justo ut scelerisque.</p>
+                        </div>
+                    </div>
+                    <!-- end /.testimonial -->
+                </div>
+                <!-- end /.testimonial_slider -->
+
+                <div class="all-testimonial">
+                    <a href="testimonial.html" class="btn btn--lg btn--round">View All Reviews</a>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end container -->
+</section>
+<!--================================
+END TESTIMONIAL
+=================================-->
+
+<!--================================
+START LATEST NEWS
+=================================-->
+<section class="latest-news section--padding">
+    <!-- start /.container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h1>Latest
+                        <span class="highlighted">News</span>
+                    </h1>
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                        est laborum dolo rumes fugats untras.</p>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start .row -->
+        <div class="row">
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="news">
+                    <div class="news__thumbnail">
+                        <<?=Html::img('@web/images/news1.png')?>
+                    </div>
+                    <div class="news__content">
+                        <a href="#" class="news-title">
+                            <h4>Web Design Trends in 2019</h4>
+                        </a>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <div class="news__meta">
+                        <div class="date">
+                            <span class="lnr lnr-clock"></span>
+                            <p>24 Feb 2019</p>
+                        </div>
+
+                        <div class="other">
+                            <ul>
+                                <li>
+                                    <span class="lnr lnr-bubble"></span>
+                                    <span>45</span>
+                                </li>
+                                <li>
+                                    <span class="lnr lnr-eye"></span>
+                                    <span>345</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="elec" class="tab-pane fade ">
-                <div class="prod-fea-list">
-                    <div class="row">
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/smarphone.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony Xperia X Compact - Unlocked Smartphone...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="prod-price">
-                                        <span class="price black">$212.20</span>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="news">
+                    <div class="news__thumbnail">
+                        <?=Html::img('@web/images/news2.png')?>
+                    </div>
+                    <div class="news__content">
+                        <a href="#" class="news-title">
+                            <h4>The best advices to start your own project</h4>
+                        </a>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <div class="news__meta">
+                        <div class="date">
+                            <span class="lnr lnr-clock"></span>
+                            <p>15 Mar 2019</p>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sound3.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony MDRXB950BT/B Ex .fa-1tra Bass Bluetooth Headphones...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price old">$699.6</span>
-                                        <span class="price">$510.02</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/tivi.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Samsung UN65KS8000 65-Inch 4K Ultra HD Smart LED TV...</a></h3>
-                                    <div class="ratingstar sm" style="display:none;">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$399.6</span>
-                                        <span class="price">$299.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sony.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony a7 Full-Frame Mirrorless Digital Camera...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price black">$199.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/macbook.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Apple iPad 4 16GB 9.7" Retina Display WiFi Bluetooth...</a></h3>
-                                    <div class="ratingstar" style="display:none;"><span class="number">(12)</span></div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$299.6</span>
-                                        <span class="price">$109.69</span>
-                                    </div>
-                                </div>
-                            </div>
+
+                        <div class="other">
+                            <ul>
+                                <li>
+                                    <span class="lnr lnr-bubble"></span>
+                                    <span>45</span>
+                                </li>
+                                <li>
+                                    <span class="lnr lnr-eye"></span>
+                                    <span>345</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="fashion" class="tab-pane fade ">
-                <div class="prod-fea-list">
-                    <div class="row">
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/smarphone.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony Xperia X Compact - Unlocked Smartphone...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="prod-price">
-                                        <span class="price black">$212.20</span>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- end /.col-md-4 -->
+
+            <!-- start .col-md-4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="news">
+                    <div class="news__thumbnail">
+                        <?=Html::img('@web/images/news1.png')?>
+                    </div>
+                    <div class="news__content">
+                        <a href="#" class="news-title">
+                            <h4>Best Tomato Sauce in town</h4>
+                        </a>
+                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            leo quam aliquet congue.</p>
+                    </div>
+                    <div class="news__meta">
+                        <div class="date">
+                            <span class="lnr lnr-clock"></span>
+                            <p>20 Dec 2016</p>
                         </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sound3.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony MDRXB950BT/B Ex .fa-1tra Bass Bluetooth Headphones...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price old">$699.6</span>
-                                        <span class="price">$510.02</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/tivi.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Samsung UN65KS8000 65-Inch 4K Ultra HD Smart LED TV...</a></h3>
-                                    <div class="ratingstar sm" style="display:none;">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$399.6</span>
-                                        <span class="price">$299.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sony.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony a7 Full-Frame Mirrorless Digital Camera...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price black">$199.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/macbook.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Apple iPad 4 16GB 9.7" Retina Display WiFi Bluetooth...</a></h3>
-                                    <div class="ratingstar" style="display:none;"><span class="number">(12)</span></div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$299.6</span>
-                                        <span class="price">$109.69</span>
-                                    </div>
-                                </div>
-                            </div>
+
+                        <div class="other">
+                            <ul>
+                                <li>
+                                    <span class="lnr lnr-bubble"></span>
+                                    <span>45</span>
+                                </li>
+                                <li>
+                                    <span class="lnr lnr-eye"></span>
+                                    <span>345</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="it" class="tab-pane fade  ">
-                <div class="prod-fea-list">
-                    <div class="row">
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/smarphone.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony Xperia X Compact - Unlocked Smartphone...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="prod-price">
-                                        <span class="price black">$212.20</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sound3.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony MDRXB950BT/B Ex .fa-1tra Bass Bluetooth Headphones...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price old">$699.6</span>
-                                        <span class="price">$510.02</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/tivi.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Samsung UN65KS8000 65-Inch 4K Ultra HD Smart LED TV...</a></h3>
-                                    <div class="ratingstar sm" style="display:none;">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$399.6</span>
-                                        <span class="price">$299.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sony.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony a7 Full-Frame Mirrorless Digital Camera...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price black">$199.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/macbook.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Apple iPad 4 16GB 9.7" Retina Display WiFi Bluetooth...</a></h3>
-                                    <div class="ratingstar" style="display:none;"><span class="number">(12)</span></div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$299.6</span>
-                                        <span class="price">$109.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- end /.col-md-4 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END LATEST NEWS
+=================================-->
+
+<!--================================
+START SPECIAL FEATURES AREA
+=================================-->
+<section class="special-feature-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="special-feature feature--1">
+                    <?=Html::img('@web/images/spf1.png')?>
+                    <h3 class="special__feature-title">30 Days Money Back
+                        <span class="highlight">Guarantee</span>
+                    </h3>
                 </div>
             </div>
-            <div id="food" class="tab-pane fade  ">
-                <div class="prod-fea-list">
-                    <div class="row">
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/smarphone.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony Xperia X Compact - Unlocked Smartphone...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="prod-price">
-                                        <span class="price black">$212.20</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sound3.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony MDRXB950BT/B Ex .fa-1tra Bass Bluetooth Headphones...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price old">$699.6</span>
-                                        <span class="price">$510.02</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/tivi.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Samsung UN65KS8000 65-Inch 4K Ultra HD Smart LED TV...</a></h3>
-                                    <div class="ratingstar sm" style="display:none;">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$399.6</span>
-                                        <span class="price">$299.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/sony.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Sony a7 Full-Frame Mirrorless Digital Camera...</a></h3>
-                                    <div class="ratingstar sm">
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                        <span class="number">(12)</span>
-                                    </div>
-                                    <div class="p-price">
-                                        <span class="price black">$199.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-15 col-sm-4 col-xs-6">
-                            <div class="product-item ver2">
-                                <div class="prod-item-img bd-style-2">
-                                    <a href="#"><?=Html::img('@web/img/products/macbook.jpg',['class'=>'img-responsive'])?></a>
-                                    <div class="button">
-                                        <a href="#" class="addcart">ADD TO CART</a>
-                                        <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <div class="prod-info">
-                                    <h3><a href="#">Apple iPad 4 16GB 9.7" Retina Display WiFi Bluetooth...</a></h3>
-                                    <div class="ratingstar" style="display:none;"><span class="number">(12)</span></div>
-                                    <div class="p-price margin--top">
-                                        <span class="price old">$299.6</span>
-                                        <span class="price">$109.69</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- end /.col-md-6 -->
+            <div class="col-md-6">
+                <div class="special-feature feature--2">
+                    <?=Html::img('@web/images/spf2.png')?>
+                    <h3 class="special__feature-title">Fast and Friendly
+                        <span class="highlight">Support</span>
+                    </h3>
+                </div>
+            </div>
+            <!-- end /.col-md-6 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END SPECIAL FEATURES AREA
+=================================-->
+
+<!--================================
+START CALL TO ACTION AREA
+=================================-->
+<section class="call-to-action bgimage">
+    <div class="bg_image_holder">
+        <?=Html::img('@web/images/calltobg.jpg')?>
+    </div>
+    <div class="container content_above">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="call-to-wrap">
+                    <h1 class="text--white">Ready to Join Our Marketplace!</h1>
+                    <h4 class="text--white">Over 25,000 designers and developers trust the MartPlace.</h4>
+                    <a href="#" class="btn btn--lg btn--round btn--white callto-action-btn">Join Us Today</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div class="banner_1">
-    <div class="container">
-        <a href="#"><?=Html::img('@web/img/banner/ad2.jpg',['class'=>'img-responsive'])?></a>
-    </div>
-</div>
-<section class="popular-product">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7 col-sm-7 col-xs-12">
-                <div class="heading-v2">
-                    <ul class="breadcrumb-ver1">
-                        <li class="active"><a data-toggle="pill" href="#popular">popular</a></li>
-                        <li><a data-toggle="pill" href="#top">top rated</a></li>
-                        <li><a data-toggle="pill" href="#new">newest</a></li>
-                    </ul>
-                </div>
-                <div class="tab-content">
-                    <div id="popular" class="tab-pane fade in active">
-                        <div class="pp-list">
-                            <div class="row top-row">
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/camera.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony Alpha a5000 Mirrorless Digital Camera with 16-50mm...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/lens.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SEL1670Z Vario-Tessar T E 16-70mm F4 ZA OSS</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/ear.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Beats EP Wired On-Ear Headphone - Rose</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/watch.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">PowerLead Pwah PL-N20 Bluetooth 4.0 Smart Watch...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/canonpixma.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Canon PIXMA Pro-100 Wireless Color Professional Inkjet...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/sound4.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SBH52BLACK Sony Stereo Bluetooth Headset</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="top" class="tab-pane fade">
-                        <div class="pp-list">
-                            <div class="row top-row">
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/camera.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony Alpha a5000 Mirrorless Digital Camera with 16-50mm...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/lens.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SEL1670Z Vario-Tessar T E 16-70mm F4 ZA OSS</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/ear.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Beats EP Wired On-Ear Headphone - Rose</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/watch.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">PowerLead Pwah PL-N20 Bluetooth 4.0 Smart Watch...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/canonpixma.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Canon PIXMA Pro-100 Wireless Color Professional Inkjet...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/sound4.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SBH52BLACK Sony Stereo Bluetooth Headset</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="new" class="tab-pane fade">
-                        <div class="pp-list">
-                            <div class="row top-row">
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/camera.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony Alpha a5000 Mirrorless Digital Camera with 16-50mm...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/lens.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SEL1670Z Vario-Tessar T E 16-70mm F4 ZA OSS</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/ear.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Beats EP Wired On-Ear Headphone - Rose</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/watch.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">PowerLead Pwah PL-N20 Bluetooth 4.0 Smart Watch...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/canonpixma.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Canon PIXMA Pro-100 Wireless Color Professional Inkjet...</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price old">$299.6</span>
-                                                <span class="price">$109.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding-right">
-                                    <div class="product-item ver2">
-                                        <div class="prod-item-img bd-style-2">
-                                            <a href="#"><?=Html::img('@web/img/products/sound4.jpg',['class'=>'img-responsive'])?></a>
-                                            <div class="button">
-                                                <a href="#" class="addcart addcart-v2">ADD TO CART</a>
-                                                <a href="#" class="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="prod-info">
-                                            <h3><a href="#">Sony SBH52BLACK Sony Stereo Bluetooth Headset</a></h3>
-                                            <div class="ratingstar sm">
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fa fa-star-o fa-1" aria-hidden="true"></i></a>
-                                                <span class="number">(12)</span>
-                                            </div>
-                                            <div class="p-price">
-                                                <span class="price black">$199.69</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 col-sm-5 col-xs-12">
-                <aside class="widget brand-v1">
-                    <div class="heading-v1">
-                        <h3>BRAND CORNER</h3>
-                    </div>
-                    <div class="brand-list-v1">
-                        <div class="product-item ver1 bd-style">
-                            <div class="prod-item-img">
-                                <a href="#"><?=Html::img('@web/img/products/canon_pixma.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Canon MX492 Wireless All-IN-One Small...</a></h3>
-                                <div class="p-price">
-                                    <span class="price black">$199.69</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item ver1 bd-style">
-                            <div class="prod-item-img">
-                                <a href="#"><?=Html::img('@web/img/products/canon.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Canon EOS 6D Digital SLR Camera + EF...</a></h3>
-                                <div class="p-price">
-                                    <span class="price old">$299.6</span>
-                                    <span class="price">$109.69</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item ver1">
-                            <div class="prod-item-img">
-                                <a href="#"><?=Html::img('@web/img/products/canon2.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Canon 0111C001 PowerShot SX610 HS, Wi-Fi...</a></h3>
-                                <div class="p-price">
-                                    <span class="price black">$199.69</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="brand-list-v1">
-                        <div class="product-item ver1 bd-style">
-                            <div class="prod-item-img">
-                                <a href="#"><?=Html::img('@web/img/products/imac.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Apple iMac MK462LL/A 27-Inch Retina 5K...</a></h3>
-                                <div class="p-price">
-                                    <span class="price old">$299.6</span>
-                                    <span class="price">$109.69</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item ver1 bd-style">
-                            <div class="prod-item-img">
-                                <a href="#"><?=Html::img('@web/img/products/iwatch.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Apple Watch Series 1 38mm Smartwatch...</a></h3>
-                                <div class="p-price">
-                                    <span class="price black">$199.69</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-item ver1">
-                            <div class="prod-item-img">
-                                <a href="#"><<?=Html::img('@web/img/products/macmini2.jpg',['class'=>'img-responsive'])?></a>
-                            </div>
-                            <div class="prod-info">
-                                <h3><a href="#">Apple Mac Mini MC936LL/A with Lion Server</a></h3>
-                                <div class="p-price">
-                                    <span class="price old">$299.6</span>
-                                    <span class="price">$109.69</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="banner_2 sub-banner">
-    <div class="container">
-        <a href="#"><?=Html::img('@web/img/banner-2.jpg',['class'=>'img-responsive'])?></a>
-    </div>
-</div>
-<div class="cate">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="heading-v3 dif">
-                    <?=Html::img('@web/img/smicon.png',['class'=>'img-responsive'])?>
-                    <span>Smartphone</span>
-                </div>
-                <div class="product-item ver3">
-                    <div class="photo">
-                        <a href="#"><?=Html::img('@web/img/iphone6.png',['class'=>'img-responsive'])?></a>
-                    </div>
-                    <ul>
-                        <li><a href="#">phones</a></li>
-                        <li><a href="#">android</a></li>
-                        <li><a href="#">google phones</a></li>
-                        <li><a href="#">apple phones</a></li>
-                        <li><a href="#">batteries</a></li>
-                        <li><a href="#">charges</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="heading-v3">
-                    <?=Html::img('@web/img/laptopicon.png',['class'=>'img-responsive'])?>
-                    <span>LAPTOP</span>
-                </div>
-                <div class="product-item ver3">
-                    <div class="photo">
-                        <a href="#"><?=Html::img('@web/img/laptop.png',['class'=>'img-responsive'])?></a>
-                    </div>
-                    <ul>
-                        <li><a href="#">phones</a></li>
-                        <li><a href="#">android</a></li>
-                        <li><a href="#">google phones</a></li>
-                        <li><a href="#">apple phones</a></li>
-                        <li><a href="#">batteries</a></li>
-                        <li><a href="#">charges</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="heading-v3">
-                    <?=Html::img('@web/img/camicon.png',['class'=>'img-responsive'])?>
-                    <span>CAMERA</span>
-                </div>
-                <div class="product-item ver3">
-                    <div class="photo">
-                        <a href="#"><?=Html::img('@web/img/cam.png',['class'=>'img-responsive'])?></a>
-                    </div>
-                    <ul>
-                        <li><a href="#">phones</a></li>
-                        <li><a href="#">android</a></li>
-                        <li><a href="#">google phones</a></li>
-                        <li><a href="#">apple phones</a></li>
-                        <li><a href="#">batteries</a></li>
-                        <li><a href="#">charges</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="brand">
-    <div class="container">
-        <div class="owl-carousel owl-theme js-owl-brand">
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/shepad.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/target.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/netsuite.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/yourclothes.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-            <div class="item">
-                <a href="#"><?=Html::img('@web/img/brand/midnight.jpg',['class'=>'img-responsive'])?></a>
-            </div>
-        </div>
-    </div>
-</div>
+<!--================================
+END CALL TO ACTION AREA
+=================================-->
