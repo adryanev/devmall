@@ -7,6 +7,7 @@
  * Time: 21.00
  */
 
+use frontend\models\forms\search\SearchProductForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal; ?>
 <?= common\widgets\BootstrapNotify::widget([
@@ -151,6 +152,206 @@ use yii\bootstrap4\Modal; ?>
                                             </div>
                                             <!-- end /.dropdown -->
                                         </div>
+                                    <?php endif; ?>
+
+                                </li>
+                                <li class="has_dropdown">
+                                    <?php if (!Yii::$app->user->isGuest): ?>
+
+                                    <div class="icon_wrap">
+                                        <span class="lnr lnr-envelope"></span>
+                                        <span class="notification_count msg">6</span>
+                                    </div>
+
+                                    <div class="dropdowns messaging--dropdown">
+                                        <div class="dropdown_module_header">
+                                            <h4>My Messages</h4>
+                                            <a href="message.html">View All</a>
+                                        </div>
+
+                                        <div class="messages">
+                                            <a href="message.html" class="message recent">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head4.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>NukeThemes</p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">Just now</span>
+                                                        <p>Hello John Smith! Nunc placerat mi ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message recent">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head5.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>Crazy Coder</p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">Just now</span>
+                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head6.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>Hybrid Insane</p>
+                                                        </div>
+
+                                                        <span class="time">Just now</span>
+                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head3.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>ThemeXylum</p>
+                                                        </div>
+
+                                                        <span class="time">Just now</span>
+                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+
+                                            <a href="message.html" class="message">
+                                                <div class="message__actions_avatar">
+                                                    <div class="avatar">
+                                                        <img src="images/notification_head4.png" alt="">
+                                                    </div>
+                                                </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p>NukeThemes</p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time">Just now</span>
+                                                        <p>Hello John Smith! Nunc placerat mi ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
+                                            </a>
+                                            <!-- end /.message -->
+                                        </div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                </li>
+
+                                <li class="has_dropdown">
+                                    <?php if (!Yii::$app->user->isGuest): ?>
+
+                                    <div class="icon_wrap">
+                                        <span class="lnr lnr-cart"></span>
+                                        <span class="notification_count purch">2</span>
+                                    </div>
+
+                                    <div class="dropdowns dropdown--cart">
+                                        <div class="cart_area">
+                                            <div class="cart_product">
+                                                <div class="product__info">
+                                                    <div class="thumbn">
+                                                        <img src="images/capro1.jpg" alt="cart product thumbnail">
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <a class="title" href="single-product.html">Finance and Consulting Business Theme</a>
+                                                        <div class="cat">
+                                                            <a href="#">
+                                                                <img src="images/catword.png" alt="">Wordpress</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product__action">
+                                                    <a href="#">
+                                                        <span class="lnr lnr-trash"></span>
+                                                    </a>
+                                                    <p>$60</p>
+                                                </div>
+                                            </div>
+                                            <div class="cart_product">
+                                                <div class="product__info">
+                                                    <div class="thumbn">
+                                                        <img src="images/capro2.jpg" alt="cart product thumbnail">
+                                                    </div>
+
+                                                    <div class="info">
+                                                        <a class="title" href="single-product.html">Flounce - Multipurpose OpenCart Theme</a>
+                                                        <div class="cat">
+                                                            <a href="#">
+                                                                <img src="images/catword.png" alt="">Wordpress</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="product__action">
+                                                    <a href="#">
+                                                        <span class="lnr lnr-trash"></span>
+                                                    </a>
+                                                    <p>$60</p>
+                                                </div>
+                                            </div>
+                                            <div class="total">
+                                                <p>
+                                                    <span>Total :</span>$80</p>
+                                            </div>
+                                            <div class="cart_action">
+                                                <a class="go_cart" href="cart.html">View Cart</a>
+                                                <a class="go_checkout" href="checkout.html">Checkout</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <?php endif; ?>
 
                                 </li>
@@ -355,7 +556,8 @@ use yii\bootstrap4\Modal; ?>
     <!-- end  -->
 
     <!-- start .mainmenu_area -->
-    <?= $this->render('menu') ?>
+    <?= /** @var SearchProductForm $searchModel */
+    $this->render('menu',['searchModel'=>$searchModel]) ?>
     <!-- end /.mainmenu-->
 </div>
 <!-- end /.menu-area -->

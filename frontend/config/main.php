@@ -71,8 +71,11 @@ return [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/*',
+            'kategori/*',
+            'produk/*',
+            'booth/*',
 //            'admin/*',
-//            'debug/*',
+            'debug/*',
 //            'sertifikat/*',
 //            'sertifikat-institusi/*',
 //            'sertifikat/*',

@@ -27,7 +27,7 @@ MartplaceAsset::register($this);
 <body class="preload home1 mutlti-vendor">
 <?php $this->beginBody() ?>
 
-<?=$this->render('header')?>
+<?=$this->render('header',['searchModel'=>Yii::$app->view->params['searchModel']])?>
 <?=$this->render('content',['content'=>$content])?>
 <?=$this->render('footer')?>
 <?php $this->endBody() ?>
