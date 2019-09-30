@@ -43,7 +43,8 @@ use yii\bootstrap4\Modal; ?>
                             <?= Html::a('<i class="fa fa-sign-in"></i> Log in',['site/login'],['class'=>'author-area__seller-btn inline'])?>
                         <?php else: ?>
 
-                            <a href="signup.html" class="author-area__seller-btn inline">Menjadi Booth</a>
+                        <?=Html::a('Menjadi Booth',Yii::$app->urlManagerPenjual->createUrl(['site/signup']),['class'=>'author-area__seller-btn inline'])?>
+
 
                         <?php endif; ?>
                         <div class="author__notification_area">
@@ -85,70 +86,6 @@ use yii\bootstrap4\Modal; ?>
                                                     </div>
                                                     <!-- end /.notifications -->
                                                 </div>
-                                                <!-- end /.notifications -->
-
-                                                <div class="notification">
-                                                    <div class="notification__info">
-                                                        <div class="info_avatar">
-                                                            <?= Html::img('@web/images/notification_head2.png') ?>                                                    </div>
-                                                        <div class="info">
-                                                            <p>
-                                                                <span>Michael</span> commented on
-                                                                <a href="#">MartPlace Extension Bundle</a>
-                                                            </p>
-                                                            <p class="time">Just now</p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-
-                                                    <div class="notification__icons ">
-                                                        <span class="lnr lnr-bubble commented noti_icon"></span>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-                                                </div>
-                                                <!-- end /.notifications -->
-
-                                                <div class="notification">
-                                                    <div class="notification__info">
-                                                        <div class="info_avatar">
-                                                            <?= Html::img('@web/images/notification_head3.png') ?>                                                    </div>
-                                                        <div class="info">
-                                                            <p>
-                                                                <span>Khamoka </span>purchased
-                                                                <a href="#"> Visibility Manager Subscriptions</a>
-                                                            </p>
-                                                            <p class="time">Just now</p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-
-                                                    <div class="notification__icons ">
-                                                        <span class="lnr lnr-cart purchased noti_icon"></span>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-                                                </div>
-                                                <!-- end /.notifications -->
-
-                                                <div class="notification">
-                                                    <div class="notification__info">
-                                                        <div class="info_avatar">
-                                                            <?= Html::img('@web/images/notification_head4.png') ?>                                                    </div>
-                                                        <div class="info">
-                                                            <p>
-                                                                <span>Anderson</span> added to Favourite
-                                                                <a href="#">Mccarther Coffee Shop</a>
-                                                            </p>
-                                                            <p class="time">Just now</p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-
-                                                    <div class="notification__icons ">
-                                                        <span class="lnr lnr-star reviewed noti_icon"></span>
-                                                    </div>
-                                                    <!-- end /.notifications -->
-                                                </div>
-                                                <!-- end /.notifications -->
                                             </div>
                                             <!-- end /.dropdown -->
                                         </div>
@@ -192,96 +129,6 @@ use yii\bootstrap4\Modal; ?>
                                                 <!-- end /.message_data -->
                                             </a>
                                             <!-- end /.message -->
-
-                                            <a href="message.html" class="message recent">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head5.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>Crazy Coder</p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">Just now</span>
-                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head6.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>Hybrid Insane</p>
-                                                        </div>
-
-                                                        <span class="time">Just now</span>
-                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head3.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>ThemeXylum</p>
-                                                        </div>
-
-                                                        <span class="time">Just now</span>
-                                                        <p>Hi! Nunc placerat mi id nisi interum ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-
-                                            <a href="message.html" class="message">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head4.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>NukeThemes</p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">Just now</span>
-                                                        <p>Hello John Smith! Nunc placerat mi ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
                                         </div>
                                     </div>
                                     <?php endif; ?>
@@ -301,36 +148,14 @@ use yii\bootstrap4\Modal; ?>
                                             <div class="cart_product">
                                                 <div class="product__info">
                                                     <div class="thumbn">
-                                                        <img src="images/capro1.jpg" alt="cart product thumbnail">
-                                                    </div>
-
-                                                    <div class="info">
-                                                        <a class="title" href="single-product.html">Finance and Consulting Business Theme</a>
-                                                        <div class="cat">
-                                                            <a href="#">
-                                                                <img src="images/catword.png" alt="">Wordpress</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="product__action">
-                                                    <a href="#">
-                                                        <span class="lnr lnr-trash"></span>
-                                                    </a>
-                                                    <p>$60</p>
-                                                </div>
-                                            </div>
-                                            <div class="cart_product">
-                                                <div class="product__info">
-                                                    <div class="thumbn">
-                                                        <img src="images/capro2.jpg" alt="cart product thumbnail">
+                                                        <?=Html::img('@web/images/capro2.jpg')?>
                                                     </div>
 
                                                     <div class="info">
                                                         <a class="title" href="single-product.html">Flounce - Multipurpose OpenCart Theme</a>
                                                         <div class="cat">
                                                             <a href="#">
-                                                                <img src="images/catword.png" alt="">Wordpress</a>
+                                                                <?=Html::img('@web/images/catword.png')?>Wordpress</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -370,9 +195,9 @@ use yii\bootstrap4\Modal; ?>
                                 </div>
                                 <div class="autor__info">
                                     <p class="name">
-                                        Jhon Doe
+                                        <?=Html::encode(Yii::$app->user->identity->profilUser->nama_depan)?>
                                     </p>
-                                    <p class="ammount">$20.45</p>
+
                                 </div>
 
                                 <div class="dropdowns dropdown--author">
@@ -380,10 +205,6 @@ use yii\bootstrap4\Modal; ?>
                                         <li>
                                             <a href="author.html">
                                                 <span class="lnr lnr-user"></span>Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard.html">
-                                                <span class="lnr lnr-home"></span> Dashboard</a>
                                         </li>
                                         <li>
                                             <a href="dashboard-setting.html">
@@ -396,26 +217,6 @@ use yii\bootstrap4\Modal; ?>
                                         <li>
                                             <a href="favourites.html">
                                                 <span class="lnr lnr-heart"></span> Favourite</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-add-credit.html">
-                                                <span class="lnr lnr-dice"></span>Add Credits</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-statement.html">
-                                                <span class="lnr lnr-chart-bars"></span>Sale Statement</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-upload.html">
-                                                <span class="lnr lnr-upload"></span>Upload Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-manage-item.html">
-                                                <span class="lnr lnr-book"></span>Manage Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-withdrawal.html">
-                                                <span class="lnr lnr-briefcase"></span>Withdrawals</a>
                                         </li>
                                         <li>
                                             <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>',['site/logout'],['data'=>[

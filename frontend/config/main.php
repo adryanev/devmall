@@ -55,6 +55,12 @@ return [
 
             ],
         ],
+        'urlManagerPenjual'=>[
+            'class'=>'yii\web\UrlManager',
+            'baseUrl' => '/penjual/web',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'assetManager'=>[
             'bundles'=>[
                 'yii\web\JqueryAsset'=>[

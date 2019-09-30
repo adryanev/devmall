@@ -70,6 +70,7 @@ class UserSignupForm extends Model
         $user->status = User::STATUS_INACTIVE;
 
         $user->save(false);
+        $profil->id_user = $user->id;
         $profil->save(false);
 
         $this->sendEmailVerification($user);
