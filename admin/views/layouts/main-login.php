@@ -3,7 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use common\assets\metronic\MetronicLoginPageAsset;
+use common\assets\metronic\MetronicLoginPageDemo1Asset;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
@@ -11,7 +11,7 @@ use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
-MetronicLoginPageAsset::register($this);
+MetronicLoginPageDemo1Asset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

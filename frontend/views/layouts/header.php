@@ -42,8 +42,10 @@ use yii\bootstrap4\Modal; ?>
                         <?php if (Yii::$app->user->isGuest): ?>
                             <?= Html::a('<i class="fa fa-sign-in"></i> Log in',['site/login'],['class'=>'author-area__seller-btn inline'])?>
                         <?php else: ?>
+<?php if(Yii::$app->user->identity->status === \common\models\User::STATUS_VERIFIED):?>
+                        <?=Html::a('Menjadi Booth',Yii::$app->urlManagerPenjual->createUrl(['site/signup']),['class'=>'author-area__seller-btn inline '])?>
 
-                        <?=Html::a('Menjadi Booth',Yii::$app->urlManagerPenjual->createUrl(['site/signup']),['class'=>'author-area__seller-btn inline'])?>
+<?php endif; ?>
 
 
                         <?php endif; ?>
@@ -203,11 +205,7 @@ use yii\bootstrap4\Modal; ?>
                                 <div class="dropdowns dropdown--author">
                                     <ul>
                                         <li>
-                                            <a href="author.html">
-                                                <span class="lnr lnr-user"></span>Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-setting.html">
+                                            <a href="<?=\yii\helpers\Url::to(['settings/account'])?>">
                                                 <span class="lnr lnr-cog"></span> Setting</a>
                                         </li>
                                         <li>
@@ -289,10 +287,7 @@ use yii\bootstrap4\Modal; ?>
 
                                 <div class="dropdowns dropdown--author">
                                     <ul>
-                                        <li>
-                                            <a href="author.html">
-                                                <span class="lnr lnr-user"></span>Profile</a>
-                                        </li>
+
                                         <li>
                                             <a href="dashboard.html">
                                                 <span class="lnr lnr-home"></span> Dashboard</a>

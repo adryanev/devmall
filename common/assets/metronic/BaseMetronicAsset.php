@@ -24,10 +24,7 @@ class BaseMetronicAsset extends AssetBundle
         'vendors/custom/vendors/flaticon/flaticon.css',
         'vendors/custom/vendors/flaticon2/flaticon.css',
         'vendors/general/@fortawesome/fontawesome-free/css/all.min.css',
-        'css/skins/header/base/light.css',
-        'css/skins/header/menu/light.css',
-        'css/skins/brand/dark.css',
-        'css/skins/aside/dark.css'
+
 
     ];
 

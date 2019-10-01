@@ -11,6 +11,7 @@ namespace penjual\models\forms;
 
 
 use yii\base\Model;
+use yii\helpers\StringHelper;
 use yii\web\UploadedFile;
 use common\models\Booth;
 use common\models\VerifikasiUser;
@@ -62,7 +63,13 @@ class PenjualSignupForm extends Model
     }
 
     private function getLatLong($koordinat){
+        $cord = StringHelper::explode($koordinat,'@');
+        $this->_latitude = $cord[0];
+        $this->_longitude = $cord[1];
+    }
 
+    public function signup(){
+        $penjual = new Booth();
     }
 
 }

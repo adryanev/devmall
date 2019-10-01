@@ -1,6 +1,9 @@
 <?php
+
 namespace penjual\controllers;
 
+use common\models\User;
+use penjual\models\forms\PenjualLoginForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -60,7 +63,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->user->identity->status !== User::STATUS_VERIFIED) {
+            return $this->redirect(['site/verification']);
+        }
         return $this->render('index');
+    }
+
+    public function actionVerification()
+    {
+
     }
 
     /**
@@ -70,20 +81,24 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'main-login';
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            $model->password = '';
-
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        $model = new PenjualLoginForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->login()) return $this->redirect(['site/index']);
+            else  Yii::$app->session->setFlash('warning','Anda belum melakukan verifikasi identitas');
         }
+
+
+        $model->password = '';
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**

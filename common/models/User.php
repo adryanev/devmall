@@ -19,6 +19,7 @@ use yii\web\IdentityInterface;
  * @property string $nomor_hp
  * @property string $email
  * @property int $status
+ * @property int $has_booth
  * @property int $created_at
  * @property int $updated_at
  * @property string $verification_token
@@ -35,7 +36,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE= 0;
     const STATUS_NOT_VERIFIED = 2;
+    const STATUS_VERIFIED = 3;
     const STATUS_BANNED = 5;
+
+    const STATUS_HAS_BOOTH = 1;
     /**
      * {@inheritdoc}
      */
@@ -58,7 +62,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'created_at', 'updated_at','has_booth'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'access_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['nomor_hp'], 'string', 'max' => 20],
@@ -86,6 +90,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
+            'has_booth'=>'Punya Booth'
         ];
     }
 

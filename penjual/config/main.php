@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-penjual',
+    'name'=>'Devmall Booth',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'penjual\controllers',
     'bootstrap' => ['log'],
@@ -50,6 +51,16 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ],
+        ],
+
+        'assetManager'=>[
+            'bundles'=>[
+                'yii\bootstrap4\BootstrapAsset'=>[
+                    'sourcePath' => '@common/assets/metronic/assets',
+
+                    'css'=>['css/demo6/style.bundle.css']
+                ]
+            ]
         ],
     ],
     'params' => $params,
