@@ -37,7 +37,9 @@
         "yiisoft/yii2-jui": "^2.0",
         "2amigos/yii2-chartjs-widget": "~2.0",
         "kidzen/yii2-dynamicform": "*",
-        "2amigos/yii2-google-maps-library": "*"
+        "2amigos/yii2-google-maps-library": "*",
+        "kartik-v/yii2-datecontrol": "dev-master",
+        "rmrevin/yii2-fontawesome": "^3.4"
 
 
     },

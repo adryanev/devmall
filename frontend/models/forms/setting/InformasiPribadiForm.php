@@ -7,11 +7,12 @@
  * Time: 9:06 PM
  */
 
-namespace frontend\models\setting;
+namespace frontend\models\forms\setting;
 
 
 use common\models\ProfilUser;
 use common\models\User;
+use InvalidArgumentException;
 use Yii;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
@@ -31,13 +32,18 @@ class InformasiPribadiForm extends Model
     /** @var ProfilUser */
     private $_profil;
 
-    public function __construct($id = 0,$config = [])
+    public function __construct($id ,$config = [])
     {
-        if($id===0){
-            throw new NotFoundHttpException('Data yang anda cari tidak ada');
+        if (empty($id)) {
+            throw new InvalidArgumentException('Pengguna tidak ditemukan');
         }
         $this->_user = User::findOne($id);
+        if (!$this->_user) {
+            throw new InvalidArgumentException('Pengguna yang dicari tidak ada');
+        }
         $this->_profil = $this->_user->profilUser;
+        $this->setAttributes($this->_user->attributes);
+        $this->setAttributes($this->_profil->attributes);
         parent::__construct($config);
 
 
@@ -68,6 +74,7 @@ class InformasiPribadiForm extends Model
             $this->_user->generateEmailVerificationToken();
             $this->_user->status = User::STATUS_NOT_VERIFIED;
             $this->sendVerificationEmail($this->_user);
+            Yii::$app->session->setFlash('Silahkan cek email anda');
         }
 
         $profilAttr = [
@@ -80,8 +87,10 @@ class InformasiPribadiForm extends Model
 
         $this->_profil->setAttributes($profilAttr);
 
-        $this->_user->save(false);
-        $this->_profil->save(false);
+
+
+        return ( $this->_user->save(false) &&
+        $this->_profil->save(false)) ? $this->_user : null;
     }
 
     private function sendVerificationEmail($user){

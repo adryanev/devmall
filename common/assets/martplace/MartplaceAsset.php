@@ -11,6 +11,8 @@ namespace common\assets\martplace;
 
 
 use dosamigos\chartjs\ChartJsAsset;
+use rmrevin\yii\fontawesome\CdnFreeAssetBundle;
+use rmrevin\yii\fontawesome\CdnProAssetBundle;
 use yii\bootstrap4\BootstrapAsset;
 use yii\bootstrap4\BootstrapPluginAsset;
 use yii\jui\JuiAsset;
@@ -27,10 +29,10 @@ class MartplaceAsset extends AssetBundle
         'css/fontello.css',
         'css/lnr-icon.css',
         'css/owl.carousel.css',
-       'https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css',
         'css/slick.css',
         'css/trumbowyg.min.css',
-        'css/style.css'
+        'css/style.css',
+        'css/mystyle.css'
     ];
 
     public $js = [
@@ -58,6 +60,7 @@ class MartplaceAsset extends AssetBundle
         BootstrapAsset::class,
         BootstrapPluginAsset::class,
         JuiAsset::class,
-        ChartJsAsset::class
+        ChartJsAsset::class,
+        CdnFreeAssetBundle::class,
     ];
 }

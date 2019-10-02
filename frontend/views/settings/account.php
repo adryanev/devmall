@@ -1,10 +1,14 @@
 <?php
 /* @var $this yii\web\View */
+/* @var $modelInformasi InformasiPribadiForm */
+/* @var $modelPassword GantiPasswordForm */
 
 $this->title = 'Akun';
 $this->params['breadcrumbs'][] = 'Pengaturan';
 $this->params['breadcrumbs'][] = $this->title;
-?>
+
+use frontend\models\forms\setting\GantiPasswordForm;
+use frontend\models\forms\setting\InformasiPribadiForm; ?>
 <!--================================
          START DASHBOARD AREA
  =================================-->
@@ -15,95 +19,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container">
 
 
-            <form action="#" class="setting_form">
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="information_module">
-                            <a class="toggle_title" href="#collapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
-                                <h4>Personal Information
+                            <a class="toggle_title" href="#collapse-info" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                                <h4>Informasi Pribadi
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
-                            <div class="information__set toggle_module collapse show" id="collapse2">
+                            <div class="information__set toggle_module collapse" id="collapse-info">
                                 <div class="information_wrapper form--fields">
-                                    <div class="form-group">
-                                        <label for="acname">Account Name
-                                            <sup>*</sup>
-                                        </label>
-                                        <input type="text" id="acname" class="text_field" placeholder="First Name" value="Aazz Tech">
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="usrname">Username
-                                            <sup>*</sup>
-                                        </label>
-                                        <input type="text" id="usrname" class="text_field" placeholder="Account name" value="aazztech">
-                                        <p>Your MartPlace URL: https://martplace.com/
-                                            <span>aazztech</span>
-                                        </p>
-                                    </div>
+                                    <?=$this->render('_informasi_pribadi_form',['model'=>$modelInformasi])?>
 
-                                    <div class="form-group">
-                                        <label for="emailad">Email Address
-                                            <sup>*</sup>
-                                        </label>
-                                        <input type="text" id="emailad" class="text_field" placeholder="Email address" value="contact@aazztech.com">
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="password">Password
-                                                    <sup>*</sup>
-                                                </label>
-                                                <input type="password" id="password" class="text_field" placeholder="Email address">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="conpassword">Confirm Password
-                                                    <sup>*</sup>
-                                                </label>
-                                                <input type="password" id="conpassword" class="text_field" placeholder="re-enter password">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="website">Website</label>
-                                        <input type="password" id="website" class="text_field" placeholder="Website">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="country">Country
-                                            <sup>*</sup>
-                                        </label>
-                                        <div class="select-wrap select-wrap2">
-                                            <select name="country" id="country" class="text_field">
-                                                <option value="">Select one</option>
-                                                <option value="bangladesh">Bangladesh</option>
-                                                <option value="india">India</option>
-                                                <option value="uruguye">Uruguye</option>
-                                                <option value="australia">Australia</option>
-                                                <option value="neverland">Neverland</option>
-                                                <option value="atlantis">Atlantis</option>
-                                            </select>
-                                            <span class="lnr lnr-chevron-down"></span>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="prohead">Profile Heading</label>
-                                        <input type="text" id="prohead" class="text_field" placeholder="Ex: Webdesign & Development Service">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="authbio">Author Bio</label>
-                                        <textarea name="author_bio" id="authbio" class="text_field" placeholder="Short brief about yourself or your account..."></textarea>
-                                    </div>
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
@@ -112,110 +42,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- end /.information_module -->
 
                         <div class="information_module">
-                            <a class="toggle_title" href="#collapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
-                                <h4>Biling Information
+                            <a class="toggle_title" href="#collapse-password" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                                <h4>Ubah Password
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
-                            <div class="information__set toggle_module collapse" id="collapse1">
+                            <div class="information__set toggle_module collapse" id="collapse-password">
                                 <div class="information_wrapper form--fields">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="first_name">First Name
-                                                    <sup>*</sup>
-                                                </label>
-                                                <input type="text" id="first_name" class="text_field" placeholder="First Name" value="Ron">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="last_name">last Name
-                                                    <sup>*</sup>
-                                                </label>
-                                                <input type="text" id="last_name" class="text_field" placeholder="last name" value="Doe">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.row -->
+                                    <?=$this->render('_ganti_password_form',['model'=>$modelPassword])?>
 
-                                    <div class="form-group">
-                                        <label for="email">Company Name
-                                            <sup>*</sup>
-                                        </label>
-                                        <input type="text" id="email" class="text_field" placeholder="AazzTech" value="AazzTech">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email1">Email Adress
-                                            <sup>*</sup>
-                                        </label>
-                                        <input type="text" id="email1" class="text_field" placeholder="Email address" value="contact@aazztech.com">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="country1">Country
-                                            <sup>*</sup>
-                                        </label>
-                                        <div class="select-wrap select-wrap2">
-                                            <select name="country" id="country" class="text_field">
-                                                <option value="">Select one</option>
-                                                <option value="bangladesh">Bangladesh</option>
-                                                <option value="india">India</option>
-                                                <option value="uruguye">Uruguye</option>
-                                                <option value="australia">Australia</option>
-                                                <option value="neverland">Neverland</option>
-                                                <option value="atlantis">Atlantis</option>
-                                            </select>
-                                            <span class="lnr lnr-chevron-down"></span>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <label for="address1">Address Line 1</label>
-                                        <input type="text" id="address1" class="text_field" placeholder="Address line one">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="address2">Address Line 2</label>
-                                        <input type="text" id="address2" class="text_field" placeholder="Address line two">
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="city">City / State
-                                                    <sup>*</sup>
-                                                </label>
-                                                <div class="select-wrap select-wrap2">
-                                                    <select name="city" id="city" class="text_field">
-                                                        <option value="">Select one</option>
-                                                        <option value="dhaka">Dhaka</option>
-                                                        <option value="sydney">Sydney</option>
-                                                        <option value="newyork">New York</option>
-                                                        <option value="london">London</option>
-                                                        <option value="mexico">New Mexico</option>
-                                                    </select>
-                                                    <span class="lnr lnr-chevron-down"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="zipcode">Zip / Postal Code
-                                                    <sup>*</sup>
-                                                </label>
-                                                <input type="text" id="zipcode" class="text_field" placeholder="zip/postal code">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+                                <!-- end /.information_wrapper -->
                             </div>
                             <!-- end /.information__set -->
                         </div>
+                        <!-- end /.information_module -->
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
@@ -426,17 +269,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
-
-                    <div class="col-md-12">
-                        <div class="dashboard_setting_btn">
-                            <button type="submit" class="btn btn--round btn--md">Save Change</button>
-                        </div>
-                    </div>
                     <!-- end /.col-md-12 -->
                 </div>
                 <!-- end /.row -->
-            </form>
-            <!-- end /form -->
+
         </div>
         <!-- end /.container -->
     </div>

@@ -7,7 +7,7 @@
  * Time: 9:09 PM
  */
 
-namespace frontend\models\setting;
+namespace frontend\models\forms\setting;
 
 
 use yii\base\Model;
