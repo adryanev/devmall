@@ -10,11 +10,7 @@
 use frontend\models\forms\search\SearchProductForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal; ?>
-<?= common\widgets\BootstrapNotify::widget([
-        'clientOptions' => [
-            'animate'=>['enter'=>'animated bounce','exit'=>'animated fadeOut'],
-        ]
-]); ?>
+
 
 <!--================================
      START MENU AREA

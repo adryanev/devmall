@@ -94,7 +94,7 @@ class SiteController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
-                    return $this->redirect(['site/index']);
+                    return $this->goHome();
                 }
             }
         }

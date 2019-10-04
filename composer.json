@@ -39,7 +39,9 @@
         "kidzen/yii2-dynamicform": "*",
         "2amigos/yii2-google-maps-library": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "rmrevin/yii2-fontawesome": "^3.4"
+        "rmrevin/yii2-fontawesome": "^3.4",
+        "kartik-v/yii2-widget-alert": "*",
+        "kartik-v/yii2-widget-growl": "*"
 
 
     },

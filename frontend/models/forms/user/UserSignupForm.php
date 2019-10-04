@@ -73,6 +73,10 @@ class UserSignupForm extends Model
         $profil->id_user = $user->id;
         $profil->save(false);
 
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRole('pengguna');
+        $auth->assign($userRole,$user->id);
+
         $this->sendEmailVerification($user);
 
         return $user;

@@ -66,7 +66,7 @@ use frontend\models\forms\setting\InformasiPribadiForm; ?>
                     <div class="col-lg-6">
                         <div class="information_module">
                             <a class="toggle_title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
-                                <h4>Profile Image & Cover
+                                <h4>Foto Profil
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
