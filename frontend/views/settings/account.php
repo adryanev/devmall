@@ -2,13 +2,17 @@
 /* @var $this yii\web\View */
 /* @var $modelInformasi InformasiPribadiForm */
 /* @var $modelPassword GantiPasswordForm */
+/* @var $modelProfil FotoProfilForm */
+/* @var $modelHp VerifikasiNomorHpForm */
 
 $this->title = 'Akun';
 $this->params['breadcrumbs'][] = 'Pengaturan';
 $this->params['breadcrumbs'][] = $this->title;
 
+use frontend\models\forms\setting\FotoProfilForm;
 use frontend\models\forms\setting\GantiPasswordForm;
-use frontend\models\forms\setting\InformasiPribadiForm; ?>
+use frontend\models\forms\setting\InformasiPribadiForm;
+use frontend\models\forms\setting\VerifikasiNomorHpForm; ?>
 <!--================================
          START DASHBOARD AREA
  =================================-->
@@ -74,30 +78,9 @@ use frontend\models\forms\setting\InformasiPribadiForm; ?>
                             <div class="information__set profile_images toggle_module collapse" id="collapse3">
                                 <div class="information_wrapper">
                                     <div class="profile_image_area">
-                                        <img src="images/authplc.png" alt="Author profile area">
-                                        <div class="img_info">
-                                            <p class="bold">Profile Image</p>
-                                            <p class="subtitle">JPG, GIF or PNG 100x100 px</p>
-                                        </div>
-
-                                        <label for="cover_photo" class="upload_btn">
-                                            <input type="file" id="cover_photo">
-                                            <span class="btn btn--sm btn--round" aria-hidden="true">Upload Image</span>
-                                        </label>
+                                       <?=$this->render('_fotoprofil_form',['model'=>$modelProfil])?>
                                     </div>
 
-                                    <div class="prof_img_upload">
-                                        <p class="bold">Cover Image</p>
-                                        <img src="images/cvrplc.jpg" alt="The great warrior of China">
-
-                                        <div class="upload_title">
-                                            <p>JPG, GIF or PNG 750x370 px</p>
-                                            <label for="dp" class="upload_btn">
-                                                <input type="file" id="dp">
-                                                <span class="btn btn--sm btn--round" aria-hidden="true">Upload Image</span>
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,67 +88,14 @@ use frontend\models\forms\setting\InformasiPribadiForm; ?>
 
                         <div class="information_module">
                             <a class="toggle_title" href="#collapse5" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
-                                <h4>Social Profiles
+                                <h4>Verifikasi Nomor Hp
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
                             <div class="information__set social_profile toggle_module collapse " id="collapse5">
                                 <div class="information_wrapper">
-                                    <div class="social__single">
-                                        <div class="social_icon">
-                                            <span class="fa fa-facebook"></span>
-                                        </div>
-
-                                        <div class="link_field">
-                                            <input type="text" class="text_field" placeholder="ex: www.facebook.com/aazztech">
-                                        </div>
-                                    </div>
-                                    <!-- end /.social__single -->
-
-                                    <div class="social__single">
-                                        <div class="social_icon">
-                                            <span class="fa fa-twitter"></span>
-                                        </div>
-
-                                        <div class="link_field">
-                                            <input type="text" class="text_field" placeholder="ex: www.twitter.com/aazztech">
-                                        </div>
-                                    </div>
-                                    <!-- end /.social__single -->
-
-                                    <div class="social__single">
-                                        <div class="social_icon">
-                                            <span class="fa fa-google-plus"></span>
-                                        </div>
-
-                                        <div class="link_field">
-                                            <input type="text" class="text_field" placeholder="ex: www.google.com/aazztech">
-                                        </div>
-                                    </div>
-                                    <!-- end /.social__single -->
-
-                                    <div class="social__single">
-                                        <div class="social_icon">
-                                            <span class="fa fa-behance"></span>
-                                        </div>
-
-                                        <div class="link_field">
-                                            <input type="text" class="text_field" placeholder="ex: www.behance.com/aazztech">
-                                        </div>
-                                    </div>
-                                    <!-- end /.social__single -->
-
-                                    <div class="social__single">
-                                        <div class="social_icon">
-                                            <span class="fa fa-dribbble"></span>
-                                        </div>
-
-                                        <div class="link_field">
-                                            <input type="text" class="text_field" placeholder="ex: www.dribbble.com/aazztech">
-                                        </div>
-                                    </div>
-                                    <!-- end /.social__single -->
+                                   <?=$this->render('_verifikasi_nomor_hp_form',['model'=>$modelHp])?>
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>

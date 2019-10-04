@@ -23,6 +23,8 @@ use yii\web\IdentityInterface;
  * @property int $created_at
  * @property int $updated_at
  * @property string $verification_token
+ * @property string $sms_verification
+ * @property int $is_phone_verified
  *
  * @property Booth $booth
  * @property Favorit[] $favorits
@@ -40,6 +42,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     const STATUS_BANNED = 5;
 
     const STATUS_HAS_BOOTH = 1;
+    const STATUS_PHONE_VERIFIED = 1;
     /**
      * {@inheritdoc}
      */
@@ -62,10 +65,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at','has_booth'], 'integer'],
+            [['status', 'created_at', 'updated_at','has_booth','is_phone_verified'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'access_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['nomor_hp'], 'string', 'max' => 20],
+            [['sms_verification'], 'string', 'max' => 6],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
@@ -90,7 +94,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'verification_token' => 'Verification Token',
-            'has_booth'=>'Punya Booth'
+            'has_booth'=>'Punya Booth',
+            'sms_verification'=>'Kode Verifikasi SMS'
         ];
     }
 
@@ -273,6 +278,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
+
+    public function generateSmsVerification(){
+        $number = rand(100000,999999);
+        $this->sms_verification = $number;
+    }
+
 
     /**
      * Removes password reset token

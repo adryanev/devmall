@@ -41,7 +41,10 @@
         "kartik-v/yii2-datecontrol": "dev-master",
         "rmrevin/yii2-fontawesome": "^3.4",
         "kartik-v/yii2-widget-alert": "*",
-        "kartik-v/yii2-widget-growl": "*"
+        "kartik-v/yii2-widget-growl": "*",
+        "nexmo/client": "^2.0",
+        "borales/yii2-phone-input": "*",
+        "dmstr/yii2-ajax-button": "^1.0"
 
 
     },

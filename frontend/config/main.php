@@ -92,6 +92,13 @@ return [
                     'sourcePath' => '@common/assets/martplace/assets',
                     'js'=>['js/vendor/jquery/jquery-1.12.3.js'],
                 ],
+                'borales\extensions\phoneInput\PhoneInputAsset'=>[
+                  'js'=>[
+                      'build/js/utils.js',
+                      'build/js/intlTelInput.min.js',
+                      'build/js/intlTelInput-jquery.min.js',
+                  ]
+                ],
                 'yii\bootstrap\BootstrapAsset'=>[
                     'class'=>BootstrapAsset::class
                 ]

@@ -55,9 +55,14 @@ class FotoProfilForm extends Model
         }
         $file = $this->avatar->getBaseName().'.'.$this->avatar->getExtension();
         $fileName = $timestamp.'-'.$file;
+        $path = \Yii::getAlias('@profilUserPath');
+
+        $this->_profil->avatar = $fileName;
+        $this->avatar->saveAs($path.'/'.$fileName);
+
+        $this->_profil->save(false);
 
 
-
-        return true;
+        return $this->_profil;
     }
 }

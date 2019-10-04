@@ -189,7 +189,7 @@ use yii\bootstrap4\Modal; ?>
 
                                 <div class="author__avatar">
 
-                                    <?= Html::img('@web/images/usr_avatar.png') ?>
+                                    <?= Html::img('@.frontend/images/profil/'.Yii::$app->user->identity->profilUser->avatar,['height'=>50,'width'=>50]) ?>
                                 </div>
                                 <div class="autor__info">
                                     <p class="name">
