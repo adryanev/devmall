@@ -165,7 +165,12 @@ class SiteController extends Controller
             if ($model->validate()) {
                 $model->signup();
             }
-            Yii::$app->session->setFlash('success', 'Terima kasih sudah mendaftar, silahkan cek email anda.');
+            Yii::$app->session->setFlash('success',[
+                'type' => 'success',
+                'icon' => 'fas fa-check',
+                'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
+                'title' => 'Pendaftaran Berhasil!',
+            ]);
             return $this->goHome();
         }
 
@@ -239,12 +244,22 @@ class SiteController extends Controller
         }
         if ($user = $model->verifyEmail()) {
             if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+                Yii::$app->session->setFlash('success',[
+                    'type' => 'success',
+                    'icon' => 'fas fa-check',
+                    'message' => 'Email anda berhasil diverifikasi, anda sudah bisa login.',
+                    'title' => 'Verifikasi Berhasil!',
+                ]);
                 return $this->goHome();
             }
         }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        Yii::$app->session->setFlash('danger',[
+            'type' => 'danger',
+            'icon' => 'fas fa-stop',
+            'message' => 'Sepertinya terjadi kesalahan saat verifikasi email anda.',
+            'title' => 'Verifikasi Gagal!',
+        ]);
         return $this->goHome();
     }
 
@@ -258,10 +273,21 @@ class SiteController extends Controller
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+
+                Yii::$app->session->setFlash('success',[
+                    'type' => 'success',
+                    'icon' => 'fas fa-check',
+                    'message' => 'Kode verifikasi baru telah dikirim ke email anda.',
+                    'title' => 'Pengiriman Berhasil!',
+                ]);
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('danger',[
+                'type' => 'danger',
+                'icon' => 'fas fa-stop',
+                'message' => 'Terjadi kesalahan saat verifikasi email anda.',
+                'title' => 'Gagal!',
+            ]);
         }
 
         return $this->render('resendVerificationEmail', [
