@@ -11,7 +11,19 @@ class AuthController extends Controller
 {
 
     public function actionUp(){
-        $auth = Yii::$app->getAuthManager();
+        $auth = Yii::$app->authManager;
+
+        $superadmin = $auth->createRole('superadmin');
+        $admin = $auth->createRole('admin');
+        $penjual = $auth->createRole('penjual');
+        $pengguna = $auth->createRole('pengguna');
+
+        $auth->add($superadmin);
+        $auth->add($admin);
+        $auth->add($penjual);
+        $auth->add($pengguna);
+
+        $auth->assign($superadmin,1);
 
         $su = $auth->getRole('superadmin');
         $permissions = ['@app-admin/*','@app-penjual/*','@app-frontend/*'];
@@ -38,5 +50,9 @@ class AuthController extends Controller
             $auth->removeChildren($item);
             $auth->remove($item);
         }
+
+        $auth = Yii::$app->authManager;
+
+        $auth->removeAll();
     }
 }
