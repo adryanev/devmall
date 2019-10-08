@@ -5,9 +5,12 @@ namespace frontend\controllers;
 
 
 use common\models\User;
+use common\models\VerifikasiUser;
+use frontend\models\forms\setting\AlamatForm;
 use frontend\models\forms\setting\FotoProfilForm;
 use frontend\models\forms\setting\GantiPasswordForm;
 use frontend\models\forms\setting\InformasiPribadiForm;
+use frontend\models\forms\setting\VerifikasiForm;
 use frontend\models\forms\setting\VerifikasiNomorHpForm;
 use Yii;
 use yii\helpers\Url;
@@ -50,6 +53,10 @@ class SettingsController extends \yii\web\Controller
         $modelPassword = new GantiPasswordForm($user->getId());
         $modelProfil = new FotoProfilForm($user->getId());
         $modelHp = new VerifikasiNomorHpForm($user->getId());
+        $modelAlamat = new AlamatForm($user->getId());
+        $modelVerfikasi = new VerifikasiForm($user->getId());
+
+        $verifikasiSekarang = VerifikasiUser::findOne(['id_user'=>$user->getId()]);
 
         if($modelInformasi->load(Yii::$app->request->post())){
             if(!$modelInformasi->validate()){
@@ -98,7 +105,7 @@ class SettingsController extends \yii\web\Controller
             if(!$modelProfil->upload()){
                 Yii::$app->session->setFlash('danger',[
                     'type'=>'danger',
-                    'icon'=> 'fas fa-stop',
+                    'icon'=> 'fas fa-times',
                     'message'=>'Gagal mengganti foto profil',
                     'title'=>'Gagal'
                 ]);
@@ -128,11 +135,46 @@ class SettingsController extends \yii\web\Controller
             else{
                 Yii::$app->session->setFlash('danger',[
                     'type'=>'danger',
-                    'icon'=> 'fas fa-stop',
+                    'icon'=> 'fas fa-times',
                     'message'=>'Gagal mengganti verifikasi nomor hp',
                     'title'=>'Gagal'
                 ]);
             }
+
+            return $this->redirect(Url::current());
+
+        }
+
+        if($modelAlamat->load(Yii::$app->request->post())&& $modelAlamat->save()){
+            Yii::$app->session->setFlash('success',[
+                'type' => 'success',
+                'icon' => 'fas fa-check',
+                'message' => 'Berhasil mengganti alamat',
+                'title' => 'Berhasil!',
+            ]);
+
+            return $this->redirect(Url::current());
+
+        }
+
+        if($modelVerfikasi->load(Yii::$app->request->post())){
+            $modelVerfikasi->berkas = UploadedFile::getInstance($modelVerfikasi,'berkas');
+            if($modelVerfikasi->save()){
+                Yii::$app->session->setFlash('success',[
+                    'type' => 'success',
+                    'icon' => 'fas fa-check',
+                    'message' => 'Berhasil mengirim verifikasi, admin akan memproses permintaan anda',
+                    'title' => 'Berhasil!',
+                ]);
+                return $this->redirect(Url::current());
+
+            }
+            Yii::$app->session->setFlash('danger',[
+                'type'=>'danger',
+                'icon'=> 'fas fa-times',
+                'message'=>'Gagal mengirim Verifikasi Identitas, Silahkan coba lagi',
+                'title'=>'Gagal'
+            ]);
 
             return $this->redirect(Url::current());
 
@@ -143,7 +185,11 @@ class SettingsController extends \yii\web\Controller
        return $this->render('account',['modelInformasi'=>$modelInformasi,
            'modelPassword'=>$modelPassword,
            'modelProfil'=>$modelProfil,
-           'modelHp'=>$modelHp]);
+           'modelHp'=>$modelHp,
+           'modelAlamat'=>$modelAlamat,
+           'modelVerifikasi'=>$modelVerfikasi,
+           'verifikasiSekarang'=>$verifikasiSekarang
+           ]);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "verifikasi_user".
@@ -19,12 +20,28 @@ use Yii;
  */
 class VerifikasiUser extends \yii\db\ActiveRecord
 {
+    const STATUS_DITERIMA = 2;
+    const STATUS_DITOLAK = 0;
+    const STATUS_DIKIRIM = 1;
+
+
+    public function getStatusVerifikasi(){
+        $status = [self::STATUS_DIKIRIM=>'Dikirim',self::STATUS_DITERIMA=>'Diterima',self::STATUS_DITOLAK=>'Ditolak'];
+        return $status[$this->status];
+    }
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'verifikasi_user';
+    }
+
+    public function behaviors()
+    {
+        return[
+            TimestampBehavior::class
+        ];
     }
 
     /**

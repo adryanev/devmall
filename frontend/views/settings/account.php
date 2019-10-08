@@ -4,15 +4,23 @@
 /* @var $modelPassword GantiPasswordForm */
 /* @var $modelProfil FotoProfilForm */
 /* @var $modelHp VerifikasiNomorHpForm */
+/* @var $modelAlamat AlamatForm */
+/* @var $modelVerifikasi VerifikasiForm */
+/* @var $verifikasiSekarang VerifikasiUser */
 
 $this->title = 'Akun';
 $this->params['breadcrumbs'][] = 'Pengaturan';
 $this->params['breadcrumbs'][] = $this->title;
 
+use common\models\VerifikasiUser;
+use frontend\models\forms\setting\AlamatForm;
 use frontend\models\forms\setting\FotoProfilForm;
 use frontend\models\forms\setting\GantiPasswordForm;
 use frontend\models\forms\setting\InformasiPribadiForm;
-use frontend\models\forms\setting\VerifikasiNomorHpForm; ?>
+use frontend\models\forms\setting\VerifikasiForm;
+use frontend\models\forms\setting\VerifikasiNomorHpForm;
+
+?>
 <!--================================
          START DASHBOARD AREA
  =================================-->
@@ -63,6 +71,23 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm; ?>
                             <!-- end /.information__set -->
                         </div>
                         <!-- end /.information_module -->
+                        <div class="information_module">
+                            <a class="toggle_title" href="#collapse-alamat" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                                <h4>Alamat
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </h4>
+                            </a>
+
+                            <div class="information__set toggle_module collapse" id="collapse-alamat">
+                                <div class="information_wrapper form--fields">
+
+                                    <?=$this->render('_alamat_form',['model'=>$modelAlamat])?>
+
+                                </div>
+                                <!-- end /.information_wrapper -->
+                            </div>
+                            <!-- end /.information__set -->
+                        </div>
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
@@ -105,92 +130,16 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm; ?>
 
                         <div class="information_module">
                             <a class="toggle_title" href="#collapse4" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
-                                <h4>Email Settings
+                                <h4>Verifikasi Identitas
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
                             <div class="information__set mail_setting toggle_module collapse" id="collapse4">
                                 <div class="information_wrapper">
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt1" class="" name="mail_rating_reminder" checked>
-                                        <label for="opt1">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Rating Reminders</span>
-                                            <span class="desc">Send an email reminding me to rate an item after purchase</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom-radio -->
 
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt2" class="" name="mail_update_noti" checked>
-                                        <label for="opt2">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Item Update Notifications</span>
-                                            <span class="desc">Send an email when an item I've purchased is updated</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt3" class="" name="mail_comment_noti" checked>
-                                        <label for="opt3">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Item Comment Notifications</span>
-                                            <span class="desc">Send me an email when someone comments on one of my items</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt4" class="" name="mail_item_review_noti" checked>
-                                        <label for="opt4">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Item Review Notifications</span>
-                                            <span class="desc">Send me an email when my items are approved or rejected</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt5" class="" name="mail_review_noti" checked>
-                                        <label for="opt5">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Buyer Review Notifications</span>
-                                            <span class="desc">Send me an email when someone leaves a review with their rating</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt6" class="" name="mail_support_noti" checked>
-                                        <label for="opt6">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Support Notifications</span>
-                                            <span class="desc">Send me emails showing my soon to expire support entitlements</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt7" class="" name="mail_weekly">
-                                        <label for="opt7">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">Weekly Summary Emails</span>
-                                            <span class="desc">Send me emails showing my soon to expire support entitlements</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
-
-                                    <div class="custom_checkbox">
-                                        <input type="checkbox" id="opt8" class="" name="mail_newsletter">
-                                        <label for="opt8">
-                                            <span class="shadow_checkbox"></span>
-                                            <span class="radio_title">MartPlace Newsletter</span>
-                                            <span class="desc">Get update about latest news, update and more.</span>
-                                        </label>
-                                    </div>
-                                    <!-- end /.custom_checkbox -->
+                                   <?=$this->render('_verifikasi_form',['model'=>$modelVerifikasi,
+                                       'verifikasiSekarang'=>$verifikasiSekarang])?>
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
