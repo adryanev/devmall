@@ -25,6 +25,8 @@ class VerifikasiUser extends \yii\db\ActiveRecord
     const STATUS_DIKIRIM = 1;
 
 
+
+
     public function getStatusVerifikasi(){
         $status = [self::STATUS_DIKIRIM=>'Dikirim',self::STATUS_DITERIMA=>'Diterima',self::STATUS_DITOLAK=>'Ditolak'];
         return $status[$this->status];

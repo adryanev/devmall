@@ -32,7 +32,7 @@ $menuItems = [
             [
                 'label' => 'Promo',
                 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
-                'url' => ['/program-studi/index'],
+                'url' => ['/promo/index'],
             ],
 
         ],
@@ -48,7 +48,7 @@ $menuItems = [
         'items' => [
             ['label' => 'Akun Pengguna', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/user/index'],],
             ['label' => 'Role Base Access Control', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/admin'],],
-
+            ['label'=>'Verifikasi Identitas','icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>','url'=>['/verifikasi-user/index']],
         ],
     ],
 

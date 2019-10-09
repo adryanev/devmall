@@ -6,6 +6,6 @@ Yii::setAlias('@penjual', dirname(dirname(__DIR__)) . '/penjual');
 Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@profilUserPath','@frontend/web/images/profil');
 
-Yii::setAlias('@.frontend','http://devmall.test/frontend/web');
-Yii::setAlias('@.penjual','http://devmall.test/penjual/web');
-Yii::setAlias('@.admin','http://devmall.test/penjual/web');
+Yii::setAlias('@.frontend','http://devmall.test');
+Yii::setAlias('@.penjual','http://booth.devmall.test');
+Yii::setAlias('@.admin','http://admin.devmall.test');
