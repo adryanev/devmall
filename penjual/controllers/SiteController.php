@@ -29,7 +29,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','verification'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,6 +56,10 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionDaftar(){
+
+    }
+
     /**
      * Displays homepage.
      *
@@ -63,8 +67,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->identity->status !== User::STATUS_VERIFIED) {
-            return $this->redirect(['site/verification']);
+        if(!Yii::$app->user->identity->getHasBooth()){
+            $this->redirect(['site/verification']);
         }
         return $this->render('index');
     }
@@ -72,6 +76,7 @@ class SiteController extends Controller
     public function actionVerification()
     {
 
+        return $this->render('index');
     }
 
     /**

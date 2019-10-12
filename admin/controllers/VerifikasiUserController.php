@@ -2,6 +2,7 @@
 
 namespace admin\controllers;
 
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use common\models\VerifikasiUser;
@@ -80,6 +81,8 @@ class VerifikasiUserController extends Controller
     {
         $model =$this->findModel($id);
         $model->status = VerifikasiUser::STATUS_DITERIMA;
+        $model->user->status = User::STATUS_VERIFIED;
+        $model->user->save(false);
         $model->save(false);
         Yii::$app->session->setFlash('success','Berhasil menyetujui verifikasi');
         return $this->redirect('index');

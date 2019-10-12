@@ -37,12 +37,26 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE= 0;
-    const STATUS_NOT_VERIFIED = 2;
     const STATUS_VERIFIED = 3;
     const STATUS_BANNED = 5;
 
     const STATUS_HAS_BOOTH = 1;
     const STATUS_PHONE_VERIFIED = 1;
+
+    public function getHasBooth(){
+        return $this->has_booth === self::STATUS_HAS_BOOTH;
+    }
+
+    public function getStatus(){
+        $status = [
+            self::STATUS_ACTIVE => 'Aktif',
+            self::STATUS_INACTIVE => 'Tidak Aktif',
+            self::STATUS_VERIFIED => 'Terverifikasi',
+            self::STATUS_BANNED => 'Banned'
+        ];
+
+        return $status[$this->status];
+    }
     /**
      * {@inheritdoc}
      */
@@ -144,7 +158,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, ]);
     }
 
     /**
@@ -163,7 +177,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username]);
     }
 
     /**
@@ -180,7 +194,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
         ]);
     }
 

@@ -10,6 +10,7 @@
 namespace penjual\models\forms;
 
 
+use Carbon\Carbon;
 use yii\base\Model;
 use yii\helpers\StringHelper;
 use yii\web\UploadedFile;
@@ -37,8 +38,7 @@ class PenjualSignupForm extends Model
 
     /** @var UploadedFile */
     public $avatar;
-    /** @var UploadedFile */
-    public $banner;
+
 
     public $terms = false;
 
@@ -58,7 +58,6 @@ class PenjualSignupForm extends Model
             [['alamat1','alamat2'],'string','max' => 100],
             [['kelurahan','kecamatan','kota','provinsi'], 'string','max' => 50],
             ['avatar','file','skipOnEmpty' => true],
-            ['banner','file','skipOnEmpty' => true]
         ];
     }
 
@@ -70,6 +69,24 @@ class PenjualSignupForm extends Model
 
     public function signup(){
         $penjual = new Booth();
+        $penjual->setAttributes($this->attributes);
+        $this->getLatLong($this->koordinat);
+        $penjual->latitude = $this->_latitude;
+        $penjual->longitude = $this->_longitude;
+
+        if(!empty($this->avatar)){
+            $timestamp = Carbon::now()->timestamp;
+            $filename = $timestamp.'-'.$this->avatar->baseName.'.'.$this->avatar->extension;
+            $penjual->avatar = $filename;
+            $this->avatar->saveAs(\Yii::getAlias('@webroot/upload/verifikasi/'.$filename));
+        }
+        else{
+            $penjual->avatar = 'default.jpg';
+        }
+
+        return $penjual->save(false)? $penjual : null;
     }
+
+
 
 }

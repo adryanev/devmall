@@ -20,17 +20,11 @@ class PenjualLoginForm extends LoginForm
 
     public function login()
     {
-        if(!$this->validate()){
-            return false;
-        }
 
         $user = $this->getUser();
-        if($user->status !== User::STATUS_VERIFIED){
-            return false;
-        }
-        else if($user->status === User::STATUS_VERIFIED){
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 : 0);
 
+        if($user->status === User::STATUS_VERIFIED){
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 : 0);
         }
         return false;
     }

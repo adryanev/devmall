@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel admin\models\VerifikasiUserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -38,36 +39,34 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="verifikasi-user-index">
 
 
+                    <?php Pjax::begin(); ?>
+                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-
-                        <?php Pjax::begin(); ?>
-                                                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-                    
-                                            <?= GridView::widget([
+                    <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
-        'columns' => [
-                        ['class' => 'yii\grid\SerialColumn','header'=>'No'],
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn', 'header' => 'No'],
 
-                                    'id',
-            'user.username',
-            ['attribute' => 'nama_file',
-                'format' => 'raw',
-                'value' => function($model){
-                                                return Html::img(Url::to(Yii::getAlias('@.frontend/upload/verifikasi/'.$model->nama_file)),['width'=>'50%']);
-                }],
-            'jenis_verifikasi',
-            'statusVerifikasi',
-            //'created_at',
-            //'updated_at',
+                            'id',
+                            'user.username',
+                            ['attribute' => 'nama_file',
+                                'format' => 'raw',
+                                'value' => function ($model) {
+                                    return Html::img(Url::to(Yii::getAlias('@.frontend/upload/verifikasi/' . $model->nama_file)), ['width' => '50%']);
+                                }],
+                            'jenis_verifikasi',
+                            'statusVerifikasi',
+                            //'created_at',
+                            //'updated_at',
 
-                        ['class' => 'common\widgets\ActionColumn','header'=>'Aksi',
-                            'template' => '{view}{delete}'],
+                            ['class' => 'common\widgets\ActionColumn', 'header' => 'Aksi',
+                                'template' => '{view}{delete}'],
 
                         ],
-                        ]); ?>
-                    
-                        <?php Pjax::end(); ?>
+                    ]); ?>
+
+                    <?php Pjax::end(); ?>
 
                 </div>
             </div>

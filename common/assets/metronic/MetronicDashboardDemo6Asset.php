@@ -16,11 +16,11 @@ class MetronicDashboardDemo6Asset extends AssetBundle
     public $sourcePath = '@common/assets/metronic/assets';
 
 
-    public $depends = [BaseMetronicDemo1Asset::class, SweetAlert2Asset::class];
+    public $depends = [BaseMetronicDemo6Asset::class, SweetAlert2Asset::class];
     public $css = [];
     public $js = [
-        'js/demo1/scripts.bundle.js',
-        'js/demo1/pages/dashboard.js',
-        'js/demo1/pages/my-script.js'
+        'js/demo6/scripts.bundle.js',
+        'js/demo6/pages/dashboard.js',
+        'js/demo6/pages/my-script.js'
     ];
 }
