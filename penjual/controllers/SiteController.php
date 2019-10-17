@@ -4,6 +4,7 @@ namespace penjual\controllers;
 
 use common\models\User;
 use penjual\models\forms\PenjualLoginForm;
+use penjual\models\forms\PenjualSignupForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -76,7 +77,8 @@ class SiteController extends Controller
     public function actionVerification()
     {
 
-        return $this->render('index');
+        $model = new PenjualSignupForm();
+        return $this->render('verification', compact('model'));
     }
 
     /**

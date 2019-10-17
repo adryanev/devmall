@@ -39,7 +39,7 @@ use yii\bootstrap4\Modal; ?>
                             <?= Html::a('<i class="fa fa-sign-in"></i> Log in',['site/login'],['class'=>'author-area__seller-btn inline'])?>
                         <?php else: ?>
 <?php if(Yii::$app->user->identity->status === \common\models\User::STATUS_VERIFIED):?>
-                        <?=Html::a('Menjadi Booth',Yii::$app->urlManagerPenjual->createUrl(['site/signup']),['class'=>'author-area__seller-btn inline '])?>
+                        <?=Html::a('Menjadi Booth',Yii::getAlias('@.penjual'),['class'=>'author-area__seller-btn inline '])?>
 
 <?php endif; ?>
 

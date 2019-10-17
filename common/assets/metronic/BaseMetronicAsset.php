@@ -24,12 +24,13 @@ class BaseMetronicAsset extends AssetBundle
         'vendors/custom/vendors/flaticon/flaticon.css',
         'vendors/custom/vendors/flaticon2/flaticon.css',
         'vendors/general/@fortawesome/fontawesome-free/css/all.min.css',
+        'css/mystyle.css'
 
 
     ];
 
 
-    public $js= [
+    public $js = [
         //global mandatory
         'vendors/general/popper.js/dist/umd/popper.js',
         'vendors/general/js-cookie/src/js.cookie.js',
@@ -52,7 +53,7 @@ class BaseMetronicAsset extends AssetBundle
         'vendors/general/dompurify/dist/purify.js',
 
     ];
-    public $depends =[
+    public $depends = [
         YiiAsset::class,
         BootstrapAsset::class,
         BootstrapPluginAsset::class
