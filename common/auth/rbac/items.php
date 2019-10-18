@@ -13,6 +13,9 @@ return [
     ],
     'penjual' => [
         'type' => 1,
+        'children' => [
+            '@app-penjual/*',
+        ],
     ],
     'pengguna' => [
         'type' => 1,

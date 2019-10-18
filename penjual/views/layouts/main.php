@@ -1,16 +1,12 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
-use admin\assets\AppAsset;
 use common\assets\metronic\MetronicDashboardDemo6Asset;
 use yii\helpers\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
-use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
 
 MetronicDashboardDemo6Asset::register($this);
 $counterUp = <<<JS
@@ -19,7 +15,7 @@ $counterUp = <<<JS
         time: 1000
     });
 JS;
-$this->registerJs($counterUp,\yii\web\View::POS_READY);
+$this->registerJs($counterUp, \yii\web\View::POS_READY);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,7 +25,7 @@ $this->registerJs($counterUp,\yii\web\View::POS_READY);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode($this->title) ?> | Devmall Booth</title>
     <!--begin::Fonts -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script>
@@ -37,7 +33,7 @@ $this->registerJs($counterUp,\yii\web\View::POS_READY);
             google: {
                 "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
             },
-            active: function() {
+            active: function () {
                 sessionStorage.fonts = true;
             }
         });
@@ -54,26 +50,26 @@ $this->registerJs($counterUp,\yii\web\View::POS_READY);
 
 <?php $this->beginBody() ?>
 
-<?=$this->render('mobile_header')?>
+<?= $this->render('mobile_header') ?>
 
 <div class="kt-grid kt-grid--hor kt-grid--root">
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
 
-        <?=$this->render('aside')?>
+        <?= $this->render('aside') ?>
 
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
 
-            <?=$this->render('header')?>
+            <?= $this->render('header') ?>
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
 
-              <?=$this->render('subheader')?>
-              <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]) ?>
+                <?= $this->render('subheader') ?>
+                <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]) ?>
 
 
-                <?=$this->render('content',['content'=>$content])?>
+                <?= $this->render('content', ['content' => $content]) ?>
             </div>
 
-            <?=$this->render('footer')?>
+            <?= $this->render('footer') ?>
         </div>
     </div>
 </div>

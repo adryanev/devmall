@@ -11,12 +11,13 @@ $params = array_merge(
 
 return [
     'id' => 'app-admin',
+    'name' => 'Devmall Admin',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
     'modules' => [
-        'admin'=>[
-            'class'=>Module::class,
+        'admin' => [
+            'class' => Module::class,
             'layout' => 'left-menu'
         ]
     ],
@@ -51,7 +52,7 @@ return [
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
-            'rules' =>[
+            'rules' => [
 //                ['class' => 'common\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -59,13 +60,20 @@ return [
 
             ],
         ],
-        'assetManager'=>[
-            'bundles'=>[
-                'yii\bootstrap4\BootstrapAsset'=>[
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap4\BootstrapAsset' => [
                     'sourcePath' => '@common/assets/metronic/assets',
 
-                    'css'=>['css/demo1/style.bundle.css']
-                ]
+                    'css' => ['css/demo1/style.bundle.css']
+                ],
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => $params['maps_api'],
+                        'language' => 'id',
+                        'version' => '3.1.18'
+                    ]
+                ],
             ]
         ],
     ],

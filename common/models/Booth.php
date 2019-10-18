@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
+
 /**
  * This is the model class for table "booth".
  *
@@ -55,6 +57,11 @@ class Booth extends \yii\db\ActiveRecord
     public function isVerified()
     {
         return $this->status === self::STATUS_VERIFIED;
+    }
+
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**

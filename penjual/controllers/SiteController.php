@@ -82,8 +82,8 @@ class SiteController extends Controller
 
     public function actionVerification()
     {
-
-        $model = new PenjualSignupForm();
+        $user = $this->getUser();
+        $model = new PenjualSignupForm($user->getId());
         if ($model->load(Yii::$app->request->post())) {
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if ($model->signup()) {
@@ -96,6 +96,12 @@ class SiteController extends Controller
 
         }
         return $this->render('verification', compact('model'));
+    }
+
+    protected function getUser()
+    {
+        $user = Yii::$app->user->identity;
+        return $user;
     }
 
     /**
