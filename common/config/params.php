@@ -12,6 +12,7 @@ return [
     'nama_sistem'=>$ini['nama_sistem'],
     'url_instansi'=>$ini['url_instansi'],
     'author'=>$ini['author'],
+    'maps_api'=>$ini['google_maps'],
     'bsVersion' => '4.x', // this will set globally `bsVersion` to Bootstrap 4.x for all Krajee Extensions
     'mdm.admin.configs' => [
         'advanced' => [

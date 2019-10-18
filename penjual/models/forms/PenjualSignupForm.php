@@ -62,7 +62,7 @@ class PenjualSignupForm extends Model
     }
 
     private function getLatLong($koordinat){
-        $cord = StringHelper::explode($koordinat,'@');
+        $cord = StringHelper::explode($koordinat,',');
         $this->_latitude = $cord[0];
         $this->_longitude = $cord[1];
     }
