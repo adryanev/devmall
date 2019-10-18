@@ -6,10 +6,10 @@ use common\models\User;
 use penjual\models\forms\PenjualLoginForm;
 use penjual\models\forms\PenjualSignupForm;
 use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -30,7 +30,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','verification'],
+                        'actions' => ['logout', 'index', 'verification'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -57,7 +57,8 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionDaftar(){
+    public function actionDaftar()
+    {
 
     }
 
@@ -68,9 +69,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if(!Yii::$app->user->identity->getHasBooth()){
+        if (!Yii::$app->user->identity->getHasBooth()) {
             $this->redirect(['site/verification']);
+        } else {
+            if (!Yii::$app->user->identity->booth->isVerified()) {
+                Yii::$app->session->setFlash('warning', 'Booth anda sedang proses verifikasi');
+            }
         }
+
         return $this->render('index');
     }
 
@@ -78,6 +84,17 @@ class SiteController extends Controller
     {
 
         $model = new PenjualSignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            if ($model->signup()) {
+                $user = User::findOne(Yii::$app->user->identity->getId());
+                $user->has_booth = User::HAS_BOOTH;
+                $user->save(false);
+                Yii::$app->session->setFlash('success', 'Berhasil untuk membuat Booth');
+                return $this->redirect(['site/index']);
+            }
+
+        }
         return $this->render('verification', compact('model'));
     }
 
@@ -96,8 +113,8 @@ class SiteController extends Controller
 
         $model = new PenjualLoginForm();
         if ($model->load(Yii::$app->request->post())) {
-            if($model->login()) return $this->redirect(['site/index']);
-            else  Yii::$app->session->setFlash('warning','Anda belum melakukan verifikasi identitas');
+            if ($model->login()) return $this->redirect(['site/index']);
+            else  Yii::$app->session->setFlash('warning', 'Anda belum melakukan verifikasi identitas');
         }
 
 

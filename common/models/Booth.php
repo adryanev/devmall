@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "booth".
  *
@@ -33,12 +31,30 @@ use Yii;
  */
 class Booth extends \yii\db\ActiveRecord
 {
+
+    const STATUS_VERIFIED = 1;
+    const STATUS_CREATED = 0;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'booth';
+    }
+
+    public function getStatus()
+    {
+        $status = [
+            self::STATUS_VERIFIED => 'Terverifikasi',
+            self::STATUS_CREATED => 'Belum diverifikasi',
+        ];
+        return $status[$this->status];
+    }
+
+    public function isVerified()
+    {
+        return $this->status === self::STATUS_VERIFIED;
     }
 
     /**

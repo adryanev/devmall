@@ -184,7 +184,6 @@ function geocodeLatLng(geocoder, latLng){
                     }
                      }
                     
-                                        console.log(address);
                     $('#penjualsignupform-kota').val(address.city);
                     $('#penjualsignupform-kecamatan').val(address.lvl3);
                     $('#penjualsignupform-provinsi').val(address.lvl1);
