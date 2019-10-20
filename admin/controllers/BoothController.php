@@ -51,8 +51,13 @@ class BoothController extends \yii\web\Controller
         $model->user->save(false);
         $model->save(false);
 
+        $auth = Yii::$app->authManager;
+        $role = $auth->getRole('penjual');
+        $auth->assign($role, $model->user->getId());
+
+
         Yii::$app->session->setFlash('success', 'Berhasil menyetujui verifikasi');
-        return $this->redirect(['index']);
+        return $this->redirect(['booth/verifikasi']);
     }
 
     public function actionTolak($id)

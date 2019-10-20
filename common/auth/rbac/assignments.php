@@ -6,4 +6,8 @@ return [
     2 => [
         'pengguna',
     ],
+    3 => [
+        'pengguna',
+        'penjual',
+    ],
 ];

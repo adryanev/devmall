@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "promo_produk".
@@ -24,6 +24,11 @@ class PromoProduk extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'promo_produk';
+    }
+
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**

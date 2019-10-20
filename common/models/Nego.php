@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "nego".
@@ -25,6 +25,11 @@ class Nego extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'nego';
+    }
+
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**

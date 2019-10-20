@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "profil_user".
@@ -34,6 +34,11 @@ class ProfilUser extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'profil_user';
+    }
+
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**
@@ -84,7 +89,8 @@ class ProfilUser extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
-    public function getNamaLengkap(){
+    public function getNamaLengkap()
+    {
         return "$this->nama_depan $this->nama_belakang";
     }
 }

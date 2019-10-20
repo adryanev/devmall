@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "kategori_produk".
@@ -24,6 +24,11 @@ class KategoriProduk extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'kategori_produk';
+    }
+
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**

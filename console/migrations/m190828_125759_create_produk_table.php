@@ -10,6 +10,7 @@ class m190828_125759_create_produk_table extends Migration
 {
 
     use TextTypesTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -24,20 +25,20 @@ class m190828_125759_create_produk_table extends Migration
 
         $this->createTable('{{%produk}}', [
             'id' => $this->primaryKey(),
-            'id_booth'=>$this->integer()->unique(),
-            'nama'=>$this->string(),
-            'deskripsi'=>$this->text()->notNull(),
-            'spesifikasi'=>$this->text()->notNull(),
-            'fitur'=>$this->text()->notNull(),
-            'harga'=>$this->bigInteger(),
-            'demo'=>$this->string(),
-            'manual'=>$this->string(),
-            'nego'=>$this->boolean(),
-            'created_at'=>$this->integer(),
-            'updated_at'=>$this->integer()
-        ],$tableOptions);
+            'id_booth' => $this->integer(),
+            'nama' => $this->string(),
+            'deskripsi' => $this->text()->notNull(),
+            'spesifikasi' => $this->text()->notNull(),
+            'fitur' => $this->text()->notNull(),
+            'harga' => $this->bigInteger(),
+            'demo' => $this->string(),
+            'manual' => $this->string(),
+            'nego' => $this->boolean(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer()
+        ], $tableOptions);
 
-        $this->addForeignKey('fk-produk-booth','{{%produk}}','id','{{%booth}}','id','cascade','cascade');
+        $this->addForeignKey('fk-produk-booth', '{{%produk}}', 'id_booth', '{{%booth}}', 'id', 'cascade', 'cascade');
 
     }
 

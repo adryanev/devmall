@@ -1,15 +1,16 @@
 <?php
 
-namespace admin\models;
+namespace penjual\models;
 
-use common\models\VerifikasiUser;
+use common\models\Produk;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * VerifikasiUserSearch represents the model behind the search form of `common\models\VerifikasiUser`.
+ * ProdukSearch represents the model behind the search form of `common\models\Produk`.
  */
-class VerifikasiUserSearch extends VerifikasiUser
+class ProdukSearch extends Produk
 {
     /**
      * {@inheritdoc}
@@ -17,8 +18,8 @@ class VerifikasiUserSearch extends VerifikasiUser
     public function rules()
     {
         return [
-            [['id', 'id_user', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['nama_file', 'jenis_verifikasi'], 'safe'],
+            [['id', 'id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
+            [['nama', 'deskripsi', 'spesifikasi', 'fitur', 'demo', 'manual'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class VerifikasiUserSearch extends VerifikasiUser
      */
     public function search($params)
     {
-        $query = VerifikasiUser::find()->where(['status' => VerifikasiUser::STATUS_DIKIRIM]);
+        $query = Produk::find()->where(['id_booth' => Yii::$app->user->identity->booth->id]);
 
         // add conditions that should always apply here
 
@@ -59,14 +60,19 @@ class VerifikasiUserSearch extends VerifikasiUser
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_user' => $this->id_user,
-            'status' => $this->status,
+            'id_booth' => $this->id_booth,
+            'harga' => $this->harga,
+            'nego' => $this->nego,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'nama_file', $this->nama_file])
-            ->andFilterWhere(['like', 'jenis_verifikasi', $this->jenis_verifikasi]);
+        $query->andFilterWhere(['like', 'nama', $this->nama])
+            ->andFilterWhere(['like', 'deskripsi', $this->deskripsi])
+            ->andFilterWhere(['like', 'spesifikasi', $this->spesifikasi])
+            ->andFilterWhere(['like', 'fitur', $this->fitur])
+            ->andFilterWhere(['like', 'demo', $this->demo])
+            ->andFilterWhere(['like', 'manual', $this->manual]);
 
         return $dataProvider;
     }

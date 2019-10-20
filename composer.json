@@ -45,7 +45,8 @@
         "nexmo/client": "^2.0",
         "borales/yii2-phone-input": "*",
         "dmstr/yii2-ajax-button": "^1.0",
-        "kolyunya/yii2-map-input-widget": "^1.2"
+        "kolyunya/yii2-map-input-widget": "^1.2",
+        "kartik-v/yii2-number": "dev-master"
 
 
     },
