@@ -6,7 +6,6 @@
 
 use common\assets\metronic\MetronicDashboardDemo6Asset;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 MetronicDashboardDemo6Asset::register($this);
 $counterUp = <<<JS
@@ -25,7 +24,7 @@ $this->registerJs($counterUp, \yii\web\View::POS_READY);
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php $this->registerCsrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?> | Devmall Booth</title>
+        <title><?= Html::encode($this->title) ?> - Devmall Booth</title>
         <!--begin::Fonts -->
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
         <script>
@@ -41,7 +40,6 @@ $this->registerJs($counterUp, \yii\web\View::POS_READY);
 
         <!--end::Fonts -->
 
-        <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['/uinicon.png'])]); ?>
         <?php $this->head() ?>
     </head>
     <!-- begin::Body -->

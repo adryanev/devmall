@@ -2,16 +2,11 @@
 
 namespace common\models;
 
-use yii\behaviors\TimestampBehavior;
-
 /**
  * This is the model class for table "kategori_produk".
  *
- * @property int $id
  * @property int $id_produk
  * @property int $id_kategori
- * @property int $created_at
- * @property int $updated_at
  *
  * @property Kategori $kategori
  * @property Produk $produk
@@ -26,10 +21,6 @@ class KategoriProduk extends \yii\db\ActiveRecord
         return 'kategori_produk';
     }
 
-    public function behaviors()
-    {
-        return [TimestampBehavior::class];
-    }
 
     /**
      * {@inheritdoc}
@@ -37,7 +28,7 @@ class KategoriProduk extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_produk', 'id_kategori', 'created_at', 'updated_at'], 'integer'],
+            [['id_produk', 'id_kategori',], 'integer'],
             [['id_kategori'], 'exist', 'skipOnError' => true, 'targetClass' => Kategori::className(), 'targetAttribute' => ['id_kategori' => 'id']],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
         ];

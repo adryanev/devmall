@@ -20,15 +20,12 @@ class m190828_131659_create_kategori_produk_table extends Migration
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
         $this->createTable('{{%kategori_produk}}', [
-            'id' => $this->primaryKey(),
-            'id_produk'=>$this->integer(),
-            'id_kategori'=>$this->integer(),
-            'created_at'=>$this->integer(),
-            'updated_at'=>$this->integer()
-        ],$tableOptions);
+            'id_produk' => $this->integer(),
+            'id_kategori' => $this->integer(),
+        ], $tableOptions);
 
-        $this->addForeignKey('fk-kategori_produk-produk','{{%kategori_produk}}','id_produk','{{%produk}}','id','cascade','cascade');
-        $this->addForeignKey('fk-kategori_produk-kategori','{{%kategori_produk}}','id_kategori','{{%kategori}}','id','cascade','cascade');
+        $this->addForeignKey('fk-kategori_produk-produk', '{{%kategori_produk}}', 'id_produk', '{{%produk}}', 'id', 'cascade', 'cascade');
+        $this->addForeignKey('fk-kategori_produk-kategori', '{{%kategori_produk}}', 'id_kategori', '{{%kategori}}', 'id', 'cascade', 'cascade');
     }
 
     /**

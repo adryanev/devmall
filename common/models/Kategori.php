@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -24,6 +23,12 @@ class Kategori extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'kategori';
+    }
+
+    public static function findAllByName($name)
+    {
+        return self::find()->where(['like', 'nama', $name])
+            ->all();
     }
 
     /**
@@ -65,5 +70,10 @@ class Kategori extends \yii\db\ActiveRecord
     public function getKategoriProduks()
     {
         return $this->hasMany(KategoriProduk::className(), ['id_kategori' => 'id']);
+    }
+
+    public function getProduks()
+    {
+        return $this->hasMany(Produk::class, ['id' => 'id_kategori'])->viaTable(KategoriProduk::tableName(), ['id_kategori' => 'id']);
     }
 }

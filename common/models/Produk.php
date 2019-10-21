@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use dosamigos\taggable\Taggable;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -24,7 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property GaleriProduk[] $galeriProduks
  * @property KategoriProduk[] $kategoriProduks
  * @property Nego $nego0
- * @property Booth $id0
+ * @property Booth $booth
  * @property PromoProduk[] $promoProduks
  * @property Ulasan[] $ulasans
  */
@@ -40,7 +41,16 @@ class Produk extends \yii\db\ActiveRecord
 
     public function behaviors()
     {
-        return [TimestampBehavior::class];
+        return
+            [
+                TimestampBehavior::class,
+                ['class' => Taggable::class,
+                    'attribute' => 'kategori',
+                    'name' => 'nama',
+                    'frequency' => 'frekuensi',
+                    'relation' => 'kategoriProduk'
+                ]
+            ];
     }
 
     /**
@@ -54,7 +64,8 @@ class Produk extends \yii\db\ActiveRecord
             [['deskripsi', 'spesifikasi', 'fitur'], 'string'],
             [['nama', 'demo', 'manual'], 'string', 'max' => 255],
             [['id_booth'], 'unique'],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id' => 'id']],
+            [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id' => 'id']],
+            ['kategori', 'safe']
         ];
     }
 
@@ -98,9 +109,9 @@ class Produk extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getKategoriProduks()
+    public function getKategoriProduk()
     {
-        return $this->hasMany(KategoriProduk::className(), ['id_produk' => 'id']);
+        return $this->hasMany(Kategori::class, ['id' => 'id_kategori'])->viaTable(KategoriProduk::tableName(), ['id_produk' => 'id']);
     }
 
     /**
@@ -114,9 +125,9 @@ class Produk extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getBooth()
     {
-        return $this->hasOne(Booth::className(), ['id' => 'id']);
+        return $this->hasOne(Booth::className(), ['id_booth' => 'id']);
     }
 
     /**

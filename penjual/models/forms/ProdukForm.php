@@ -13,12 +13,12 @@ namespace penjual\models\forms;
 use Carbon\Carbon;
 use common\models\constants\FileExtension;
 use common\models\GaleriProduk;
-use common\models\KategoriProduk;
 use common\models\Nego;
 use common\models\Produk;
 use Yii;
 use yii\base\Model;
 use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 class ProdukForm extends Model
@@ -46,7 +46,6 @@ class ProdukForm extends Model
     private $_produk;
     private $_nego;
 
-
     public function __construct($id = null, $config = [])
     {
         $this->_booth = Yii::$app->user->identity->booth;
@@ -55,11 +54,39 @@ class ProdukForm extends Model
             $this->_nego = Nego::findOne($this->_produk->id);
             if ($this->_nego) {
                 $this->nego = true;
+                $this->setAttributes($this->_nego->attributes);
             }
             $this->setAttributes($this->_produk->attributes);
-            $this->setAttributes($this->_nego->attributes);
+            $kategori = $this->_produk->kategoriProduks;
+            $this->kategori = ArrayHelper::map($kategori, 'id_kategori', function ($each) {
+                return $each->kategori->nama;
+            });
         }
         parent::__construct($config);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBooth()
+    {
+        return $this->_booth;
+    }
+
+    /**
+     * @return Produk|null
+     */
+    public function getProduk(): ?Produk
+    {
+        return $this->_produk;
+    }
+
+    /**
+     * @return Nego|null
+     */
+    public function getNego(): ?Nego
+    {
+        return $this->_nego;
     }
 
     public function rules()
@@ -68,7 +95,6 @@ class ProdukForm extends Model
             [['nama', 'deskripsi', 'harga', 'demo', 'fitur', 'manual', 'kategori'], 'required'],
             [['nama', 'deskripsi', 'fitur', 'spesifikasi'], 'string'],
             ['nego', 'boolean'],
-            [['kategori'], 'integer'],
             [['harga', 'harga_satu', 'harga_dua', 'harga_tiga'], 'integer'],
             ['galeri', 'file', 'extensions' => FileExtension::FOTO],
             ['manual', 'file', 'extensions' => FileExtension::DOKUMEN],
@@ -85,17 +111,19 @@ class ProdukForm extends Model
 
         $transaction = Yii::$app->db->beginTransaction();
         $produk->save(false);
-        foreach ($this->kategori as $k => $kategori) {
-            $kategoriProduk = new KategoriProduk();
-            $kategoriProduk->id_produk = $produk->id;
-            $kategoriProduk->id_kategori = $k;
-            $kategoriProduk->save(false);
-        }
         if (!empty($this->nego)) {
             $nego = new Nego();
             $nego->setAttributes($this->attributes);
             $nego->id_produk = $produk->id;
             $nego->save(false);
+        }
+        if (!empty($this->manual)) {
+            $timestamp = Carbon::now()->timestamp;
+            $filename = $timestamp . '-' . $this->manual->baseName . '.' . $this->manual->extension;
+            $produk->nego = $filename;
+            $this->manual->saveAs("@penjual/web/upload/produk/" . $this->_booth->id . '/' . $filename);
+
+
         }
         if (!empty($this->galeri)) {
             foreach ($this->galeri as $file) {
@@ -106,6 +134,7 @@ class ProdukForm extends Model
                 $galeri->nama_berkas = $filename;
                 $galeri->jenis_berkas = $file->extension;
                 $galeri->save(false);
+                $file->saveAs("@penjual/web/upload/produk/" . $this->_booth->id . '/' . $filename);
 
             }
         }
@@ -153,4 +182,6 @@ class ProdukForm extends Model
         }
         return $this->_produk;
     }
+
+
 }
