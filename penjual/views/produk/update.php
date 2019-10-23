@@ -6,10 +6,11 @@ use yii\helpers\Html;
 /* @var $model common\models\Produk */
 /* @var $galeriModel common\models\GaleriProduk */
 /* @var $negoModel common\models\Nego */
+/* @var $dataGaleri [] */
 
-$this->title = 'Ubah Produk: ' . $model->getProduk()->id;
+$this->title = 'Ubah Produk: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Produk', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->getProduk()->id, 'url' => ['view', 'id' => $model->getProduk()->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Ubah';
 ?>
 
@@ -34,7 +35,8 @@ $this->params['breadcrumbs'][] = 'Ubah';
                     <?= $this->render('_form', [
                         'model' => $model,
                         'negoModel' => $negoModel,
-                        'galeriModel' => $galeriModel
+                        'galeriModel' => $galeriModel,
+                        'dataGaleri' => $dataGaleri
                     ]) ?>
 
                 </div>

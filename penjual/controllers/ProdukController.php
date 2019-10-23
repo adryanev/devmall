@@ -8,13 +8,13 @@ use common\models\GaleriProduk;
 use common\models\Kategori;
 use common\models\Nego;
 use common\models\Produk;
-use penjual\models\forms\ProdukForm;
 use penjual\models\ProdukSearch;
 use Yii;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -94,6 +94,7 @@ class ProdukController extends Controller
         $model = new Produk();
         $negoModel = new Nego();
         $galeriModel = new GaleriProduk();
+        $dataGaleri = null;
         /** @var $booth Booth */
         $booth = Yii::$app->user->identity->booth;
         if ($model->load(Yii::$app->request->post()) && $negoModel->load(Yii::$app->request->post()) && $galeriModel->load(Yii::$app->request->post())) {
@@ -149,7 +150,9 @@ class ProdukController extends Controller
         return $this->render('create', [
             'model' => $model,
             'negoModel' => $negoModel,
-            'galeriModel' => $galeriModel
+            'galeriModel' => $galeriModel,
+            'dataGaleri' => $dataGaleri
+
         ]);
     }
 
@@ -162,11 +165,10 @@ class ProdukController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = new ProdukForm($id);
-        var_dump($model);
-        exit();
-        $kategori = Kategori::find()->all();
-        $dataKategori = ArrayHelper::map($kategori, 'id', 'nama');
+        $model = Produk::findOne($id);
+        $negoModel = $model->nego0;
+        $galeriModel = new GaleriProduk();
+        $dataGaleri = GaleriProduk::find()->where(['id_produk' => $model->id])->all();
 
         if ($model->load(Yii::$app->request->post())) {
             $update = $model->update();
@@ -177,7 +179,9 @@ class ProdukController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'dataKategori' => $dataKategori
+            'negoModel' => $negoModel,
+            'galeriModel' => $galeriModel,
+            'dataGaleri' => $dataGaleri
 
         ]);
     }
@@ -211,5 +215,72 @@ class ProdukController extends Controller
 
         return $items;
 
+    }
+
+    public function actionHapusManual($id)
+    {
+        if (Yii::$app->request->isPost) {
+
+            $data = Yii::$app->request->post();
+
+            $id = $data['id'];
+            $produk = $this->findModel($id);
+            $path = Yii::getAlias('@produkPath');
+            $deleteDokumen = FileHelper::unlink($path . "/" . $produk->manual);
+            if ($deleteDokumen) {
+                $produk->manual = null;
+                Yii::$app->session->setFlash('success', 'Berhasil menghapus dokumen led');
+                return $this->redirect(['produk/update', 'id' => $id]);
+
+            }
+            Yii::$app->session->setFlash('success', 'Gagal menghapus dokumen led');
+            return $this->redirect(['produk/update', 'id' => $id]);
+
+        }
+
+        return new MethodNotAllowedHttpException('Harus melalui prosedur penghapusan data.');
+    }
+
+    public function actionDownloadManual($id)
+    {
+        ini_set('max_execution_time', 5 * 60);
+        $model = $this->findModel($id);
+        $file = Yii::getAlias('@produkPath' . "/{$model->manual}");
+        return Yii::$app->response->sendFile($file);
+    }
+
+    public function actionDownloadGaleri($id)
+    {
+        ini_set('max_execution_time', 5 * 60);
+        $model = GaleriProduk::findOne($id);
+        $file = Yii::getAlias('@produkPath' . "/{$model->nama_berkas}");
+        return Yii::$app->response->sendFile($file);
+
+    }
+
+    public function actionHapusGaleri($id)
+    {
+
+        if (Yii::$app->request->isPost) {
+
+            $data = Yii::$app->request->post();
+
+            $id = $data['id'];
+            $galeri = GaleriProduk::findOne($id);
+            $idProduk = $galeri->id_produk;
+            $path = Yii::getAlias('@penjual/web/upload/produk');
+            $deleteDokumen = FileHelper::unlink($path . "/" . $galeri->nama_berkas);
+            if ($deleteDokumen) {
+                $galeri->delete();
+                Yii::$app->session->setFlash('success', 'Berhasil menghapus dokumen led');
+                return $this->redirect(['produk/update', 'id' => $idProduk]);
+
+            }
+            Yii::$app->session->setFlash('success', 'Gagal menghapus dokumen led');
+            return $this->redirect(['produk/update', 'id' => $idProduk]);
+
+        }
+
+        return new MethodNotAllowedHttpException('Harus melalui prosedur penghapusan data.');
     }
 }
