@@ -63,8 +63,11 @@ class ProdukController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $gambar = $model->galeriProduks;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'gambar' => $gambar
         ]);
     }
 

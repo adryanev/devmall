@@ -114,22 +114,18 @@ use yii\helpers\FileHelper;
                                 <div class="row pull-right">
                                     <div class="col-lg-12">
                                         <?php $type = FileTypeHelper::getType($extensions);
-                                        if ($type === FileTypeHelper::TYPE_IMAGE || $type === FileTypeHelper::TYPE_PDF):?>
+                                        if ($type === FileTypeHelper::TYPE_PDF):?>
                                             <?php Modal::begin([
                                                 'title' => $model->manual,
                                                 'toggleButton' => ['label' => '<i class="la la-eye"></i> &nbsp;Lihat', 'class' => 'btn btn-info btn-pill btn-elevate btn-elevate-air'],
                                                 'size' => 'modal-lg',
                                                 'clientOptions' => ['backdrop' => 'blur', 'keyboard' => true]
-                                            ]); ?>
-                                            <?php switch ($type) {
-                                                case FileTypeHelper::TYPE_IMAGE:
-                                                    echo Html::img("$path/{$model->manual}", ['height' => '100%', 'width' => '100%']);
-                                                    break;
-                                                case FileTypeHelper::TYPE_PDF:
-                                                    echo '<embed src="' . $path . '/' . $model->manual . '" type="application/pdf" height="100%" width="100%">
+                                            ]);
+
+                                            echo '<embed src="' . Yii::getAlias('@.produkPath') . '/' . $model->manual . '" type="application/pdf" height="100%" width="100%">
 ';
-                                                    break;
-                                            } ?>
+                                            ?>
+
                                             <?php Modal::end(); ?>
                                         <?php endif; ?>
                                         <?= Html::a('<i class ="la la-download"></i> Unduh', ['produk/download-manual', 'id' => $model->id], ['class' => 'btn btn-warning btn-pill btn-elevate btn-elevate-air']) ?>
@@ -193,7 +189,7 @@ use yii\helpers\FileHelper;
                         <?php foreach ($dataGaleri as $item) : ?>
                             <tr>
                                 <td>
-                                    <?= Html::img(Yii::getAlias('@web/upload/produk/' . $item->nama_berkas), ['width' => '30%']);
+                                    <?= Html::img(Yii::getAlias('@.produkPath/' . $item->nama_berkas), ['width' => '30%']);
                                     ?>
                                 </td>
                                 <td>

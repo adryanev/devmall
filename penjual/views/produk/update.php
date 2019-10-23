@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $negoModel common\models\Nego */
 /* @var $dataGaleri [] */
 
-$this->title = 'Ubah Produk: ' . $model->id;
+$this->title = 'Ubah Produk: ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Produk', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Ubah';

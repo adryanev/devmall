@@ -1,15 +1,49 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\GaleriProduk;
+use yii\bootstrap4\Carousel;
+use yii\bootstrap4\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Produk */
+/* @var $gambar GaleriProduk[] */
 
-$this->title = $model->id;
+$this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Produk', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$arrayGambar = \yii\helpers\ArrayHelper::map($gambar, 'id', 'nama_berkas');
+$dataGambar = array_values($arrayGambar);
+$gams = [];
+foreach ($dataGambar as $gamber) {
+    $gams[] = Html::img(Yii::getAlias('@.produkPath/' . $gamber), ['width' => '50%']);
+}
+
 ?>
+<div class="row">
+    <div class="col-lg-12">
+
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <?= Carousel::widget([
+                            'items' => $gams,
+                            'showIndicators' => true,
+                        ]) ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--end::Portlet-->
+
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-12">
 
@@ -31,11 +65,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <?= Html::a('<i class=flaticon2-edit></i> Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-elevate btn-elevate-air']) ?>
                             <?= Html::a('<i class=flaticon2-delete></i> Hapus', ['delete', 'id' => $model->id], [
-                            'class' => 'btn btn-danger btn-elevate btn-elevate-air',
-                            'data' => [
-                            'confirm' => 'Apakah anda ingin menghapus item ini?',
-                            'method' => 'post',
-                            ],
+                                'class' => 'btn btn-danger btn-elevate btn-elevate-air',
+                                'data' => [
+                                    'confirm' => 'Apakah anda ingin menghapus item ini?',
+                                    'method' => 'post',
+                                ],
                             ]) ?>
                         </div>
                     </div>
@@ -46,21 +80,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                     <?= DetailView::widget([
-                    'model' => $model,
-                    'attributes' => [
-                                'id',
-            'id_booth',
-            'nama',
-            'deskripsi:ntext',
-            'spesifikasi:ntext',
-            'fitur:ntext',
-            'harga',
-            'demo',
-            'manual',
-            'nego',
-            'created_at',
-            'updated_at',
-                    ],
+                        'model' => $model,
+                        'attributes' => [
+                            'id',
+                            'nama',
+                            'deskripsi:html',
+                            'spesifikasi:html',
+                            'fitur:html',
+                            'harga:currency',
+                            'demo:url',
+                            'nego:boolean',
+                            'created_at:datetime',
+                            'updated_at:datetime',
+                        ],
                     ]) ?>
 
                 </div>
