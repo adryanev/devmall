@@ -1,12 +1,11 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel penjual\models\ProdukSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+\common\assets\metronic\MetronicDashboardDemo1PricingAsset::register($this);
 
 $this->title = 'Produk';
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,37 +33,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <div class="produk-index">
+                <div class="kt-pricing-1">
+                    <div class="kt-pricing-1__items row">
+                        <?php foreach ($dataProvider->models as $model): ?>
+                            <div class="kt-pricing-1__item col-lg-3">
+                                <div class="kt-pricing-1__visual">
+                                    <div class="kt-pricing-1__hexagon1"></div>
+                                    <div class="kt-pricing-1__hexagon2"></div>
 
-
-                    <?php Pjax::begin(); ?>
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn', 'header' => 'No'],
-
-//                            'id',
-//                            'id_booth',
-                            'nama',
-                            'deskripsi:html',
-                            'spesifikasi:html',
-                            'fitur:html',
-                            'harga:currency',
-                            //'demo',
-                            //'manual',
-                            //'nego',
-                            //'created_at',
-                            //'updated_at',
-
-                            ['class' => 'common\widgets\ActionColumn', 'header' => 'Aksi'],
-                        ],
-                    ]); ?>
-
-                    <?php Pjax::end(); ?>
-
+                                    <span class="kt-pricing-1__icon kt-font-brand"><?= Html::img(Yii::getAlias('@.produkPath/' . $model->galeriProduks[0]->nama_berkas), ['width' => '100%']) ?></span>
+                                </div>
+                                <span class="kt-pricing-1__price"><?= \yii\helpers\StringHelper::mb_ucwords(Html::encode($model->nama)) ?></span>
+                                <h2 class="kt-pricing-1__subtitle"><?= Yii::$app->formatter->asCurrency($model->harga) ?></h2>
+                                <span class="kt-pricing-1__description">
+													<?= $model->deskripsi ?>
+												</span>
+                                <div class="kt-pricing-1__btn">
+                                    <?= Html::a('<i class="la la-eye"></i> Lihat', ['produk/view', 'id' => $model->id], ['class' => 'btn btn-brand btn-custom btn-pill btn-wide btn-uppercase btn-bolder btn-sm']) ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -72,6 +61,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </div>
-
 
 

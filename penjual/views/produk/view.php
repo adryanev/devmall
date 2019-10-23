@@ -17,7 +17,7 @@ $arrayGambar = \yii\helpers\ArrayHelper::map($gambar, 'id', 'nama_berkas');
 $dataGambar = array_values($arrayGambar);
 $gams = [];
 foreach ($dataGambar as $gamber) {
-    $gams[] = Html::img(Yii::getAlias('@.produkPath/' . $gamber), ['width' => '50%']);
+    $gams[] = Html::img(Yii::getAlias('@.produkPath/' . $gamber), ['width' => '50%', 'class' => 'rounded mx-auto d-block carousel']);
 }
 
 ?>
@@ -82,16 +82,20 @@ foreach ($dataGambar as $gamber) {
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            'id',
+//                            'id',
                             'nama',
                             'deskripsi:html',
                             'spesifikasi:html',
                             'fitur:html',
                             'harga:currency',
                             'demo:url',
+                            ['attribute' => 'manual', 'value' => Yii::getAlias('@.produkPath/' . $model->manual), 'format' => 'url'],
                             'nego:boolean',
-                            'created_at:datetime',
-                            'updated_at:datetime',
+                            ['attribute' => 'nego0.harga_satu', 'visible' => $model->nego, 'format' => 'currency'],
+                            ['attribute' => 'nego0.harga_dua', 'visible' => $model->nego, 'format' => 'currency'],
+                            ['attribute' => 'nego0.harga_tiga', 'visible' => $model->nego, 'format' => 'currency'],
+//                            'created_at:datetime',
+//                            'updated_at:datetime',
                         ],
                     ]) ?>
 
@@ -102,6 +106,16 @@ foreach ($dataGambar as $gamber) {
 
     </div>
 </div>
+
+<?php
+$css = <<<CSS
+    .carousel{
+        filter: brightness(85%);
+    }
+CSS;
+$this->registerCss($css);
+
+?>
 
 
 
