@@ -23,7 +23,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Favorit[] $favorits
  * @property GaleriProduk[] $galeriProduks
- * @property KategoriProduk[] $kategoriProduks
+ * @property KategoriProduk[] $kategoriProduk
  * @property Nego $nego0
  * @property Booth $booth
  * @property PromoProduk[] $promoProduks
@@ -127,7 +127,7 @@ class Produk extends \yii\db\ActiveRecord
      */
     public function getBooth()
     {
-        return $this->hasOne(Booth::className(), ['id_booth' => 'id']);
+        return $this->hasOne(Booth::className(), ['id' => 'id_booth']);
     }
 
     /**

@@ -18,11 +18,11 @@ use yii\bootstrap4\Html;
 
 /* @var $this yii\web\View */
 /* @var $model PenjualSignupForm */
-
 $this->title = 'Pembuatan Booth';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
     <!--begin::Portlet-->
 <?php $form = ActiveForm::begin(['id' => 'pembuatan-booth-form', 'layout' => 'horizontal', 'fieldConfig' => [
     'horizontalCssClasses' => [
@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'wrapper' => 'col-sm-9',
     ],
 ]]) ?>
+
     <div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -120,6 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $js = <<<JS
+
 var componentForm = {
   street_number: 'short_name',
   route: 'long_name',

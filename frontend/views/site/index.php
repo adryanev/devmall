@@ -1,17 +1,24 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $modelPencarian SearchProductIndexForm */
+/* @var $dataKategori [] */
+
 
 $this->title = 'Welcome to Devmall';
 
-use yii\bootstrap4\Html; ?>
+use frontend\models\forms\search\SearchProductIndexForm;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
+
+?>
 
 <!--================================
 START HERO AREA
 =================================-->
 <section class="hero-area bgimage">
     <div class="bg_image_holder">
-        <?=Html::img('@web/images/hero_area_bg1.jpg')?>
+        <?= Html::img('@web/images/hero_area_bg1.jpg') ?>
     </div>
     <!-- start hero-content -->
     <div class="hero-content content_above">
@@ -25,18 +32,13 @@ START HERO AREA
                     <div class="col-md-12">
                         <div class="hero__content__title">
                             <h1>
-                                <span class="light">Create Your Own</span>
-                                <span class="bold">Digital Product Marketplace</span>
+                                <span class="light">Devmall</span>
+                                <span class="bold">Marketplace Aplikasi Anda</span>
                             </h1>
-                            <p class="tagline">MartPlace is the most powerful, & customizable template for Easy Digital Downloads Products</p>
+
                         </div>
 
-                        <!-- start .hero__btn-area-->
-                        <div class="hero__btn-area">
-                            <a href="all-products.html" class="btn btn--round btn--lg">View All Products</a>
-                            <a href="all-products.html" class="btn btn--round btn--lg">Popular Products</a>
-                        </div>
-                        <!-- end .hero__btn-area-->
+
                     </div>
                     <!-- end /.col-md-12 -->
                 </div>
@@ -58,20 +60,23 @@ START HERO AREA
                 <div class="col-sm-12">
                     <!-- start .search_box -->
                     <div class="search_box">
-                        <form action="#">
-                            <input type="text" class="text_field" placeholder="Search your products...">
-                            <div class="search__select select-wrap">
-                                <select name="category" class="select--field" id="blah">
-                                    <option value="">All Categories</option>
-                                    <option value="">PSD</option>
-                                    <option value="">HTML</option>
-                                    <option value="">WordPress</option>
-                                    <option value="">All Categories</option>
-                                </select>
-                                <span class="lnr lnr-chevron-down"></span>
-                            </div>
-                            <button type="submit" class="search-btn btn--lg">Search Now</button>
-                        </form>
+                        <?php $form = ActiveForm::begin(['id' => 'pencarian-produk-index', 'fieldConfig' => [
+                            'options' => [
+                                'tag' => false,
+                            ],
+                        ], 'method' => 'get',
+                            'action' => ['produk/search']
+
+                        ]) ?>
+
+                        <?= $form->field($modelPencarian, 'produk')->textInput(['class' => 'text_field', 'placeholder' => 'Cari Produk', 'name' => 'produk'])->label(false) ?>
+
+                        <div class="search__select select-wrap">
+                            <?= $form->field($modelPencarian, 'kategori')->dropDownList($dataKategori, ['class' => 'select--field', 'name' => 'kategori'])->label(false) ?>
+                            <span class="lnr lnr-chevron-down"></span>
+                        </div>
+                        <?= Html::submitButton('Cari Sekarang', ['class' => 'search-btn btn-lg']) ?>
+                        <?php ActiveForm::end() ?>
                     </div>
                     <!-- end ./search_box -->
                 </div>
@@ -99,7 +104,7 @@ START FEATURE AREA
             <div class="col-lg-4 col-md-6">
                 <div class="feature">
                     <div class="feature__img">
-                        <?=Html::img('@web/images/feature1.png')?>
+                        <?= Html::img('@web/images/feature1.png') ?>
                     </div>
                     <div class="feature__title">
                         <h3>Best UX Research</h3>
@@ -117,7 +122,7 @@ START FEATURE AREA
             <div class="col-lg-4 col-md-6">
                 <div class="feature">
                     <div class="feature__img">
-                        <?=Html::img('@web/images/feature2.png')?>
+                        <?= Html::img('@web/images/feature2.png') ?>
                     </div>
                     <div class="feature__title">
                         <h3>Fully Responsive</h3>
@@ -135,7 +140,7 @@ START FEATURE AREA
             <div class="col-lg-4 col-md-6">
                 <div class="feature">
                     <div class="feature__img">
-                        <?=Html::img('@web/images/feature3.png')?>
+                        <?= Html::img('@web/images/feature3.png') ?>
                     </div>
                     <div class="feature__title">
                         <h3>Buy & Sell Easily</h3>
@@ -187,14 +192,13 @@ START FEATURED PRODUCT AREA
     <!-- start .featured-product-slider -->
 
 
-
     <div class="container">
         <div class="row">
             <div class="col-md-12 no0-padding">
                 <div class="featured-product-slider prod-slider1">
                     <div class="featured__single-slider">
                         <div class="featured__preview-img">
-                            <?=Html::img('@web/images/featprod.jpg')?>
+                            <?= Html::img('@web/images/featprod.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -209,7 +213,7 @@ START FEATURED PRODUCT AREA
                                 </a>
                                 <ul class="titlebtm">
                                     <li>
-                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                         <p>
                                             <a href="#">AazzTech</a>
                                         </p>
@@ -222,7 +226,8 @@ START FEATURED PRODUCT AREA
                                 <!-- end /.titlebtm -->
 
                                 <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent
+                                    pharetra,
                                     justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
                             </div>
                             <!-- end /.product-desc -->
@@ -284,7 +289,7 @@ START FEATURED PRODUCT AREA
 
                     <div class="featured__single-slider">
                         <div class="featured__preview-img">
-                            <?=Html::img('@web/images/featprod.jpg')?>
+                            <?= Html::img('@web/images/featprod.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -299,7 +304,7 @@ START FEATURED PRODUCT AREA
                                 </a>
                                 <ul class="titlebtm">
                                     <li>
-                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                         <p>
                                             <a href="#">AazzTech</a>
                                         </p>
@@ -312,7 +317,8 @@ START FEATURED PRODUCT AREA
                                 <!-- end /.titlebtm -->
 
                                 <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent
+                                    pharetra,
                                     justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
                             </div>
                             <!-- end /.product-desc -->
@@ -389,7 +395,7 @@ START FEATURED PRODUCT AREA
                                 </a>
                                 <ul class="titlebtm">
                                     <li>
-                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                         <p>
                                             <a href="#">AazzTech</a>
                                         </p>
@@ -402,7 +408,8 @@ START FEATURED PRODUCT AREA
                                 <!-- end /.titlebtm -->
 
                                 <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent
+                                    pharetra,
                                     justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
                             </div>
                             <!-- end /.product-desc -->
@@ -479,7 +486,7 @@ START FEATURED PRODUCT AREA
                                 </a>
                                 <ul class="titlebtm">
                                     <li>
-                                        <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                        <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                         <p>
                                             <a href="#">AazzTech</a>
                                         </p>
@@ -492,7 +499,8 @@ START FEATURED PRODUCT AREA
                                 <!-- end /.titlebtm -->
 
                                 <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
+                                    mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent
+                                    pharetra,
                                     justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
                             </div>
                             <!-- end /.product-desc -->
@@ -581,7 +589,8 @@ START PRODUCTS AREA
                     <div class="filter__menu">
                         <p>Filter by:</p>
                         <div class="filter__menu_icon">
-                            <a href="#" id="drop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" id="drop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
                                 <img class="svg" src="images/svg/menu.svg" alt="menu icon">
                             </a>
 
@@ -655,7 +664,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p1.jpg')?>
+                        <?= Html::img('@web/images/p1.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -670,7 +679,7 @@ START PRODUCTS AREA
                         </a>
                         <ul class="titlebtm">
                             <li>
-                                <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                 <p>
                                     <a href="#">AazzTech</a>
                                 </p>
@@ -711,7 +720,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p2.jpg')?>
+                        <?= Html::img('@web/images/p2.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -726,7 +735,7 @@ START PRODUCTS AREA
                         </a>
                         <ul class="titlebtm">
                             <li>
-                                <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                <?= Html::img('@web/images/auth2.jpg', ['class' => 'auth-img']) ?>
                                 <p>
                                     <a href="#">AazzTech</a>
                                 </p>
@@ -767,7 +776,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p3.jpg')?>
+                        <?= Html::img('@web/images/p3.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -842,7 +851,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p4.jpg')?>
+                        <?= Html::img('@web/images/p4.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -857,7 +866,7 @@ START PRODUCTS AREA
                         </a>
                         <ul class="titlebtm">
                             <li>
-                                <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                 <p>
                                     <a href="#">AazzTech</a>
                                 </p>
@@ -898,7 +907,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p5.jpg')?>
+                        <?= Html::img('@web/images/p5.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -913,7 +922,7 @@ START PRODUCTS AREA
                         </a>
                         <ul class="titlebtm">
                             <li>
-                                <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                <?= Html::img('@web/images/auth2.jpg', ['class' => 'auth-img']) ?>
                                 <p>
                                     <a href="#">AazzTech</a>
                                 </p>
@@ -954,7 +963,7 @@ START PRODUCTS AREA
                 <div class="product product--card">
 
                     <div class="product__thumbnail">
-                        <?=Html::img('@web/images/p6.jpg')?>
+                        <?= Html::img('@web/images/p6.jpg') ?>
                         <div class="prod_btn">
                             <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                             <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -969,7 +978,7 @@ START PRODUCTS AREA
                         </a>
                         <ul class="titlebtm">
                             <li>
-                                <?=Html::img('@web/images/auth3.jpg',['class'=>'auth-img'])?>
+                                <?= Html::img('@web/images/auth3.jpg', ['class' => 'auth-img']) ?>
                                 <p>
                                     <a href="#">AazzTech</a>
                                 </p>
@@ -1076,7 +1085,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p4.jpg')?>
+                            <?= Html::img('@web/images/p4.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1091,7 +1100,7 @@ START FOLLOWERS FEED AREA
                             </a>
                             <ul class="titlebtm">
                                 <li>
-                                    <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                    <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                     <p>
                                         <a href="#">AazzTech</a>
                                     </p>
@@ -1102,7 +1111,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1128,7 +1138,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p2.jpg')?>
+                            <?= Html::img('@web/images/p2.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1143,7 +1153,7 @@ START FOLLOWERS FEED AREA
                             </a>
                             <ul class="titlebtm">
                                 <li>
-                                    <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                    <?= Html::img('@web/images/auth2.jpg', ['class' => 'auth-img']) ?>
                                     <p>
                                         <a href="#">AazzTech</a>
                                     </p>
@@ -1154,7 +1164,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1180,7 +1191,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p6.jpg')?>
+                            <?= Html::img('@web/images/p6.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1206,7 +1217,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1232,7 +1244,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p4.jpg')?>
+                            <?= Html::img('@web/images/p4.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1247,7 +1259,7 @@ START FOLLOWERS FEED AREA
                             </a>
                             <ul class="titlebtm">
                                 <li>
-                                    <?=Html::img('@web/images/auth.jpg',['class'=>'auth-img'])?>
+                                    <?= Html::img('@web/images/auth.jpg', ['class' => 'auth-img']) ?>
                                     <p>
                                         <a href="#">AazzTech</a>
                                     </p>
@@ -1258,7 +1270,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1284,7 +1297,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p2.jpg')?>
+                            <?= Html::img('@web/images/p2.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1299,7 +1312,7 @@ START FOLLOWERS FEED AREA
                             </a>
                             <ul class="titlebtm">
                                 <li>
-                                    <?=Html::img('@web/images/auth2.jpg',['class'=>'auth-img'])?>
+                                    <?= Html::img('@web/images/auth2.jpg', ['class' => 'auth-img']) ?>
                                     <p>
                                         <a href="#">AazzTech</a>
                                     </p>
@@ -1310,7 +1323,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1336,7 +1350,7 @@ START FOLLOWERS FEED AREA
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <?=Html::img('@web/images/p6.jpg')?>
+                            <?= Html::img('@web/images/p6.jpg') ?>
                             <div class="prod_btn">
                                 <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
                                 <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
@@ -1362,7 +1376,8 @@ START FOLLOWERS FEED AREA
                                 </li>
                             </ul>
 
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
                                 leo quam aliquet congue.</p>
                         </div>
                         <!-- end /.product-desc -->
@@ -1399,7 +1414,7 @@ START COUNTER UP AREA
 =================================-->
 <section class="counter-up-area bgimage">
     <div class="bg_image_holder">
-        <?=Html::img('@web/images/countbg.jpg')?>
+        <?= Html::img('@web/images/countbg.jpg') ?>
     </div>
     <!-- start .container -->
     <div class="container content_above">
@@ -1448,7 +1463,8 @@ END COUNTER UP AREA
                     <h1>Why Choose
                         <span class="highlighted">MartPlace</span>
                     </h1>
-                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats.
+                        Lid
                         est laborum dolo rumes fugats untras.</p>
                 </div>
             </div>
@@ -1579,15 +1595,16 @@ START SELL BUY
             <div class="col-md-6 no-padding">
                 <div class="proposal proposal--left bgimage">
                     <div class="bg_image_holder">
-                        <?=Html::img('@web/images/bbg.png')?>
+                        <?= Html::img('@web/images/bbg.png') ?>
                     </div>
                     <div class="content_above">
                         <div class="proposal__icon ">
-                            <?=Html::img('@web/images/buy.png')?>
+                            <?= Html::img('@web/images/buy.png') ?>
                         </div>
                         <div class="proposal__content ">
                             <h1 class="text--white">Sell Your Products</h1>
-                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
+                                scelerisque the mattis,
                                 leo quam aliquet diamcongue is laoreet elit metus.</p>
                         </div>
                         <a href="#" class="btn--round btn btn--lg btn--white">Become an Author</a>
@@ -1599,15 +1616,16 @@ START SELL BUY
             <div class="col-md-6 no-padding">
                 <div class="proposal proposal--right">
                     <div class="bg_image_holder">
-                        <?=Html::img('@web/images/sbg.png')?>
+                        <?= Html::img('@web/images/sbg.png') ?>
                     </div>
                     <div class="content_above">
                         <div class="proposal__icon">
-                            <?=Html::img('@web/images/sell.png')?>
+                            <?= Html::img('@web/images/sell.png') ?>
                         </div>
                         <div class="proposal__content ">
                             <h1 class="text--white">Start Shopping Today</h1>
-                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
+                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
+                                scelerisque the mattis,
                                 leo quam aliquet diamcongue is laoreet elit metus.</p>
                         </div>
                         <a href="#" class="btn--round btn btn--lg btn--white">Start Shopping</a>
@@ -1637,7 +1655,8 @@ START TESTIMONIAL
                     <h1>Our Clients
                         <span class="highlighted">Feedback</span>
                     </h1>
-                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats.
+                        Lid
                         est laborum dolo rumes fugats untras.</p>
                 </div>
             </div>
@@ -1653,7 +1672,7 @@ START TESTIMONIAL
                     <div class="testimonial">
                         <div class="testimonial__about">
                             <div class="avatar v_middle">
-                                <?=Html::img('@web/images/test1.jpg')?>
+                                <?= Html::img('@web/images/test1.jpg') ?>
                             </div>
                             <div class="name-designation v_middle">
                                 <h4 class="name">Tubeda Pagla</h4>
@@ -1662,8 +1681,10 @@ START TESTIMONIAL
                             <span class="lnr lnr-bubble quote-icon"></span>
                         </div>
                         <div class="testimonial__text">
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi
+                                interdum
                                 is mollis. Praesent the pharetra, justo ut scelerisque.</p>
                         </div>
                     </div>
@@ -1672,7 +1693,7 @@ START TESTIMONIAL
                     <div class="testimonial">
                         <div class="testimonial__about">
                             <div class="avatar v_middle">
-                                <?=Html::img('@web/images/test2.jpg')?>
+                                <?= Html::img('@web/images/test2.jpg') ?>
                             </div>
                             <div class="name-designation v_middle">
                                 <h4 class="name">Tarashi Hamada</h4>
@@ -1681,8 +1702,10 @@ START TESTIMONIAL
                             <span class="lnr lnr-bubble quote-icon"></span>
                         </div>
                         <div class="testimonial__text">
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi
+                                interdum
                                 is mollis. Praesent the pharetra, justo ut scelerisque.</p>
                         </div>
                     </div>
@@ -1691,7 +1714,7 @@ START TESTIMONIAL
                     <div class="testimonial">
                         <div class="testimonial__about">
                             <div class="avatar v_middle">
-                                <?=Html::img('@web/images/test1.jpg')?>
+                                <?= Html::img('@web/images/test1.jpg') ?>
                             </div>
                             <div class="name-designation v_middle">
                                 <h4 class="name">Tubeda Pagla</h4>
@@ -1700,8 +1723,10 @@ START TESTIMONIAL
                             <span class="lnr lnr-bubble quote-icon"></span>
                         </div>
                         <div class="testimonial__text">
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi
+                                interdum
                                 is mollis. Praesent the pharetra, justo ut scelerisque.</p>
                         </div>
                     </div>
@@ -1710,7 +1735,7 @@ START TESTIMONIAL
                     <div class="testimonial">
                         <div class="testimonial__about">
                             <div class="avatar v_middle">
-                                <?=Html::img('@web/images/test2.jpg')?>
+                                <?= Html::img('@web/images/test2.jpg') ?>
                             </div>
                             <div class="name-designation v_middle">
                                 <h4 class="name">Tarashi Hamada</h4>
@@ -1719,8 +1744,10 @@ START TESTIMONIAL
                             <span class="lnr lnr-bubble quote-icon"></span>
                         </div>
                         <div class="testimonial__text">
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi interdum
+                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
+                                mattis,
+                                leo quam aliquet diam congue is the laoreet elit metus. Nunc placerat mi is id nisi
+                                interdum
                                 is mollis. Praesent the pharetra, justo ut scelerisque.</p>
                         </div>
                     </div>
@@ -1756,7 +1783,8 @@ START LATEST NEWS
                     <h1>Latest
                         <span class="highlighted">News</span>
                     </h1>
-                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats. Lid
+                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats.
+                        Lid
                         est laborum dolo rumes fugats untras.</p>
                 </div>
             </div>
@@ -1770,7 +1798,7 @@ START LATEST NEWS
             <div class="col-lg-4 col-md-6">
                 <div class="news">
                     <div class="news__thumbnail">
-                        <<?=Html::img('@web/images/news1.png')?>
+                        <<?= Html::img('@web/images/news1.png') ?>
                     </div>
                     <div class="news__content">
                         <a href="#" class="news-title">
@@ -1806,7 +1834,7 @@ START LATEST NEWS
             <div class="col-lg-4 col-md-6">
                 <div class="news">
                     <div class="news__thumbnail">
-                        <?=Html::img('@web/images/news2.png')?>
+                        <?= Html::img('@web/images/news2.png') ?>
                     </div>
                     <div class="news__content">
                         <a href="#" class="news-title">
@@ -1842,7 +1870,7 @@ START LATEST NEWS
             <div class="col-lg-4 col-md-6">
                 <div class="news">
                     <div class="news__thumbnail">
-                        <?=Html::img('@web/images/news1.png')?>
+                        <?= Html::img('@web/images/news1.png') ?>
                     </div>
                     <div class="news__content">
                         <a href="#" class="news-title">
@@ -1890,7 +1918,7 @@ START SPECIAL FEATURES AREA
         <div class="row">
             <div class="col-md-6">
                 <div class="special-feature feature--1">
-                    <?=Html::img('@web/images/spf1.png')?>
+                    <?= Html::img('@web/images/spf1.png') ?>
                     <h3 class="special__feature-title">30 Days Money Back
                         <span class="highlight">Guarantee</span>
                     </h3>
@@ -1899,7 +1927,7 @@ START SPECIAL FEATURES AREA
             <!-- end /.col-md-6 -->
             <div class="col-md-6">
                 <div class="special-feature feature--2">
-                    <?=Html::img('@web/images/spf2.png')?>
+                    <?= Html::img('@web/images/spf2.png') ?>
                     <h3 class="special__feature-title">Fast and Friendly
                         <span class="highlight">Support</span>
                     </h3>
@@ -1920,7 +1948,7 @@ START CALL TO ACTION AREA
 =================================-->
 <section class="call-to-action bgimage">
     <div class="bg_image_holder">
-        <?=Html::img('@web/images/calltobg.jpg')?>
+        <?= Html::img('@web/images/calltobg.jpg') ?>
     </div>
     <div class="container content_above">
         <div class="row">

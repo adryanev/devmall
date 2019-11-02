@@ -1,22 +1,23 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\models\Kategori;
+use frontend\models\ContactForm;
+use frontend\models\forms\search\SearchProductIndexForm;
 use frontend\models\forms\user\UserLoginForm;
 use frontend\models\forms\user\UserSignupForm;
+use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-use yii\web\MethodNotAllowedHttpException;
 
 /**
  * Site controller
@@ -78,7 +79,15 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = 'main-index';
-        return $this->render('index');
+        $kategori = Kategori::find()->all();
+        $dataKategori = ArrayHelper::map($kategori, 'id', 'nama');
+
+        $modelPencarian = new SearchProductIndexForm();
+        if ($modelPencarian->load(Yii::$app->request->post())) {
+            return $this->redirect(['produk/search', 'produk' => $modelPencarian->product, 'kategori' => $modelPencarian->kategori]);
+        }
+
+        return $this->render('index', compact('dataKategori', 'modelPencarian'));
     }
 
     /**
@@ -88,9 +97,12 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goBack();
+        }
         $model = new UserLoginForm();
 
-        if(Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
@@ -100,8 +112,8 @@ class SiteController extends Controller
         }
         $model->password = '';
 
-        return $this->render('/common-forms/user-login-form',[
-            'model'=>$model
+        return $this->render('/common-forms/user-login-form', [
+            'model' => $model
         ]);
 
 
@@ -165,7 +177,7 @@ class SiteController extends Controller
             if ($model->validate()) {
                 $model->signup();
             }
-            Yii::$app->session->setFlash('success',[
+            Yii::$app->session->setFlash('success', [
                 'type' => 'success',
                 'icon' => 'fas fa-check',
                 'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
@@ -232,8 +244,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
@@ -244,7 +256,7 @@ class SiteController extends Controller
         }
         if ($user = $model->verifyEmail()) {
             if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success',[
+                Yii::$app->session->setFlash('success', [
                     'type' => 'success',
                     'icon' => 'fas fa-check',
                     'message' => 'Email anda berhasil diverifikasi, anda sudah bisa login.',
@@ -254,7 +266,7 @@ class SiteController extends Controller
             }
         }
 
-        Yii::$app->session->setFlash('danger',[
+        Yii::$app->session->setFlash('danger', [
             'type' => 'danger',
             'icon' => 'fas fa-stop',
             'message' => 'Sepertinya terjadi kesalahan saat verifikasi email anda.',
@@ -274,7 +286,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
 
-                Yii::$app->session->setFlash('success',[
+                Yii::$app->session->setFlash('success', [
                     'type' => 'success',
                     'icon' => 'fas fa-check',
                     'message' => 'Kode verifikasi baru telah dikirim ke email anda.',
@@ -282,7 +294,7 @@ class SiteController extends Controller
                 ]);
                 return $this->goHome();
             }
-            Yii::$app->session->setFlash('danger',[
+            Yii::$app->session->setFlash('danger', [
                 'type' => 'danger',
                 'icon' => 'fas fa-stop',
                 'message' => 'Terjadi kesalahan saat verifikasi email anda.',

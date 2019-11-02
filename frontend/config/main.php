@@ -2,7 +2,6 @@
 
 use kartik\datecontrol\Module;
 use yii\bootstrap4\BootstrapAsset;
-use yii\web\View;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -13,13 +12,13 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name'=>'Dev Mall',
+    'name' => 'Dev Mall',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'modules'=>[
-        'datecontrol'=>[
-            'class'=>'kartik\datecontrol\Module',
+    'modules' => [
+        'datecontrol' => [
+            'class' => 'kartik\datecontrol\Module',
             // format settings for displaying each date attribute (ICU format example)
             'displaySettings' => [
                 Module::FORMAT_DATE => 'dd MMMM yyyy',
@@ -72,7 +71,7 @@ return [
             'showScriptName' => false,
             // Disable r= routes
             'enablePrettyUrl' => true,
-            'rules' =>[
+            'rules' => [
 //                ['class' => 'common\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -80,29 +79,34 @@ return [
 
             ],
         ],
-        'urlManagerPenjual'=>[
-            'class'=>'yii\web\UrlManager',
+        'urlManagerPenjual' => [
+            'class' => 'yii\web\UrlManager',
             'baseUrl' => '/penjual/web',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
-        'assetManager'=>[
-            'bundles'=>[
-                'yii\web\JqueryAsset'=>[
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
                     'sourcePath' => '@common/assets/martplace/assets',
-                    'js'=>['js/vendor/jquery/jquery-1.12.3.js'],
+                    'js' => ['js/vendor/jquery/jquery-1.12.3.js'],
                 ],
-                'borales\extensions\phoneInput\PhoneInputAsset'=>[
-                  'js'=>[
-                      'build/js/utils.js',
-                      'build/js/intlTelInput.min.js',
-                      'build/js/intlTelInput-jquery.min.js',
-                  ]
+                'borales\extensions\phoneInput\PhoneInputAsset' => [
+                    'js' => [
+                        'build/js/utils.js',
+                        'build/js/intlTelInput.min.js',
+                        'build/js/intlTelInput-jquery.min.js',
+                    ]
                 ],
-                'yii\bootstrap\BootstrapAsset'=>[
-                    'class'=>BootstrapAsset::class
+                'yii\bootstrap\BootstrapAsset' => [
+                    'class' => BootstrapAsset::class
                 ]
             ]
+        ],
+    ],
+    'container' => [
+        'definitions' => [
+            \yii\widgets\LinkPager::class => \yii\bootstrap4\LinkPager::class,
         ],
     ],
     'as access' => [

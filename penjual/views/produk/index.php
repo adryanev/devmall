@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $searchModel penjual\models\ProdukSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-\common\assets\metronic\MetronicDashboardDemo1PricingAsset::register($this);
+\common\assets\metronic\MetronicDashboardPricingAsset::register($this);
 
 $this->title = 'Produk';
 $this->params['breadcrumbs'][] = $this->title;

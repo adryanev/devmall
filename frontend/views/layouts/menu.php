@@ -9,8 +9,6 @@
 
 use common\widgets\MartplaceNav;
 use frontend\models\forms\search\SearchProductForm;
-use mdm\admin\components\Helper;
-use mdm\admin\components\MenuHelper;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
@@ -36,12 +34,12 @@ $menuItems = $items;
                 <div class="navbar-header">
                     <!-- start mainmenu__search -->
                     <div class="mainmenu__search">
-                        <?php $form = ActiveForm::begin(['action' => ['search/product'],'method' => 'GET']); ?>
-                            <div class="searc-wrap">
-                                <?= /** @var SearchProductForm $searchModel */
-                                $form->field($searchModel,'product')->textInput(['placeholder'=>'Cari Produk','name'=>'produk'])->label(false)?>
-                                <?=Html::submitButton('<span class="lnr lnr-magnifier"></span>',['class'=>'search-wrap__btn'])?>
-                            </div>
+                        <?php $form = ActiveForm::begin(['action' => ['produk/search'], 'method' => 'GET']); ?>
+                        <div class="searc-wrap">
+                            <?= /** @var SearchProductForm $searchModel */
+                            $form->field($searchModel, 'product')->textInput(['placeholder' => 'Cari Produk', 'name' => 'produk'])->label(false) ?>
+                            <?= Html::submitButton('<span class="lnr lnr-magnifier"></span>', ['class' => 'search-wrap__btn']) ?>
+                        </div>
                         <?php ActiveForm::end() ?>
                     </div>
                     <!-- start mainmenu__search -->
@@ -49,27 +47,28 @@ $menuItems = $items;
 
                 <?php
                 NavBar::begin([
-                        'options' => [
-                                'class'=> 'navbar navbar-expand-md navbar-light mainmenu__menu'
-                        ]
+                    'options' => [
+                        'class' => 'navbar navbar-expand-md navbar-light mainmenu__menu'
+                    ]
                 ])
                 ?>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
                 <?= Nav::widget(
-                        [
-                                'options' => [
-                                        'class'=>'navbar-nav'
-                                ],
-                            'items' => $menuItems
+                    [
+                        'options' => [
+                            'class' => 'navbar-nav'
+                        ],
+                        'items' => $menuItems
 
 
-                        ]
-                )?>
-                    <!-- /.navbar-collapse -->
+                    ]
+                ) ?>
+                <!-- /.navbar-collapse -->
                 <?php NavBar::end() ?>
             </div>
             <!-- end /.col-md-12 -->
