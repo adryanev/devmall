@@ -80,7 +80,7 @@ class SiteController extends Controller
     {
         $this->layout = 'main-index';
         $kategori = Kategori::find()->all();
-        $dataKategori = ArrayHelper::map($kategori, 'id', 'nama');
+        $dataKategori = ArrayHelper::map($kategori, 'nama', 'nama');
 
         $modelPencarian = new SearchProductIndexForm();
         if ($modelPencarian->load(Yii::$app->request->post())) {

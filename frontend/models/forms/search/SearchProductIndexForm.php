@@ -23,7 +23,7 @@ class SearchProductIndexForm extends Model
         return [
             [['produk', 'kategori'], 'required'],
             ['produk', 'string', 'max' => 100],
-            ['kategori', 'integer'],
+            ['kategori', 'string'],
         ];
     }
 

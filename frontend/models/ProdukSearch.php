@@ -25,8 +25,8 @@ class ProdukSearch extends Produk
     public function rules()
     {
         return [
-            [['id', 'id_booth', 'harga', 'nego', 'created_at', 'updated_at', 'kategori'], 'integer'],
-            [['nama', 'deskripsi', 'spesifikasi', 'fitur', 'demo', 'manual'], 'safe'],
+            [['id', 'id_booth', 'harga', 'nego', 'created_at', 'updated_at',], 'integer'],
+            [['nama', 'deskripsi', 'spesifikasi', 'fitur', 'demo', 'manual', 'kategori'], 'safe'],
         ];
     }
 
@@ -82,7 +82,7 @@ class ProdukSearch extends Produk
             'nego' => $this->nego,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'kategori.id' => $this->kategori
+
         ]);
 
         $query->andFilterWhere(['like', 'produk.nama', $this->nama])
@@ -90,7 +90,8 @@ class ProdukSearch extends Produk
             ->andFilterWhere(['like', 'spesifikasi', $this->spesifikasi])
             ->andFilterWhere(['like', 'fitur', $this->fitur])
             ->andFilterWhere(['like', 'demo', $this->demo])
-            ->andFilterWhere(['like', 'manual', $this->manual]);
+            ->andFilterWhere(['like', 'manual', $this->manual])
+            ->andFilterWhere(['like', 'kategori.nama', $this->kategori]);
 
         return $dataProvider;
     }
