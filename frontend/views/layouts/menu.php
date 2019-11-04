@@ -16,8 +16,7 @@ use yii\bootstrap4\NavBar;
 
 $items = [
     ['label' => 'Home', 'url' => ['/site/index']],
-    ['label' => 'Kategori', 'url' => ['/kategori/index']],
-    ['label' => 'Produk', 'url' => ['/produk/index']],
+    ['label' => 'Produk', 'url' => ['/produk/index', 'kategori' => '']],
     ['label' => 'Booth', 'url' => ['/booth/contact']],
 
 ];

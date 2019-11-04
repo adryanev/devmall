@@ -14,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property KategoriProduk[] $kategoriProduks
+ * @property Produk[] $produks
+ * @property int $frekuensi [int(11)]
  */
 class Kategori extends \yii\db\ActiveRecord
 {

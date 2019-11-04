@@ -1,9 +1,14 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $produkDataProvider \yii\data\ActiveDataProvider */
+/* @var $kategori \common\models\Kategori[] */
 $params = Yii::$app->request->getQueryParam('produk');
 $this->title = 'Pencarian: ' . $params;
 $colsCount = 3;
+
+use common\models\Kategori;
+use yii\bootstrap4\Html;
+
 ?>
 
 <!--================================
@@ -20,37 +25,13 @@ $colsCount = 3;
                             <span class="lnr lnr-chevron-down"></span>
                         </a>
                         <ul class="custom_dropdown custom_drop2 dropdown-menu" aria-labelledby="drop1">
-                            <?php ?>
-                            <li>
-                                <a href="#">Wordpress
-                                    <span>35</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Landing Page
-                                    <span>45</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Psd Template
-                                    <span>13</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Plugins
-                                    <span>08</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">HTML Template
-                                    <span>34</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">Components
-                                    <span>78</span>
-                                </a>
-                            </li>
+                            <?php foreach ($kategori as /** @var $kat Kategori */
+                                           $kat):
+                                ?>
+                                <li>
+                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/search', 'produk' => $params, 'kategori' => $kat->nama]) ?>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                     <!-- end /.filter__option -->

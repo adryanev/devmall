@@ -56,6 +56,11 @@ class ProdukSearch extends Produk
             'query' => $query,
             'pagination' => [
                 'pageSize' => 10
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'harga' => SORT_ASC,
+                ]
             ]
         ]);
 
@@ -66,7 +71,13 @@ class ProdukSearch extends Produk
         } else {
             $this->kategori = null;
         }
-        $this->setAttributes(['nama' => $params['produk']]);
+        if (isset($params['produk'])) {
+            $this->nama = $params['produk'];
+            $this->setAttributes(['nama' => $params['produk']]);
+
+        } else {
+            $this->nama = null;
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
