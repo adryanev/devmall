@@ -4,6 +4,7 @@ namespace common\models;
 
 use dosamigos\taggable\Taggable;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "produk".
@@ -28,6 +29,7 @@ use yii\behaviors\TimestampBehavior;
  * @property Booth $booth
  * @property PromoProduk[] $promoProduks
  * @property Ulasan[] $ulasans
+ * @property float $nilaiUlasan
  */
 class Produk extends \yii\db\ActiveRecord
 {
@@ -136,6 +138,19 @@ class Produk extends \yii\db\ActiveRecord
     public function getPromoProduks()
     {
         return $this->hasMany(PromoProduk::className(), ['id_produk' => 'id']);
+    }
+
+    public function getNilaiUlasan()
+    {
+        $ulasan = $this->ulasans;
+        $totalUlasan = $this->getUlasans()->count();
+        $mapUlasan = ArrayHelper::map($ulasan, 'nilai', 'nilai');
+        $nilaiUlasan = array_sum($mapUlasan);
+        $nilai = round(($nilaiUlasan / max($totalUlasan, 1)), 1);
+
+        return $nilai;
+
+
     }
 
     /**

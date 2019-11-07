@@ -8,6 +8,7 @@
  */
 
 use common\models\Produk;
+use yii\bootstrap4\Html;
 use yii\web\View;
 
 /**
@@ -26,243 +27,92 @@ use yii\web\View;
             <!-- start col-md-12 -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h1>More Items
-                        <span class="highlighted">by Aazztech</span>
+                    <h1>Lainnya dari
+                        <span class="highlighted"> <?= $model->booth->nama ?></span>
                     </h1>
                 </div>
             </div>
             <!-- end /.col-md-12 -->
 
-            <!-- start .col-md-4 -->
-            <div class="col-lg-4 col-md-6">
-                <!-- start .single-product -->
-                <div class="product product--card">
+            <?php $lainnya = $model->booth->getProduks()->orderBy(new \yii\db\Expression('RAND()'))->limit(3)->all();
+            foreach ($lainnya as $produkLainnya):
+                ?>
+                <!-- start .col-md-4 -->
+                <div class="col-lg-4 col-md-6">
+                    <!-- start .single-product -->
+                    <div class="product product--card">
 
-                    <div class="product__thumbnail">
-                        <img src="images/p4.jpg" alt="Product Image">
-                        <div class="prod_btn">
-                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
-                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
+                        <div class="product__thumbnail">
+                            <?= Html::img('@.penjual/upload/produk/' . $produkLainnya->galeriProduks[0]->nama_berkas, ['alt' => 'gambar produk', 'height' => 250]) ?>
+                            <div class="prod_btn">
+                                <?= Html::a('Lihat Detail', ['produk/view', 'id' => $produkLainnya->id], ['class' => 'transparent btn--sm btn--round']) ?>
+                                <?= Html::a('Demo Langsung', $produkLainnya->demo, ['class' => 'transparent btn--sm btn--round']) ?>
+                            </div>
+                            <!-- end /.prod_btn -->
                         </div>
-                        <!-- end /.prod_btn -->
-                    </div>
-                    <!-- end /.product__thumbnail -->
+                        <!-- end /.product__thumbnail -->
 
-                    <div class="product-desc">
-                        <a href="#" class="product_title">
-                            <h4>Mccarther Coffee Shop</h4>
-                        </a>
-                        <ul class="titlebtm">
-                            <li>
-                                <img class="auth-img" src="images/auth3.jpg" alt="author image">
-                                <p>
-                                    <a href="#">AazzTech</a>
-                                </p>
-                            </li>
-                            <li class="product_cat">
-                                <a href="#">
-                                    <img src="images/cathtm.png" alt="category image">Plugin</a>
-                            </li>
-                        </ul>
+                        <div class="product-desc">
+                            <a href="#" class="product_title">
+                                <h4><?= $produkLainnya->nama ?></h4>
+                            </a>
+                            <ul class="titlebtm">
+                                <li>
+                                    <?= Html::img('@.penjual/upload/verifikasi/' . $produkLainnya->booth->avatar, ['class' => 'auth-img']) ?>
+                                    <p>
+                                        <?= Html::a($produkLainnya->booth->nama, ['booth/view', 'id' => $produkLainnya->booth->id]) ?>
+                                    </p>
+                                </li>
+                                <li class="product_cat">
+                                    <?php foreach ($produkLainnya->kategoriProduk as $kategoriProduk): ?>
 
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                            leo quam aliquet congue.</p>
-                    </div>
-                    <!-- end /.product-desc -->
-
-                    <div class="product-purchase">
-                        <div class="price_love">
-                            <span>$10</span>
-                            <p>
-                                <span class="lnr lnr-heart"></span> 48</p>
-                        </div>
-
-                        <div class="rating product--rating">
-                            <ul>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star-half-o"></span>
+                                        <i class="lnr lnr-book"></i><a href="#">
+                                            <?= $kategoriProduk->nama ?></a>
+                                    <?php endforeach; ?>
                                 </li>
                             </ul>
+
+                            <?= \yii\helpers\StringHelper::truncateWords($produkLainnya->deskripsi, 50, '...', true) ?>
                         </div>
+                        <!-- end /.product-desc -->
 
-                        <div class="sell">
-                            <p>
-                                <span class="lnr lnr-cart"></span>
-                                <span>50</span>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end /.product-purchase -->
-                </div>
-                <!-- end /.single-product -->
-            </div>
-            <!-- end /.col-md-4 -->
-
-            <!-- start .col-md-4 -->
-            <div class="col-lg-4 col-md-6">
-                <!-- start .single-product -->
-                <div class="product product--card">
-
-                    <div class="product__thumbnail">
-                        <img src="images/p2.jpg" alt="Product Image">
-                        <div class="prod_btn">
-                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
-                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
-                        </div>
-                        <!-- end /.prod_btn -->
-                    </div>
-                    <!-- end /.product__thumbnail -->
-
-                    <div class="product-desc">
-                        <a href="#" class="product_title">
-                            <h4>Mccarther Coffee Shop</h4>
-                        </a>
-                        <ul class="titlebtm">
-                            <li>
-                                <img class="auth-img" src="images/auth2.jpg" alt="author image">
+                        <div class="product-purchase">
+                            <div class="price_love">
+                                <span><?= Yii::$app->formatter->asCurrency($produkLainnya->harga) ?></span>
                                 <p>
-                                    <a href="#">AazzTech</a>
-                                </p>
-                            </li>
-                            <li class="product_cat">
-                                <a href="#">
-                                    <img src="images/catword.png" alt="category image">wordpress</a>
-                            </li>
-                        </ul>
-
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                            leo quam aliquet congue.</p>
-                    </div>
-                    <!-- end /.product-desc -->
-
-                    <div class="product-purchase">
-                        <div class="price_love">
-                            <span>$10</span>
-                            <p>
-                                <span class="lnr lnr-heart"></span> 48</p>
-                        </div>
-
-                        <div class="rating product--rating">
-                            <ul>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star-half-o"></span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="sell">
-                            <p>
-                                <span class="lnr lnr-cart"></span>
-                                <span>50</span>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end /.product-purchase -->
-                </div>
-                <!-- end /.single-product -->
-            </div>
-            <!-- end /.col-md-4 -->
-
-            <!-- start .col-md-4 -->
-            <div class="col-lg-4 col-md-6">
-                <!-- start .single-product -->
-                <div class="product product--card">
-
-                    <div class="product__thumbnail">
-                        <img src="images/p6.jpg" alt="Product Image">
-                        <div class="prod_btn">
-                            <a href="single-product.html" class="transparent btn--sm btn--round">More Info</a>
-                            <a href="single-product.html" class="transparent btn--sm btn--round">Live Demo</a>
-                        </div>
-                        <!-- end /.prod_btn -->
-                    </div>
-                    <!-- end /.product__thumbnail -->
-
-                    <div class="product-desc">
-                        <a href="#" class="product_title">
-                            <h4>The of the century</h4>
-                        </a>
-                        <ul class="titlebtm">
-                            <li>
-                                <img class="auth-img" src="images/auth.jpg" alt="author image">
+                                    <span class="lnr lnr-heart"></span> 48</p>
+                            </div>
+                            <div class="sell">
                                 <p>
-                                    <a href="#">AazzTech</a>
+                                    <span class="lnr lnr-cart"></span>
+                                    <span>50</span>
                                 </p>
-                            </li>
-                            <li class="product_cat">
-                                <a href="#">
-                                    <img src="images/catph.png" alt="Category Image">PSD</a>
-                            </li>
-                        </ul>
+                            </div>
 
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattis,
-                            leo quam aliquet congue.</p>
+                            <div class="rating product--rating">
+                                <?= \kartik\rating\StarRating::widget([
+                                    'name' => 'rating_produk_' . $produkLainnya->id,
+                                    'value' => $produkLainnya->nilaiUlasan,
+                                    'pluginOptions' => [
+                                        'size' => 'xs',
+                                        'displayOnly' => true,
+                                        'theme' => 'krajee-svg',
+                                        'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                                        'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
+                                    ]
+                                ]) ?>
+                            </div>
+
+
+                        </div>
+                        <!-- end /.product-purchase -->
                     </div>
-                    <!-- end /.product-desc -->
-
-                    <div class="product-purchase">
-                        <div class="price_love">
-                            <span>$10</span>
-                            <p>
-                                <span class="lnr lnr-heart"></span> 48</p>
-                        </div>
-
-                        <div class="rating product--rating">
-                            <ul>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star-half-o"></span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="sell">
-                            <p>
-                                <span class="lnr lnr-cart"></span>
-                                <span>50</span>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- end /.product-purchase -->
+                    <!-- end /.single-product -->
                 </div>
-                <!-- end /.single-product -->
-            </div>
-            <!-- end /.col-md-4 -->
+                <!-- end /.col-md-4 -->
+
+            <?php endforeach; ?>
+            <!-- start .col-md-4 -->
 
         </div>
         <!-- end /.container -->

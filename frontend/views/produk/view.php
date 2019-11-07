@@ -9,6 +9,7 @@
 
 
 use common\models\Produk;
+use kartik\rating\StarRating;
 use yii\bootstrap4\Carousel;
 use yii\bootstrap4\Html;
 use yii\web\View;
@@ -835,41 +836,27 @@ foreach ($dataGambar as $gamber) {
                         <ul class="data">
                             <li>
                                 <p>
-                                    <span class="lnr lnr-cart pcolor"></span>Total Sales</p>
+                                    <span class="lnr lnr-cart pcolor"></span>Total Terjual</p>
                                 <span>426</span>
                             </li>
                             <li>
                                 <p>
-                                    <span class="lnr lnr-heart scolor"></span>Favorites</p>
+                                    <span class="lnr lnr-heart scolor"></span>Difavoritkan</p>
                                 <span>240</span>
-                            </li>
-                            <li>
-                                <p>
-                                    <span class="lnr lnr-bubble mcolor3"></span>Comments</p>
-                                <span>35</span>
                             </li>
                         </ul>
 
 
                         <div class="rating product--rating">
-                            <ul>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star"></span>
-                                </li>
-                                <li>
-                                    <span class="fa fa-star-half-o"></span>
-                                </li>
-                            </ul>
-                            <span class="rating__count">( 26 Ratings )</span>
+                            <?= StarRating::widget([
+                                'name' => 'ulasan_produk_sidebar',
+                                'value' => $model->nilaiUlasan,
+                                'pluginOptions' => [
+                                    'displayOnly' => true,
+                                    'theme' => 'krajee-svg',
+                                    'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                                    'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>']]) ?>
+                            <span class="rating__count">(<?= $model->getUlasans()->count() ?> Ulasan)</span>
                         </div>
                         <!-- end /.rating -->
                     </div>
@@ -907,44 +894,24 @@ foreach ($dataGambar as $gamber) {
 
                     <div class="author-card sidebar-card ">
                         <div class="card-title">
-                            <h4>Product Information</h4>
+                            <h4>Informasi Penjual</h4>
                         </div>
 
                         <div class="author-infos">
                             <div class="author_avatar">
-                                <img src="images/author-avatar.jpg" alt="Presenting the broken author avatar :D">
+                                <?= Html::img('@.penjual/upload/verifikasi/' . $model->booth->avatar) ?>
                             </div>
 
                             <div class="author">
-                                <h4>AazzTech</h4>
-                                <p>Signed Up: 08 April 2016</p>
+                                <h4><?= $model->booth->nama ?></h4>
+                                <p>Bergabung Sejak: <?= Yii::$app->formatter->asDate($model->booth->created_at) ?></p>
                             </div>
                             <!-- end /.author -->
 
-                            <div class="social social--color--filled">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <span class="fa fa-facebook"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="fa fa-twitter"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="fa fa-dribbble"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- end /.social -->
 
                             <div class="author-btn">
-                                <a href="#" class="btn btn--sm btn--round">View Profile</a>
-                                <a href="#" class="btn btn--sm btn--round">Message</a>
+                                <?= Html::a('Lihat Penjual', ['booth/view', 'id' => $model->booth->id], ['class' => 'btn btn--sm btn--round']) ?>
+                                <?= Html::a('Kirim Pesan', ['booth/message', 'id' => $model->booth->id], ['class' => 'btn btn--sm btn--round']) ?>
                             </div>
                             <!-- end /.author-btn -->
                         </div>

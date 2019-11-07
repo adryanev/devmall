@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "booth".
@@ -28,8 +29,12 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property User $user
- * @property Produk $produk
+ * @property Produk[] $produks
  * @property Promo[] $promos
+ * @property Follow[] $followers
+ * @property float $avgUlasan
+ * @property int $totalUlasan
+ * @property string $alamatLengkap
  */
 class Booth extends \yii\db\ActiveRecord
 {
@@ -121,16 +126,50 @@ class Booth extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProduk()
+    public function getPromos()
     {
-        return $this->hasOne(Produk::className(), ['id' => 'id']);
+        return $this->hasMany(Promo::className(), ['id_booth' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPromos()
+    public function getFollowers()
     {
-        return $this->hasMany(Promo::className(), ['id_booth' => 'id']);
+        return $this->hasMany(Follow::className(), ['id_booth' => 'id']);
+    }
+
+    public function getAvgUlasan()
+    {
+        $produks = $this->produks;
+        $reviews = ArrayHelper::map($produks, 'id', function (/** @var $model Produk */ $model) {
+            return $model->nilaiUlasan;
+        });
+
+        return round(array_sum($reviews) / max($this->getProduks()->count(), 1), 1);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduks()
+    {
+        return $this->hasMany(Produk::className(), ['id_booth' => 'id']);
+    }
+
+    public function getTotalUlasan()
+    {
+        $produk = $this->produks;
+        $totalUlasan = ArrayHelper::map($produk, 'id', function (/** @var $model Produk */ $model) {
+            return $model->getUlasans()->count();
+        });
+        return array_sum($totalUlasan);
+    }
+
+    public function getAlamatLengkap()
+    {
+        $fullAddress = "{$this->alamat1}, {$this->alamat2}, {$this->kelurahan}, {$this->kecamatan}, {$this->kota}, {$this->provinsi}";
+
+        return $fullAddress;
     }
 }

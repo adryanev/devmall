@@ -49,7 +49,9 @@ use yii\bootstrap4\Html;
 
         </ul>
 
-        <p><?= Html::encode($model->deskripsi) ?></p>
+        <p><?=
+
+            \yii\helpers\StringHelper::truncateWords($model->deskripsi, 50, '...', true) ?></p>
     </div>
     <!-- end /.product-desc -->
 

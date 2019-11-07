@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\web\IdentityInterface;
 
 /**
@@ -29,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property Booth $booth
  * @property Favorit[] $favorits
  * @property ProfilUser $profilUser
+ * @property Follow[] $follows
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
  */
@@ -309,5 +311,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function following($id)
+    {
+        return $this->getFollows()->andWhere(['id_booth' => $id])->one();
+
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+
+    public function getFollows()
+    {
+        return $this->hasMany(Follow::class, ['id_pengguna' => 'id']);
     }
 }

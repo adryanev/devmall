@@ -100,7 +100,14 @@ return [
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
                     'class' => BootstrapAsset::class
-                ]
+                ],
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => $params['maps_api'],
+                        'language' => 'id',
+                        'version' => '3.1.18'
+                    ]
+                ],
             ]
         ],
     ],
