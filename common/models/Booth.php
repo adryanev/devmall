@@ -35,6 +35,7 @@ use yii\helpers\ArrayHelper;
  * @property float $avgUlasan
  * @property int $totalUlasan
  * @property string $alamatLengkap
+ * @property Produk[] $produkPopuler
  */
 class Booth extends \yii\db\ActiveRecord
 {
@@ -171,5 +172,14 @@ class Booth extends \yii\db\ActiveRecord
         $fullAddress = "{$this->alamat1}, {$this->alamat2}, {$this->kelurahan}, {$this->kecamatan}, {$this->kota}, {$this->provinsi}";
 
         return $fullAddress;
+    }
+
+    /**
+     * Populer adalah produk yang banyak dibeli dan banyak difavoritkan
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getProdukPopuler()
+    {
+        return $this->getProduks()->select(['produk.*', 'count(favorit.id_produk) as jumlah_favorit'])->joinWith('favorits', true, 'right join')->groupBy('produk.id')->orderBy('jumlah_favorit DESC');
     }
 }

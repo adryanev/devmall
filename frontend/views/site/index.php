@@ -69,10 +69,10 @@ START HERO AREA
 
                         ]) ?>
 
-                        <?= $form->field($modelPencarian, 'produk')->textInput(['class' => 'text_field', 'placeholder' => 'Cari Produk', 'name' => 'produk'])->label(false) ?>
+                        <?= $form->field($modelPencarian, 'produk')->textInput(['class' => 'text_field', 'placeholder' => 'Cari Produk', 'name' => 'ProdukSearch[nama]'])->label(false) ?>
 
                         <div class="search__select select-wrap">
-                            <?= $form->field($modelPencarian, 'kategori')->dropDownList($dataKategori, ['class' => 'select--field', 'name' => 'kategori'])->label(false) ?>
+                            <?= $form->field($modelPencarian, 'kategori')->dropDownList($dataKategori, ['class' => 'select--field', 'name' => 'ProdukSearch[kategori]'])->label(false) ?>
                             <span class="lnr lnr-chevron-down"></span>
                         </div>
                         <?= Html::submitButton('Cari Sekarang', ['class' => 'search-btn btn-lg']) ?>

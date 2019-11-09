@@ -12,6 +12,7 @@ use common\models\Produk;
 use kartik\rating\StarRating;
 use yii\bootstrap4\Carousel;
 use yii\bootstrap4\Html;
+use yii\helpers\ArrayHelper;
 use yii\web\View;
 
 /**
@@ -23,7 +24,7 @@ $this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Produk', 'url' => ['produk/index', 'kategori' => '']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$arrayGambar = \yii\helpers\ArrayHelper::map($model->galeriProduks, 'id', 'nama_berkas');
+$arrayGambar = ArrayHelper::map($model->galeriProduks, 'id', 'nama_berkas');
 $dataGambar = array_values($arrayGambar);
 $gams = [];
 foreach ($dataGambar as $gamber) {
@@ -58,8 +59,7 @@ foreach ($dataGambar as $gamber) {
                                 <?= Html::a('<span class="lnr lnr-link"></span> Demo', $model->demo, ['class' => 'btn btn--round btn--lg', 'target' => '_blank']) ?>
                                 <a href="#" class="btn btn--round btn--lg btn--icon">
                                     <span class="lnr lnr-heart"></span>Tambah ke Favorit</a>
-                                <a href="#" class="btn btn--round btn--lg btn--icon">
-                                    <i class="fab fa-whatsapp"></i> Hubungi Penjual</a>
+                                <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
                             </div>
                         </div>
                         <!-- end /.item__action -->
@@ -879,9 +879,10 @@ foreach ($dataGambar as $gamber) {
                             <li>
                                 <p class="data-label">Category</p>
                                 <p class="info text-info">
-                                    <?php foreach ($model->kategoriProduk as $kategoriProduk) {
-                                        echo $kategoriProduk->nama . ' ';
-                                    } ?>
+                                    <?php
+                                    $kategoriProduk = ArrayHelper::map($model->kategoriProduk, 'id', 'nama');
+                                    echo implode(', ', $kategoriProduk) ?>
+
                                 </p>
                             </li>
                             <li>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aaaeb4aaf21fce624baed35098f4a21a",
+    "content-hash": "7b9b149ba22336470b7ec90bfc0b603f",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -4224,6 +4224,49 @@
                 "yii"
             ],
             "time": "2019-07-07T10:11:42+00:00"
+        },
+        {
+            "name": "rsr/yii2-button-dropdown-sorter",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RezaSR/yii2-ButtonDropdownSorter.git",
+                "reference": "6b546b50947f225facee29ccdfcadd223ce34682"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RezaSR/yii2-ButtonDropdownSorter/zipball/6b546b50947f225facee29ccdfcadd223ce34682",
+                "reference": "6b546b50947f225facee29ccdfcadd223ce34682",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "rsr\\yii2\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Reza Saberi Rad",
+                    "email": "rsr_reza@yahoo.com"
+                }
+            ],
+            "description": "Bootstrap ButtonDropdown to use as sorter in yii2",
+            "keywords": [
+                "bootstrap",
+                "dropdown",
+                "sorter",
+                "yii2"
+            ],
+            "time": "2015-04-12T19:41:33+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",

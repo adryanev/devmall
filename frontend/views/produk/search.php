@@ -2,8 +2,8 @@
 /* @var $this yii\web\View */
 /* @var $produkDataProvider \yii\data\ActiveDataProvider */
 /* @var $kategori \common\models\Kategori[] */
-$params = Yii::$app->request->getQueryParam('produk');
-$this->title = 'Pencarian: ' . $params;
+$params = Yii::$app->request->getQueryParam('ProdukSearch');
+$this->title = 'Pencarian: ' . implode(' | ', $params);
 $colsCount = 3;
 
 use common\models\Kategori;
@@ -29,7 +29,7 @@ use yii\bootstrap4\Html;
                                            $kat):
                                 ?>
                                 <li>
-                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/search', 'produk' => $params, 'kategori' => $kat->nama]) ?>
+                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/search', 'ProdukSearch[nama]' => $params, 'ProdukSearch[kategori]' => $kat->nama]) ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>

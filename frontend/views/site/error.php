@@ -20,7 +20,7 @@ $this->title = $name;
                     <div class="alert alert-danger">
                         <?= nl2br(Html::encode($message)) ?>
                     </div>
-                    <a href="index.html" class="btn btn--round btn--default">Back to Home</a>
+                    <?= Html::a('Kembali', ['site/index'], ['class' => 'btn btn--round btn--default']) ?>
                 </div>
             </div>
         </div>

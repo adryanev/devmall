@@ -1,17 +1,12 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use common\assets\martplace\MartplaceAsset;
-use frontend\assets\FrontendAsset;
-use kartik\alert\Alert;
 use kartik\growl\Growl;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
 
 
 MartplaceAsset::register($this);
@@ -24,7 +19,7 @@ MartplaceAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?> | DevMall</title>
+    <title><?= Html::encode($this->title) ?> - DevMall</title>
     <?php $this->head() ?>
 </head>
 <body class="preload">
@@ -48,10 +43,10 @@ MartplaceAsset::register($this);
     ]);
     ?>
 <?php endforeach; ?>
-<?=$this->render('header',['searchModel'=>Yii::$app->view->params['searchModel']])?>
-<?=$this->render('breadcrumb')?>
-<?=$this->render('content',['content'=>$content])?>
-<?=$this->render('footer')?>
+<?= $this->render('header', ['searchModel' => Yii::$app->view->params['searchModel']]) ?>
+<?= $this->render('breadcrumb') ?>
+<?= $this->render('content', ['content' => $content]) ?>
+<?= $this->render('footer') ?>
 <?php $this->endBody() ?>
 </body>
 </html>

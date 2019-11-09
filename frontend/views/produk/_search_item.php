@@ -29,21 +29,21 @@ use yii\bootstrap4\Html;
     <!-- end /.product__thumbnail -->
 
     <div class="product-desc">
-        <a href="#" class="product_title">
-            <h4><?= Html::encode($model->nama) ?></h4>
-        </a>
+        <?= Html::a('<h4>' . Html::encode($model->nama) . '</h4>', ['produk/view', 'id' => $model->id], ['class' => 'product_title']) ?>
         <ul class="titlebtm">
             <li>
                 <?= Html::img('@.penjual/upload/verifikasi/' . $model->booth->avatar, ['class' => 'auth-img', 'alt' => 'Gambar Penjual']) ?>
                 <p>
-                    <a href="#"><?= $model->booth->nama ?></a>
+                    <?= Html::a($model->booth->nama, ['booth/view', 'id' => $model->booth->id]) ?>
                 </p>
             </li>
             <li class="product_cat">
                 <?php foreach ($model->kategoriProduk as $kategoriProduk): ?>
 
-                    <i class="lnr lnr-book"></i><a href="#">
-                        <?= $kategoriProduk->nama ?></a>
+                    <i class="lnr lnr-book"></i>
+                    <?= Html::a($kategoriProduk->nama, ['produk/search', 'ProdukSearch[kategori]' => $kategoriProduk->nama]) ?>
+
+
                 <?php endforeach; ?>
             </li>
 
@@ -59,7 +59,7 @@ use yii\bootstrap4\Html;
         <div class="price_love">
             <span><?= Yii::$app->formatter->asCurrency($model->harga) ?></span>
             <p>
-                <span class="lnr lnr-heart"></span> 90</p>
+                <span class="lnr lnr-heart"></span> <?= $model->getFavorits()->count() ?></p>
         </div>
         <div class="sell">
             <p>

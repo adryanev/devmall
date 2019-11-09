@@ -49,7 +49,8 @@
         "kartik-v/yii2-number": "dev-master",
         "2amigos/yii2-taggable-behavior": "~1.0",
         "2amigos/yii2-selectize-widget": "~1.0",
-        "kartik-v/yii2-widget-rating": "dev-master"
+        "kartik-v/yii2-widget-rating": "dev-master",
+        "rsr/yii2-button-dropdown-sorter": "^1.0"
 
 
     },

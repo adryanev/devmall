@@ -66,19 +66,6 @@ class ProdukSearch extends Produk
 
         $this->load($params);
 
-        if (isset($params['kategori'])) {
-            $this->kategori = $params['kategori'];
-        } else {
-            $this->kategori = null;
-        }
-        if (isset($params['produk'])) {
-            $this->nama = $params['produk'];
-            $this->setAttributes(['nama' => $params['produk']]);
-
-        } else {
-            $this->nama = null;
-        }
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

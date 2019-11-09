@@ -36,7 +36,7 @@ $menuItems = $items;
                         <?php $form = ActiveForm::begin(['action' => ['produk/search'], 'method' => 'GET']); ?>
                         <div class="searc-wrap">
                             <?= /** @var SearchProductForm $searchModel */
-                            $form->field($searchModel, 'product')->textInput(['placeholder' => 'Cari Produk', 'name' => 'produk'])->label(false) ?>
+                            $form->field($searchModel, 'product')->textInput(['placeholder' => 'Cari Produk', 'name' => 'ProdukSearch[nama]'])->label(false) ?>
                             <?= Html::submitButton('<span class="lnr lnr-magnifier"></span>', ['class' => 'search-wrap__btn']) ?>
                         </div>
                         <?php ActiveForm::end() ?>
