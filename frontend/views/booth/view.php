@@ -44,12 +44,12 @@ use yii\bootstrap4\Html;
                                         <?= Html::a('<i class="fas fa-user-minus"></i> Mengikuti', ['booth/unfollow', 'id' => $model->id], ['class' => 'btn btn--sm btn--round btn-info', 'data-method' => 'POST',
 
                                         ]) ?>
-                                    <?php else: ?>
-                                        <?= Html::a('<i class="fas fa-user-plus"></i> Ikuti', ['booth/follow', 'id' => $model->id], ['class' => 'btn btn--sm btn--round btn--bordered', 'data-method' => 'POST',
 
-                                        ]) ?>
                                     <?php endif; ?>
+                                <?php else: ?>
+                                    <?= Html::a('<i class="fas fa-user-plus"></i> Ikuti', ['booth/follow', 'id' => $model->id], ['class' => 'btn btn--sm btn--round btn--bordered', 'data-method' => 'POST',
 
+                                    ]) ?>
                                 <?php endif; ?>
 
                                 <?= Html::a('<i class="fab fa-whatsapp"></i> Chat', 'https://api.whatsapp.com/send?phone=' . $model->nomor_telepon, ['class' => 'btn btn--round btn--sm btn--icon btn-success', 'target' => '_blank']) ?>

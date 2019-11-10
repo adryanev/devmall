@@ -106,7 +106,7 @@ class SiteController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
-                    return $this->goHome();
+                    return $this->goBack();
                 }
             }
         }

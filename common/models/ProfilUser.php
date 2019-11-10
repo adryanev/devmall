@@ -25,6 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property User $user
+ * @property string $namaLengkap
  */
 class ProfilUser extends \yii\db\ActiveRecord
 {

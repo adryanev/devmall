@@ -6,13 +6,33 @@ use common\models\Booth;
 use common\models\Follow;
 use frontend\models\BoothSearch;
 use frontend\models\ProdukSearch;
+use frontend\models\UlasanSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\web\MethodNotAllowedHttpException;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 class BoothController extends \yii\web\Controller
 {
+
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'index' => ['GET'],
+                    'view' => ['GET'],
+                    'produk' => ['GET'],
+                    'follow' => ['POST'],
+                    'unfollow' => ['POST'],
+                    'review' => ['GET']
+                ]
+            ]
+        ];
+    }
+
     public function actionIndex()
     {
         $modelSearch = new BoothSearch();
@@ -53,9 +73,6 @@ class BoothController extends \yii\web\Controller
 
     public function actionFollow($id)
     {
-        if (!Yii::$app->request->isPost) {
-            throw new MethodNotAllowedHttpException('Akses di tolak');
-        }
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
 
@@ -75,9 +92,6 @@ class BoothController extends \yii\web\Controller
 
     public function actionUnfollow($id)
     {
-        if (!Yii::$app->request->isPost) {
-            throw new MethodNotAllowedHttpException('Akses di tolak');
-        }
 
         $user = Yii::$app->user->identity->getId();
 
@@ -86,6 +100,14 @@ class BoothController extends \yii\web\Controller
 
         return $this->redirect(['booth/view', 'id' => $id]);
 
+    }
+
+    public function actionReview($booth)
+    {
+        $searchModel = new UlasanSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('review', compact('searchModel', 'dataProvider'));
     }
 
 }
