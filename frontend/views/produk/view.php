@@ -59,8 +59,8 @@ foreach ($dataGambar as $gamber) {
 
                         <div class="item-action">
                             <div class="action-btns">
-                                <?= Html::a('<span class="lnr lnr-link"></span> Demo', $model->demo, ['class' => 'btn btn--round btn--lg', 'target' => '_blank']) ?>
-                                <a href="#" class="btn btn--round btn--lg btn--icon">
+                                <?= Html::a('<span class="lnr lnr-link"></span> Demo', $model->demo, ['class' => 'btn btn--round btn--lg btn-light', 'target' => '_blank']) ?>
+                                <a href="#" class="btn btn-secondary btn--round btn--lg btn--icon">
                                     <span class="lnr lnr-heart"></span>Tambah ke Favorit</a>
                                 <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
                             </div>
@@ -126,9 +126,10 @@ foreach ($dataGambar as $gamber) {
                         </div>
 
                         <div class="purchase-button">
-                            <a href="#" class="btn btn--lg btn--round cart-btn">
+                            <a href="#" class="btn btn--lg btn--round cart-btn btn-warning">
                                 <span class="fas fa-comments-dollar"></span> Nego</a>
-                            <a href="#" class="btn btn--lg btn--round"><span class="fas fa-shopping-bag"></span>
+                            <a href="#" class="btn btn--lg btn--round btn-info"><span
+                                        class="fas fa-shopping-bag"></span>
                                 Beli Sekarang</a>
                             <a href="#" class="btn btn--lg btn--round cart-btn">
                                 <span class="lnr lnr-cart"></span> Tambah ke Keranjang</a>
