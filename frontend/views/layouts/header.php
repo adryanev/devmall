@@ -209,8 +209,8 @@ use yii\bootstrap4\Modal; ?>
                                                 <span class="lnr lnr-cart"></span>Purchases</a>
                                         </li>
                                         <li>
-                                            <a href="favourites.html">
-                                                <span class="lnr lnr-heart"></span> Favourite</a>
+                                            <?=Html::a('<span class="lnr lnr-heart"></span> Favorit',['user/favorit'])?>
+
                                         </li>
                                         <li>
                                             <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>',['site/logout'],['data'=>[

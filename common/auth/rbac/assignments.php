@@ -4,11 +4,9 @@ return [
         'superadmin',
     ],
     2 => [
-        'pengguna',
         'penjual',
     ],
     3 => [
         'pengguna',
-        'penjual',
     ],
 ];

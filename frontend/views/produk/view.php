@@ -60,8 +60,18 @@ foreach ($dataGambar as $gamber) {
                         <div class="item-action">
                             <div class="action-btns">
                                 <?= Html::a('<span class="lnr lnr-link"></span> Demo', $model->demo, ['class' => 'btn btn--round btn--lg btn-light', 'target' => '_blank']) ?>
-                                <a href="#" class="btn btn-secondary btn--round btn--lg btn--icon">
-                                    <span class="lnr lnr-heart"></span>Tambah ke Favorit</a>
+                                <?php if(Yii::$app->user->identity->isFavoriting($model->id)): ?>
+                                    <?=Html::a('<span class="lnr lnr-heart"></span>Hapus dari Favorit',['favorit/remove','id'=>$model->id],['class'=>'btn btn-danger btn--round btn--lg btn--icon','data'=>[
+                                        'method'=>'POST',
+                                        'params'=>['user'=>Yii::$app->user->identity->getId()]
+                                    ]])?>
+                                <?php else: ?>
+                                <?=Html::a('<span class="lnr lnr-heart"></span>Tambah ke Favorit',['favorit/add','id'=>$model->id],['class'=>'btn btn-secondary btn--round btn--lg btn--icon','data'=>[
+                                        'method'=>'POST',
+                                    'params'=>['user'=>Yii::$app->user->identity->getId()]
+                                ]])?>
+                                <?php endif; ?>
+
                                 <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
                             </div>
                         </div>

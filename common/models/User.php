@@ -77,7 +77,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username]);
+        return static::find()->where(['username'=>$username])->andWhere(['status'=>User::STATUS_ACTIVE])->orWhere(['status'=>USER::STATUS_VERIFIED])->one();
     }
 
     /**
@@ -326,5 +326,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFollows()
     {
         return $this->hasMany(Follow::class, ['id_pengguna' => 'id']);
+    }
+    public function isFavoriting($id){
+        $result = $this->getFavorits()->andWhere(['id_produk'=>$id])->one();
+        return empty($result)? false: true;
     }
 }

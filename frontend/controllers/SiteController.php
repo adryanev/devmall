@@ -110,6 +110,7 @@ class SiteController extends Controller
                 }
             }
         }
+
         $model->password = '';
 
         return $this->render('/common-forms/user-login-form', [
