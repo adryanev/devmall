@@ -141,9 +141,11 @@ foreach ($dataGambar as $gamber) {
                             <a href="#" class="btn btn--lg btn--round btn-info"><span
                                         class="fas fa-shopping-bag"></span>
                                 Beli Sekarang</a>
-                            <a href="#" class="btn btn--lg btn--round cart-btn">
-                                <span class="lnr lnr-cart"></span> Tambah ke Keranjang</a>
-
+                            <?=Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang',['keranjang/tambah'],['class'=>'btn btn--lg btn--round cart-btn','data'=>[
+                                    'method'=>'POST',
+                                'params'=>['produk'=>$model->id,
+                                    'user'=>Yii::$app->user->identity->getId()]
+                            ]])?>
                         </div>
                         <!-- end /.purchase-button -->
                     </div>

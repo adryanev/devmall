@@ -9,7 +9,10 @@
 
 use frontend\models\forms\search\SearchProductForm;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Modal; ?>
+use yii\bootstrap4\Modal;
+use yii\helpers\ArrayHelper;
+
+?>
 
 
 <!--================================
@@ -90,88 +93,60 @@ use yii\bootstrap4\Modal; ?>
                                     <?php endif; ?>
 
                                 </li>
-                                <li class="has_dropdown">
-                                    <?php if (!Yii::$app->user->isGuest): ?>
 
-                                    <div class="icon_wrap">
-                                        <span class="lnr lnr-envelope"></span>
-                                        <span class="notification_count msg">6</span>
-                                    </div>
-
-                                    <div class="dropdowns messaging--dropdown">
-                                        <div class="dropdown_module_header">
-                                            <h4>My Messages</h4>
-                                            <a href="message.html">View All</a>
-                                        </div>
-
-                                        <div class="messages">
-                                            <a href="message.html" class="message recent">
-                                                <div class="message__actions_avatar">
-                                                    <div class="avatar">
-                                                        <img src="images/notification_head4.png" alt="">
-                                                    </div>
-                                                </div>
-                                                <!-- end /.actions -->
-
-                                                <div class="message_data">
-                                                    <div class="name_time">
-                                                        <div class="name">
-                                                            <p>NukeThemes</p>
-                                                            <span class="lnr lnr-envelope"></span>
-                                                        </div>
-
-                                                        <span class="time">Just now</span>
-                                                        <p>Hello John Smith! Nunc placerat mi ...</p>
-                                                    </div>
-                                                </div>
-                                                <!-- end /.message_data -->
-                                            </a>
-                                            <!-- end /.message -->
-                                        </div>
-                                    </div>
-                                    <?php endif; ?>
-
-                                </li>
 
                                 <li class="has_dropdown">
-                                    <?php if (!Yii::$app->user->isGuest): ?>
+                                    <?php if (!Yii::$app->user->isGuest):
+                                        $cart = Yii::$app->user->identity->getKeranjangs();
+
+                                        ?>
 
                                     <div class="icon_wrap">
                                         <span class="lnr lnr-cart"></span>
-                                        <span class="notification_count purch">2</span>
+                                        <span class="notification_count purch"><?=$cart->count()?></span>
                                     </div>
 
                                     <div class="dropdowns dropdown--cart">
                                         <div class="cart_area">
+                                            <?php foreach ($cart->limit(3)->all() as $produkKeranjang):?>
                                             <div class="cart_product">
                                                 <div class="product__info">
                                                     <div class="thumbn">
-                                                        <?=Html::img('@web/images/capro2.jpg')?>
+
+                                                        <?=Html::img('@.penjual/upload/produk/'.$produkKeranjang->galeriProduks[0]->nama_berkas,['height'=>70,'width'=>80])?>
                                                     </div>
 
                                                     <div class="info">
-                                                        <a class="title" href="single-product.html">Flounce - Multipurpose OpenCart Theme</a>
+                                                        <?=Html::a($produkKeranjang->nama,['produk/view','id'=>$produkKeranjang->id],['class'=>'title'])?>
                                                         <div class="cat">
-                                                            <a href="#">
-                                                                <?=Html::img('@web/images/catword.png')?>Wordpress</a>
+                                                            <?php foreach ($produkKeranjang->kategoriProduk as $kategori): ?>
+                                                            <?=Html::a($kategori->nama,['produk/search','SearchProdukForm[kategori]'=>$kategori->nama])?>
+                                                            <?php endforeach; ?>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="product__action">
-                                                    <a href="#">
-                                                        <span class="lnr lnr-trash"></span>
-                                                    </a>
-                                                    <p>$60</p>
+                                                    <?=Html::a('<span class="lnr lnr-trash"></span>',['keranjang/hapus'],['data'=>[
+                                                            'method'=>'POST',
+                                                        'params'=>['user'=>Yii::$app->user->identity->getId(),
+                                                            'produk'=>$produkKeranjang->id]
+                                                    ]])?>
+                                                    <p><?=Yii::$app->formatter->asCurrency($produkKeranjang->harga)?></p>
                                                 </div>
                                             </div>
+                                            <?php endforeach; ?>
+                                            <?php
+                                            $keranjangTotal = array_sum(array_values(ArrayHelper::map($cart->all(),'harga','harga')));
+
+                                            ?>
                                             <div class="total">
                                                 <p>
-                                                    <span>Total :</span>$80</p>
+                                                    <span>Total :</span><?=Yii::$app->formatter->asCurrency($keranjangTotal)?></p>
                                             </div>
                                             <div class="cart_action">
-                                                <a class="go_cart" href="cart.html">View Cart</a>
-                                                <a class="go_checkout" href="checkout.html">Checkout</a>
+                                                <?=Html::a('Lihat Keranjang',['keranjang/index'],['class'=>'go_cart'])?>
+                                                <?=Html::a('Bayar',['pembayaran/keranjang'],['class'=>'go_checkout'])?>
                                             </div>
                                         </div>
                                     </div>

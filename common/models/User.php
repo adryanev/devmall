@@ -33,6 +33,8 @@ use yii\web\IdentityInterface;
  * @property Follow[] $follows
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
+ * @property Keranjang[] $keranjangs
+
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
@@ -77,7 +79,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::find()->where(['username'=>$username])->andWhere(['status'=>User::STATUS_ACTIVE])->orWhere(['status'=>USER::STATUS_VERIFIED])->one();
+        return static::find()->where(['status'=>User::STATUS_ACTIVE])->orWhere(['status'=>USER::STATUS_VERIFIED])->andWhere(['username'=>$username])->one();
     }
 
     /**
@@ -230,6 +232,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getVerifikasiUser()
     {
         return $this->hasOne(VerifikasiUser::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKeranjangs()
+    {
+        return $this->hasMany(Produk::className(), ['id'=>'id_produk'])->viaTable(Keranjang::tableName(),['id_user'=>'id']);
     }
 
     /**
