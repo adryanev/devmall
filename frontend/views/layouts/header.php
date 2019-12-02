@@ -146,7 +146,7 @@ use yii\helpers\ArrayHelper;
                                             </div>
                                             <div class="cart_action">
                                                 <?=Html::a('Lihat Keranjang',['keranjang/index'],['class'=>'go_cart'])?>
-                                                <?=Html::a('Bayar',['pembayaran/keranjang'],['class'=>'go_checkout'])?>
+                                                <?=Html::a('Bayar',['pembayaran/checkout'],['class'=>'go_checkout'])?>
                                             </div>
                                         </div>
                                     </div>
@@ -176,12 +176,11 @@ use yii\helpers\ArrayHelper;
                                 <div class="dropdowns dropdown--author">
                                     <ul>
                                         <li>
-                                            <a href="<?=\yii\helpers\Url::to(['settings/account'])?>">
-                                                <span class="lnr lnr-cog"></span> Setting</a>
+                                            <?=Html::a('<span class="lnr lnr-cog"></span> Setting',['settings/account'])?>
                                         </li>
                                         <li>
-                                            <a href="cart.html">
-                                                <span class="lnr lnr-cart"></span>Purchases</a>
+                                            <?=Html::a(' <span class="lnr lnr-cart"></span>Pembelian',['user/pembelian'])?>
+
                                         </li>
                                         <li>
                                             <?=Html::a('<span class="lnr lnr-heart"></span> Favorit',['user/favorit'])?>

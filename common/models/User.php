@@ -242,6 +242,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Produk::className(), ['id'=>'id_produk'])->viaTable(Keranjang::tableName(),['id_user'=>'id']);
     }
 
+    public function getKeranjang(){
+        return $this->hasMany(Keranjang::className(),['id_user'=>'id']);
+    }
+
     /**
      * {@inheritdoc}
      */

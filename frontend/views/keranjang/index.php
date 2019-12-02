@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <span>Total</span><?=Yii::$app->formatter->asCurrency($keranjangTotal)?></p>
                                 </div>
 
-                                <?=Html::a('Lanjut ke Pembayaran',['pembayaran/keranjang'],['class'=>'btn btn--round btn--md checkout_link'])?>
+                                <?=Html::a('Lanjut ke Pembayaran',['pembayaran/checkout'],['class'=>'btn btn--round btn--md checkout_link'])?>
                              </div>
                         </div>
                         <!-- end .col-md-12 -->

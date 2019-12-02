@@ -256,7 +256,6 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if ($user = $model->verifyEmail()) {
-            if (Yii::$app->user->login($user)) {
                 Yii::$app->session->setFlash('success', [
                     'type' => 'success',
                     'icon' => 'fas fa-check',
@@ -264,7 +263,6 @@ class SiteController extends Controller
                     'title' => 'Verifikasi Berhasil!',
                 ]);
                 return $this->goHome();
-            }
         }
 
         Yii::$app->session->setFlash('danger', [

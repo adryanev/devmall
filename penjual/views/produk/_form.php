@@ -33,7 +33,7 @@ use yii\helpers\FileHelper;
             \dosamigos\selectize\SelectizeTextInput::className(),
             [
                 'loadUrl' => ['produk/kategori-list'],
-                'options' => ['class' => 'form-control'],
+                'options' => ['class' => 'form-control','required'=>true],
                 'clientOptions' => [
                     'plugins' => ['remove_button'],
                     'valueField' => 'name',

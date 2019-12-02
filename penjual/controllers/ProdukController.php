@@ -170,24 +170,73 @@ class ProdukController extends Controller
     {
         $model = Produk::findOne($id);
         $negoModel = $model->nego0;
+        if(empty($negoModel)){
+            $negoModel = new Nego();
+        }
         $galeriModel = new GaleriProduk();
+        $booth = Yii::$app->user->identity->booth;
+
         $dataGaleri = GaleriProduk::find()->where(['id_produk' => $model->id])->all();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $update = $model->update();
-            Yii::$app->session->setFlash('success', 'Berhasil mengubah Produk.');
+        if ($model->load(Yii::$app->request->post()) && $negoModel->load(Yii::$app->request->post()) && $galeriModel->load(Yii::$app->request->post())) {
 
-            return $this->redirect(['view', 'id' => $update->id]);
+            $manual = UploadedFile::getInstance($model, 'manual');
+            $galeri = UploadedFile::getInstances($galeriModel, 'nama_berkas');
+            $transaction = Yii::$app->db->beginTransaction();
+
+            $model->id_booth = $booth->id;
+            if (!empty($manual)) {
+                $timestamp = Carbon::now()->timestamp;
+                $filename = $timestamp . '-' . $manual->baseName . '.' . $manual->extension;
+                $model->manual = $filename;
+                $manual->saveAs(Yii::getAlias("@penjual/web/upload/produk/") . $filename);
+
+
+            }
+            if (!$model->update(false)) {
+                throw new Exception('Gagal menyimpan produk');
+            }
+            if ($model->nego) {
+                if($negoModel){
+                    $negoModel->id_produk = $model->id;;
+                    $negoModel->setAttributes($negoModel->attributes);
+                    $negoModel->update(false);
+
+                }
+
+            }
+
+            if (!empty($galeri)) {
+                foreach ($galeri as $file) {
+                    $timestamp = Carbon::now()->timestamp;
+                    $filename = $timestamp . '-' . $file->baseName . '.' . $file->extension;
+                    $galeri = new GaleriProduk();
+                    $galeri->id_produk = $model->id;
+                    $galeri->nama_berkas = $filename;
+                    $galeri->jenis_berkas = $file->extension;
+                    $galeri->save(false);
+                    $file->saveAs(Yii::getAlias("@penjual/web/upload/produk/") . $filename);
+
+                }
+            }
+            try {
+                $transaction->commit();
+                return $this->redirect(['produk/view', 'id' => $model->id]);
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+
+        }
+            return $this->render('update', [
+                'model' => $model,
+                'negoModel' => $negoModel,
+                'galeriModel' => $galeriModel,
+                'dataGaleri' => $dataGaleri
+
+            ]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-            'negoModel' => $negoModel,
-            'galeriModel' => $galeriModel,
-            'dataGaleri' => $dataGaleri
-
-        ]);
-    }
 
     /**
      * Deletes an existing Produk model.

@@ -141,11 +141,17 @@ foreach ($dataGambar as $gamber) {
                             <a href="#" class="btn btn--lg btn--round btn-info"><span
                                         class="fas fa-shopping-bag"></span>
                                 Beli Sekarang</a>
+                            <?php
+                            /** @var $cart yii\db\ActiveQuery */
+                            $cart = Yii::$app->user->identity->getKeranjang();
+                           $keranjs = $cart->andHaving(['id_produk'=>$model->id])->one();
+                            if(!$keranjs):?>
                             <?=Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang',['keranjang/tambah'],['class'=>'btn btn--lg btn--round cart-btn','data'=>[
                                     'method'=>'POST',
                                 'params'=>['produk'=>$model->id,
                                     'user'=>Yii::$app->user->identity->getId()]
                             ]])?>
+                            <?php endif; ?>
                         </div>
                         <!-- end /.purchase-button -->
                     </div>
@@ -187,15 +193,15 @@ foreach ($dataGambar as $gamber) {
 
                         <ul class="infos">
                             <li>
-                                <p class="data-label">Released</p>
+                                <p class="data-label">Dirilis</p>
                                 <p class="info"><?= Yii::$app->formatter->asDate($model->created_at) ?></p>
                             </li>
                             <li>
-                                <p class="data-label">Updated</p>
+                                <p class="data-label">Diperbaharui</p>
                                 <p class="info"><?= Yii::$app->formatter->asDate($model->updated_at) ?> </p>
                             </li>
                             <li>
-                                <p class="data-label">Category</p>
+                                <p class="data-label">Kategori</p>
                                 <p class="info text-info">
                                     <?php
                                     $kategoriProduk = ArrayHelper::map($model->kategoriProduk, 'id', 'nama');
@@ -204,8 +210,8 @@ foreach ($dataGambar as $gamber) {
                                 </p>
                             </li>
                             <li>
-                                <p class="data-label">Files Included</p>
-                                <p class="info"><?= empty($model->manual) ? '-' : 'Buku Panduan' ?></p>
+                                <p class="data-label"> Buku Panduan</p>
+                                <p class="info"><?= empty($model->manual) ? 'Tidak' : 'Ya' ?></p>
                             </li>
                         </ul>
                     </div>

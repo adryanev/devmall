@@ -62,7 +62,7 @@ class Produk extends \yii\db\ActiveRecord
     {
         return [
             [['id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
-            [['deskripsi', 'spesifikasi', 'fitur'], 'required'],
+            [['deskripsi', 'spesifikasi', 'fitur','nama','kategori','harga'], 'required'],
             [['deskripsi', 'spesifikasi', 'fitur'], 'string'],
             [['nama', 'demo', 'manual'], 'string', 'max' => 255],
             [['id_booth'], 'unique'],
