@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Kategori;
+use common\models\Produk;
 use frontend\models\ContactForm;
 use frontend\models\forms\search\SearchProductIndexForm;
 use frontend\models\forms\user\UserLoginForm;
@@ -13,6 +14,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
@@ -81,13 +84,14 @@ class SiteController extends Controller
         $this->layout = 'main-index';
         $kategori = Kategori::find()->all();
         $dataKategori = ArrayHelper::map($kategori, 'nama', 'nama');
+        $produkDataProvider = new ActiveDataProvider(['query' => Produk::find()->orderBy(new Expression('rand()'))->limit(10),'pagination' => false]);
 
         $modelPencarian = new SearchProductIndexForm();
         if ($modelPencarian->load(Yii::$app->request->post())) {
             return $this->redirect(['produk/search', 'produk' => $modelPencarian->product, 'kategori' => $modelPencarian->kategori]);
         }
 
-        return $this->render('index', compact('dataKategori', 'modelPencarian'));
+        return $this->render('index', compact('dataKategori', 'modelPencarian','produkDataProvider'));
     }
 
     /**

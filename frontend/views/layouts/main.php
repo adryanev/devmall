@@ -46,7 +46,7 @@ MartplaceAsset::register($this);
 <?= $this->render('header', ['searchModel' => Yii::$app->view->params['searchModel']]) ?>
 <?= $this->render('breadcrumb') ?>
 <?= $this->render('content', ['content' => $content]) ?>
-<?= $this->render('footer') ?>
+<?= $this->render('footer', ['configApps'=>Yii::$app->view->params['configApps']]) ?>
 <?php $this->endBody() ?>
 </body>
 </html>

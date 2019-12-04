@@ -7,6 +7,10 @@
  * Time: 21.05
  */
 
+/**
+ * @var $configApps array
+ */
+
 use yii\bootstrap\Html; ?>
 <!--================================
        START FOOTER AREA
@@ -21,8 +25,7 @@ use yii\bootstrap\Html; ?>
                         <div class="info__logo">
                             <img src="images/flogo.png" alt="footer logo">
                         </div>
-                        <p class="info--text">Nunc placerat mi id nisi interdum they mollis. Praesent pharetra, justo ut scel erisque the mattis,
-                            leo quam.</p>
+                        <p class="info--text"><?= $configApps['deskripsi'] ?></p>
                         <ul class="info-contact">
                             <li>
                                 <span class="lnr lnr-phone info-icon"></span>
