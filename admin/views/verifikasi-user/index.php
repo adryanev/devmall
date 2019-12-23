@@ -23,16 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <i class="flaticon2-list-2"></i>
                     </span>
                     <h3 class="kt-portlet__head-title">
-                        <?= Html::encode($this->title) ?> <small>portlet sub title</small>
+                        <?= Html::encode($this->title) ?> <small>KTP</small>
                     </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-
-                            <?= Html::button('<i class=flaticon2-add></i> Tambah Verifikasi User', ['value' => Url::to(['create']), 'title' => 'Tambah Verifikasi User', 'class' => 'showModalButton btn btn-success btn-elevate btn-elevate-air']); ?>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="kt-portlet__body">

@@ -51,7 +51,8 @@
         "2amigos/yii2-selectize-widget": "~1.0",
         "kartik-v/yii2-widget-rating": "dev-master",
         "rsr/yii2-button-dropdown-sorter": "^1.0",
-        "froala/yii2-froala-editor": "^3.0"
+        "froala/yii2-froala-editor": "^3.0",
+        "midtrans/midtrans-php": "^2.0"
 
 
     },

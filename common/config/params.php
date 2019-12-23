@@ -1,6 +1,6 @@
 <?php
 
-$ini = parse_ini_file(__DIR__.'/../../system-configuration.ini');
+$ini = parse_ini_file(__DIR__ . '/../../system-configuration.ini');
 
 return [
     'adminEmail' => 'admin@example.com',
@@ -8,11 +8,14 @@ return [
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
-    'instansi'=>$ini['instansi'],
-    'nama_sistem'=>$ini['nama_sistem'],
-    'url_instansi'=>$ini['url_instansi'],
-    'author'=>$ini['author'],
-    'maps_api'=>$ini['google_maps'],
+    'instansi' => $ini['instansi'],
+    'nama_sistem' => $ini['nama_sistem'],
+    'url_instansi' => $ini['url_instansi'],
+    'author' => $ini['author'],
+    'maps_api' => $ini['google_maps'],
+    'midtrans_client_key' => $ini['midtrans_client_key'],
+    'midtrans_server_key' => $ini['midtrans_server_key'],
+    'midtrans_merchant_id' => $ini['midtrans_merchant_id'],
     'bsVersion' => '4.x', // this will set globally `bsVersion` to Bootstrap 4.x for all Krajee Extensions
     'mdm.admin.configs' => [
         'advanced' => [

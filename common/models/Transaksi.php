@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -14,12 +13,11 @@ use yii\behaviors\TimestampBehavior;
  * @property int $total
  * @property int $status
  * @property int $expire
- * @property string $metode_pembayaran
  * @property int $created_at
  * @property int $updated_at
  * @property string $jenis_transaksi
- * @property int $id_booth
  * @property string $kode_transaksi
+ * @property string $snap_token
  *
  * @property User $user
  * @property Booth $booth
@@ -28,6 +26,14 @@ use yii\behaviors\TimestampBehavior;
  */
 class Transaksi extends \yii\db\ActiveRecord
 {
+
+    const STATUS_SUCCESS = 1;
+    const STATUS_PENDING = 0;
+    const STATUS_FAILED = 3;
+    const STATUS_EXPIRED = 4;
+    const TRANSAKSI_TUNAI = 'tunai';
+    const TRANSAKSI_CICIL = 'cicil';
+
     /**
      * {@inheritdoc}
      */
@@ -40,6 +46,7 @@ class Transaksi extends \yii\db\ActiveRecord
     {
         return [TimestampBehavior::class];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -47,10 +54,8 @@ class Transaksi extends \yii\db\ActiveRecord
     {
         return [
             [['id_user', 'waktu', 'total', 'status', 'expire', 'created_at', 'updated_at', 'id_booth'], 'integer'],
-            [['metode_pembayaran'], 'string', 'max' => 6],
-            [['jenis_transaksi', 'kode_transaksi'], 'string', 'max' => 255],
+            [['jenis_transaksi', 'kode_transaksi', 'snap_token'], 'string', 'max' => 255],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
-            [['id_booth'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id_booth' => 'id']],
         ];
     }
 
@@ -66,12 +71,11 @@ class Transaksi extends \yii\db\ActiveRecord
             'total' => 'Total',
             'status' => 'Status',
             'expire' => 'Expire',
-            'metode_pembayaran' => 'Metode Pembayaran',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'jenis_transaksi' => 'Jenis Transaksi',
-            'id_booth' => 'Id Booth',
             'kode_transaksi' => 'Kode Transaksi',
+            'snap_token' => 'Snap Token'
         ];
     }
 
@@ -81,14 +85,6 @@ class Transaksi extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getBooth()
-    {
-        return $this->hasOne(Booth::className(), ['id' => 'id_booth']);
     }
 
     /**

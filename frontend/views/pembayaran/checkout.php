@@ -6,217 +6,230 @@
  */
 $profilUser = $user->profilUser;
 $this->title = 'Pembayaran';
+$total = 0;
 
 use common\models\Keranjang;
 use yii\bootstrap4\Html;
-use yii\helpers\ArrayHelper; ?>
+use yii\helpers\Json;
+use yii\helpers\Url;
 
-<!--================================
-           START DASHBOARD AREA
-   =================================-->
-<section class="dashboard-area">
- <div class="dashboard_contents">
-  <div class="container">
-    <div class="row">
-     <div class="col-lg-6">
-      <div class="information_module">
-       <div class="toggle_title">
-        <h4>Informasi Pembayaran </h4>
-       </div>
+?>
 
-       <div class="information__set">
-        <div class="information_wrapper form--fields">
-         <div class="row">
-          <div class="col-md-6">
-           <div class="form-group">
-            <label for="first_name">Nama Depan
-            </label>
-               <?= Html::textInput('nama_depan',$profilUser->nama_depan,['readonly'=>true,'class'=>'text_field'])?>
-           </div>
-          </div>
+    <!--================================
+               START DASHBOARD AREA
+       =================================-->
+    <section class="dashboard-area">
+        <div class="dashboard_contents">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="information_module">
+                            <div class="toggle_title">
+                                <h4>Informasi Pembayaran </h4>
+                            </div>
 
-          <div class="col-md-6">
-           <div class="form-group">
-            <label for="last_name">Nama Belakang
-            </label>
-               <?= Html::textInput('nama_belakang',$profilUser->nama_belakang,['readonly'=>true,'class'=>'text_field'])?>
-           </div>
-          </div>
-         </div>
-         <!-- end /.row -->
+                            <div class="information__set">
+                                <div class="information_wrapper form--fields">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="first_name">Nama Depan
+                                                </label>
+                                                <?= Html::textInput('nama_depan', $profilUser->nama_depan, ['readonly' => true, 'class' => 'text_field']) ?>
+                                            </div>
+                                        </div>
 
-         <div class="form-group">
-          <label for="email1">Email
-           <sup>*</sup>
-          </label>
-             <?= Html::textInput('email_user',$user->email,['readonly'=>true,'class'=>'text_field'])?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="last_name">Nama Belakang
+                                                </label>
+                                                <?= Html::textInput('nama_belakang', $profilUser->nama_belakang, ['readonly' => true, 'class' => 'text_field']) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end /.row -->
+
+                                    <div class="form-group">
+                                        <label for="email1">Email
+                                            <sup>*</sup>
+                                        </label>
+                                        <?= Html::textInput('email_user', $user->email, ['readonly' => true, 'class' => 'text_field']) ?>
 
 
-         <div class="form-group">
-          <label for="address1">Nomor Hp</label>
-             <?= Html::textInput('nomor_hp_user',$user->nomor_hp,['readonly'=>true,'class'=>'text_field'])?>
-         </div>
+                                        <div class="form-group">
+                                            <label for="address1">Nomor Hp</label>
+                                            <?= Html::textInput('nomor_hp_user', $user->nomor_hp, ['readonly' => true, 'class' => 'text_field']) ?>
+                                        </div>
 
-         </div>
-        </div>
-       </div>
-       <!-- end /.information__set -->
-      </div>
-      <!-- end /.information_module -->
-     </div>
-     <!-- end /.col-md-6 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end /.information__set -->
+                        </div>
+                        <!-- end /.information_module -->
+                    </div>
+                    <!-- end /.col-md-6 -->
 
-     <div class="col-lg-6">
-      <div class="information_module order_summary">
-       <div class="toggle_title">
-        <h4>Produk dibeli</h4>
-       </div>
+                    <div class="col-lg-6">
+                        <div class="information_module order_summary">
+                            <div class="toggle_title">
+                                <h4>Produk dibeli</h4>
+                            </div>
 
-       <ul>
-           <?php
-           $total = 0;
-           foreach ($keranjangDataProvider->models as /** @var $model Keranjang */$model) :?>
-        <li class="item">
-            <?=Html::a($model->produk->nama,['produk/view','id'=>$model->produk->id],['target'=>'_blank'])?>
-         <span><?=Yii::$app->formatter->asCurrency($model->produk->harga)?></span>
-        </li>
+                            <ul>
+                                <?php
 
-           <?php
-           $total+=$model->produk->harga;
-           endforeach; ?>
-           <hr>
-           <li class="item">
-               <a>Total</a>
-               <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
+                                foreach ($keranjangDataProvider->models as /** @var $model Keranjang */
+                                         $model) :?>
+                                    <li class="item">
+                                        <?= Html::a($model->produk->nama, ['produk/view', 'id' => $model->produk->id], ['target' => '_blank']) ?>
+                                        <span><?= Yii::$app->formatter->asCurrency($model->produk->harga) ?></span>
+                                    </li>
 
-           </li>
-       </ul>
+                                    <?php
+                                    $total += $model->produk->harga;
+                                endforeach; ?>
+                                <hr>
+                                <li class="item">
+                                    <a>Total</a>
+                                    <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
 
-      </div>
-      <!-- end /.information_module-->
+                                </li>
+                            </ul>
 
-      <div class="information_module payment_options">
-       <div class="toggle_title">
-        <h4>Select Payment Method</h4>
-       </div>
+                        </div>
+                        <!-- end /.information_module-->
 
-       <ul>
-        <li>
-         <div class="custom-radio">
-          <input type="radio" id="opt1" class="" name="filter_opt">
-          <label for="opt1">
-           <span class="circle"></span>Credit Card</label>
-         </div>
-         <img src="images/cards.png" alt="Visa Cards">
-        </li>
+                        <div class="information_module payment_options">
+                            <div class="toggle_title">
+                                <h4>Bayar</h4>
+                            </div>
 
-        <li>
-         <div class="custom-radio">
-          <input type="radio" id="opt2" class="" name="filter_opt">
-          <label for="opt2">
-           <span class="circle"></span>Paypal</label>
-         </div>
-         <img src="images/paypal.png" alt="Visa Cards">
-        </li>
 
-        <li>
-         <div class="custom-radio">
-          <input type="radio" id="opt3" class="" name="filter_opt">
-          <label for="opt3">
-           <span class="circle"></span>Martplace Credit</label>
-         </div>
-         <p>Balance
-          <span class="bold">$180</span>
-         </p>
-        </li>
-       </ul>
+                            <div class="payment_info modules__content">
+                                <form action="" class="form">
+                                    <div class="form-group">
+                                        <div class="custom_checkbox">
+                                            <?= Html::checkbox('cicilan', false, ['id' => 'cicilan-checkbox']) ?>
+                                            <label for="cicilan-checkbox">
+                                                <span class="shadow_checkbox"></span>
+                                                <span class="label_text">Cicilan</span>
+                                            </label>
 
-       <div class="payment_info modules__content">
-        <div class="form-group">
-         <label for="card_number">Card Number</label>
-         <input id="card_number" type="text" class="text_field" placeholder="Enter your card number here...">
-        </div>
+                                        </div>
 
-        <!-- lebel for date selection -->
-        <label for="name">Expire Date</label>
-        <div class="row">
-         <div class="col-md-6 col-sm-6">
-          <div class="form-group">
-           <div class="select-wrap select-wrap2">
-            <select name="months" id="name">
-             <option value="">Month</option>
-             <option value="jan">jan</option>
-             <option value="feb">Feb</option>
-             <option value="mar">Mar</option>
-             <option value="apr">Apr</option>
-             <option value="may">May</option>
-             <option value="jun">Jun</option>
-             <option value="jul">Jul</option>
-             <option value="aug">Aug</option>
-             <option value="sep">Sep</option>
-             <option value="oct">Oct</option>
-             <option value="nov">Nov</option>
-             <option value="dec">Dec</option>
-            </select>
-            <span class="lnr lnr-chevron-down"></span>
-           </div>
-           <!-- end /.select-wrap -->
-          </div>
-          <!-- end /.form-group -->
-         </div>
-         <!-- end /.col-md-6-->
+                                    </div>
+                                    <ul class="cicilan-list d-none">
+                                        <li>
+                                            <div class="custom-radio">
+                                                <?= Html::radio('jumlah_cicilan', false, ['id' => 'opt1', 'value' => 3]) ?>
+                                                <label for="opt1">
+                                                    <span class="circle"></span>3 Bulan</label>
+                                            </div>
+                                            <p><?= '(3x ' . Yii::$app->formatter->asCurrency(round($total / 3)) . ')' ?></p>
+                                        </li>
 
-         <div class="col-md-6 col-sm-6">
-          <div class="form-group">
-           <div class="select-wrap select-wrap2">
-            <select name="years" id="years">
-             <option value="">Year</option>
-             <option value="28">2028</option>
-             <option value="27">2027</option>
-             <option value="26">2026</option>
-             <option value="25">2025</option>
-             <option value="24">2024</option>
-             <option value="23">2023</option>
-             <option value="22">2022</option>
-             <option value="21">2021</option>
-             <option value="20">2020</option>
-             <option value="19">2019</option>
-             <option value="18">2019</option>
-             <option value="17">2019</option>
-            </select>
-            <span class="lnr lnr-chevron-down"></span>
-           </div>
-           <!-- end /.select-wrap -->
-          </div>
-          <!-- end /.form-group -->
-         </div>
-         <!-- end /.col-md-6-->
+                                        <li>
+                                            <div class="custom-radio">
+                                                <?= Html::radio('jumlah_cicilan', false, ['id' => 'opt2', 'value' => 6]) ?>
+                                                <label for="opt2">
+                                                    <span class="circle"></span>6 Bulan</label>
+                                            </div>
+                                            <p><?= '(6x ' . Yii::$app->formatter->asCurrency(round($total / 6)) . ')' ?></p>
+                                        </li>
+
+                                        <li>
+                                            <div class="custom-radio">
+                                                <?= Html::radio('jumlah_cicilan', false, ['id' => 'opt3', 'value' => 9]) ?>
+                                                <label for="opt3">
+                                                    <span class="circle"></span>9 Bulan</label>
+                                            </div>
+                                            <p><?= '(9x ' . Yii::$app->formatter->asCurrency(round($total / 9)) . ')' ?></p>
+                                        </li>
+
+                                        <li>
+                                            <div class="custom-radio">
+                                                <?= Html::radio('jumlah_cicilan', false, ['id' => 'opt4', 'value' => 12]) ?>
+                                                <label for="opt4">
+                                                    <span class="circle"></span>12 Bulan</label>
+                                            </div>
+                                            <p><?= '(12x ' . Yii::$app->formatter->asCurrency(round($total / 12)) . ')' ?></p>
+                                        </li>
+                                    </ul>
+                                </form>
+
+
+                                <button type="submit" id="button-bayar" class="btn btn--round btn--default">Konfirmasi
+                                    Pembelian
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /.information_module-->
+            </div>
+            <!-- end /.col-md-6 -->
         </div>
         <!-- end /.row -->
-
-        <div class="row">
-         <div class="col-md-6">
-          <div class="form-group">
-           <label for="cv_code">CVV Code</label>
-           <input id="cv_code" type="text" class="text_field" placeholder="Enter code here...">
-          </div>
-
-          <button type="submit" class="btn btn--round btn--default">Confirm Order</button>
-         </div>
+        <!-- end /form -->
         </div>
-       </div>
-      </div>
-      <!-- end /.information_module-->
-     </div>
-     <!-- end /.col-md-6 -->
-    </div>
-    <!-- end /.row -->
-   <!-- end /form -->
-  </div>
-  <!-- end /.container -->
- </div>
- <!-- end /.dashboard_menu_area -->
-</section>
-<!--================================
-        END DASHBOARD AREA
-=================================-->
+        <!-- end /.container -->
+        </div>
+        <!-- end /.dashboard_menu_area -->
+    </section>
+    <!--================================
+            END DASHBOARD AREA
+    =================================-->
+<?php
+
+\common\assets\MidtransAsset::register($this);
+
+$datakeranjang = Json::encode($keranjangDataProvider->models);
+$url = Url::to(['pembayaran/confirm-order']);
+$user = Json::encode(Yii::$app->user->identity);
+$js = <<<JS
+var cicil = 0;
+var cicilan = 0;
+var dataProduk = {keranjang:$datakeranjang,total:$total,user:$user,isCicilan: cicil,jumlahCicilan:cicilan};
+
+$('#cicilan-checkbox').on('change',function() {
+    var checked = $('#cicilan-checkbox').prop('checked');
+    if(checked){
+        dataProduk.isCicilan = true;
+       $('.cicilan-list').removeClass('d-none');
+       console.log(dataProduk);
+    }
+    else{
+        dataProduk.isCicilan = false;
+        dataProduk.jumlahCicilan = 1;
+        $('.cicilan-list').addClass('d-none');
+        console.log(dataProduk);
+    }
+});
+$('input[name=jumlah_cicilan]').on('change',function() {
+    dataProduk.jumlahCicilan = $('input[name=jumlah_cicilan]:checked').val();
+    console.log(dataProduk);
+});
+$('#button-bayar').on('click',function() {
+  console.log("bayar function triggered");
+  console.log(dataProduk);
+     $.post(
+        "$url",{data: dataProduk},
+        function(data, status) {
+            snap.pay(data.snap_token,{
+                onSuccess: function(result){
+                   console.log(result);
+                },
+                onPending: function(result) {
+                    console.log(result);
+                },
+                onError: function(result) {
+                    console.log(result);
+                }
+            });
+        }     
+    );
+});
+JS;
+
+$this->registerJs($js);

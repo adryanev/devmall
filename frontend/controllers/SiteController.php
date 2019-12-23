@@ -91,7 +91,16 @@ class SiteController extends Controller
             return $this->redirect(['produk/search', 'produk' => $modelPencarian->product, 'kategori' => $modelPencarian->kategori]);
         }
 
-        return $this->render('index', compact('dataKategori', 'modelPencarian','produkDataProvider'));
+        //new produk
+        $newProduk = Produk::find()->orderBy('created_at DESC');
+        $newProdukDataProvider = new ActiveDataProvider(['query' => $newProduk,'pagination' => [
+            'pageSize'=>6,
+        ]]);
+
+        //follower
+
+
+        return $this->render('index', compact('dataKategori', 'modelPencarian','produkDataProvider','newProdukDataProvider'));
     }
 
     /**

@@ -5,11 +5,15 @@
 /* @var $content string */
 
 use common\assets\martplace\MartplaceAsset;
+use common\models\Config;
 use kartik\growl\Growl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 
 MartplaceAsset::register($this);
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -46,7 +50,7 @@ MartplaceAsset::register($this);
 <?= $this->render('header', ['searchModel' => Yii::$app->view->params['searchModel']]) ?>
 <?= $this->render('breadcrumb') ?>
 <?= $this->render('content', ['content' => $content]) ?>
-<?= $this->render('footer', ['configApps'=>Yii::$app->view->params['configApps']]) ?>
+<?= $this->render('footer') ?>
 <?php $this->endBody() ?>
 </body>
 </html>

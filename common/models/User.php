@@ -345,4 +345,5 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $result = $this->getFavorits()->andWhere(['id_produk'=>$id])->one();
         return empty($result)? false: true;
     }
+
 }

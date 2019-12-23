@@ -12,11 +12,11 @@ class m191123_085455_alter_transaksi_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%transaksi}}','jenis_transaksi',$this->string());
-        $this->addColumn('{{%transaksi}}','id_booth',$this->integer());
-        $this->addForeignKey('fk-transaksi_booth','{{%transaksi}}','id_booth','{{%booth}}','id');
+        $this->addColumn('{{%transaksi}}', 'jenis_transaksi', $this->string());
+        $this->addColumn('{{%transaksi}}', 'id_booth', $this->integer());
+        $this->addForeignKey('fk-transaksi_booth', '{{%transaksi}}', 'id_booth', '{{%booth}}', 'id');
 
-        $this->addColumn('{{%transaksi}}','kode_transaksi',$this->string());
+        $this->addColumn('{{%transaksi}}', 'kode_transaksi', $this->string());
 
     }
 
@@ -25,10 +25,10 @@ class m191123_085455_alter_transaksi_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%transaksi}}','kode_transaksi');
-        $this->dropForeignKey('fk-transaksi-booth','{{%transaksi}}');
-        $this->dropColumn('{{%transaksi}}','id_booth');
-        $this->dropColumn('{{%transaksi}}','jenis_transaksi');
+        $this->dropColumn('{{%transaksi}}', 'kode_transaksi');
+        $this->dropForeignKey('fk-transaksi_booth', '{{%transaksi}}');
+        $this->dropColumn('{{%transaksi}}', 'id_booth');
+        $this->dropColumn('{{%transaksi}}', 'jenis_transaksi');
 
 
     }

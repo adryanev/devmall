@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b647cb36258b716816257155aa5a8da",
+    "content-hash": "1f3ac740c08d6212544d99fb95ea0d4f",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -358,8 +358,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/daneden/animate.css/zipball/ab5fe9dae4fdb936eee698ce1850a263008f0a99",
-                "reference": "ab5fe9dae4fdb936eee698ce1850a263008f0a99",
-                "shasum": null
+                "reference": "ab5fe9dae4fdb936eee698ce1850a263008f0a99"
             },
             "type": "bower-asset"
         },
@@ -368,14 +367,13 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:twbs/bootstrap.git",
+                "url": "https://github.com/twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
-                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
-                "shasum": null
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "require": {
                 "bower-asset/jquery": ">=1.9.1,<4.0"
@@ -396,8 +394,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/8521776076612b28c69385cafa28ccd8b7670eb7",
-                "reference": "8521776076612b28c69385cafa28ccd8b7670eb7",
-                "shasum": null
+                "reference": "8521776076612b28c69385cafa28ccd8b7670eb7"
             },
             "type": "bower-asset",
             "license": [
@@ -415,8 +412,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/DataTables/DataTables/zipball/156faa83386460c578e00c460eca9766e38a0c5f",
-                "reference": "156faa83386460c578e00c460eca9766e38a0c5f",
-                "shasum": null
+                "reference": "156faa83386460c578e00c460eca9766e38a0c5f"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7.0"
@@ -437,8 +433,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Jowin/Datatables-Bootstrap3/zipball/06d78a732dfd1da928ff118dd26249ae94021495",
-                "reference": "06d78a732dfd1da928ff118dd26249ae94021495",
-                "shasum": null
+                "reference": "06d78a732dfd1da928ff118dd26249ae94021495"
             },
             "type": "bower-asset"
         },
@@ -453,8 +448,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/DataTables/TableTools/zipball/5fc9d457b673fe3f2d84f32660ee74e29ce6f84e",
-                "reference": "5fc9d457b673fe3f2d84f32660ee74e29ce6f84e",
-                "shasum": null
+                "reference": "5fc9d457b673fe3f2d84f32660ee74e29ce6f84e"
             },
             "require": {
                 "bower-asset/datatables": ">=1.9.0",
@@ -467,14 +461,13 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
-                "shasum": null
+                "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -495,8 +488,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Bluefieldscom/intl-tel-input/zipball/fdf05e74e58f5824bf361620acf0d688433310f6",
-                "reference": "fdf05e74e58f5824bf361620acf0d688433310f6",
-                "shasum": null
+                "reference": "fdf05e74e58f5824bf361620acf0d688433310f6"
             },
             "type": "bower-asset"
         },
@@ -511,8 +503,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
-                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d",
-                "shasum": null
+                "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "type": "bower-asset",
             "license": [
@@ -524,14 +515,13 @@
             "version": "1.12.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:components/jqueryui.git",
+                "url": "https://github.com/components/jqueryui.git",
                 "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
-                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc",
-                "shasum": null
+                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
@@ -552,8 +542,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/brianreavis/microplugin.js/zipball/d8671e6cc769938648f8735610534427cdeeaf67",
-                "reference": "d8671e6cc769938648f8735610534427cdeeaf67",
-                "shasum": null
+                "reference": "d8671e6cc769938648f8735610534427cdeeaf67"
             },
             "type": "bower-asset",
             "license": [
@@ -565,14 +554,13 @@
             "version": "v1.3.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:bestiejs/punycode.js.git",
+                "url": "https://github.com/bestiejs/punycode.js.git",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bestiejs/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3",
-                "shasum": null
+                "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
             },
             "type": "bower-asset"
         },
@@ -587,8 +575,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/mouse0270/bootstrap-notify/zipball/c6a3e3acafda0815cce3703103499b6262500cd7",
-                "reference": "c6a3e3acafda0815cce3703103499b6262500cd7",
-                "shasum": null
+                "reference": "c6a3e3acafda0815cce3703103499b6262500cd7"
             },
             "require": {
                 "bower-asset/bootstrap": ">=2.0.0",
@@ -610,8 +597,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/selectize/selectize.js/zipball/eb0fca364f9bd6864ae197ea58c853f2717052a9",
-                "reference": "eb0fca364f9bd6864ae197ea58c853f2717052a9",
-                "shasum": null
+                "reference": "eb0fca364f9bd6864ae197ea58c853f2717052a9"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7.0",
@@ -634,8 +620,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/brianreavis/sifter.js/zipball/2a9c84ec5ac63ceaa4516205e013113626d36a2d",
-                "reference": "2a9c84ec5ac63ceaa4516205e013113626d36a2d",
-                "shasum": null
+                "reference": "2a9c84ec5ac63ceaa4516205e013113626d36a2d"
             },
             "type": "bower-asset",
             "license": [
@@ -647,14 +632,13 @@
             "version": "v7.33.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:sweetalert2/sweetalert2.git",
+                "url": "https://github.com/sweetalert2/sweetalert2.git",
                 "reference": "296862833b24e446c7bda35f040712840911cc7a"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/sweetalert2/sweetalert2/zipball/296862833b24e446c7bda35f040712840911cc7a",
-                "reference": "296862833b24e446c7bda35f040712840911cc7a",
-                "shasum": null
+                "reference": "296862833b24e446c7bda35f040712840911cc7a"
             },
             "type": "bower-asset",
             "license": [
@@ -672,8 +656,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
-                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
-                "shasum": null
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "require": {
                 "bower-asset/jquery": ">=1.8"
@@ -3032,6 +3015,55 @@
             "time": "2018-11-12T12:35:44+00:00"
         },
         {
+            "name": "midtrans/midtrans-php",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Midtrans/midtrans-php.git",
+                "reference": "71217bdf2366dbb692fc6ff1bdaa3a485d1a5425"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/71217bdf2366dbb692fc6ff1bdaa3a485d1a5425",
+                "reference": "71217bdf2366dbb692fc6ff1bdaa3a485d1a5425",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7.*",
+                "psy/psysh": "0.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Midtrans\\": "Midtrans/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andri Setiawan",
+                    "email": "andri.setiawan@veritrans.co.id"
+                },
+                {
+                    "name": "Alvin Litani",
+                    "email": "alvin.litani@veritrans.co.id"
+                },
+                {
+                    "name": "Ismail Faruqi",
+                    "email": "ismail.faruqi@veritrans.co.id"
+                }
+            ],
+            "description": "PHP Wrapper for Midtrans Payment API.",
+            "homepage": "https://midtrans.com",
+            "time": "2019-11-25T10:47:20+00:00"
+        },
+        {
             "name": "mpdf/mpdf",
             "version": "v8.0.3",
             "source": {
@@ -3329,9 +3361,7 @@
             "version": "4.3.1",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.1.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://registry.npmjs.org/bootstrap/-/bootstrap-4.3.1.tgz"
             },
             "type": "npm-asset",
             "license": [

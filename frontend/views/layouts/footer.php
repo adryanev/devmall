@@ -11,7 +11,17 @@
  * @var $configApps array
  */
 
-use yii\bootstrap\Html; ?>
+
+
+
+use common\models\Config;
+use yii\bootstrap\Html;
+use yii\helpers\ArrayHelper;
+
+$config = Config::find()->asArray()->all();
+$configArray = ArrayHelper::map($config,'key','value');
+$configApps = $configArray;
+?>
 <!--================================
        START FOOTER AREA
    =================================-->
@@ -29,15 +39,15 @@ use yii\bootstrap\Html; ?>
                         <ul class="info-contact">
                             <li>
                                 <span class="lnr lnr-phone info-icon"></span>
-                                <span class="info">Phone: +6789-875-2235</span>
+                                <span class="info"><?=$configApps['nomor_hp']?></span>
                             </li>
                             <li>
                                 <span class="lnr lnr-envelope info-icon"></span>
-                                <span class="info">support@aazztech.com</span>
+                                <span class="info"><?=$configApps['email']?></span>
                             </li>
                             <li>
                                 <span class="lnr lnr-map-marker info-icon"></span>
-                                <span class="info">202 New Hampshire Avenue Northwest #100, New York-2573</span>
+                                <span class="info"><?=$configApps['alamat']?></span>
                             </li>
                         </ul>
                     </div>

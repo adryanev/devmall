@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -22,6 +21,10 @@ use yii\behaviors\TimestampBehavior;
  */
 class TransaksiCicilan extends \yii\db\ActiveRecord
 {
+
+    const STATUS_LUNAS = 1;
+    const STATUS_ONGOING = 0;
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +37,7 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
     {
         return [TimestampBehavior::class];
     }
+
     /**
      * {@inheritdoc}
      */
