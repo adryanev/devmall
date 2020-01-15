@@ -19,6 +19,28 @@ return [
         'admin' => [
             'class' => Module::class,
             'layout' => 'left-menu'
+        ],
+        'datecontrol' => [
+            'class' => 'kartik\datecontrol\Module',
+            // format settings for displaying each date attribute (ICU format example)
+            'displaySettings' => [
+                kartik\datecontrol\Module::FORMAT_DATE => 'dd MMMM yyyy',
+                kartik\datecontrol\Module::FORMAT_TIME => 'HH:mm:ss',
+                kartik\datecontrol\Module::FORMAT_DATETIME => 'dd MMMM yyyy HH:mm:ss',
+            ],
+            'saveTimezone' => 'Asia/Jakarta',
+            'displayTimezone' => 'Asia/Jakarta',
+            // format settings for saving each date attribute (PHP format example)
+            'saveSettings' => [
+                kartik\datecontrol\Module::FORMAT_DATE => 'php:U', // saves as unix timestamp
+                kartik\datecontrol\Module::FORMAT_TIME => 'php:U',
+                kartik\datecontrol\Module::FORMAT_DATETIME => 'php:U',
+            ],
+
+
+            // automatically use kartik\widgets for each of the above formats
+            'autoWidget' => true,
+
         ]
     ],
     'components' => [

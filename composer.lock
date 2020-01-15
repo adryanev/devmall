@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f3ac740c08d6212544d99fb95ea0d4f",
+    "content-hash": "3d7543d993fb4c8a608415a34c37d712",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -367,7 +367,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -388,12 +388,12 @@
             "version": "v2.9.2",
             "source": {
                 "type": "git",
-                "url": "git@github.com:nnnick/Chart.js.git",
+                "url": "https://github.com/chartjs/Chart.js.git",
                 "reference": "8521776076612b28c69385cafa28ccd8b7670eb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/8521776076612b28c69385cafa28ccd8b7670eb7",
+                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/8521776076612b28c69385cafa28ccd8b7670eb7",
                 "reference": "8521776076612b28c69385cafa28ccd8b7670eb7"
             },
             "type": "bower-asset",
@@ -406,7 +406,7 @@
             "version": "1.10.19",
             "source": {
                 "type": "git",
-                "url": "git@github.com:DataTables/DataTables.git",
+                "url": "https://github.com/DataTables/DataTables.git",
                 "reference": "156faa83386460c578e00c460eca9766e38a0c5f"
             },
             "dist": {
@@ -497,7 +497,7 @@
             "version": "3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
@@ -650,7 +650,7 @@
             "version": "2.0.7.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:yiisoft/jquery-pjax.git",
+                "url": "https://github.com/yiisoft/jquery-pjax.git",
                 "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "dist": {
@@ -5679,6 +5679,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-10-10T17:38:20+00:00"
         },
         {
@@ -5724,6 +5725,7 @@
                 "escaper",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-escaper",
             "time": "2019-09-05T20:03:20+00:00"
         }
     ],

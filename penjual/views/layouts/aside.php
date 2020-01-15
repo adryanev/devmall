@@ -11,17 +11,16 @@ $menuItems = [
     [
         'label' => 'Produk',
         'icon' => '<i class="la la-android"></i>',
-        'url' => ['/produk/index'],
-//        'items' => [
-//            ['label' => 'Kategori', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/kategori/index'],],
-//            ['label' => 'Produk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/fakultas-akademi/index'],],
-//            [
-//                'label' => 'Promo',
-//                'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
-//                'url' => ['/program-studi/index'],
-//            ],
-//
-//        ],
+        'url' => ['#'],
+        'items' => [
+            ['label' => 'Produk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/produk/index'],],
+            [
+                'label' => 'Promo',
+                'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
+                'url' => ['/promo/index'],
+            ],
+
+        ],
     ],
 
     ['label' => 'Request', 'icon' => '<i class="la la-inbox"></i>', 'url' => ['/request/index'],],

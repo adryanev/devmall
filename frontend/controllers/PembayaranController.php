@@ -115,6 +115,7 @@ class PembayaranController extends Controller
             $detailTransaksi->is_promo = false;
             $detailTransaksi->harga_transaksi = $produk->produk->harga;
             $detailTransaksi->save(false);
+            $produk->delete();
 
         }
         $snapPayload = [

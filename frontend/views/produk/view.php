@@ -10,8 +10,10 @@
 
 use common\models\Produk;
 use kartik\rating\StarRating;
+use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Carousel;
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 
@@ -60,16 +62,16 @@ foreach ($dataGambar as $gamber) {
                         <div class="item-action">
                             <div class="action-btns">
                                 <?= Html::a('<span class="lnr lnr-link"></span> Demo', $model->demo, ['class' => 'btn btn--round btn--lg btn-light', 'target' => '_blank']) ?>
-                                <?php if(Yii::$app->user->identity->isFavoriting($model->id)): ?>
-                                    <?=Html::a('<span class="lnr lnr-heart"></span>Hapus dari Favorit',['favorit/remove','id'=>$model->id],['class'=>'btn btn-danger btn--round btn--lg btn--icon','data'=>[
-                                        'method'=>'POST',
-                                        'params'=>['user'=>Yii::$app->user->identity->getId()]
-                                    ]])?>
+                                <?php if (Yii::$app->user->identity->isFavoriting($model->id)): ?>
+                                    <?= Html::a('<span class="lnr lnr-heart"></span>Hapus dari Favorit', ['favorit/remove', 'id' => $model->id], ['class' => 'btn btn-danger btn--round btn--lg btn--icon', 'data' => [
+                                        'method' => 'POST',
+                                        'params' => ['user' => Yii::$app->user->identity->getId()]
+                                    ]]) ?>
                                 <?php else: ?>
-                                <?=Html::a('<span class="lnr lnr-heart"></span>Tambah ke Favorit',['favorit/add','id'=>$model->id],['class'=>'btn btn-secondary btn--round btn--lg btn--icon','data'=>[
-                                        'method'=>'POST',
-                                    'params'=>['user'=>Yii::$app->user->identity->getId()]
-                                ]])?>
+                                    <?= Html::a('<span class="lnr lnr-heart"></span>Tambah ke Favorit', ['favorit/add', 'id' => $model->id], ['class' => 'btn btn-secondary btn--round btn--lg btn--icon', 'data' => [
+                                        'method' => 'POST',
+                                        'params' => ['user' => Yii::$app->user->identity->getId()]
+                                    ]]) ?>
                                 <?php endif; ?>
 
                                 <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
@@ -136,21 +138,32 @@ foreach ($dataGambar as $gamber) {
                         </div>
 
                         <div class="purchase-button">
-                            <a href="#" class="btn btn--lg btn--round cart-btn btn-warning">
-                                <span class="fas fa-comments-dollar"></span> Nego</a>
+                            <?php if ($model->nego): ?>
+
+                                <?php Modal::begin([
+                                    'title' => "Negosiasi",
+                                    'toggleButton' => ['label' => '<span class="fas fa-comments-dollar"></span> Nego', 'class' => 'btn btn--lg btn--round cart-btn btn-warning']
+                                ]) ?>
+
+                                <?php $form = ActiveForm::begin() ?>
+
+
+                                <?php ActiveForm::end() ?>
+                                <?php Modal::end() ?>
+                            <?php endif; ?>
                             <a href="#" class="btn btn--lg btn--round btn-info"><span
                                         class="fas fa-shopping-bag"></span>
                                 Beli Sekarang</a>
                             <?php
                             /** @var $cart yii\db\ActiveQuery */
                             $cart = Yii::$app->user->identity->getKeranjang();
-                           $keranjs = $cart->andHaving(['id_produk'=>$model->id])->one();
-                            if(!$keranjs):?>
-                            <?=Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang',['keranjang/tambah'],['class'=>'btn btn--lg btn--round cart-btn','data'=>[
-                                    'method'=>'POST',
-                                'params'=>['produk'=>$model->id,
-                                    'user'=>Yii::$app->user->identity->getId()]
-                            ]])?>
+                            $keranjs = $cart->andHaving(['id_produk' => $model->id])->one();
+                            if (!$keranjs):?>
+                                <?= Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang', ['keranjang/tambah'], ['class' => 'btn btn--lg btn--round cart-btn', 'data' => [
+                                    'method' => 'POST',
+                                    'params' => ['produk' => $model->id,
+                                        'user' => Yii::$app->user->identity->getId()]
+                                ]]) ?>
                             <?php endif; ?>
                         </div>
                         <!-- end /.purchase-button -->

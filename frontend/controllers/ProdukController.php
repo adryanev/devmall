@@ -44,6 +44,7 @@ class ProdukController extends \yii\web\Controller
             $modelUlasan->id_user = Yii::$app->user->identity->getId();
         }
 
+
         $ulasanSearch = new UlasanSearch();
         $ulasanSearch->id_produk = $id;
         $ulasanDataProvider = $ulasanSearch->search(Yii::$app->request->queryParams);
