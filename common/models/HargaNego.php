@@ -2,40 +2,29 @@
 
 namespace common\models;
 
-use yii\behaviors\TimestampBehavior;
+use Yii;
 
 /**
- * This is the model class for table "keranjang".
+ * This is the model class for table "harga_nego".
  *
  * @property int $id
  * @property int $id_user
  * @property int $id_produk
- * @property int $is_nego
- * @property int $id_harga_nego
- * @property int $is_diskon
+ * @property int $harga
  * @property int $created_at
  * @property int $updated_at
  *
  * @property Produk $produk
  * @property User $user
- * @property HargaNego $hargaNego
- * @property Diskon $diskon
  */
-class Keranjang extends \yii\db\ActiveRecord
+class HargaNego extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'keranjang';
-    }
-
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class
-        ];
+        return 'harga_nego';
     }
 
     /**
@@ -44,7 +33,7 @@ class Keranjang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_produk', 'created_at', 'updated_at'], 'integer'],
+            [['id_user', 'id_produk', 'harga', 'created_at', 'updated_at'], 'integer'],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
@@ -59,6 +48,7 @@ class Keranjang extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_user' => 'Id User',
             'id_produk' => 'Id Produk',
+            'harga' => 'Harga',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
