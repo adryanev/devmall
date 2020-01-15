@@ -94,7 +94,7 @@ use yii\helpers\Html;
 <?php $js = <<<JS
 
 $(".dynamicform_wrapper").on("beforeDelete", function(e, item) {
-    if (! yii.confirm("Apakah kamu ingin menghapus item ini?")) {
+    if (! confirm("Apakah kamu ingin menghapus item ini?")) {
         return false;
     }
     return true;

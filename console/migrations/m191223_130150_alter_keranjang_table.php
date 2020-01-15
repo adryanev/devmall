@@ -15,6 +15,7 @@ class m191223_130150_alter_keranjang_table extends Migration
 
         $this->addColumn('{{%keranjang}}', 'is_nego', $this->boolean());
         $this->addColumn('{{%keranjang}}', 'id_harga_nego', $this->integer());
+        $this->addColumn('{{%keranjang}}', 'is_diskon', $this->boolean());
     }
 
     /**
@@ -22,9 +23,9 @@ class m191223_130150_alter_keranjang_table extends Migration
      */
     public function safeDown()
     {
-        echo "m191223_130150_alter_keranjang_table cannot be reverted.\n";
-
-        return false;
+        $this->dropColumn('{{%keranjang}}', 'is_diskon');
+        $this->dropColumn('{{%keranjang}}', 'id_harga_nego');
+        $this->dropColumn('{{%keranjang}}', 'is_diskon');
     }
 
     /*

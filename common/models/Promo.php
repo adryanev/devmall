@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Booth $booth
  * @property PromoProduk[] $promoProduks
+ * @property Produk[] $produksInPromo
  */
 class Promo extends \yii\db\ActiveRecord
 {
@@ -81,5 +82,10 @@ class Promo extends \yii\db\ActiveRecord
     public function getPromoProduks()
     {
         return $this->hasMany(PromoProduk::className(), ['id_promo' => 'id']);
+    }
+
+    public function getProduksInPromo()
+    {
+        return $this->hasMany(Produk::class, ['id' => 'id_produk'])->viaTable(PromoProduk::tableName(), ['id_promo' => 'id']);
     }
 }

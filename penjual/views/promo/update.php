@@ -8,9 +8,9 @@ use yii\helpers\Html;
 /* @var $produkList common\models\Promo[] */
 
 
-$this->title = 'Ubah Promo: ' . $modelPromo->id;
+$this->title = 'Ubah Promo: ' . $modelPromo->promo;
 $this->params['breadcrumbs'][] = ['label' => 'Promo', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $modelPromo->id, 'url' => ['view', 'id' => $modelPromo->id]];
+$this->params['breadcrumbs'][] = ['label' => $modelPromo->promo, 'url' => ['view', 'id' => $modelPromo->id]];
 $this->params['breadcrumbs'][] = 'Ubah';
 ?>
 
