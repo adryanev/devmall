@@ -19,6 +19,11 @@ $menuItems = [
                 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
                 'url' => ['/promo/index'],
             ],
+            [
+                'label' => 'Diskon',
+                'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
+                'url' => ['/diskon/index'],
+            ],
 
         ],
     ],

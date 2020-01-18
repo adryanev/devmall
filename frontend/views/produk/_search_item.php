@@ -55,13 +55,24 @@ use yii\bootstrap4\Html;
     </div>
     <!-- end /.product-desc -->
 
-    <div class="product-purchase">
-        <div class="price_love">
-            <span><?= Yii::$app->formatter->asCurrency($model->harga) ?></span>
+    <div class="product-purchase" style="text-align: center">
+        <div class="price_love" style="display: inline-block">
+            <?php if ($model->diskon) : ?>
+                <small style="font-size: 8pt;">
+                    <del><?= Yii::$app->formatter->asCurrency($model->harga) ?></del>
+                </small>
+                <br>
+                <span style="font-size: 14pt"><?= Yii::$app->formatter->asCurrency($model->hargaDiskon) ?></span>
+            <?php else: ?>
+                <span style="font-size: 14pt"><?= Yii::$app->formatter->asCurrency($model->harga) ?></span>
+            <?php endif; ?>
+
+        </div>
+        <div class="clearfix"></div>
+        <br>
+        <div class="sell">
             <p>
                 <span class="lnr lnr-heart"></span> <?= $model->getFavorits()->count() ?></p>
-        </div>
-        <div class="sell">
             <p>
                 <span class="lnr lnr-cart"></span>
                 <span>16</span>

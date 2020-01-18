@@ -79,4 +79,14 @@ class Keranjang extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
+
+    public function getHargaNego()
+    {
+        return $this->hasOne(HargaNego::className(), ['id' => 'id_harga_nego']);
+    }
+
+    public function getDiskon()
+    {
+        return $this->hasOne(Diskon::className(), ['id_produk' => 'id_produk']);
+    }
 }

@@ -131,10 +131,25 @@ foreach ($dataGambar as $gamber) {
 
             <div class="col-lg-4">
                 <aside class="sidebar sidebar--single-product">
+                    <?php if ($model->diskon): ?>
+                        <div class="sidebar-card card-pricing card--pricing2">
+                            <div class="price">
+                                <h1>
+                                    <sup>Diskon</sup>
+                                    <span><?= Yii::$app->formatter->asCurrency($model->hargaDiskon) ?></span>
+                                </h1>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="sidebar-card card-pricing">
                         <div class="price">
                             <h1>
-                                <?= Yii::$app->formatter->asCurrency($model->harga) ?></h1>
+                                <?php if ($model->diskon): ?>
+                                    <del><?= Yii::$app->formatter->asCurrency($model->harga) ?></del>
+                                <?php else: ?>
+                                    <?= Yii::$app->formatter->asCurrency($model->harga) ?>
+                                <?php endif; ?>
+                            </h1>
                         </div>
 
                         <div class="purchase-button">
@@ -162,12 +177,15 @@ foreach ($dataGambar as $gamber) {
                                 <?= Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang', ['keranjang/tambah'], ['class' => 'btn btn--lg btn--round cart-btn', 'data' => [
                                     'method' => 'POST',
                                     'params' => ['produk' => $model->id,
-                                        'user' => Yii::$app->user->identity->getId()]
+                                        'user' => Yii::$app->user->identity->getId(),
+                                        'is_diskon' => isset($model->diskon),
+                                        'is_nego' => isset($model->nego0)]
                                 ]]) ?>
                             <?php endif; ?>
                         </div>
                         <!-- end /.purchase-button -->
                     </div>
+
                     <!-- end /.sidebar--card -->
 
                     <div class="sidebar-card card--metadata">

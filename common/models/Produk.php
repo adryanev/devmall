@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property int $nego
  * @property int $created_at
  * @property int $updated_at
- *
+ * @property int hargaDiskon
  * @property Favorit[] $favorits
  * @property GaleriProduk[] $galeriProduks
  * @property KategoriProduk[] $kategoriProduk
@@ -30,6 +30,7 @@ use yii\helpers\ArrayHelper;
  * @property PromoProduk[] $promoProduks
  * @property Ulasan[] $ulasans
  * @property float $nilaiUlasan
+ * @property Diskon $diskon
  */
 class Produk extends \yii\db\ActiveRecord
 {
@@ -62,7 +63,7 @@ class Produk extends \yii\db\ActiveRecord
     {
         return [
             [['id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
-            [['deskripsi', 'spesifikasi', 'fitur','nama','kategori','harga'], 'required'],
+            [['deskripsi', 'spesifikasi', 'fitur', 'nama', 'kategori', 'harga'], 'required'],
             [['deskripsi', 'spesifikasi', 'fitur'], 'string'],
             [['nama', 'demo', 'manual'], 'string', 'max' => 255],
             [['id_booth'], 'unique'],
@@ -159,5 +160,18 @@ class Produk extends \yii\db\ActiveRecord
     public function getUlasans()
     {
         return $this->hasMany(Ulasan::className(), ['id_produk' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiskon()
+    {
+        return $this->hasOne(Diskon::class, ['id_produk' => 'id']);
+    }
+
+    public function getHargaDiskon()
+    {
+        return $this->harga - round(($this->harga * ($this->diskon->persentase) / 100));
     }
 }

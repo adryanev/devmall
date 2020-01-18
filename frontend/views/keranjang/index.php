@@ -15,9 +15,6 @@ $this->title = 'Keranjang Belanjaan';
 $this->params['breadcrumbs'][] = $this->title;
 
 
-
-
-
 ?>
 
 <!--================================
@@ -46,59 +43,60 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="row">
-                        <?php foreach ($keranjangDataProvider->models as /** @var $produk Produk */ $produk): ?>
-                        <div class="col-md-12">
-                            <div class="single_product clearfix">
-                                <div class="col-lg-5 col-md-7 v_middle">
-                                    <div class="product__description">
-                                        <?= Html::img('@.penjual/upload/produk/'.$produk->galeriProduks[0]->nama_berkas,['width'=>'30%','height'=>120])?>
-                                        <div class="short_desc">
-                                            <a href="single-product.html">
-                                                <h4><?=$produk->nama?></h4>
-                                            </a>
-                                            <?= StringHelper::truncateWords($produk->deskripsi,20,'...',true)?>
+                        <?php foreach ($keranjangDataProvider->models as /** @var $produk Produk */
+                                       $produk): ?>
+                            <div class="col-md-12">
+                                <div class="single_product clearfix">
+                                    <div class="col-lg-5 col-md-7 v_middle">
+                                        <div class="product__description">
+                                            <?= Html::img('@.penjual/upload/produk/' . $produk->galeriProduks[0]->nama_berkas, ['width' => '30%', 'height' => 120]) ?>
+                                            <div class="short_desc">
+                                                <a href="single-product.html">
+                                                    <h4><?= $produk->nama ?></h4>
+                                                </a>
+                                                <?= StringHelper::truncateWords($produk->deskripsi, 20, '...', true) ?>
+                                            </div>
                                         </div>
+                                        <!-- end /.product__description -->
                                     </div>
-                                    <!-- end /.product__description -->
-                                </div>
-                                <!-- end /.col-md-5 -->
+                                    <!-- end /.col-md-5 -->
 
-                                <div class="col-lg-3 col-md-2 v_middle">
-                                    <div class="product__additional_info">
-                                        <ul>
-                                            <?php foreach ($produk->kategoriProduk as $kategoriProduk):?>
-                                            <li>
-                                                   <?=$kategoriProduk->nama?>
-                                            </li>
-                                            <?php endforeach; ?>
-                                        </ul>
+                                    <div class="col-lg-3 col-md-2 v_middle">
+                                        <div class="product__additional_info">
+                                            <ul>
+                                                <?php foreach ($produk->kategoriProduk as $kategoriProduk): ?>
+                                                    <li>
+                                                        <?= $kategoriProduk->nama ?>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                        <!-- end /.product__additional_info -->
                                     </div>
-                                    <!-- end /.product__additional_info -->
-                                </div>
-                                <!-- end /.col-md-3 -->
+                                    <!-- end /.col-md-3 -->
 
-                                <div class="col-lg-4 col-md-3 v_middle">
-                                    <div class="product__price_download">
-                                        <div class="item_price v_middle">
-                                            <span><?=Yii::$app->formatter->asCurrency($produk->harga)?></span>
+                                    <div class="col-lg-4 col-md-3 v_middle">
+                                        <div class="product__price_download">
+                                            <div class="item_price v_middle">
+                                                <span><?= Yii::$app->formatter->asCurrency($produk->harga) ?></span>
+                                            </div>
+                                            <div class="item_action v_middle">
+                                                <?= Html::a('<span class="lnr lnr-trash"></span>', ['keranjang/hapus'], ['class' => 'remove_from_cart', 'data' => [
+                                                    'method' => 'POST',
+                                                    'params' => [
+                                                        'produk' => $produk->id,
+                                                        'user' => Yii::$app->user->identity->getId()
+                                                    ]
+                                                ]]) ?>
+                                            </div>
+                                            <!-- end /.item_action -->
                                         </div>
-                                        <div class="item_action v_middle">
-                                            <?=Html::a('<span class="lnr lnr-trash"></span>',['keranjang/hapus'],['class'=>'remove_from_cart','data'=>[
-                                                    'method'=>'POST',
-                                                'params'=>[
-                                                    'produk'=>$produk->id,
-                                                    'user'=>Yii::$app->user->identity->getId()
-                                                ]
-                                            ]])?>
-                                        </div>
-                                        <!-- end /.item_action -->
+                                        <!-- end /.product__price_download -->
                                     </div>
-                                    <!-- end /.product__price_download -->
+                                    <!-- end /.col-md-4 -->
                                 </div>
-                                <!-- end /.col-md-4 -->
+                                <!-- end /.single_product -->
                             </div>
-                            <!-- end /.single_product -->
-                        </div>
                         <?php endforeach; ?>
                     </div>
                     <!-- end /.row -->
@@ -108,15 +106,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="cart_calculation">
                                 <div class="cart--subtotal">
                                     <p>
-                                        <span>Jumlah produk</span><?=$keranjangCount?></p>
+                                        <span>Jumlah produk</span><?= $keranjangCount ?></p>
                                 </div>
                                 <div class="cart--total">
                                     <p>
-                                        <span>Total</span><?=Yii::$app->formatter->asCurrency($keranjangTotal)?></p>
+                                        <span>Total</span><?= Yii::$app->formatter->asCurrency($keranjangTotal) ?></p>
                                 </div>
 
-                                <?=Html::a('Lanjut ke Pembayaran',['pembayaran/checkout'],['class'=>'btn btn--round btn--md checkout_link'])?>
-                             </div>
+                                <?php if (!($keranjangCount > 0)): ?>
+                                    <?= Html::button('Lanjut ke Pembayaran', ['class' => 'btn btn--round btn--md btn--disabled checkout_link', 'disabled' => true]) ?>
+                                <?php else: ?>
+                                    <?= Html::a('Lanjut ke Pembayaran', ['pembayaran/checkout'], ['class' => 'btn btn--round btn--md checkout_link']) ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <!-- end .col-md-12 -->
                     </div>
