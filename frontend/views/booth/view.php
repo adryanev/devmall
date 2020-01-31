@@ -77,6 +77,14 @@ use yii\bootstrap4\Html;
                     </div>
                     <!-- end /.author-menu -->
 
+                    <div class="sidebar-card author-menu">
+                        <ul>
+                            <li>
+                                <?= Html::a('Request Produk', ['permintaan/tambah', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
+                            </li>
+                        </ul>
+                    </div>
+
                 </aside>
             </div>
             <!-- end /.sidebar -->
@@ -133,6 +141,49 @@ use yii\bootstrap4\Html;
                             <?= $model->deskripsi ?>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="product-title-area">
+                                    <div class="product__title">
+                                        <h2>Produk Populer</h2>
+                                    </div>
+                                    <?= Html::a('Lihat produk lainnya', ['booth/produk', 'ProdukSearch[id_booth]' => $model->id], ['class' => 'btn btn--sm']); ?>
+                                </div>
+                                <!-- end /.product-title-area -->
+                            </div>
+                            <!-- end /.col-md-12 -->
+                            <?= \yii\widgets\ListView::widget(
+                                [
+                                    'dataProvider' => $produkPopulerDataProvider,
+                                    'itemView' => '/produk/_search_item',
+                                    'itemOptions' => [
+                                        'class' => 'col-lg-6 col-md-8'
+
+                                    ],
+                                    'summary' => false,
+                                    'beforeItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                                        if ($index % $colsCount === 0) {
+                                            return "<div class='row'>";
+                                        }
+                                        return '';
+                                    },
+                                    'afterItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                                        $content = '';
+                                        if (($index > 0) && ($index % $colsCount === $colsCount - 1)) {
+                                            $content .= "</div>";
+                                        }
+                                        return $content;
+                                    },
+                                ]);
+                            if ($produkPopulerDataProvider->count % $colsCount !== 0) {
+                                echo "</div>";
+                            } ?>
+
+                        </div>
+
+                        <br>
+                        <div class="clearfix"></div>
+
                         <div class="author_module about_author">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -141,7 +192,6 @@ use yii\bootstrap4\Html;
                                 </div>
                             </div>
                             <br>
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <?php
@@ -165,46 +215,7 @@ use yii\bootstrap4\Html;
                 </div>
                 <!-- end /.row -->
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="product-title-area">
-                            <div class="product__title">
-                                <h2>Produk Populer</h2>
-                            </div>
-                            <?= Html::a('Lihat produk lainnya', ['booth/produk', 'ProdukSearch[id_booth]' => $model->id], ['class' => 'btn btn--sm']); ?>
-                        </div>
-                        <!-- end /.product-title-area -->
-                    </div>
-                    <!-- end /.col-md-12 -->
-                    <?= \yii\widgets\ListView::widget(
-                        [
-                            'dataProvider' => $produkPopulerDataProvider,
-                            'itemView' => '/produk/_search_item',
-                            'itemOptions' => [
-                                'class' => 'col-lg-6 col-md-8'
 
-                            ],
-                            'summary' => false,
-                            'beforeItem' => function ($model, $key, $index, $widget) use ($colsCount) {
-                                if ($index % $colsCount === 0) {
-                                    return "<div class='row'>";
-                                }
-                                return '';
-                            },
-                            'afterItem' => function ($model, $key, $index, $widget) use ($colsCount) {
-                                $content = '';
-                                if (($index > 0) && ($index % $colsCount === $colsCount - 1)) {
-                                    $content .= "</div>";
-                                }
-                                return $content;
-                            },
-                        ]);
-                    if ($produkPopulerDataProvider->count % $colsCount !== 0) {
-                        echo "</div>";
-                    } ?>
-
-                </div>
-                <!-- end /.row -->
             </div>
             <!-- end /.col-md-8 -->
 

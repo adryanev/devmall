@@ -5,11 +5,14 @@ namespace frontend\controllers;
 use common\models\Kategori;
 use common\models\Produk;
 use common\models\Ulasan;
+use frontend\models\forms\nego\NegoForm;
 use frontend\models\ProdukSearch;
 use frontend\models\UlasanSearch;
 use Yii;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class ProdukController extends \yii\web\Controller
 {
@@ -39,6 +42,9 @@ class ProdukController extends \yii\web\Controller
         $model = $this->findModel($id);
         $modelUlasan = new Ulasan();
 
+        $modelNego = new NegoForm($id);
+
+
         if (!Yii::$app->user->isGuest) {
             $modelUlasan->id_produk = $id;
             $modelUlasan->id_user = Yii::$app->user->identity->getId();
@@ -61,7 +67,32 @@ class ProdukController extends \yii\web\Controller
             return $this->redirect(Url::current());
         }
 
-        return $this->render('view', compact('model', 'ulasanSearch', 'modelUlasan', 'ulasanDataProvider'));
+        if (Yii::$app->request->isAjax && $modelNego->load(Yii::$app->request->post())) {
+
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($modelNego);
+        }
+        if ($modelNego->load(Yii::$app->request->post())) {
+            if (!$modelNego->simpanHarga()) {
+                Yii::$app->session->setFlash('warning', [
+                    'type' => 'warning',
+                    'icon' => 'fas fa-warning',
+                    'message' => 'Terjadi kesalahan saat menyimpan harga nego',
+                    'title' => 'Ups, terjadi kesalahan.'
+                ]);
+                return $this->redirect(Url::current());
+            }
+            Yii::$app->session->setFlash('success', [
+                'type' => 'success',
+                'icon' => 'fas fa-check',
+                'message' => 'Nego Berhasil disimpan.',
+                'title' => 'Nego',
+            ]);
+            return $this->redirect(Url::current());
+
+        }
+
+        return $this->render('view', compact('model', 'ulasanSearch', 'modelUlasan', 'ulasanDataProvider', 'modelNego'));
     }
 
     protected function findModel($id)

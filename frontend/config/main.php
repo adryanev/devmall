@@ -45,6 +45,7 @@ return [
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
+            'class' => 'common\components\User',
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
@@ -72,7 +73,7 @@ return [
             // Disable r= routes
             'enablePrettyUrl' => true,
             'rules' => [
-//                ['class' => 'common\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
+                //                ['class' => 'common\helpers\UrlRule', 'connectionID' => 'db', /* ... */],
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -123,12 +124,12 @@ return [
             'kategori/*',
             'produk/*',
             'booth/*',
-//            'admin/*',
+            //            'admin/*',
             'debug/*',
-//            'sertifikat/*',
-//            'sertifikat-institusi/*',
-//            'sertifikat/*',
-//            'sertifikat-prodi/*'
+            //            'sertifikat/*',
+            //            'sertifikat-institusi/*',
+            //            'sertifikat/*',
+            //            'sertifikat-prodi/*'
             // The actions listed here will be allowed to everyone including guests.
             // So, 'admin/*' should not appear here in the production, of course.
             // But in the earlier stages of your development, you may probably want to

@@ -11,3 +11,4 @@ Yii::setAlias('@.frontend', 'http://devmall.test');
 Yii::setAlias('@.penjual', 'http://booth.devmall.test');
 Yii::setAlias('@.admin', 'http://admin.devmall.test');
 Yii::setAlias('@.produkPath', '@.penjual/upload/produk');
+Yii::setAlias('@.permintaanPath', '@.frontend/upload/permintaan');

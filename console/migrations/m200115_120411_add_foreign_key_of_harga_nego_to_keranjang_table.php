@@ -13,7 +13,7 @@ class m200115_120411_add_foreign_key_of_harga_nego_to_keranjang_table extends Mi
     public function safeUp()
     {
 
-        $this->addForeignKey('fk-keranjang-harga_nego', '{{%keranjnag}}', 'id_harga_nego', '{{%harga_nego}}', 'id');
+        $this->addForeignKey('fk-keranjang-harga_nego', '{{%keranjang}}', 'id_harga_nego', '{{%harga_nego}}', 'id');
     }
 
     /**
