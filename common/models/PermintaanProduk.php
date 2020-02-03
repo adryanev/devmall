@@ -93,7 +93,7 @@ class PermintaanProduk extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'keterangan' => 'Keterangan',
-            'statusString' => 'Status`'
+            'statusString' => 'Status'
         ];
     }
 

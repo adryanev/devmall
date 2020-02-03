@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\constants\JenisKelamin;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -26,9 +27,13 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property User $user
  * @property string $namaLengkap
+ * @property string $alamatLengkap
+ * @property string $jenisKelaminString
  */
 class ProfilUser extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -93,5 +98,18 @@ class ProfilUser extends \yii\db\ActiveRecord
     public function getNamaLengkap()
     {
         return "$this->nama_depan $this->nama_belakang";
+    }
+
+    public function getAlamatLengkap()
+    {
+
+        $alamat = [$this->alamat1, $this->alamat2, $this->kelurahan, $this->kecamatan, $this->kota, $this->provinsi];
+        return implode($glue = ', ', $alamat);
+    }
+
+    public function getJenisKelaminString()
+    {
+        $list = JenisKelamin::LIST;
+        return isset($list[$this->jenis_kelamin]) ? $list[$this->jenis_kelamin] : null ;
     }
 }

@@ -9,7 +9,6 @@
 
 namespace common\models\constants;
 
-
 class JenisKelamin
 {
 
