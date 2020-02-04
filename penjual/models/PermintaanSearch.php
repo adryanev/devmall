@@ -3,9 +3,9 @@
 
 namespace penjual\models;
 
-
 use common\helpers\UnixToDateTrait;
 use common\models\PermintaanProduk;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -41,7 +41,7 @@ class PermintaanSearch extends PermintaanProduk
     /**
      * Creates data provider instance with search query applied
      *
-     * @param array $params
+     * @param  array  $params
      *
      * @return ActiveDataProvider
      */
@@ -61,17 +61,19 @@ class PermintaanSearch extends PermintaanProduk
         ];
 
         $this->load($params);
-        if (!$this->validate()) return $dataProvider;
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
 
-        $query->andFilterWhere(['uang_muka' => $this->uang_muka,
-                'harga' => $this->harga,
-                'progres' => $this->progres,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at
-            ]
-        );
+        $query->andFilterWhere([
+            'uang_muka' => $this->uang_muka,
+            'harga' => $this->harga,
+            'progres' => $this->progres,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
+        ]);
         if (!empty($params['PermintaanSearch']['deadline'])) {
-            \Yii::debug('Memfilter Deadline');
+            Yii::debug('Memfilter Deadline');
             $date = $this->convertToDate($params['PermintaanSearch']['deadline']);
             $query->andFilterWhere(['between', 'deadline', $date['dateStart'], $date['dateEnd']]);
         }
@@ -81,6 +83,4 @@ class PermintaanSearch extends PermintaanProduk
 
         return $dataProvider;
     }
-
-
 }

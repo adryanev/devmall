@@ -3,7 +3,6 @@
 
 namespace frontend\controllers;
 
-
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
 use frontend\helpers\FlashHelper;
@@ -40,7 +39,6 @@ class PermintaanController extends Controller
                     $db->rollBack();
 
                     return $this->redirect(Url::current());
-
                 }
                 $files = UploadedFile::getInstances($modelDetail, 'uploadedFiles');
                 $modelDetail->uploadedFiles = $files;
@@ -74,8 +72,6 @@ class PermintaanController extends Controller
                 throw  $exception;
 //                return $this->redirect(Url::current());
             }
-
-
         }
         return $this->render('tambah', ['model' => $model, 'modelDetail' => $modelDetail]);
     }
