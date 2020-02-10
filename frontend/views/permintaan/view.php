@@ -9,17 +9,30 @@ $this->params['breadcrumbs'][] = ['label' => 'Booth', 'url' => ['booth/view', 'i
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 
-?>
+use yii\bootstrap4\Html; ?>
 
 <section class="dashboard-area dashboard_purchase">
 
     <div class="dashboard_contents">
         <div class="container">
             <div class="row">
+                <div class="col-lg-12">
+                    <h4>Permintaan</h4>
+
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12 pull-right">
+                    <?= Html::a('Ubah Permintaan', ['permintaan/update', 'id' => $model->id], ['class' => 'btn btn-md btn-info btn--round']) ?>
+                    <?= Html::a('Hapus Permintaan', ['permintaan/delete', 'id' => $model->id], ['class' => 'btn btn-md btn-danger btn--round']) ?>
+                </div>
+            </div>
+            <br>
+            <div class="row">
 
                 <div class="col-md-12">
                     <div class="modules__content">
-                        <h4>Permintaan</h4>
                         <div class="row">
                             <div class="col-lg-12">
                                 <?= \yii\widgets\DetailView::widget(
@@ -61,7 +74,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'columns' => [
                                             ['attribute' => 'nama_berkas',
                                                 'value' => function ($model) {
-                                                    return \yii\bootstrap4\Html::a($model->nama_berkas, Yii::getAlias('@.permintaanPath/' . $model->nama_berkas));
+                                                    return Html::a($model->nama_berkas, Yii::getAlias('@.permintaanPath/' . $model->nama_berkas));
                                                 }, 'format' => 'html']
                                         ],
                                         'summary' => false

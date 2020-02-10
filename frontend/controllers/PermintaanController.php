@@ -9,6 +9,7 @@ use frontend\helpers\FlashHelper;
 use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
 use yii\base\Exception;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,6 +77,14 @@ class PermintaanController extends Controller
         return $this->render('tambah', ['model' => $model, 'modelDetail' => $modelDetail]);
     }
 
+
+    public function actionIndex()
+    {
+        $model = PermintaanProduk::find()->where(['id_user' => Yii::$app->user->identity->id]);
+        $dataProvider = new ActiveDataProvider(['query' => $model]);
+
+        return $this->render('index', ['dataProvider' => $dataProvider]);
+    }
 
     public function actionView($id)
     {
