@@ -3,6 +3,8 @@
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "permintaan_produk".
@@ -27,12 +29,13 @@ use yii\behaviors\TimestampBehavior;
  * @property PermintaanProdukDetail[] $permintaanProdukDetails
  * @property RiwayatPermintaan[] $riwayatPermintaans
  */
-class PermintaanProduk extends \yii\db\ActiveRecord
+class PermintaanProduk extends ActiveRecord
 {
-    const PERMINTAAN_DITERIMA = 1;
-    const PERMINTAAN_DITOLAK = 0;
-    const PERMINTAAN_SELESAI = 9;
-    const PERMINTAAN_DIKIRIM = 2;
+    const STATUS_DITERIMA = 1;
+    const STATUS_DITOLAK = 0;
+    const STATUS_SELESAI = 9;
+    const STATUS_DIKIRIM = 2;
+    const STATUS_DIKERJAKAN = 5;
 
     /**
      * {@inheritdoc}
@@ -45,11 +48,13 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     public function getStatusString()
     {
         $string = [
-            self::PERMINTAAN_DIKIRIM => 'Permintaan Dikirim',
-            self::PERMINTAAN_DITERIMA => 'Permintaan Diterima',
-            self::PERMINTAAN_DITOLAK => 'Permintaan Ditolak',
-            self::PERMINTAAN_SELESAI => 'Permintaan Selesai'
+            self::STATUS_DIKIRIM => 'Permintaan Dikirim',
+            self::STATUS_DITERIMA => 'Permintaan Diterima',
+            self::STATUS_DITOLAK => 'Permintaan Ditolak',
+            self::STATUS_SELESAI => 'Permintaan Selesai',
+            self::STATUS_DIKERJAKAN => 'Permintaan Dikerjakan',
         ];
+
 
         return $string[$this->status];
     }
@@ -65,12 +70,27 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_booth', 'id_user', 'deadline', 'harga', 'uang_muka', 'status', 'created_at', 'updated_at'], 'integer'],
+            [
+                ['id_booth', 'id_user', 'deadline', 'harga', 'uang_muka', 'status', 'created_at', 'updated_at'],
+                'integer'
+            ],
             [['kriteria', 'keterangan'], 'string'],
             [['progres'], 'number'],
             [['nama'], 'string', 'max' => 255],
-            [['id_booth'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id_booth' => 'id']],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [
+                ['id_booth'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Booth::className(),
+                'targetAttribute' => ['id_booth' => 'id']
+            ],
+            [
+                ['id_user'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['id_user' => 'id']
+            ],
         ];
     }
 
@@ -98,7 +118,7 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBooth()
     {
@@ -106,7 +126,7 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -114,7 +134,7 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPermintaanProdukDetails()
     {
@@ -122,7 +142,7 @@ class PermintaanProduk extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRiwayatPermintaans()
     {

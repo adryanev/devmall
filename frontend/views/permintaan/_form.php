@@ -7,11 +7,14 @@
  *
  */
 
+use dosamigos\tinymce\TinyMce;
 use kartik\datecontrol\DateControl;
 use kartik\datecontrol\Module;
 use kartik\file\FileInput;
+use kartik\grid\GridView;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\data\ActiveDataProvider;
 
 
 ?>
@@ -20,7 +23,7 @@ use yii\bootstrap4\Html;
 
     <?= $form->field($model, 'id_booth')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'nama')->textInput() ?>
-    <?= $form->field($model, 'kriteria')->widget(\dosamigos\tinymce\TinyMce::class, []) ?>
+    <?= $form->field($model, 'kriteria')->widget(TinyMce::class, []) ?>
     <?= $form->field($model, 'deadline')->widget(DateControl::class, [
         'type' => Module::FORMAT_DATE,
         'widgetOptions' => [
@@ -29,6 +32,30 @@ use yii\bootstrap4\Html;
     ]) ?>
     <?= $form->field($model, 'harga')->textInput(['type' => 'number']) ?>
     <?= $form->field($model, 'uang_muka')->textInput(['type' => 'number']) ?>
+    <?php if (!$model->isNewRecord): ?>
+        <?= GridView::widget([
+            'dataProvider' => new ActiveDataProvider(['query' => $dataDetail]),
+            'summary' => false,
+            'columns' => [
+                ['class' => 'kartik\grid\SerialColumn', 'header' => 'No'],
+                'nama_berkas',
+                [
+                    'class' => 'kartik\grid\ActionColumn',
+                    'header' => 'Aksi',
+                    'template' => '{delete-file}',
+                    'contentOptions' => ['class' => 'action'],
+                    'buttons' => [
+                        'delete-file' => function ($url, $model, $key) {
+                            return Html::a(
+                                '<i class="fas fa-trash"></i>',
+                                ['permintaan/delete-file', 'id' => $model->id]
+                            );
+                        }
+                    ]
+                ]
+            ]
+        ]) ?>
+    <?php endif; ?>
     <?= $form->field($modelDetail, 'uploadedFiles[]')->widget(FileInput::class, [
         'options' => [
             'multiple' => true,
