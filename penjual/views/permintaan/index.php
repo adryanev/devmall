@@ -8,6 +8,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 use kartik\grid\GridView;
 use yii\bootstrap4\Html;
+use yii\grid\SerialColumn;
 
 ?>
 
@@ -32,9 +33,11 @@ use yii\bootstrap4\Html;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            ['class' => \yii\grid\SerialColumn::class, 'header' => 'No'],
-                            ['attribute' => 'user',
-                                'value' => 'user.username'],
+                            ['class' => SerialColumn::class, 'header' => 'No'],
+                            [
+                                'attribute' => 'user',
+                                'value' => 'user.username'
+                            ],
                             'nama',
                             'harga:currency',
                             'uang_muka:currency',
@@ -53,8 +56,12 @@ use yii\bootstrap4\Html;
 
                             ],
                             'created_at:date',
-                            ['class'=>'common\widgets\ActionColumn','header'=>'Aksi',
-                            'template'=>'{view}']
+                            'statusString',
+                            [
+                                'class' => 'common\widgets\ActionColumn',
+                                'header' => 'Aksi',
+                                'template' => '{view}'
+                            ]
                         ]
                     ]) ?>
 

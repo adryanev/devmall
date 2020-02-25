@@ -3,24 +3,42 @@
 
 namespace frontend\controllers;
 
-
 use Carbon\Carbon;
 use common\models\Keranjang;
+use common\models\PermintaanProduk;
 use common\models\Transaksi;
 use common\models\TransaksiCicilan;
 use common\models\TransaksiDetail;
+use common\models\TransaksiPermintaan;
 use common\models\User;
+use frontend\helpers\FlashHelper;
 use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class PembayaranController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'verbs'=> [
+                'class'=>VerbFilter::class,
+                'actions'=>[
+                    'cicilan'=>['POST'],
+                    'permintaan'=>['POST'],
+                    'confirm-order'=>['POST']
+                ]
+            ],
+        ];
+    }
 
     public function actionCheckout()
     {
@@ -31,12 +49,10 @@ class PembayaranController extends Controller
         $keranjang = Keranjang::find()->where(['id_user' => $user->id]);
         $keranjangDataProvider = new ActiveDataProvider(['query' => $keranjang]);
         if (empty($user->nomor_hp)) {
-            Yii::$app->session->setFlash('success', [
-                'type' => 'danger',
-                'icon' => 'fas fa-stop',
-                'message' => 'Untuk bisa bertransaksi, verifikasi dulu nomor hp anda.',
-                'title' => 'Verifikasi Nomor Hp!',
-            ]);
+            $flash =  FlashHelper::DANGER;
+            $flash['message'] = 'Untuk bisa bertransaksi, verifikasi dulu nomor hp anda.';
+            $flash['title'] = 'Verifikasi Nomor Hp!';
+            Yii::$app->session->setFlash('danger', $flash);
             return $this->redirect(['settings/account']);
         }
         return $this->render('checkout', compact('user', 'keranjangDataProvider'));
@@ -116,7 +132,6 @@ class PembayaranController extends Controller
             $detailTransaksi->harga_transaksi = $produk->produk->harga;
             $detailTransaksi->save(false);
             $produk->delete();
-
         }
         $snapPayload = [
             'transaction_details' => $transactionDetail,
@@ -128,8 +143,6 @@ class PembayaranController extends Controller
         $transaksi->snap_token = $snapToken;
         $returns = ['snap_token' => $snapToken];
         try {
-
-
             $transaksi->update(false);
             $db->commit();
         } catch (Exception $e) {
@@ -138,8 +151,6 @@ class PembayaranController extends Controller
 
 
         return $returns;
-
-
     }
 
 
@@ -161,20 +172,57 @@ class PembayaranController extends Controller
                 $transaksi->status = Transaksi::STATUS_SUCCESS;
             }
         } elseif ($transaction == 'pending') {
-
-
             $transaksi->status = Transaksi::STATUS_PENDING;
-
         } elseif ($transaction == 'deny') {
-
             $transaksi->status = Transaksi::STATUS_FAILED;
-
         } elseif ($transaction == 'expire') {
-
             $transaksi->status = Transaksi::STATUS_EXPIRED;
         } elseif ($transaction == 'cancel') {
-
             $transaksi->status = Transaksi::STATUS_FAILED;
         }
+    }
+
+    public function actionCicilan()
+    {
+    }
+
+    public function actionPermintaan()
+    {
+        $post = Yii::$app->request->post();
+        $permintaan = $this->findPermintaan($post['id']);
+        $transaksiPermintaan = $this->findTransaksiPermintaan($permintaan->id);
+        $riwayat = $transaksiPermintaan->getTransaksiBelumDibayar()->one();
+
+        return $this->render('permintaan', ['riwayat'=>$riwayat,'user'=>Yii::$app->user->identity,'transaksiPermintaan'=>$transaksiPermintaan]);
+    }
+
+    protected function findPermintaan($id)
+    {
+        $permintaan = PermintaanProduk::findOne($id);
+        if (!$permintaan) {
+            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
+        }
+
+        return $permintaan;
+    }
+
+    protected function findTransaksiPermintaan($id)
+    {
+        $transaksi = TransaksiPermintaan::findOne(['id_permintaan'=>$id]);
+        if (!$transaksi) {
+            throw new NotFoundHttpException();
+        }
+        return $transaksi;
+    }
+
+    public function actionConfirmPermintaan()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $data = Yii::$app->request->post();
+        return $data;
+    }
+
+    public function actionConfirmCicilan()
+    {
     }
 }

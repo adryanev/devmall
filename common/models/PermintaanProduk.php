@@ -28,6 +28,7 @@ use yii\db\ActiveRecord;
  * @property User $user
  * @property PermintaanProdukDetail[] $permintaanProdukDetails
  * @property RiwayatPermintaan[] $riwayatPermintaans
+ * @property TransaksiPermintaan $transaksiPermintaan
  */
 class PermintaanProduk extends ActiveRecord
 {
@@ -147,5 +148,13 @@ class PermintaanProduk extends ActiveRecord
     public function getRiwayatPermintaans()
     {
         return $this->hasMany(RiwayatPermintaan::class, ['id_permintaan_produk' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getTransaksiPermintaan()
+    {
+        return $this->hasOne(TransaksiPermintaan::class, ['id_permintaan' => 'id']);
     }
 }

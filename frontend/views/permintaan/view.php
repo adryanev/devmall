@@ -2,14 +2,19 @@
 /**
  * @var $this yii\web\View
  * @var $model common\models\PermintaanProduk
+ * @var $unpaid int
  */
 
-$this->title = $model->booth->nama . '-' . $model->nama;
+use common\models\PermintaanProduk;
+use yii\bootstrap4\Html;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
+use yii\widgets\DetailView;
+
+$this->title = $model->booth->nama.'-'.$model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Booth', 'url' => ['booth/view', 'id' => $model->id_booth]];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
-
-
-use yii\bootstrap4\Html; ?>
+?>
 
 <section class="dashboard-area dashboard_purchase">
 
@@ -22,12 +27,29 @@ use yii\bootstrap4\Html; ?>
                 </div>
             </div>
             <br>
+
             <div class="row">
                 <div class="col-lg-12 pull-right">
-                    <?= Html::a('Ubah Permintaan', ['permintaan/update', 'id' => $model->id], ['class' => 'btn btn-md btn-info btn--round']) ?>
-                    <?= Html::a('Hapus Permintaan', ['permintaan/delete', 'id' => $model->id], ['class' => 'btn btn-md btn-danger btn--round']) ?>
+                    <?php if ($model->status === PermintaanProduk::STATUS_DIKIRIM): ?>
+                        <?= Html::a('Ubah Permintaan', ['permintaan/update', 'id' => $model->id],
+                            ['class' => 'btn btn-md btn-info btn--round']) ?>
+                        <?= Html::a('Hapus Permintaan', ['permintaan/delete', 'id' => $model->id],
+                            ['class' => 'btn btn-md btn-danger btn--round']) ?>
+                    <?php endif; ?>
+
+                    <?php if ($unpaid): ?>
+                        <?= Html::a('Selesaikan Pembayaran', ['pembayaran/permintaan'], [
+                            'class' => 'btn btn-md btn-success btn--round',
+                            'data' => [
+                                'method' => 'POST',
+                                'params' => ['id' => $model->id]
+                            ]
+                        ]) ?>
+                    <?php endif; ?>
+
                 </div>
             </div>
+
             <br>
             <div class="row">
 
@@ -35,7 +57,7 @@ use yii\bootstrap4\Html; ?>
                     <div class="modules__content">
                         <div class="row">
                             <div class="col-lg-12">
-                                <?= \yii\widgets\DetailView::widget(
+                                <?= DetailView::widget(
                                     [
                                         'model' => $model,
                                         'attributes' => [
@@ -66,16 +88,20 @@ use yii\bootstrap4\Html; ?>
                                 <h4>Berkas Pendukung</h4>
                                 <div class="clearfix"></div>
                                 <br>
-                                <?= \yii\grid\GridView::widget(
+                                <?= GridView::widget(
                                     [
-                                        'dataProvider' => new \yii\data\ActiveDataProvider([
+                                        'dataProvider' => new ActiveDataProvider([
                                             'query' => $model->getPermintaanProdukDetails()
                                         ]),
                                         'columns' => [
-                                            ['attribute' => 'nama_berkas',
+                                            [
+                                                'attribute' => 'nama_berkas',
                                                 'value' => function ($model) {
-                                                    return Html::a($model->nama_berkas, Yii::getAlias('@.permintaanPath/' . $model->nama_berkas));
-                                                }, 'format' => 'html']
+                                                    return Html::a($model->nama_berkas,
+                                                        Yii::getAlias('@.permintaanPath/'.$model->nama_berkas));
+                                                },
+                                                'format' => 'html'
+                                            ]
                                         ],
                                         'summary' => false
                                     ]

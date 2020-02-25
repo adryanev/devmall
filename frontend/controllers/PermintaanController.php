@@ -5,6 +5,7 @@ namespace frontend\controllers;
 
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
+use common\models\RiwayatTransaksiPermintaan;
 use frontend\helpers\FlashHelper;
 use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
@@ -177,10 +178,11 @@ class PermintaanController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $unpaid = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans()->where(['status' => RiwayatTransaksiPermintaan::STATUS_PENDING])->one();
         if ($model->id_user !== Yii::$app->user->identity->getId()) {
             throw new UnauthorizedHttpException('Oops, permintaan ini bukan milik anda');
         }
 
-        return $this->render('view', ['model' => $model]);
+        return $this->render('view', ['model' => $model, 'unpaid' => $unpaid]);
     }
 }
