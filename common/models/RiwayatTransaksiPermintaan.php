@@ -4,6 +4,7 @@ namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "riwayat_transaksi_permintaan".
@@ -20,7 +21,7 @@ use yii\db\ActiveQuery;
  *
  * @property TransaksiPermintaan $transaksiPermintaan
  */
-class RiwayatTransaksiPermintaan extends \yii\db\ActiveRecord
+class RiwayatTransaksiPermintaan extends ActiveRecord
 {
 
     const STATUS_SUCCESS = 1;

@@ -16,7 +16,7 @@ use yii\bootstrap4\Modal;
 use yii\data\ActiveDataProvider;
 use yii\widgets\DetailView;
 
-$this->title = 'Permintaan: ' . $model->nama;
+$this->title = 'Permintaan: '.$model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Permintaan', 'url' => ['/permintaan/index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <?php if ($model->status === PermintaanProduk::STATUS_DIKIRIM): ?>
+                            <?php if ($model->status === PermintaanProduk::STATUS_DIKIRIM) : ?>
                                 <?php Modal::begin([
                                     'title' => '<h4>Konfirmasi Aksi</h4>',
                                     'id' => 'modal-terima',
@@ -93,11 +93,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'attribute' => 'user.profilUser.namaLengkap',
                                         'label' => 'Nama Peminta',
                                         'value' => function ($model) {
-                                            return Html::a(
-                                                $model->user->profilUser->namaLengkap,
+                                            return Html::a($model->user->profilUser->namaLengkap,
                                                 ['user/view', 'id' => $model->user->id],
-                                                $options = ['target' => '_blank']
-                                            );
+                                                $options = ['target' => '_blank']);
                                         },
                                         'format' => 'raw'
 
@@ -130,14 +128,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'template' => '{download}',
                                         'buttons' => [
                                             'download' => function ($url, $model, $key) {
-                                                return Html::a(
-                                                    '<i class="la la-download"></i> Download',
-                                                    $url,
+                                                return Html::a('<i class="la la-download"></i> Download', $url,
                                                     $options = [
                                                         'class' => 'btn btn-success btn-sm btn-pill btn-elevate btn-elevate-air',
                                                         '_target' => 'blank'
-                                                    ]
-                                                );
+                                                    ]);
                                             }
                                         ]
                                     ]

@@ -13,8 +13,11 @@ use yii\helpers\Json;
 use yii\helpers\Url;
 
 $this->title = 'Pembayaran Permintaan';
-$this->params['breadcrumbs'][] = ['label'=>'Permintaan','url'=>['permintaan/view','id'=>$transaksiPermintaan->id_permintaan]];
-$this->params['breadcrumbs'][] = ['label'=>$this->title];
+$this->params['breadcrumbs'][] = [
+    'label' => 'Permintaan',
+    'url' => ['permintaan/view', 'id' => $transaksiPermintaan->id_permintaan]
+];
+$this->params['breadcrumbs'][] = ['label' => $this->title];
 
 $profilUser = $user->profilUser;
 $total = $riwayat->nominal;
@@ -41,7 +44,8 @@ $total = $riwayat->nominal;
                                             <div class="form-group">
                                                 <label for="first_name">Nama Depan
                                                 </label>
-                                                <?= Html::textInput('nama_depan', $profilUser->nama_depan, ['readonly' => true, 'class' => 'text_field']) ?>
+                                                <?= Html::textInput('nama_depan', $profilUser->nama_depan,
+                                                    ['readonly' => true, 'class' => 'text_field']) ?>
                                             </div>
                                         </div>
 
@@ -49,7 +53,8 @@ $total = $riwayat->nominal;
                                             <div class="form-group">
                                                 <label for="last_name">Nama Belakang
                                                 </label>
-                                                <?= Html::textInput('nama_belakang', $profilUser->nama_belakang, ['readonly' => true, 'class' => 'text_field']) ?>
+                                                <?= Html::textInput('nama_belakang', $profilUser->nama_belakang,
+                                                    ['readonly' => true, 'class' => 'text_field']) ?>
                                             </div>
                                         </div>
                                     </div>
@@ -59,12 +64,14 @@ $total = $riwayat->nominal;
                                         <label for="email1">Email
                                             <sup>*</sup>
                                         </label>
-                                        <?= Html::textInput('email_user', $user->email, ['readonly' => true, 'class' => 'text_field']) ?>
+                                        <?= Html::textInput('email_user', $user->email,
+                                            ['readonly' => true, 'class' => 'text_field']) ?>
 
 
                                         <div class="form-group">
                                             <label for="address1">Nomor Hp</label>
-                                            <?= Html::textInput('nomor_hp_user', $user->nomor_hp, ['readonly' => true, 'class' => 'text_field']) ?>
+                                            <?= Html::textInput('nomor_hp_user', $user->nomor_hp,
+                                                ['readonly' => true, 'class' => 'text_field']) ?>
                                         </div>
 
                                     </div>
@@ -79,28 +86,28 @@ $total = $riwayat->nominal;
                     <div class="col-lg-6">
                         <div class="information_module order_summary">
                             <div class="toggle_title">
-                                <h4>Produk dibeli (<?=Html::a($transaksiPermintaan->permintaan->nama, ['permintaan/view','id'=>$transaksiPermintaan->id_permintaan], ['target'=>'_blank'])?> )</h4>
+                                <h4>Produk dibeli (<?= Html::a($transaksiPermintaan->permintaan->nama,
+                                        ['permintaan/view', 'id' => $transaksiPermintaan->id_permintaan],
+                                        ['target' => '_blank']) ?> )</h4>
 
                             </div>
 
                             <ul>
                                 <li class="item">
-                                    <?=Html::a(
-                                        'Harga Aplikasi',
-                                        ''
-                                    )?>
-                                    <span><?=Yii::$app->formatter->asCurrency($transaksiPermintaan->permintaan->harga)?></span>
+                                    <?= Html::a('Harga Aplikasi',
+                                        '') ?>
+                                    <span><?= Yii::$app->formatter->asCurrency($transaksiPermintaan->permintaan->harga) ?></span>
                                 </li>
                                 <li class="item">
-                                    <?=Html::a($riwayat->jenisString, '')?>
-                                    <span><?=Yii::$app->formatter->asCurrency($total)?></span>
+                                    <?= Html::a($riwayat->jenisString, '') ?>
+                                    <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
                                 </li>
 
 
                                 <hr>
                                 <li class="item">
                                     <a>Total</a>
-                                    <span><?= Yii::$app->formatter->asCurrency($total)   ?></span>
+                                    <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
 
                                 </li>
                             </ul>

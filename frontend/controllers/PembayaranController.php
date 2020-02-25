@@ -29,12 +29,12 @@ class PembayaranController extends Controller
     public function behaviors()
     {
         return [
-            'verbs'=> [
-                'class'=>VerbFilter::class,
-                'actions'=>[
-                    'cicilan'=>['POST'],
-                    'permintaan'=>['POST'],
-                    'confirm-order'=>['POST']
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'cicilan' => ['POST'],
+                    'permintaan' => ['POST'],
+                    'confirm-order' => ['POST']
                 ]
             ],
         ];
@@ -49,7 +49,7 @@ class PembayaranController extends Controller
         $keranjang = Keranjang::find()->where(['id_user' => $user->id]);
         $keranjangDataProvider = new ActiveDataProvider(['query' => $keranjang]);
         if (empty($user->nomor_hp)) {
-            $flash =  FlashHelper::DANGER;
+            $flash = FlashHelper::DANGER;
             $flash['message'] = 'Untuk bisa bertransaksi, verifikasi dulu nomor hp anda.';
             $flash['title'] = 'Verifikasi Nomor Hp!';
             Yii::$app->session->setFlash('danger', $flash);
@@ -193,7 +193,11 @@ class PembayaranController extends Controller
         $transaksiPermintaan = $this->findTransaksiPermintaan($permintaan->id);
         $riwayat = $transaksiPermintaan->getTransaksiBelumDibayar()->one();
 
-        return $this->render('permintaan', ['riwayat'=>$riwayat,'user'=>Yii::$app->user->identity,'transaksiPermintaan'=>$transaksiPermintaan]);
+        return $this->render('permintaan', [
+            'riwayat' => $riwayat,
+            'user' => Yii::$app->user->identity,
+            'transaksiPermintaan' => $transaksiPermintaan
+        ]);
     }
 
     protected function findPermintaan($id)
@@ -208,7 +212,7 @@ class PembayaranController extends Controller
 
     protected function findTransaksiPermintaan($id)
     {
-        $transaksi = TransaksiPermintaan::findOne(['id_permintaan'=>$id]);
+        $transaksi = TransaksiPermintaan::findOne(['id_permintaan' => $id]);
         if (!$transaksi) {
             throw new NotFoundHttpException();
         }
