@@ -6,6 +6,7 @@ namespace frontend\controllers;
 use Carbon\Carbon;
 use common\models\Keranjang;
 use common\models\PermintaanProduk;
+use common\models\RiwayatTransaksiPermintaan;
 use common\models\Transaksi;
 use common\models\TransaksiCicilan;
 use common\models\TransaksiDetail;
@@ -221,9 +222,58 @@ class PembayaranController extends Controller
 
     public function actionConfirmPermintaan()
     {
+        Config::$serverKey = Yii::$app->params['midtrans_server_key'];
+
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = Yii::$app->request->post();
-        return $data;
+
+        $user = Yii::$app->user->identity;
+
+
+        $transaksi = RiwayatTransaksiPermintaan::findOne($data['data']['id']);
+        $total = $data['data']['total'];
+
+        $transactionDetail = [
+            'order_id' => $transaksi->id,
+            'gross_amount' => $total
+        ];
+        $billingAddress = [
+            'first_name' => $user->profilUser->nama_depan,
+            'last_name' => $user->profilUser->nama_belakang,
+            'address' => $user->profilUser->alamat1,
+            'city' => $user->profilUser->kota,
+            'country_code' => 'IDN'
+        ];
+        $customerDetail = [
+            'first_name' => $user->profilUser->nama_depan,
+            'last_name' => $user->profilUser->nama_belakang,
+            'email' => $user->email,
+            'phone' => $user->nomor_hp,
+            'billing_address' => $billingAddress,
+            'shipping_address' => $billingAddress
+        ];
+
+        $snapPayload = [
+            'transaction_details' => $transactionDetail,
+            'customer_details' => $customerDetail,
+            'item_details' => [
+                [  'id' => $transaksi->id,
+                    'price' => $total,
+                    'quantity' => 1,
+                    'name' => $transaksi->transaksiPermintaan->permintaan->nama . '(' . $transaksi->jenisString . ')'
+                ]
+
+            ]
+        ];
+        $snapToken = Snap::getSnapToken($snapPayload);
+
+        $transaksi->snap_token = $snapToken;
+
+        return ['snap_token' => $snapToken];
     }
 
     public function actionConfirmCicilan()

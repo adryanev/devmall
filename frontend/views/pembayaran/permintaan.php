@@ -156,7 +156,7 @@ $url = Url::to(['pembayaran/confirm-permintaan']);
 $user = Json::encode(Yii::$app->user->identity);
 $id = $riwayat->id;
 $js = <<<JS
-var dataProduk = {id:$id,total:;$total,user;:$user;}
+var dataProduk = {id:$id,total:$total,user:$user}
 
 $('#button-bayar').on('click',function() {
   console.log("bayar function triggered");

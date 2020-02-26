@@ -178,7 +178,10 @@ class PermintaanController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $unpaid = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans()->where(['status' => RiwayatTransaksiPermintaan::STATUS_PENDING])->one();
+        $unpaid = $model->transaksiPermintaan;
+        if ($unpaid) {
+            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => RiwayatTransaksiPermintaan::STATUS_PENDING])->one();
+        }
         if ($model->id_user !== Yii::$app->user->identity->getId()) {
             throw new UnauthorizedHttpException('Oops, permintaan ini bukan milik anda');
         }

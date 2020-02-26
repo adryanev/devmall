@@ -55,7 +55,7 @@ class PermintaanController extends Controller
             throw new MethodNotAllowedHttpException('Maaf anda tidak bisa mengakses halaman ini');
         }
 
-        $path = Yii::getAlias('@permintaanPath/'.$file->nama_berkas);
+        $path = Yii::getAlias('@permintaanPath/' . $file->nama_berkas);
         return Yii::$app->response->sendFile($path);
     }
 
@@ -92,6 +92,7 @@ class PermintaanController extends Controller
                 $detail->id_transaksi_permintaan = $transaksi_permintaan->id;
                 $detail->nominal = $transaksi_permintaan->permintaan->uang_muka;
                 $detail->status = RiwayatTransaksiPermintaan::STATUS_PENDING;
+                $detail->jenis = RiwayatTransaksiPermintaan::JENIS_UANG_MUKA;
 
                 if (!$detail->save(false)) {
                     $db->rollBack();
@@ -104,6 +105,9 @@ class PermintaanController extends Controller
                 return $exception;
             }
         }
+        //TODO: Kirim Email dan Notifikasi
+
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Permintaan Diterima'));
 
         return $this->redirect(['permintaan/view', 'id' => $model->id]);
     }
@@ -119,6 +123,8 @@ class PermintaanController extends Controller
             $model->status = PermintaanProduk::STATUS_DITOLAK;
             $model->update(false);
         }
+
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Permintaan Ditolak'));
         return $this->redirect(['permintaan/index']);
     }
 }
