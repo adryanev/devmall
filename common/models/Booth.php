@@ -2,7 +2,9 @@
 
 namespace common\models;
 
+use yii\base\InvalidConfigException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -36,6 +38,7 @@ use yii\helpers\ArrayHelper;
  * @property int $totalUlasan
  * @property string $alamatLengkap
  * @property Produk[] $produkPopuler
+ * @property Coin $coin
  */
 class Booth extends \yii\db\ActiveRecord
 {
@@ -117,7 +120,15 @@ class Booth extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getCoin()
+    {
+        return $this->hasOne(Coin::class, ['id'=>'id_booth']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -125,7 +136,7 @@ class Booth extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPromos()
     {
@@ -133,7 +144,7 @@ class Booth extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFollowers()
     {
@@ -151,7 +162,7 @@ class Booth extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProduks()
     {
@@ -176,7 +187,7 @@ class Booth extends \yii\db\ActiveRecord
 
     /**
      * Populer adalah produk yang banyak dibeli dan banyak difavoritkan
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getProdukPopuler()
     {
