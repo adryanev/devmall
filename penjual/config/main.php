@@ -36,6 +36,7 @@ return [
 
             // automatically use kartik\widgets for each of the above formats
             'autoWidget' => true,
+            'ajaxConversion' => false
 
         ],
         'gridview' => [

@@ -6,6 +6,9 @@
 
 /* @var $keteranganForm penjual\models\forms\KeteranganPermintaanForm */
 
+/* @var $progress penjual\models\forms\ProgressPermintaanForm */
+/* @var $dataProgressProvider ActiveDataProvider*/
+
 use common\models\PermintaanProduk;
 use common\widgets\ActionColumn;
 use kartik\grid\GridView;
@@ -16,7 +19,7 @@ use yii\bootstrap4\Modal;
 use yii\data\ActiveDataProvider;
 use yii\widgets\DetailView;
 
-$this->title = 'Permintaan: '.$model->nama;
+$this->title = 'Permintaan: ' . $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Permintaan', 'url' => ['/permintaan/index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
@@ -37,7 +40,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-wrapper">
                         <div class="kt-portlet__head-actions">
-                            <?php if ($model->status === PermintaanProduk::STATUS_DIKIRIM) : ?>
+                            <?php if ($model->status === PermintaanProduk::STATUS_DIKIRIM): ?>
                                 <?php Modal::begin([
                                     'title' => '<h4>Konfirmasi Aksi</h4>',
                                     'id' => 'modal-terima',
@@ -93,9 +96,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'attribute' => 'user.profilUser.namaLengkap',
                                         'label' => 'Nama Peminta',
                                         'value' => function ($model) {
-                                            return Html::a($model->user->profilUser->namaLengkap,
+                                            return Html::a(
+                                                $model->user->profilUser->namaLengkap,
                                                 ['user/view', 'id' => $model->user->id],
-                                                $options = ['target' => '_blank']);
+                                                $options = ['target' => '_blank']
+                                            );
                                         },
                                         'format' => 'raw'
 
@@ -128,11 +133,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                         'template' => '{download}',
                                         'buttons' => [
                                             'download' => function ($url, $model, $key) {
-                                                return Html::a('<i class="la la-download"></i> Download', $url,
+                                                return Html::a(
+                                                    '<i class="la la-download"></i> Download',
+                                                    $url,
                                                     $options = [
                                                         'class' => 'btn btn-success btn-sm btn-pill btn-elevate btn-elevate-air',
                                                         '_target' => 'blank'
-                                                    ]);
+                                                    ]
+                                                );
                                             }
                                         ]
                                     ]
@@ -146,3 +154,66 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <span class="kt-portlet__head-icon">
+                        <i class="flaticon2-chart"></i>
+                    </span>
+                    <h3 class="kt-portlet__head-title">
+                       Progress
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-wrapper">
+                        <div class="kt-portlet__head-actions">
+                            <?php Modal::begin(['id' => 'tambah-progress','toggleButton' => [
+                                'label'=>'<i class="flaticon2-plus"></i> Tambah Progress',
+                                'class'=>'btn btn-primary btn-round btn-elevate btn-elevate-air'
+                            ],'title' => 'Tambah Progress Permintaan'])?>
+                            <?=$this->render('_form-progress',['permintaan'=>$model,'model'=>$progress]) ?>
+                            <?php Modal::end() ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet__body">
+                <div class="permintaan-view">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?=GridView::widget([
+                                'dataProvider' => $dataProgressProvider,
+                                'columns' => [
+                                    ['class' => SerialColumn::class, 'header' => 'No'],
+                                    'tanggal:date',
+                                    'keterangan',
+                                    'created_at:datetime',
+                                    ['class'=>'common\widgets\ActionColumn','header'=>'Aksi',
+                                        'template' => '{update}{delete}',
+                                        'buttons' => [
+                                            'update'=>function($url, $model, $key){
+                                              return Html::a('<i class="flaticon2-edit"></i> Ubah',['permintaan/update-progress','id'=>$key],['class'=>' btn btn-sm btn-pill btn-elevate btn-elevate-air btn-warning']);
+                                            },
+                                            'delete'=>function($url, $model, $key){
+                                                return Html::a('<i class="flaticon2-delete"></i> Hapus',['permintaan/hapus-progress','id'=>$key],[ 'class'=>' btn btn-sm btn-pill btn-elevate btn-elevate-air btn-danger',
+                                                    'data-confirm' => Yii::t('yii', 'Apakah anda yakin untuk menghapus item ini?'),
+                                                    'data-method' => 'post',]);
+                                            }
+                                        ]]
+                                ]
+                            ])?>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -52,7 +52,9 @@
         "kartik-v/yii2-widget-rating": "dev-master",
         "rsr/yii2-button-dropdown-sorter": "^1.0",
         "froala/yii2-froala-editor": "^3.0",
-        "midtrans/midtrans-php": "^2.0"
+        "midtrans/midtrans-php": "^2.0",
+        "ivankff/yii2-modal-ajax": "^4.1",
+        "omnilight/yii2-scheduling": "^1.1"
 
 
     },
