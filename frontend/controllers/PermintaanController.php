@@ -124,7 +124,7 @@ class PermintaanController extends Controller
 
     protected function findModel($id)
     {
-        $model = PermintaanProduk::findOne($id);
+        $model = PermintaanProduk::findOne(['id'=>$id,'id_user'=>Yii::$app->user->identity->getId()]);
         if (!$model) {
             throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
         }
@@ -187,5 +187,12 @@ class PermintaanController extends Controller
         }
 
         return $this->render('view', ['model' => $model, 'unpaid' => $unpaid]);
+    }
+
+    public function actionProgress($id){
+        $model = $this->findModel($id);
+        $progress = $model->riwayatPermintaans;
+
+        return $this->render('progress',compact('model','progress'));
     }
 }

@@ -47,6 +47,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         ]) ?>
                     <?php endif; ?>
 
+                    <?= $model->status === PermintaanProduk::STATUS_DIKERJAKAN ? Html::a('Lihat Progress',['permintaan/progress','id'=>$model->id],['class'=>'btn btn-md btn-info btn--round']) : ''?>
+
                 </div>
             </div>
 
