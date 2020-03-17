@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\PembayaranHelper;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -18,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property int|null $updated_at
  * @property int|null $jenis
  * @property string|null $jenisString
+ * @property string|null $statusString
  *
  * @property TransaksiPermintaan $transaksiPermintaan
  */
@@ -39,6 +41,14 @@ class RiwayatTransaksiPermintaan extends ActiveRecord
     {
         return 'riwayat_transaksi_permintaan';
     }
+
+    public function getStatusString()
+    {
+        $status = $this->status;
+        $string = PembayaranHelper::STATUS;
+        return $string[$status];
+    }
+
 
     public function getJenisString()
     {
@@ -88,6 +98,7 @@ class RiwayatTransaksiPermintaan extends ActiveRecord
             'snap_token' => 'Snap Token',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'jenisString'=>'Jenis Transaksi'
         ];
     }
 

@@ -11,6 +11,7 @@ use penjual\models\forms\KeteranganPermintaanForm;
 use penjual\models\forms\ProgressPermintaanForm;
 use penjual\models\PermintaanSearch;
 use Yii;
+use yii\base\DynamicModel;
 use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\web\Controller;
@@ -37,23 +38,16 @@ class PermintaanController extends Controller
         $model = $this->findModel($id);
         $progress->id_permintaan = $model->id;
         $keteranganForm = new KeteranganPermintaanForm($model->id);
-        $dataProgress = RiwayatPermintaan::find()->where(['id_permintaan_produk'=>$model->id]);
+        $dataProgress = RiwayatPermintaan::find()->where(['id_permintaan_produk' => $model->id]);
         $dataProgressProvider = new ActiveDataProvider(['query' => $dataProgress]);
+        $dataPembayaran = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans();
+        $dataPembayaranProvider =new ActiveDataProvider(['query' => $dataPembayaran]);
 
         if ($model->id_booth !== Yii::$app->user->identity->booth->id) {
             throw new MethodNotAllowedHttpException('Maaf Ini bukan data anda');
         }
 
-        return $this->render('view', compact('model', 'keteranganForm','progress','dataProgressProvider'));
-    }
-
-    protected function findModel($id)
-    {
-        $model = PermintaanProduk::findOne($id);
-        if (!$model) {
-            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
-        }
-        return $model;
+        return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider','dataPembayaranProvider'));
     }
 
     public function actionDownload($id)
@@ -63,7 +57,7 @@ class PermintaanController extends Controller
             throw new MethodNotAllowedHttpException('Maaf anda tidak bisa mengakses halaman ini');
         }
 
-        $path = Yii::getAlias('@permintaanPath/' . $file->nama_berkas);
+        $path = Yii::getAlias('@permintaanPath/'.$file->nama_berkas);
         return Yii::$app->response->sendFile($path);
     }
 
@@ -143,7 +137,7 @@ class PermintaanController extends Controller
         $model->id_permintaan = $permintaan->id;
 
         if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_form-progress', ['model'=>$model,'permintaan'=>$permintaan]);
+            return $this->renderAjax('_form-progress', ['model' => $model, 'permintaan' => $permintaan]);
         }
 
 
@@ -158,40 +152,121 @@ class PermintaanController extends Controller
             }
         }
 
-        return $this->render('tambah-progress', ['model'=>$model, 'permintaan'=>$permintaan]);
+        return $this->render('tambah-progress', ['model' => $model, 'permintaan' => $permintaan]);
     }
 
-    public function actionUpdateProgress($id){
+    public function actionUpdateProgress($id)
+    {
 
         $progress = $this->findProgress($id);
         $permintaan = $this->findModel($progress->id_permintaan_produk);
         $model = new ProgressPermintaanForm($id);
 
-        if($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             $model->update();
 
-            return $this->redirect(['permintaan/view','id'=>$model->id_permintaan]);
+            return $this->redirect(['permintaan/view', 'id' => $model->id_permintaan]);
         }
 
-        return $this->render('tambah-progress',['model'=>$model,'permintaan'=>$permintaan]);
+        return $this->render('tambah-progress', ['model' => $model, 'permintaan' => $permintaan]);
 
     }
 
-    protected function findProgress($id){
-        $model = RiwayatPermintaan::findOne($id);
-        if(!$model)
-        {
-            throw new NotFoundHttpException();
-        }
-        return $model;
-    }
-
-    public function actionHapusProgress($id){
+    public function actionHapusProgress($id)
+    {
 
         $model = $this->findProgress($id);
         $permintaan = $model->id_permintaan_produk;
         $model->delete();
 
-        return $this->redirect(['permintaan/view','id'=>$permintaan]);
+        return $this->redirect(['permintaan/view', 'id' => $permintaan]);
+    }
+
+    public function actionMintaBayar($id)
+    {
+        $permintaan = $this->findModel($id);
+        $transaksi = $permintaan->transaksiPermintaan;
+        $model = new DynamicModel(['id', 'nominal']);
+        $model->addRule(['id', 'nominal'], 'required')
+            ->addRule(['id', 'nominal'], 'integer');
+        $model->id = $transaksi->id;
+
+
+
+        if($model->load(Yii::$app->request->post())){
+            $riwayat = new RiwayatTransaksiPermintaan();
+            $riwayat->id_transaksi_permintaan = $transaksi->id;
+            $riwayat->status = RiwayatTransaksiPermintaan::STATUS_PENDING;
+            $riwayat->jenis = RiwayatTransaksiPermintaan::JENIS_ANGSURAN;
+            $riwayat->nominal = $model->nominal;
+
+            if($riwayat->save(false)){
+                if(Yii::$app->request->isAjax){
+
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ['success'=>true];
+                }
+            }
+
+
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_form-minta-bayar',compact('model','permintaan'));
+        }
+
+        return $this->render('minta-bayar',compact('model','transaksi','permintaan'));
+    }
+
+    public function actionUpdatePermintaanBayar($id){
+        $model = $this->findRiwayatTransaksiPermintaan($id);
+        $modelPermintaan = new DynamicModel(['id','nominal']);
+        $modelPermintaan->addRule(['id','nominal'],'required')
+            ->addRule(['id','nominal'],'integer');
+        $modelPermintaan->id = $model->id;
+        $modelPermintaan->nominal = $model->nominal;
+
+        if($modelPermintaan->load(Yii::$app->request->post()))
+        {
+            $model->nominal = $modelPermintaan->nominal;
+            if($model->update(false)){
+                return $this->redirect(['view','id'=>$model->transaksiPermintaan->id_permintaan]);
+            }
+        }
+        return $this->render('update-permintaan',['model'=>$modelPermintaan,'permintaan'=>$model->transaksiPermintaan->permintaan]);
+
+    }
+
+    public function actionHapusPermintaanBayar($id){
+        $model = $this->findRiwayatTransaksiPermintaan($id);
+        $idPermintaan = $model->transaksiPermintaan->id_permintaan;
+        $model->delete();
+        return $this->redirect(['view','id'=>$idPermintaan]);
+    }
+
+    protected function findModel($id)
+    {
+        $model = PermintaanProduk::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
+        }
+        return $model;
+    }
+
+    protected function findProgress($id)
+    {
+        $model = RiwayatPermintaan::findOne(['id'=>$id]);
+        if (!$model) {
+            throw new NotFoundHttpException();
+        }
+        return $model;
+    }
+
+    protected function findRiwayatTransaksiPermintaan($id){
+        $model = RiwayatTransaksiPermintaan::findOne($id);
+        if(!$model){
+            throw new NotFoundHttpException();
+        }
+
+        return $model;
     }
 }
