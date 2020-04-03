@@ -92,13 +92,13 @@ class RiwayatTransaksiPermintaan extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_transaksi_permintaan' => 'Id Transaksi Permintaan',
+            'id_transaksi_permintaan' => 'Id TransaksiProduk Permintaan',
             'nominal' => 'Nominal',
             'status' => 'Status',
             'snap_token' => 'Snap Token',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'jenisString'=>'Jenis Transaksi'
+            'jenisString'=>'Jenis TransaksiProduk'
         ];
     }
 

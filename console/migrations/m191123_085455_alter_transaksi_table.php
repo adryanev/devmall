@@ -12,11 +12,11 @@ class m191123_085455_alter_transaksi_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%transaksi}}', 'jenis_transaksi', $this->string());
-        $this->addColumn('{{%transaksi}}', 'id_booth', $this->integer());
-        $this->addForeignKey('fk-transaksi_booth', '{{%transaksi}}', 'id_booth', '{{%booth}}', 'id');
+        $this->addColumn('{{%transaksi_produk}}', 'jenis_transaksi', $this->string());
+        $this->addColumn('{{%transaksi_produk}}', 'id_booth', $this->integer());
+        $this->addForeignKey('fk-transaksi_booth', '{{%transaksi_produk}}', 'id_booth', '{{%booth}}', 'id');
 
-        $this->addColumn('{{%transaksi}}', 'kode_transaksi', $this->string());
+        $this->addColumn('{{%transaksi_produk}}', 'kode_transaksi', $this->string());
 
     }
 

@@ -24,7 +24,7 @@ use yii\behaviors\TimestampBehavior;
  * @property TransaksiCicilan[] $transaksiCicilans
  * @property TransaksiDetail[] $transaksiDetails
  */
-class Transaksi extends \yii\db\ActiveRecord
+class TransaksiProduk extends \yii\db\ActiveRecord
 {
 
     const STATUS_SUCCESS = 1;
@@ -39,7 +39,7 @@ class Transaksi extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'transaksi';
+        return 'transaksi_produk';
     }
 
     public function behaviors()
@@ -73,8 +73,8 @@ class Transaksi extends \yii\db\ActiveRecord
             'expire' => 'Expire',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'jenis_transaksi' => 'Jenis Transaksi',
-            'kode_transaksi' => 'Kode Transaksi',
+            'jenis_transaksi' => 'Jenis TransaksiProduk',
+            'kode_transaksi' => 'Kode TransaksiProduk',
             'snap_token' => 'Snap Token'
         ];
     }

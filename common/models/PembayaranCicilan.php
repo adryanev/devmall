@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -51,7 +50,7 @@ class PembayaranCicilan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_transaksi_cicilan' => 'Id Transaksi Cicilan',
+            'id_transaksi_cicilan' => 'Id TransaksiProduk Cicilan',
             'tanggal_pembayaran' => 'Tanggal Pembayaran',
             'jumlah_dibayar' => 'Jumlah Dibayar',
             'status' => 'Status',

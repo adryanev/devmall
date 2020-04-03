@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -17,7 +16,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property Produk $produk
- * @property Transaksi $transaksi
+ * @property TransaksiProduk $transaksi
  */
 class TransaksiDetail extends \yii\db\ActiveRecord
 {
@@ -42,7 +41,7 @@ class TransaksiDetail extends \yii\db\ActiveRecord
         return [
             [['id_transaksi', 'id_produk', 'harga_transaksi', 'is_promo', 'created_at', 'updated_at'], 'integer'],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
-            [['id_transaksi'], 'exist', 'skipOnError' => true, 'targetClass' => Transaksi::className(), 'targetAttribute' => ['id_transaksi' => 'id']],
+            [['id_transaksi'], 'exist', 'skipOnError' => true, 'targetClass' => TransaksiProduk::className(), 'targetAttribute' => ['id_transaksi' => 'id']],
         ];
     }
 
@@ -53,9 +52,9 @@ class TransaksiDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_transaksi' => 'Id Transaksi',
+            'id_transaksi' => 'Id TransaksiProduk',
             'id_produk' => 'Id Produk',
-            'harga_transaksi' => 'Harga Transaksi',
+            'harga_transaksi' => 'Harga TransaksiProduk',
             'is_promo' => 'Is Promo',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -75,6 +74,6 @@ class TransaksiDetail extends \yii\db\ActiveRecord
      */
     public function getTransaksi()
     {
-        return $this->hasOne(Transaksi::className(), ['id' => 'id_transaksi']);
+        return $this->hasOne(TransaksiProduk::className(), ['id' => 'id_transaksi']);
     }
 }

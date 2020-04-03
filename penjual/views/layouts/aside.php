@@ -29,9 +29,9 @@ $menuItems = [
     ],
 
     ['label' => 'Permintaan', 'icon' => '<i class="la la-inbox"></i>', 'url' => ['/permintaan/index'],],
-    ['label' => 'Transaksi', 'icon' => '<i class="la la-money"></i>', 'url' => ['/transaksi/index'],
+    ['label' => 'TransaksiProduk', 'icon' => '<i class="la la-money"></i>', 'url' => ['/transaksi/index'],
         'items' => [
-            ['label' => 'Transaksi Masuk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/transaksi/masuk'],],
+            ['label' => 'TransaksiProduk Masuk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/transaksi/masuk'],],
             ['label' => 'Reimburse', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/transaksi/reimburse'],],
         ]
     ],

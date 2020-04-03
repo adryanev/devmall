@@ -22,7 +22,7 @@ class m191127_130002_create_transaksi_cicilan_table extends Migration
             'created_at'=>$this->integer(),
             'updated_at'=>$this->integer()
         ]);
-        $this->addForeignKey('fk-transaksi_cicilan-transaksi','{{%transaksi_cicilan}}','id_transaksi','{{%transaksi}}','id');
+        $this->addForeignKey('fk-transaksi_cicilan-transaksi','{{%transaksi_cicilan}}','id_transaksi','{{%transaksi_produk}}','id');
     }
 
     /**

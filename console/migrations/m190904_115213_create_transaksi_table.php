@@ -18,7 +18,7 @@ class m190904_115213_create_transaksi_table extends Migration
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%transaksi}}', [
+        $this->createTable('{{%transaksi_produk}}', [
             'id' => $this->primaryKey(),
             'id_user'=>$this->integer(),
             'waktu'=>$this->integer(),
@@ -31,7 +31,7 @@ class m190904_115213_create_transaksi_table extends Migration
 
         ],$tableOptions);
 
-        $this->addForeignKey('fk-transaksi-user','{{%transaksi}}','id_user','{{%user}}','id','cascade','cascade');
+        $this->addForeignKey('fk-transaksi-user','{{%transaksi_produk}}','id_user','{{%user}}','id','cascade','cascade');
 
 
     }
@@ -41,6 +41,6 @@ class m190904_115213_create_transaksi_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%transaksi}}');
+        $this->dropTable('{{%transaksi_produk}}');
     }
 }

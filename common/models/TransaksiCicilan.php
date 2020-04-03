@@ -17,7 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $updated_at
  *
  * @property PembayaranCicilan[] $pembayaranCicilans
- * @property Transaksi $transaksi
+ * @property TransaksiProduk $transaksi
  */
 class TransaksiCicilan extends \yii\db\ActiveRecord
 {
@@ -46,7 +46,7 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
         return [
             [['id_transaksi', 'banyak_cicilan', 'jumlah_cicilan', 'status', 'created_at', 'updated_at'], 'integer'],
             [['tanggal_jatuh_tempo'], 'safe'],
-            [['id_transaksi'], 'exist', 'skipOnError' => true, 'targetClass' => Transaksi::className(), 'targetAttribute' => ['id_transaksi' => 'id']],
+            [['id_transaksi'], 'exist', 'skipOnError' => true, 'targetClass' => TransaksiProduk::className(), 'targetAttribute' => ['id_transaksi' => 'id']],
         ];
     }
 
@@ -57,7 +57,7 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_transaksi' => 'Id Transaksi',
+            'id_transaksi' => 'Id TransaksiProduk',
             'banyak_cicilan' => 'Banyak Cicilan',
             'jumlah_cicilan' => 'Jumlah Cicilan',
             'tanggal_jatuh_tempo' => 'Tanggal Jatuh Tempo',
@@ -80,6 +80,6 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
      */
     public function getTransaksi()
     {
-        return $this->hasOne(Transaksi::className(), ['id' => 'id_transaksi']);
+        return $this->hasOne(TransaksiProduk::className(), ['id' => 'id_transaksi']);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4b5c69ffe95db149aecee796a6774c0",
+    "content-hash": "1122d6d249497436583b7ae880f87905",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -367,7 +367,7 @@
             "version": "v3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
@@ -388,12 +388,12 @@
             "version": "v2.9.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/chartjs/Chart.js.git",
+                "url": "git@github.com:nnnick/Chart.js.git",
                 "reference": "06f73dc3590084b2c464bf08189c7aee2b6b92d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/06f73dc3590084b2c464bf08189c7aee2b6b92d2",
+                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/06f73dc3590084b2c464bf08189c7aee2b6b92d2",
                 "reference": "06f73dc3590084b2c464bf08189c7aee2b6b92d2"
             },
             "type": "bower-asset",
@@ -461,7 +461,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -482,12 +482,12 @@
             "version": "v16.0.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jackocnr/intl-tel-input.git",
+                "url": "git@github.com:Bluefieldscom/intl-tel-input.git",
                 "reference": "c84a31fbb40800a96d8a710c0056d81054503d0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackocnr/intl-tel-input/zipball/c84a31fbb40800a96d8a710c0056d81054503d0c",
+                "url": "https://api.github.com/repos/Bluefieldscom/intl-tel-input/zipball/c84a31fbb40800a96d8a710c0056d81054503d0c",
                 "reference": "c84a31fbb40800a96d8a710c0056d81054503d0c"
             },
             "type": "bower-asset"
@@ -3549,6 +3549,57 @@
                 "yii"
             ],
             "time": "2019-07-19T17:36:56+00:00"
+        },
+        {
+            "name": "oxyaction/yii2-polymorphic-relation-behavior",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Oxyaction/yii2-polymorphic-relation-behavior.git",
+                "reference": "4e8237e5939e01eefb6d6c1dc2b2278c335f4bd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Oxyaction/yii2-polymorphic-relation-behavior/zipball/4e8237e5939e01eefb6d6c1dc2b2278c335f4bd2",
+                "reference": "4e8237e5939e01eefb6d6c1dc2b2278c335f4bd2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "suggest": {
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "oxyaction\\behaviors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kompaniets",
+                    "email": "alexkomp.ua@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/Oxyaction/yii2-polymorphic-relation-behavior",
+            "keywords": [
+                "Behavior",
+                "behaviour",
+                "polymorphic",
+                "relation",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2017-03-12T11:06:56+00:00"
         },
         {
             "name": "paragonie/random_compat",

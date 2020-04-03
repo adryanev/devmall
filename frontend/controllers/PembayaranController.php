@@ -7,10 +7,10 @@ use Carbon\Carbon;
 use common\models\Keranjang;
 use common\models\PermintaanProduk;
 use common\models\RiwayatTransaksiPermintaan;
-use common\models\Transaksi;
 use common\models\TransaksiCicilan;
 use common\models\TransaksiDetail;
 use common\models\TransaksiPermintaan;
+use common\models\TransaksiProduk;
 use common\models\User;
 use frontend\helpers\FlashHelper;
 use Midtrans\Config;
@@ -78,10 +78,10 @@ class PembayaranController extends Controller
         $keranjang = $req['keranjang'];
         $user = User::findOne($req['user']['id']);
         $waktu = Carbon::now();
-        $transaksi = new Transaksi();
+        $transaksi = new TransaksiProduk();
         $transaksi->id_user = $user->id;
         $transaksi->total = $req['total'];
-        $transaksi->status = Transaksi::STATUS_PENDING;
+        $transaksi->status = TransaksiProduk::STATUS_PENDING;
         $transaksi->expire = $waktu->addHours(8)->timestamp;
         $transaksi->kode_transaksi = 'devmall-' . $waktu->timestamp;
         $transaksi->waktu = $waktu->timestamp;
@@ -164,22 +164,22 @@ class PembayaranController extends Controller
         $type = $notif->payment_type;
         $orderId = $notif->orderId;
         $fraud = $notif->fraud_status;
-        $transaksi = Transaksi::findOne(['kode_transaksi' => $orderId]);
+        $transaksi = TransaksiProduk::findOne(['kode_transaksi' => $orderId]);
 
         if ($transaction === 'capture') {
             if ($fraud === 'challenge') {
-                $transaksi->status = Transaksi::STATUS_PENDING;
+                $transaksi->status = TransaksiProduk::STATUS_PENDING;
             } else {
-                $transaksi->status = Transaksi::STATUS_SUCCESS;
+                $transaksi->status = TransaksiProduk::STATUS_SUCCESS;
             }
         } elseif ($transaction == 'pending') {
-            $transaksi->status = Transaksi::STATUS_PENDING;
+            $transaksi->status = TransaksiProduk::STATUS_PENDING;
         } elseif ($transaction == 'deny') {
-            $transaksi->status = Transaksi::STATUS_FAILED;
+            $transaksi->status = TransaksiProduk::STATUS_FAILED;
         } elseif ($transaction == 'expire') {
-            $transaksi->status = Transaksi::STATUS_EXPIRED;
+            $transaksi->status = TransaksiProduk::STATUS_EXPIRED;
         } elseif ($transaction == 'cancel') {
-            $transaksi->status = Transaksi::STATUS_FAILED;
+            $transaksi->status = TransaksiProduk::STATUS_FAILED;
         }
     }
 

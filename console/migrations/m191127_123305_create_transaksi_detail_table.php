@@ -23,7 +23,7 @@ class m191127_123305_create_transaksi_detail_table extends Migration
         ]);
 
 
-        $this->addForeignKey('fk-transaksi_detail-transaksi','{{%transaksi_detail}}','id_transaksi','{{%transaksi}}','id','cascade','cascade');
+        $this->addForeignKey('fk-transaksi_detail-transaksi','{{%transaksi_detail}}','id_transaksi','{{%transaksi_produk}}','id','cascade','cascade');
         $this->addForeignKey('fk-transaksi_detail-produk','{{%transaksi_detail}}','id_produk','{{%produk}}','id','cascade','cascade');
     }
 
