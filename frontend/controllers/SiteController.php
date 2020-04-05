@@ -275,7 +275,7 @@ class SiteController extends Controller
                     'message' => 'Email anda berhasil diverifikasi, anda sudah bisa login.',
                     'title' => 'Verifikasi Berhasil!',
                 ]);
-                return $this->goHome();
+                return $this->redirect(['site/check-verification-email','email'=>$user->email]);
         }
 
         Yii::$app->session->setFlash('danger', [
@@ -285,6 +285,11 @@ class SiteController extends Controller
             'title' => 'Verifikasi Gagal!',
         ]);
         return $this->goHome();
+    }
+
+    public function actionCheckVerificationEmail($email){
+
+        return $this->render('check-verification-email',compact('email'));
     }
 
     /**

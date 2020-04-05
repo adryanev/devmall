@@ -10,6 +10,15 @@ use yii\web\NotFoundHttpException;
 
 class BoothController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'verbs'=>[
+                'class'=>'yii\filters\VerbFilter',
+
+            ]
+        ]
+    }
     public function actionIndex()
     {
         $data = Booth::find();
@@ -40,7 +49,6 @@ class BoothController extends \yii\web\Controller
         }
 
         return $model;
-
     }
 
     public function actionTerima($id)
@@ -63,6 +71,8 @@ class BoothController extends \yii\web\Controller
     public function actionTolak($id)
     {
         $model = $this->findModel($id);
+        $model->user->has_booth = 0;
+        $model->user->update(false);
         $model->delete();
         Yii::$app->session->setFlash('success', 'Berhasil menolak verifikasi');
 
@@ -77,6 +87,4 @@ class BoothController extends \yii\web\Controller
         Yii::$app->session->setFlash('success', 'Berhasil menghapus Booth');
         return $this->redirect(['index']);
     }
-
-
 }

@@ -19,7 +19,7 @@ class m190827_124005_create_verifikasi_user_table extends Migration
         }
         $this->createTable('{{%verifikasi_user}}', [
             'id' => $this->primaryKey(),
-            'id_user'=>$this->integer()->unique(),
+            'id_user'=>$this->integer(),
             'nama_file'=>$this->string(),
             'jenis_verifikasi'=>$this->string(),
             'status'=>$this->tinyInteger(),

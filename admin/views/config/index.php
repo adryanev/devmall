@@ -1,8 +1,8 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel admin\models\ConfigSearch */
@@ -41,22 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-                    
+
                                             <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
         'columns' => [
                         ['class' => 'yii\grid\SerialColumn','header'=>'No'],
 
-                                    'id',
+//                                    'id',
             'key',
             'value',
 
                         ['class' => 'common\widgets\ActionColumn','header'=>'Aksi'],
                         ],
                         ]); ?>
-                    
-                    
+
+
                 </div>
             </div>
         </div>

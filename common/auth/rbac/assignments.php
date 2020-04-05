@@ -7,7 +7,4 @@ return [
         'pengguna',
         'penjual',
     ],
-    3 => [
-        'pengguna',
-    ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 
 
 /* @var $this yii\web\View */
@@ -17,7 +17,21 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'value')->widget(\dosamigos\tinymce\TinyMce::class,[
+        'language' => 'ID',
+        'options' => [
+            'rows'=>6
+        ],
+        'clientOptions' => [
+            'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste imagetools"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            'paste_data_images'=>true,
+        ]
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('<i class=\'la la-save\'></i> Simpan', ['class' => 'btn btn-pill btn-elevate btn-elevate-air btn-brand']) ?>

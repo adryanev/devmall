@@ -22,6 +22,8 @@ class m190828_133914_create_config_table extends Migration
             'key'=>$this->string()->unique(),
             'value'=>$this->string(),
         ]);
+        $this->createIndex('idx-config-key','{{%config}}','key');
+
 
     }
 
@@ -30,6 +32,7 @@ class m190828_133914_create_config_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropIndex('idx-config-key','{{%config}}');
         $this->dropTable('{{%config}}');
     }
 }

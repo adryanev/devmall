@@ -56,7 +56,7 @@ class SettingsController extends \yii\web\Controller
         $modelAlamat = new AlamatForm($user->getId());
         $modelVerfikasi = new VerifikasiForm($user->getId());
 
-        $verifikasiSekarang = VerifikasiUser::findOne(['id_user'=>$user->getId()]);
+        $verifikasiSekarang = VerifikasiUser::find()->where(['id_user'=>$user->getId()])->orderBy('id DESC')->one();
 
         if($modelInformasi->load(Yii::$app->request->post())){
             if(!$modelInformasi->validate()){
