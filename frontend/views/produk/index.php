@@ -28,7 +28,7 @@ use yii\bootstrap4\Html;
                             <?php foreach ($kategori as /** @var $kat Kategori */
                                            $kat): ?>
                                 <li>
-                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/index', 'kategori' => $kat->nama]) ?>
+                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/index', 'ProdukSearch[kategori]' => $kat->nama]) ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -59,12 +59,12 @@ use yii\bootstrap4\Html;
                             var url  = window.location.href;
                             var select = $('#sort-harga option:selected').val();
                             var newUrl = url.replace(regex,'')
-                            
+
 
                            window.location.href=newUrl+"&sort="+select;
 
                         });
-                        
+
 JS;
                     $this->registerJs($jsSortHarga);
 
@@ -96,6 +96,7 @@ JS;
         <?= \yii\widgets\ListView::widget([
             'dataProvider' => $produkDataProvider,
             'itemView' => '_search_item',
+            'summary' => false,
             'itemOptions' => [
                 'class' => 'col-lg-4 col-md-6'
 

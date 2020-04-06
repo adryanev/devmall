@@ -29,7 +29,7 @@ use yii\bootstrap4\Html;
                                            $kat):
                                 ?>
                                 <li>
-                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/search', 'ProdukSearch[nama]' => $params, 'ProdukSearch[kategori]' => $kat->nama]) ?>
+                                    <?= Html::a($kat->nama . '<span>' . $kat->frekuensi . '</span>', ['produk/search', 'ProdukSearch[nama]' => $params['nama'], 'ProdukSearch[kategori]' => $kat->nama]) ?>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
@@ -62,6 +62,7 @@ use yii\bootstrap4\Html;
         <?= \yii\widgets\ListView::widget([
             'dataProvider' => $produkDataProvider,
             'itemView' => '_search_item',
+            'summary' => false,
             'itemOptions' => [
                 'class' => 'col-lg-4 col-md-6'
 

@@ -138,6 +138,7 @@ START PRODUCTS AREA
         <?= \yii\widgets\ListView::widget([
             'dataProvider' => $newProdukDataProvider,
             'itemView' => '/produk/_search_item',
+            'summary' => false,
             'itemOptions' => [
                 'class' => 'col-lg-4 col-md-6'
 

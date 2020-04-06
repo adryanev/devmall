@@ -197,7 +197,7 @@ class SiteController extends Controller
                 'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
                 'title' => 'Pendaftaran Berhasil!',
             ]);
-            return $this->goHome();
+            return $this->redirect(['site/check-verification-email','email'=>$model->email]);
         }
 
         return $this->render('/common-forms/user-signup-form', [
@@ -275,7 +275,7 @@ class SiteController extends Controller
                     'message' => 'Email anda berhasil diverifikasi, anda sudah bisa login.',
                     'title' => 'Verifikasi Berhasil!',
                 ]);
-                return $this->redirect(['site/check-verification-email','email'=>$user->email]);
+                return $this->goHome();
         }
 
         Yii::$app->session->setFlash('danger', [
@@ -309,7 +309,7 @@ class SiteController extends Controller
                     'message' => 'Kode verifikasi baru telah dikirim ke email anda.',
                     'title' => 'Pengiriman Berhasil!',
                 ]);
-                return $this->goHome();
+                return $this->redirect(['site/check-verification-email','email'=>$model->email]);
             }
             Yii::$app->session->setFlash('danger', [
                 'type' => 'danger',

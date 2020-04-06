@@ -3,6 +3,7 @@
 use common\models\constants\FileExtension;
 use common\models\VerifikasiUser;
 use frontend\models\forms\setting\VerifikasiForm;
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,12 +11,12 @@ use yii\widgets\ActiveForm;
 /* @var $model VerifikasiForm */
 /* @var $form ActiveForm */
 /* @var $verifikasiSekarang VerifikasiUser */
-$not_verified = $verifikasiSekarang->status === VerifikasiUser::STATUS_DITOLAK;
+$not_verified = isset($verifikasiSekarang)? $verifikasiSekarang->status === VerifikasiUser::STATUS_DITOLAK: null;
 ?>
 
 <div class="row">
     <div class="col-lg-12">
-        <?php if(isset($not_verified)): ?>
+        <?php if (isset($not_verified)): ?>
         <h5 class="text-capitalize">Status Verifikasi Terakhir Ini</h5>
         <div class="table-responsive">
             <table class="table withdraw__table">
@@ -28,18 +29,18 @@ $not_verified = $verifikasiSekarang->status === VerifikasiUser::STATUS_DITOLAK;
 
                 <tbody>
                 <tr>
-                    <td><?= Html::img('@web/upload/verifikasi/'.$verifikasiSekarang->nama_file,['width'=>'50%']) ?></td>
+                    <td><?= Html::img('@web/upload/verifikasi/' . $verifikasiSekarang->nama_file, ['width'=>'50%']) ?></td>
                     <td class="bold"><?=$verifikasiSekarang->getStatusVerifikasi()?></td>
                 </tr>
                 </tbody>
             </table>
     </div>
-        <?php
-         endif;
+            <?php
+        endif;
         ?>
 </div>
     <?php
-    if($not_verified) :
+    if ($not_verified || !isset($verifikasiSekarang)):
         ?>
         <div class="verifikasi_identitas_form">
 
@@ -48,7 +49,8 @@ $not_verified = $verifikasiSekarang->status === VerifikasiUser::STATUS_DITOLAK;
 
 
             <?= $form->field($model, 'berkas')->widget(
-                \kartik\file\FileInput::class,[
+                FileInput::class,
+                [
                     'pluginOptions' => [
                         'theme' => 'explorer-fas',
                         'allowedFileExtensions' => FileExtension::FOTO,

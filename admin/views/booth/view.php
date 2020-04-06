@@ -72,7 +72,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <div class="kt-portlet__head-actions">
 
 
-                                <?= Html::a('<i class=flaticon2-checkmark></i> Terima', ['terima', 'id' => $model->id], ['class' => 'btn btn-success btn-elevate btn-elevate-air']) ?>
+                                <?= Html::a('<i class=flaticon2-checkmark></i> Terima', ['terima', 'id' => $model->id], ['class' => 'btn btn-success btn-elevate btn-elevate-air','data'=>[
+                                    'confirm'=>'Apakah anda akan menyetujui Booth ini?',
+                                    'method'=>'POST'
+                                ]]) ?>
                                 <?= Html::a('<i class=flaticon2-delete></i> Tolak', ['tolak', 'id' => $model->id], [
                                     'class' => 'btn btn-danger btn-elevate btn-elevate-air',
                                     'data' => [

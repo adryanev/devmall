@@ -17,9 +17,8 @@ $this->title = 'Verifikasi Email Terkirim';
                 <div class="cardify login">
                     <div class="login--form">
                         <h3><?= Html::encode($this->title)?></h3>
-                        <?=\yii\bootstrap4\Alert::widget(['body' =>'<p>Permintaan Verifikasi Terkirim ke : '.Html::encode($email).', bila tidak ada, '.Html::a('minta ulang verifikasi',['site/check-verification-email'],['data'=>[
-                            'method'=>'POST',
-                                'params'=>['ResendEmailVerificationForm[email]'=>$email]
+                        <?=\yii\bootstrap4\Alert::widget(['body' =>'<p>Permintaan Verifikasi Terkirim ke : '.Html::encode($email).', bila tidak ada, '.Html::a('minta ulang verifikasi',['site/resend-verification-email'],['data'=>[
+                            'method'=>'POST', 'params'=>['ResendVerificationEmailForm[email]'=>$email]
                             ]]).'.</p>','options' => ['class'=>'alert-success'],'closeButton' => false])?>
                     </div>
 
