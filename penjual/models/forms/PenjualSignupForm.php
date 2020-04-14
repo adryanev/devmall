@@ -93,6 +93,8 @@ class PenjualSignupForm extends Model
         $penjual->status = Booth::STATUS_CREATED;
         $penjual->id_user = $this->_user->id;
 
+
+
         return $penjual->save(false) ? $penjual : null;
     }
 
