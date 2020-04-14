@@ -21,7 +21,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class TransaksiProduk extends \yii\db\ActiveRecord
 {
-    const TRANSAKSI_PRODUK = 'TransaksiProduk';
+    const TRANSAKSI_PRODUK = 'transaksiProduk';
 
     const STATUS_SUCCESS = 1;
     const STATUS_PENDING = 0;

@@ -20,7 +20,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class PembayaranCicilan extends \yii\db\ActiveRecord
 {
-    const PEMBAYARAN_CICILAN = 'PembayaranCicilan';
+    const PEMBAYARAN_CICILAN = 'pembayaranCicilan';
 
     /**
      * {@inheritdoc}

@@ -25,7 +25,7 @@ use yii\db\ActiveRecord;
  */
 class PembayaranTransaksiPermintaan extends ActiveRecord
 {
-    const PEMBAYARAN_TRANSAKSI_PERMINTAAN = 'PembayaranTransaksiPermintaan';
+    const PEMBAYARAN_TRANSAKSI_PERMINTAAN = 'pembayaranTransaksiPermintaan';
 
     const STATUS_SUCCESS = 1;
     const STATUS_PENDING = 0;

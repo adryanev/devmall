@@ -227,7 +227,7 @@ $('#button-bayar').on('click',function() {
                     console.log(result);
                 }
             });
-        }     
+        }
     );
 });
 JS;

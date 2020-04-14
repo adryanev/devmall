@@ -17,6 +17,10 @@ namespace common\models;
  * @property string|null $snap_token
  * @property int|null $created_at
  * @property int|null $updated_at
+ *
+ * @property TransaksiProduk $transaksiProduk
+ * @property TransaksiCicilan $transaksiCicilan
+ * @property PembayaranTransaksiPermintaan $transkasiPermintaan
  */
 class Pembayaran extends \yii\db\ActiveRecord
 {
@@ -60,17 +64,38 @@ class Pembayaran extends \yii\db\ActiveRecord
         ];
     }
 
-    public function savePembayaranProduk(){
-        $transaksi = TransaksiProduk::findOne(['id'=>$this->external_id]);
-        $transaksi->status = $this->status;
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransaksiProduk(){
+        return $this->hasOne(TransaksiProduk::class,['id'=>'external_id']);
     }
 
-    public function savePembayaranCicilan(){
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransaksiCicilan(){
+        return $this->hasOne(TransaksiCicilan::class,['id'=>'external_id']);
     }
 
-    public function savePembayaranPermintaan(){
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTransaksiPermintaan(){
+        return $this->hasOne(PembayaranTransaksiPermintaan::class,['id'=>'external_id']);
     }
+
+//    public function savePembayaranProduk(){
+//        $transaksi = TransaksiProduk::findOne(['id'=>$this->external_id]);
+//        $transaksi->status = $this->status;
+//
+//    }
+//
+//    public function savePembayaranCicilan(){
+//
+//    }
+//
+//    public function savePembayaranPermintaan(){
+//
+//    }
 }

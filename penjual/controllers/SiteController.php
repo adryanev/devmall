@@ -2,6 +2,7 @@
 
 namespace penjual\controllers;
 
+use common\models\Coin;
 use common\models\User;
 use penjual\models\forms\PenjualLoginForm;
 use penjual\models\forms\PenjualSignupForm;
@@ -90,6 +91,11 @@ class SiteController extends Controller
                 $user = User::findOne(Yii::$app->user->identity->getId());
                 $user->has_booth = User::HAS_BOOTH;
                 $user->save(false);
+                $coin = new Coin();
+                $coin->id_booth = $user->booth->id;
+                $coin->saldo = 0;
+                $coin->status = Coin::STATUS_ACTIVE;
+                $coin->save(false);
                 Yii::$app->session->setFlash('success', 'Berhasil untuk membuat Booth');
                 return $this->redirect(['site/index']);
             }
