@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\helpers\PembayaranHelper;
+use oxyaction\behaviors\RelatedPolymorphicBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -14,7 +15,6 @@ use yii\db\ActiveRecord;
  * @property int|null $id_transaksi_permintaan
  * @property int|null $nominal
  * @property int|null $status
- * @property string|null $snap_token
  * @property int|null $created_at
  * @property int|null $updated_at
  * @property int|null $jenis
@@ -23,8 +23,9 @@ use yii\db\ActiveRecord;
  *
  * @property TransaksiPermintaan $transaksiPermintaan
  */
-class RiwayatTransaksiPermintaan extends ActiveRecord
+class PembayaranTransaksiPermintaan extends ActiveRecord
 {
+    const PEMBAYARAN_TRANSAKSI_PERMINTAAN = 'PembayaranTransaksiPermintaan';
 
     const STATUS_SUCCESS = 1;
     const STATUS_PENDING = 0;
@@ -39,7 +40,7 @@ class RiwayatTransaksiPermintaan extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'riwayat_transaksi_permintaan';
+        return 'pembayaran_transaksi_permintaan';
     }
 
     public function getStatusString()
@@ -63,7 +64,14 @@ class RiwayatTransaksiPermintaan extends ActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::class
+            TimestampBehavior::class,
+            'polymorphic'=>[
+                'class'=>RelatedPolymorphicBehavior::class,
+                'polyRelations'=>[
+                    'pembayarans'=>Pembayaran::class
+                ],
+                'polymorphicType' => self::PEMBAYARAN_TRANSAKSI_PERMINTAAN
+            ]
         ];
     }
 

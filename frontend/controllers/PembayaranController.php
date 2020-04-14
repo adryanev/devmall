@@ -4,9 +4,12 @@
 namespace frontend\controllers;
 
 use Carbon\Carbon;
+use common\helpers\PembayaranHelper;
 use common\models\Keranjang;
+use common\models\Pembayaran;
+use common\models\PembayaranCicilan;
+use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
-use common\models\RiwayatTransaksiPermintaan;
 use common\models\TransaksiCicilan;
 use common\models\TransaksiDetail;
 use common\models\TransaksiPermintaan;
@@ -59,143 +62,6 @@ class PembayaranController extends Controller
         return $this->render('checkout', compact('user', 'keranjangDataProvider'));
     }
 
-    public function actionCheckoutTest()
-    {
-        $this->enableCsrfValidation=false;
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $transaction = file_get_contents('php://input');
-
-        // Change "app.sandbox.midtrans.com" to "app.midtrans.com" when you are deploying to production environment
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://app.sandbox.midtrans.com/snap/v1/transactions",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => $transaction,
-            CURLOPT_HTTPHEADER => array(
-                "accept: application/json",
-                "Authorization: Basic U0ItTWlkLXNlcnZlci1uNHZVMElOSGl3WXk4aVMzX1VNTFlVN1c6",
-                "cache-control: no-cache",
-                "content-type: application/json"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }
-    }
-
-    public function actionNotificationTest()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $this->enableCsrfValidation=false;
-        require_once(dirname(__FILE__) . '/Veritrans.php');
-        Veritrans_Config::$isProduction = false;
-        Veritrans_Config::$serverKey = 'SB-Mid-server-n4vU0INHiwYy8iS3_UMLYU7W';
-
-
-
-        if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-
-
-            try {
-                $notif = new Veritrans_Notification();
-            } catch (Exception $e) {
-                echo "Exception: ".$e->getMessage()."\r\n";
-                echo "Notification received: ".file_get_contents("php://input");
-                exit();
-            }
-            $transaction = $notif->transaction_status;
-            $type = $notif->payment_type;
-            $order_id = $notif->order_id;
-            $fraud = $notif->fraud_status;
-            if ($transaction == 'capture') {
-                // For credit card transaction, we need to check whether transaction is challenge by FDS or not
-                if ($type == 'credit_card'){
-                    if($fraud == 'challenge'){
-                        // TODO set payment status in merchant's database to 'Challenge by FDS'
-                        // TODO merchant should decide whether this transaction is authorized or not in MAP
-                        echo "Transaction order_id: " . $order_id ." is challenged by FDS";
-                    }
-                    else {
-                        // TODO set payment status in merchant's database to 'Success'
-                        echo "Transaction order_id: " . $order_id ." successfully captured using " . $type;
-                    }
-                }
-            }
-            else if ($transaction == 'settlement'){
-                // TODO set payment status in merchant's database to 'Settlement'
-                echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
-            }
-            else if($transaction == 'pending'){
-                // TODO set payment status in merchant's database to 'Pending'
-                echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
-            }
-            else if ($transaction == 'deny') {
-                // TODO set payment status in merchant's database to 'Denied'
-                echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
-            }
-            else if ($transaction == 'expire') {
-                // TODO set payment status in merchant's database to 'expire'
-                echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
-            }
-            else if ($transaction == 'cancel') {
-                // TODO set payment status in merchant's database to 'Denied'
-                echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
-            }
-
-
-        } else {
-
-
-            //
-            // order_id=776981683&status_code=200&transaction_status=capture
-
-            $order_id = $_GET['order_id'];
-            $statusCode = $_GET['status_code'];
-            $transaction  = $_GET['transaction_status'];
-
-
-            if($transaction == 'capture') {
-                echo "<p>Transaksi berhasil.</p>";
-                echo "<p>Status transaksi untuk order id : " . $order_id;
-
-            }
-            // Deny
-            else if($transaction == 'deny') {
-                echo "<p>Transaksi ditolak.</p>";
-                echo "<p>Status transaksi untuk order id .: " . $order_id;
-
-            }
-            // Challenge
-            else if($transaction == 'challenge') {
-                echo "<p>Transaksi challenge.</p>";
-                echo "<p>Status transaksi untuk order id : " . $order_id;
-
-            }
-            // Error
-            else {
-                echo "<p>Terjadi kesalahan pada data transaksi yang dikirim.</p>";
-                echo "<p>Status message: [$response->status_code] " . $transaction;
-            }
-
-
-        }
-    }
-
     public function actionConfirmOrder()
     {
         Config::$serverKey = Yii::$app->params['midtrans_server_key'];
@@ -215,14 +81,25 @@ class PembayaranController extends Controller
         $keranjang = $req['keranjang'];
         $user = User::findOne($req['user']['id']);
         $waktu = Carbon::now();
+        $sekarang = $waktu;
+
+        $pembayaran = new Pembayaran();
         $transaksi = new TransaksiProduk();
-        $transaksi->id_user = $user->id;
-        $transaksi->total = $req['total'];
+        if (isset($user)) {
+            $transaksi->id_user = $user->id;
+        }
         $transaksi->status = TransaksiProduk::STATUS_PENDING;
-        $transaksi->expire = $waktu->addHours(8)->timestamp;
-        $transaksi->kode_transaksi = 'devmall-' . $waktu->timestamp;
-        $transaksi->waktu = $waktu->timestamp;
+        $transaksi->jenis_transaksi = $isCicilan? TransaksiProduk::JENIS_TRANSAKSI_CICIL : TransaksiProduk::JENIS_TRANSAKSI_TUNAI;
+//        $transaksi->total = $req['total'];
+        $pembayaran->nominal = $req['total'];
+        $pembayaran->status = PembayaranHelper::STATUS_PENDING;
+
+
+        $pembayaran->expire = $waktu->addDay()->timestamp;
+        $pembayaran->kode_pembayaran = 'devmall-produk-' . $waktu->timestamp;
+        $pembayaran->waktu = $waktu->timestamp;
         $transaksi->save(false);
+        $pembayaran->save(false);
 
         if ($isCicilan) {
             $cicilan = new TransaksiCicilan();
@@ -232,6 +109,13 @@ class PembayaranController extends Controller
             $cicilan->jumlah_cicilan = round($total / $jumlahCicilan);
             $cicilan->status = TransaksiCicilan::STATUS_ONGOING;
             $cicilan->save(false);
+
+            $bayarCicilan = new PembayaranCicilan();
+            $bayarCicilan->id_transaksi_cicilan = $cicilan->id;
+            $bayarCicilan->jumlah_dibayar = $cicilan->jumlah_cicilan;
+            $bayarCicilan->tanggal_pembayaran = $sekarang;
+            $bayarCicilan->status = PembayaranHelper::STATUS_PENDING;
+            $bayarCicilan->save(false);
         }
 
         $transactionDetail = [
@@ -266,7 +150,9 @@ class PembayaranController extends Controller
             $detailTransaksi = new TransaksiDetail();
             $detailTransaksi->id_transaksi = $transaksi->id;
             $detailTransaksi->id_produk = $produk->id_produk;
-            $detailTransaksi->is_promo = false;
+            $detailTransaksi->is_promo = $produk->is_diskon;
+            //TODO: Check apakah produk diskon
+
             $detailTransaksi->harga_transaksi = $produk->produk->harga;
             $detailTransaksi->save(false);
             $produk->delete();
@@ -278,7 +164,7 @@ class PembayaranController extends Controller
         ];
         $snapToken = Snap::getSnapToken($snapPayload);
 
-        $transaksi->snap_token = $snapToken;
+        $pembayaran->snap_token = $snapToken;
         $returns = ['snap_token' => $snapToken];
         try {
             $transaksi->update(false);
@@ -292,6 +178,9 @@ class PembayaranController extends Controller
     }
 
 
+    /**
+     * @throws NotFoundHttpException
+     */
     public function actionNotifikasi()
     {
         $notif = new Notification();
@@ -299,29 +188,62 @@ class PembayaranController extends Controller
 
         $transaction = $notif->transaction_status;
         $type = $notif->payment_type;
-        $orderId = $notif->orderId;
+        $order_id = $notif->order_id;
         $fraud = $notif->fraud_status;
-        $transaksi = TransaksiProduk::findOne(['kode_transaksi' => $orderId]);
+        $pembayaran = Pembayaran::findOne(['kode_transaksi' => $order_id]);
 
+        if (!$pembayaran) {
+            throw new NotFoundHttpException();
+        }
         if ($transaction === 'capture') {
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
             if ($fraud === 'challenge') {
-                $transaksi->status = TransaksiProduk::STATUS_PENDING;
+                // TODO set payment status in merchant's database to 'Challenge by FDS'
+                // TODO merchant should decide whether this transaction is authorized or not in MAP
+                $pembayaran->status = PembayaranHelper::STATUS_CHALLENGED;
+                echo "Transaction order_id: " . $order_id ." is challenged by FDS";
             } else {
-                $transaksi->status = TransaksiProduk::STATUS_SUCCESS;
+                // TODO set payment status in merchant's database to 'Success'
+                $pembayaran->status = PembayaranHelper::STATUS_SUCCESS;
+                echo "Transaction order_id: " . $order_id ." successfully captured using " . $type;
             }
-        } elseif ($transaction == 'pending') {
-            $transaksi->status = TransaksiProduk::STATUS_PENDING;
-        } elseif ($transaction == 'deny') {
-            $transaksi->status = TransaksiProduk::STATUS_FAILED;
-        } elseif ($transaction == 'expire') {
-            $transaksi->status = TransaksiProduk::STATUS_EXPIRED;
-        } elseif ($transaction == 'cancel') {
-            $transaksi->status = TransaksiProduk::STATUS_FAILED;
+        } elseif ($transaction === 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $pembayaran->status = PembayaranHelper::STATUS_SUCCESS;
+            echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+        } elseif ($transaction === 'pending') {
+            // TODO set payment status in merchant's database to 'Pending'
+            $pembayaran->status = PembayaranHelper::STATUS_PENDING;
+            echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+        } elseif ($transaction === 'deny') {
+            // TODO set payment status in merchant's database to 'Denied'
+            $pembayaran->status = PembayaranHelper::STATUS_DENIED;
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+        } elseif ($transaction === 'expire') {
+            // TODO set payment status in merchant's database to 'expire'
+            $pembayaran->status = PembayaranHelper::STATUS_EXPIRED;
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
+        } elseif ($transaction === 'cancel') {
+            // TODO set payment status in merchant's database to 'Denied'
+            $pembayaran->status = PembayaranHelper::STATUS_DENIED;
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
         }
     }
 
     public function actionCicilan()
     {
+    }
+
+    public function actionSelesai(){
+
+        var_dump(Yii::$app->request->params);
+    }
+    public function actionTidakSelesai(){
+        var_dump(Yii::$app->request->params);
+    }
+
+    public function actionGagal(){
+        var_dump(Yii::$app->request->params);
     }
 
     public function actionPermintaan()
@@ -371,7 +293,7 @@ class PembayaranController extends Controller
         $user = Yii::$app->user->identity;
 
 
-        $transaksi = RiwayatTransaksiPermintaan::findOne($data['data']['id']);
+        $transaksi = PembayaranTransaksiPermintaan::findOne($data['data']['id']);
         $total = $data['data']['total'];
 
         $transactionDetail = [

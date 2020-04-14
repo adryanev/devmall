@@ -2,10 +2,10 @@
 
 namespace penjual\controllers;
 
+use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
 use common\models\RiwayatPermintaan;
-use common\models\RiwayatTransaksiPermintaan;
 use common\models\TransaksiPermintaan;
 use penjual\models\forms\KeteranganPermintaanForm;
 use penjual\models\forms\ProgressPermintaanForm;
@@ -50,6 +50,15 @@ class PermintaanController extends Controller
         return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider','dataPembayaranProvider'));
     }
 
+    protected function findModel($id)
+    {
+        $model = PermintaanProduk::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
+        }
+        return $model;
+    }
+
     public function actionDownload($id)
     {
         $file = PermintaanProdukDetail::findOne($id);
@@ -90,11 +99,11 @@ class PermintaanController extends Controller
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
 
-                $detail = new RiwayatTransaksiPermintaan();
+                $detail = new PembayaranTransaksiPermintaan();
                 $detail->id_transaksi_permintaan = $transaksi_permintaan->id;
                 $detail->nominal = $transaksi_permintaan->permintaan->uang_muka;
-                $detail->status = RiwayatTransaksiPermintaan::STATUS_PENDING;
-                $detail->jenis = RiwayatTransaksiPermintaan::JENIS_UANG_MUKA;
+                $detail->status = PembayaranTransaksiPermintaan::STATUS_PENDING;
+                $detail->jenis = PembayaranTransaksiPermintaan::JENIS_UANG_MUKA;
 
                 if (!$detail->save(false)) {
                     $db->rollBack();
@@ -172,6 +181,15 @@ class PermintaanController extends Controller
 
     }
 
+    protected function findProgress($id)
+    {
+        $model = RiwayatPermintaan::findOne(['id'=>$id]);
+        if (!$model) {
+            throw new NotFoundHttpException();
+        }
+        return $model;
+    }
+
     public function actionHapusProgress($id)
     {
 
@@ -194,10 +212,10 @@ class PermintaanController extends Controller
 
 
         if($model->load(Yii::$app->request->post())){
-            $riwayat = new RiwayatTransaksiPermintaan();
+            $riwayat = new PembayaranTransaksiPermintaan();
             $riwayat->id_transaksi_permintaan = $transaksi->id;
-            $riwayat->status = RiwayatTransaksiPermintaan::STATUS_PENDING;
-            $riwayat->jenis = RiwayatTransaksiPermintaan::JENIS_ANGSURAN;
+            $riwayat->status = PembayaranTransaksiPermintaan::STATUS_PENDING;
+            $riwayat->jenis = PembayaranTransaksiPermintaan::JENIS_ANGSURAN;
             $riwayat->nominal = $model->nominal;
 
             if($riwayat->save(false)){
@@ -236,37 +254,19 @@ class PermintaanController extends Controller
 
     }
 
-    public function actionHapusPermintaanBayar($id){
-        $model = $this->findRiwayatTransaksiPermintaan($id);
-        $idPermintaan = $model->transaksiPermintaan->id_permintaan;
-        $model->delete();
-        return $this->redirect(['view','id'=>$idPermintaan]);
-    }
-
-    protected function findModel($id)
-    {
-        $model = PermintaanProduk::findOne($id);
-        if (!$model) {
-            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
-        }
-        return $model;
-    }
-
-    protected function findProgress($id)
-    {
-        $model = RiwayatPermintaan::findOne(['id'=>$id]);
-        if (!$model) {
-            throw new NotFoundHttpException();
-        }
-        return $model;
-    }
-
     protected function findRiwayatTransaksiPermintaan($id){
-        $model = RiwayatTransaksiPermintaan::findOne($id);
+        $model = PembayaranTransaksiPermintaan::findOne($id);
         if(!$model){
             throw new NotFoundHttpException();
         }
 
         return $model;
+    }
+
+    public function actionHapusPermintaanBayar($id){
+        $model = $this->findRiwayatTransaksiPermintaan($id);
+        $idPermintaan = $model->transaksiPermintaan->id_permintaan;
+        $model->delete();
+        return $this->redirect(['view','id'=>$idPermintaan]);
     }
 }

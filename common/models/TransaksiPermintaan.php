@@ -17,9 +17,9 @@ use yii\db\ActiveRecord;
  * @property int|null $created_at
  * @property int|null $updated_at
  *
- * @property RiwayatTransaksiPermintaan[] $transaksiBelumDibayar
+ * @property PembayaranTransaksiPermintaan[] $transaksiBelumDibayar
  *
- * @property RiwayatTransaksiPermintaan[] $riwayatTransaksiPermintaans
+ * @property PembayaranTransaksiPermintaan[] $riwayatTransaksiPermintaans
  * @property PermintaanProduk $permintaan
  */
 class TransaksiPermintaan extends ActiveRecord
@@ -93,7 +93,7 @@ class TransaksiPermintaan extends ActiveRecord
     public function getTransaksiBelumDibayar()
     {
 
-        return $this->getRiwayatTransaksiPermintaans()->andWhere(['status' => RiwayatTransaksiPermintaan::STATUS_PENDING]);
+        return $this->getRiwayatTransaksiPermintaans()->andWhere(['status' => PembayaranTransaksiPermintaan::STATUS_PENDING]);
     }
 
     /**
@@ -103,6 +103,6 @@ class TransaksiPermintaan extends ActiveRecord
      */
     public function getRiwayatTransaksiPermintaans()
     {
-        return $this->hasMany(RiwayatTransaksiPermintaan::className(), ['id_transaksi_permintaan' => 'id']);
+        return $this->hasMany(PembayaranTransaksiPermintaan::className(), ['id_transaksi_permintaan' => 'id']);
     }
 }

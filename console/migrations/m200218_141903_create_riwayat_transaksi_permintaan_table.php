@@ -12,7 +12,7 @@ class m200218_141903_create_riwayat_transaksi_permintaan_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%riwayat_transaksi_permintaan}}', [
+        $this->createTable('{{%pembayaran_transaksi_permintaan}}', [
             'id' => $this->primaryKey(),
             'id_transaksi_permintaan' => $this->integer(),
             'nominal' => $this->bigInteger(),
@@ -22,8 +22,8 @@ class m200218_141903_create_riwayat_transaksi_permintaan_table extends Migration
             'updated_at' => $this->integer()
         ]);
         $this->addForeignKey(
-            'fk-riwayat_tp-tp',
-            '{{%riwayat_transaksi_permintaan}}',
+            'fk-pembayaran_tp-tp',
+            '{{%pembayaran_transaksi_permintaan}}',
             'id_transaksi_permintaan',
             '{{%transaksi_permintaan}}',
             'id'
@@ -36,7 +36,7 @@ class m200218_141903_create_riwayat_transaksi_permintaan_table extends Migration
     public function safeDown()
     {
 
-        $this->dropForeignKey('fk-riwayat_tp-tp', '{{%riwayat_transaksi_permintaan}}');
-        $this->dropTable('{{%riwayat_transaksi_permintaan}}');
+        $this->dropForeignKey('fk-pembayaran_tp-tp', '{{%pembayaran_transaksi_permintaan}}');
+        $this->dropTable('{{%pembayaran_transaksi_permintaan}}');
     }
 }

@@ -11,8 +11,8 @@
 /* @var $dataPembayaranProvider ActiveDataProvider*/
 
 use common\helpers\PembayaranHelper;
+use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
-use common\models\RiwayatTransaksiPermintaan;
 use common\widgets\ActionColumn;
 use ivankff\yii2ModalAjax\ModalAjax;
 use kartik\grid\GridView;
@@ -274,18 +274,18 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     'nominal:currency',
                                     'jenisString',
                                     'statusString',
-                                    ['class'=>'common\widgets\ActionColumn','header'=>'Aksi',
+                                    ['class'=> ActionColumn::class,'header'=>'Aksi',
                                         'template' => '{update} {delete}',
                                         'buttons' => [
                                             'update'=>function($url, $model, $key){
-                                                if ($model->status === PembayaranHelper::STATUS_PENDING && $model->jenis !== RiwayatTransaksiPermintaan::JENIS_UANG_MUKA){
+                                                if ($model->status === PembayaranHelper::STATUS_PENDING && $model->jenis !== PembayaranTransaksiPermintaan::JENIS_UANG_MUKA){
                                                     return Html::a('<i class="flaticon2-edit"></i> Edit',['permintaan/update-permintaan-bayar','id'=>$key],[ 'class'=>' btn btn-sm btn-pill btn-elevate btn-elevate-air btn-warning']);
                                                 }
 
                                                 return null;
                                             },
                                             'delete'=> function($url, $model, $key){
-                                                if($model->status === PembayaranHelper::STATUS_PENDING && $model->jenis !== RiwayatTransaksiPermintaan::JENIS_UANG_MUKA){
+                                                if($model->status === PembayaranHelper::STATUS_PENDING && $model->jenis !== PembayaranTransaksiPermintaan::JENIS_UANG_MUKA){
                                                     return Html::a('<i class="flaticon2-delete"></i> Hapus',['permintaan/hapus-permintaan-bayar','id'=>$key],[ 'class'=>' btn btn-sm btn-pill btn-elevate btn-elevate-air btn-danger','data'=>['method'=>'POST','confirm'=>"Apakah anda yakin menghapus item ini?"]]);
                                                 }
                                                 return null;

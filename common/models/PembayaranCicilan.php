@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use oxyaction\behaviors\RelatedPolymorphicBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -19,6 +20,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class PembayaranCicilan extends \yii\db\ActiveRecord
 {
+    const PEMBAYARAN_CICILAN = 'PembayaranCicilan';
+
     /**
      * {@inheritdoc}
      */
@@ -29,7 +32,16 @@ class PembayaranCicilan extends \yii\db\ActiveRecord
 
     public function behaviors()
     {
-        return [TimestampBehavior::class];
+        return [
+            TimestampBehavior::class,
+            'polymorphic'=>[
+                'class'=>RelatedPolymorphicBehavior::class,
+                'polyRelations'=>[
+                    'pembayarans'=>Pembayaran::class
+                ],
+                'polymorphicType' => self::PEMBAYARAN_CICILAN
+            ]
+        ];
     }
 
     /**

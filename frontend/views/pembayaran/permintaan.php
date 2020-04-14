@@ -2,7 +2,7 @@
 
 /**
  * @var $this yii\web\View
- * @var $riwayat common\models\RiwayatTransaksiPermintaan
+ * @var $riwayat common\models\PembayaranTransaksiPermintaan
  * @var $user common\models\User
  * @var $transaksiPermintaan common\models\TransaksiPermintaan
  */

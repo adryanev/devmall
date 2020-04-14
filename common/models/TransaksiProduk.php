@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use oxyaction\behaviors\RelatedPolymorphicBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -9,31 +10,25 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property int $id
  * @property int $id_user
- * @property int $waktu
- * @property int $total
  * @property int $status
- * @property int $expire
  * @property int $created_at
  * @property int $updated_at
  * @property string $jenis_transaksi
- * @property string $kode_transaksi
- * @property string $snap_token
  *
  * @property User $user
- * @property Booth $booth
  * @property TransaksiCicilan[] $transaksiCicilans
  * @property TransaksiDetail[] $transaksiDetails
  */
 class TransaksiProduk extends \yii\db\ActiveRecord
 {
-    const TRANSAKSI_PRODUK = 1;
+    const TRANSAKSI_PRODUK = 'TransaksiProduk';
 
     const STATUS_SUCCESS = 1;
     const STATUS_PENDING = 0;
     const STATUS_FAILED = 3;
     const STATUS_EXPIRED = 4;
-    const TRANSAKSI_TUNAI = 'tunai';
-    const TRANSAKSI_CICIL = 'cicil';
+    const JENIS_TRANSAKSI_TUNAI = 'tunai';
+    const JENIS_TRANSAKSI_CICIL = 'cicil';
 
     /**
      * {@inheritdoc}
@@ -47,7 +42,15 @@ class TransaksiProduk extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::class,
+            'polymorphic'=>[
+                'class'=>RelatedPolymorphicBehavior::class,
+                'polyRelations' => [
+                    'pembayarans'=> Pembayaran::class
+                ],
+                'polymorphicType' => self::TRANSAKSI_PRODUK
 
+
+            ]
         ];
     }
 

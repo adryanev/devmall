@@ -3,9 +3,9 @@
 
 namespace frontend\controllers;
 
+use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
-use common\models\RiwayatTransaksiPermintaan;
 use frontend\helpers\FlashHelper;
 use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
@@ -180,7 +180,7 @@ class PermintaanController extends Controller
         $model = $this->findModel($id);
         $unpaid = $model->transaksiPermintaan;
         if ($unpaid) {
-            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => RiwayatTransaksiPermintaan::STATUS_PENDING])->one();
+            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => PembayaranTransaksiPermintaan::STATUS_PENDING])->one();
         }
         if ($model->id_user !== Yii::$app->user->identity->getId()) {
             throw new UnauthorizedHttpException('Oops, permintaan ini bukan milik anda');
