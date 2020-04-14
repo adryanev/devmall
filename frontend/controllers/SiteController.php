@@ -1,19 +1,26 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\models\Kategori;
+use common\models\Produk;
+use frontend\models\ContactForm;
+use frontend\models\forms\search\SearchProductIndexForm;
+use frontend\models\forms\user\UserLoginForm;
+use frontend\models\forms\user\UserSignupForm;
+use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 
 /**
  * Site controller
@@ -74,7 +81,26 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->layout = 'main-index';
+        $kategori = Kategori::find()->all();
+        $dataKategori = ArrayHelper::map($kategori, 'nama', 'nama');
+        $produkDataProvider = new ActiveDataProvider(['query' => Produk::find()->orderBy(new Expression('rand()'))->limit(10),'pagination' => false]);
+
+        $modelPencarian = new SearchProductIndexForm();
+        if ($modelPencarian->load(Yii::$app->request->post())) {
+            return $this->redirect(['produk/search', 'produk' => $modelPencarian->product, 'kategori' => $modelPencarian->kategori]);
+        }
+
+        //new produk
+        $newProduk = Produk::find()->orderBy('created_at DESC');
+        $newProdukDataProvider = new ActiveDataProvider(['query' => $newProduk,'pagination' => [
+            'pageSize'=>6,
+        ]]);
+
+        //follower
+
+
+        return $this->render('index', compact('dataKategori', 'modelPencarian','produkDataProvider','newProdukDataProvider'));
     }
 
     /**
@@ -85,19 +111,26 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        } else {
-            $model->password = '';
-
-            return $this->render('login', [
-                'model' => $model,
-            ]);
         }
+        $model = new UserLoginForm();
+
+        if (Yii::$app->request->isPost) {
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->validate()) {
+                    $model->login();
+                    return $this->goBack();
+                }
+            }
+        }
+
+        $model->password = '';
+
+        return $this->render('/common-forms/user-login-form', [
+            'model' => $model
+        ]);
+
+
     }
 
     /**
@@ -152,13 +185,22 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+        $model = new UserSignupForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $model->signup();
+            }
+            Yii::$app->session->setFlash('success', [
+                'type' => 'success',
+                'icon' => 'fas fa-check',
+                'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
+                'title' => 'Pendaftaran Berhasil!',
+            ]);
+            return $this->redirect(['site/check-verification-email','email'=>$model->email]);
         }
 
-        return $this->render('signup', [
+        return $this->render('/common-forms/user-signup-form', [
             'model' => $model,
         ]);
     }
@@ -216,8 +258,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
@@ -227,14 +269,27 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
         if ($user = $model->verifyEmail()) {
-            if (Yii::$app->user->login($user)) {
-                Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+                Yii::$app->session->setFlash('success', [
+                    'type' => 'success',
+                    'icon' => 'fas fa-check',
+                    'message' => 'Email anda berhasil diverifikasi, anda sudah bisa login.',
+                    'title' => 'Verifikasi Berhasil!',
+                ]);
                 return $this->goHome();
-            }
         }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+        Yii::$app->session->setFlash('danger', [
+            'type' => 'danger',
+            'icon' => 'fas fa-stop',
+            'message' => 'Sepertinya terjadi kesalahan saat verifikasi email anda.',
+            'title' => 'Verifikasi Gagal!',
+        ]);
         return $this->goHome();
+    }
+
+    public function actionCheckVerificationEmail($email){
+
+        return $this->render('check-verification-email',compact('email'));
     }
 
     /**
@@ -247,10 +302,21 @@ class SiteController extends Controller
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
+
+                Yii::$app->session->setFlash('success', [
+                    'type' => 'success',
+                    'icon' => 'fas fa-check',
+                    'message' => 'Kode verifikasi baru telah dikirim ke email anda.',
+                    'title' => 'Pengiriman Berhasil!',
+                ]);
+                return $this->redirect(['site/check-verification-email','email'=>$model->email]);
             }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+            Yii::$app->session->setFlash('danger', [
+                'type' => 'danger',
+                'icon' => 'fas fa-stop',
+                'message' => 'Terjadi kesalahan saat verifikasi email anda.',
+                'title' => 'Gagal!',
+            ]);
         }
 
         return $this->render('resendVerificationEmail', [

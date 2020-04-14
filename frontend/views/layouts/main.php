@@ -1,16 +1,19 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
+use common\assets\martplace\MartplaceAsset;
+use common\models\Config;
+use kartik\growl\Growl;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
 
-AppAsset::register($this);
+
+MartplaceAsset::register($this);
+
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -20,63 +23,34 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode($this->title) ?> - DevMall</title>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="preload">
 <?php $this->beginBody() ?>
-
-<div class="wrap">
+<?php foreach (Yii::$app->session->getAllFlashes() as $message): ?>
     <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
+    echo Growl::widget([
+        'type' => (!empty($message['type'])) ? $message['type'] : 'danger',
+        'title' => (!empty($message['title'])) ? Html::encode($message['title']) : 'Title Not Set!',
+        'icon' => (!empty($message['icon'])) ? $message['icon'] : 'fa fa-info',
+        'body' => (!empty($message['message'])) ? Html::encode($message['message']) : 'Message Not Set!',
+        'showSeparator' => true,
+        'delay' => 1, //This delay is how long before the message shows
+        'pluginOptions' => [
+            'delay' => (!empty($message['duration'])) ? $message['duration'] : 3000, //This delay is how long the message shows for
+            'placement' => [
+                'from' => (!empty($message['positonY'])) ? $message['positonY'] : 'top',
+                'align' => (!empty($message['positonX'])) ? $message['positonX'] : 'right',
+            ]
+        ]
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
     ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
+<?php endforeach; ?>
+<?= $this->render('header', ['searchModel' => Yii::$app->view->params['searchModel']]) ?>
+<?= $this->render('breadcrumb') ?>
+<?= $this->render('content', ['content' => $content]) ?>
+<?= $this->render('footer') ?>
 <?php $this->endBody() ?>
 </body>
 </html>

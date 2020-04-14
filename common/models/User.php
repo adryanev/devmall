@@ -1,61 +1,58 @@
 <?php
+
 namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
- * @property string $verification_token
+ * @property string $access_token
+ * @property string $nomor_hp
  * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- */
-class User extends ActiveRecord implements IdentityInterface
-{
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
-    const STATUS_ACTIVE = 10;
+ * @property int $status
+ * @property int $has_booth
+ * @property int $created_at
+ * @property int $updated_at
+ * @property string $verification_token
+ * @property string $sms_verification
+ * @property int $is_phone_verified
+ *
+ * @property Booth $booth
+ * @property Favorit[] $favorits
+ * @property ProfilUser $profilUser
+ * @property Follow[] $follows
+ * @property Ulasan[] $ulasans
+ * @property VerifikasiUser $verifikasiUser
+ * @property Keranjang[] $keranjangs
 
+ */
+class User extends \yii\db\ActiveRecord implements IdentityInterface
+{
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    const STATUS_VERIFIED = 3;
+    const STATUS_BANNED = 5;
+
+    const HAS_BOOTH = 1;
+    const STATUS_PHONE_VERIFIED = 1;
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-        ];
+        return 'user';
     }
 
     /**
@@ -63,7 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id,]);
     }
 
     /**
@@ -82,7 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->where(['status'=>User::STATUS_ACTIVE])->orWhere(['status'=>USER::STATUS_VERIFIED])->andWhere(['username'=>$username])->one();
     }
 
     /**
@@ -99,20 +96,6 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds user by verification email token
-     *
-     * @param string $token verify email token
-     * @return static|null
-     */
-    public static function findByVerificationToken($token) {
-        return static::findOne([
-            'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
         ]);
     }
 
@@ -128,9 +111,139 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
+    }
+
+    /**
+     * Finds user by verification email token
+     *
+     * @param string $token verify email token
+     * @return static|null
+     */
+    public static function findByVerificationToken($token)
+    {
+        return static::findOne([
+            'verification_token' => $token,
+        ]);
+    }
+
+    public function getHasBooth()
+    {
+        return $this->has_booth === self::HAS_BOOTH;
+    }
+
+    public function getStatus()
+    {
+        $status = [
+            self::STATUS_ACTIVE => 'Aktif',
+            self::STATUS_INACTIVE => 'Tidak Aktif',
+            self::STATUS_VERIFIED => 'Terverifikasi',
+            self::STATUS_BANNED => 'Banned'
+        ];
+
+        return $status[$this->status];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['status', 'created_at', 'updated_at', 'has_booth', 'is_phone_verified'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'access_token', 'email', 'verification_token'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            [['nomor_hp'], 'string', 'max' => 20],
+            [['sms_verification'], 'string', 'max' => 6],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
+            [['password_reset_token'], 'unique'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'access_token' => 'Access Token',
+            'nomor_hp' => 'Nomor Hp',
+            'email' => 'Email',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'verification_token' => 'Verification Token',
+            'has_booth' => 'Punya Booth',
+            'sms_verification' => 'Kode Verifikasi SMS'
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooth()
+    {
+        return $this->hasOne(Booth::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavorits()
+    {
+        return $this->hasMany(Favorit::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfilUser()
+    {
+        return $this->hasOne(ProfilUser::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUlasans()
+    {
+        return $this->hasMany(Ulasan::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVerifikasiUser()
+    {
+        return $this->hasOne(VerifikasiUser::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKeranjangs()
+    {
+        return $this->hasMany(Produk::className(), ['id'=>'id_produk'])->viaTable(Keranjang::tableName(),['id_user'=>'id']);
+    }
+
+    public function getKeranjang(){
+        return $this->hasMany(Keranjang::className(),['id_user'=>'id']);
     }
 
     /**
@@ -144,17 +257,17 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function getAuthKey()
+    public function validateAuthKey($authKey)
     {
-        return $this->auth_key;
+        return $this->getAuthKey() === $authKey;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function validateAuthKey($authKey)
+    public function getAuthKey()
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -199,6 +312,13 @@ class User extends ActiveRecord implements IdentityInterface
         $this->verification_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
+    public function generateSmsVerification()
+    {
+        $number = rand(100000, 999999);
+        $this->sms_verification = $number;
+    }
+
+
     /**
      * Removes password reset token
      */
@@ -206,4 +326,24 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function following($id)
+    {
+        return $this->getFollows()->andWhere(['id_booth' => $id])->one();
+
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+
+    public function getFollows()
+    {
+        return $this->hasMany(Follow::class, ['id_pengguna' => 'id']);
+    }
+    public function isFavoriting($id){
+        $result = $this->getFavorits()->andWhere(['id_produk'=>$id])->one();
+        return empty($result)? false: true;
+    }
+
 }

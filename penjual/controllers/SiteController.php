@@ -1,11 +1,15 @@
 <?php
+
 namespace penjual\controllers;
 
+use common\models\User;
+use penjual\models\forms\PenjualLoginForm;
+use penjual\models\forms\PenjualSignupForm;
 use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -26,7 +30,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'verification'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -53,6 +57,11 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionDaftar()
+    {
+
+    }
+
     /**
      * Displays homepage.
      *
@@ -60,7 +69,39 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->identity->getHasBooth()) {
+            $this->redirect(['site/verification']);
+        } else {
+            if (!Yii::$app->user->identity->booth->isVerified()) {
+                Yii::$app->session->setFlash('warning', 'Booth anda sedang proses verifikasi');
+            }
+        }
+
         return $this->render('index');
+    }
+
+    public function actionVerification()
+    {
+        $user = $this->getUser();
+        $model = new PenjualSignupForm($user->getId());
+        if ($model->load(Yii::$app->request->post())) {
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+            if ($model->signup()) {
+                $user = User::findOne(Yii::$app->user->identity->getId());
+                $user->has_booth = User::HAS_BOOTH;
+                $user->save(false);
+                Yii::$app->session->setFlash('success', 'Berhasil untuk membuat Booth');
+                return $this->redirect(['site/index']);
+            }
+
+        }
+        return $this->render('verification', compact('model'));
+    }
+
+    protected function getUser()
+    {
+        $user = Yii::$app->user->identity;
+        return $user;
     }
 
     /**
@@ -70,20 +111,24 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'main-login';
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            $model->password = '';
-
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        $model = new PenjualLoginForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) return $this->redirect(['site/index']);
+            else  Yii::$app->session->setFlash('warning', 'Anda belum melakukan verifikasi identitas');
         }
+
+
+        $model->password = '';
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**

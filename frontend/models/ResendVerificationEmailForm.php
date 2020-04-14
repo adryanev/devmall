@@ -3,8 +3,8 @@
 
 namespace frontend\models;
 
-use Yii;
 use common\models\User;
+use Yii;
 use yii\base\Model;
 
 class ResendVerificationEmailForm extends Model
@@ -47,6 +47,9 @@ class ResendVerificationEmailForm extends Model
         if ($user === null) {
             return false;
         }
+
+        $user->generateEmailVerificationToken();
+        if(!$user->update(false)) return false;
 
         return Yii::$app
             ->mailer

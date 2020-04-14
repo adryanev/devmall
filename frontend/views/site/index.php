@@ -1,53 +1,181 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $modelPencarian SearchProductIndexForm */
+/* @var $dataKategori [] */
+/* @var $newProdukDataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Yii Application';
+
+$this->title = 'Welcome to Devmall';
+$colsCount = 3;
+
+use frontend\models\forms\search\SearchProductIndexForm;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
+
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<!--================================
+START HERO AREA
+=================================-->
+<section class="hero-area bgimage">
+    <div class="bg_image_holder">
+        <?= Html::img('@web/images/hero_area_bg1.jpg') ?>
     </div>
+    <!-- start hero-content -->
+    <div class="hero-content content_above">
+        <!-- start .contact_wrapper -->
+        <div class="content-wrapper">
+            <!-- start .container -->
+            <div class="container">
+                <!-- start row -->
+                <div class="row">
+                    <!-- start col-md-12 -->
+                    <div class="col-md-12">
+                        <div class="hero__content__title">
+                            <h1>
+                                <span class="light">Devmall</span>
+                                <span class="bold">Marketplace Aplikasi Anda</span>
+                            </h1>
 
-    <div class="body-content">
+                        </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                    </div>
+                    <!-- end /.col-md-12 -->
+                </div>
+                <!-- end /.row -->
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <!-- end /.container -->
         </div>
-
+        <!-- end .contact_wrapper -->
     </div>
-</div>
+    <!-- end hero-content -->
+
+    <!--start search-area -->
+    <div class="search-area">
+        <!-- start .container -->
+        <div class="container">
+            <!-- start .container -->
+            <div class="row">
+                <!-- start .col-sm-12 -->
+                <div class="col-sm-12">
+                    <!-- start .search_box -->
+                    <div class="search_box">
+                        <?php $form = ActiveForm::begin(['id' => 'pencarian-produk-index', 'fieldConfig' => [
+                            'options' => [
+                                'tag' => false,
+                            ],
+                        ], 'method' => 'get',
+                            'action' => ['produk/search']
+
+                        ]) ?>
+
+                        <?= $form->field($modelPencarian, 'produk')->textInput(['class' => 'text_field', 'placeholder' => 'Cari Produk', 'name' => 'ProdukSearch[nama]'])->label(false) ?>
+
+                        <div class="search__select select-wrap">
+                            <?= $form->field($modelPencarian, 'kategori')->dropDownList($dataKategori, ['class' => 'select--field', 'name' => 'ProdukSearch[kategori]'])->label(false) ?>
+                            <span class="lnr lnr-chevron-down"></span>
+                        </div>
+                        <?= Html::submitButton('Cari Sekarang', ['class' => 'search-btn btn-lg']) ?>
+                        <?php ActiveForm::end() ?>
+                    </div>
+                    <!-- end ./search_box -->
+                </div>
+                <!-- end /.col-sm-12 -->
+            </div>
+            <!-- end /.row -->
+        </div>
+        <!-- end /.container -->
+    </div>
+    <!--start /.search-area -->
+</section>
+<!--================================
+END HERO AREA
+=================================-->
+
+
+<!--================================
+START PRODUCTS AREA
+=================================-->
+<section class="products section--padding">
+    <!-- start container -->
+    <div class="container">
+        <!-- start row -->
+        <div class="row">
+            <!-- start col-md-12 -->
+            <div class="col-md-12">
+                <div class="product-title-area">
+                    <div class="product__title">
+                        <h2>Produk Terbaru</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start row -->
+        <div class="row">
+            <!-- start .col-md-12 -->
+            <div class="col-md-12">
+                <div class="sorting">
+                    <ul>
+                        <?php foreach ($dataKategori as $kategori) : ?>
+                            <li>
+                                <?= Html::a($kategori, ['produk/index', 'kategori' => $kategori]) ?>
+                            </li>
+                        <?php endforeach; ?>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end /.col-md-12 -->
+        </div>
+        <!-- end /.row -->
+
+        <!-- start .row -->
+        <?= \yii\widgets\ListView::widget([
+            'dataProvider' => $newProdukDataProvider,
+            'itemView' => '/produk/_search_item',
+            'summary' => false,
+            'itemOptions' => [
+                'class' => 'col-lg-4 col-md-6'
+
+            ],
+            'beforeItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                if ($index % $colsCount === 0) {
+                    return "<div class='row'>";
+                }
+                return '';
+            },
+            'afterItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                $content = '';
+                if (($index > 0) && ($index % $colsCount === $colsCount - 1)) {
+                    $content .= "</div>";
+                }
+                return $content;
+            },
+        ]);
+        if ($newProdukDataProvider->count % $colsCount !== 0) {
+            echo "</div>";
+        } ?>
+        <!-- end /.row -->
+
+        <!-- start .row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="more-product">
+                    <?= Html::a('Produk Lainnya', ['produk/index', 'kategori' => ''], ['class' => 'btn btn--lg btn--round']) ?>
+                </div>
+            </div>
+            <!-- end ./col-md-12 -->
+        </div>
+        <!-- end /.row -->
+    </div>
+    <!-- end /.container -->
+</section>
+<!--================================
+END PRODUCTS AREA
+=================================-->
+
