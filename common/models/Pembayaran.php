@@ -85,17 +85,38 @@ class Pembayaran extends \yii\db\ActiveRecord
         return $this->hasOne(PembayaranTransaksiPermintaan::class,['id'=>'external_id']);
     }
 
-//    public function savePembayaranProduk(){
-//        $transaksi = TransaksiProduk::findOne(['id'=>$this->external_id]);
-//        $transaksi->status = $this->status;
-//
-//    }
-//
-//    public function savePembayaranCicilan(){
-//
-//    }
-//
-//    public function savePembayaranPermintaan(){
-//
-//    }
+    public function savePembayaranProduk(){
+        $transaksi = $this->transaksiProduk;
+        $transaksi->status = $this->status;
+
+        $detailTransaksi = $transaksi->transaksiDetails;
+        foreach ($detailTransaksi as $detail){
+            $booth = $detail->produk->booth;
+            $coin = $booth->coin;
+            if($detail->is_promo) $coin->saldo += $detail->produk->hargaDiskon;
+            else $coin->saldo += $detail->produk->harga;
+            $coin->save(false);
+        }
+
+        return $transaksi->save(false);
+
+    }
+
+    public function savePembayaranCicilan(){
+        $transaksi = $this->transaksiCicilan;
+        $pembayaranCicilan = new PembayaranCicilan();
+        $pembayaranCicilan->status = $this->status;
+        $pembayaranCicilan->tanggal_pembayaran = $this->waktu;
+        $pembayaranCicilan->jumlah_dibayar = $this->nominal;
+        $pembayaranCicilan->id_transaksi_cicilan = $transaksi->id;
+        $transaksi->updateStatus();
+        return $pembayaranCicilan->save(false);
+
+
+
+    }
+
+    public function savePembayaranPermintaan(){
+
+    }
 }
