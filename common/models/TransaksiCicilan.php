@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\PembayaranHelper;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -81,5 +82,22 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
     public function getTransaksi()
     {
         return $this->hasOne(TransaksiProduk::className(), ['id' => 'id_transaksi']);
+    }
+
+    public function updateStatus(){
+        $pembayaran = $this->pembayaranCicilans;
+        $sum = 0;
+        foreach ($pembayaran as $bayar){
+            $sum = $bayar->jumlah_dibayar;
+        }
+        if($sum >= $this->jumlah_cicilan){
+            $this->status = self::STATUS_LUNAS;
+            $this->transaksi->status = PembayaranHelper::STATUS_SUCCESS;
+        }
+        else {
+            $this->status = self::STATUS_ONGOING;
+        }
+
+        return $this->update(false);
     }
 }
