@@ -4,6 +4,7 @@
 namespace frontend\models\forms\nego;
 
 
+use common\components\shoppingcart\ShoppingCart;
 use common\models\HargaNego;
 use common\models\Model;
 use common\models\Produk;
@@ -17,9 +18,9 @@ class NegoForm extends Model
     public $produk;
     private $_produk;
 
-    public function __construct($id, $config = [])
+    public function __construct($produk, $config = [])
     {
-        $this->_produk = Produk::findOne($id);
+        $this->_produk =$produk;
         if (!$this->_produk) {
             throw new InvalidArgumentException('Data yang anda cari tidak ditemukan');
         }
@@ -50,11 +51,11 @@ class NegoForm extends Model
         if (!$this->validate()) {
             return false;
         }
-        $hargaNego = new HargaNego();
+        $hargaNego = HargaNego::findOne(['id_user'=>Yii::$app->user->id,'id_produk'=>$this->_produk->id]) ?? new HargaNego();
         $hargaNego->id_user = Yii::$app->user->identity->id;
         $hargaNego->id_produk = $this->_produk->id;
         $hargaNego->harga = $this->harga;
-
-        return $hargaNego->save() ? $hargaNego : false;
+        $hargaNego->save();
+        return $hargaNego ;
     }
 }

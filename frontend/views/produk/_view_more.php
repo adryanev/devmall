@@ -35,7 +35,7 @@ $colsCount = 3;
             </div>
             <!-- end /.col-md-12 -->
 
-            <?php $lainnya = $model->booth->getProduks()->orderBy(new \yii\db\Expression('RAND()'))->limit(3)->all();
+            <?php $lainnya = $model->booth->getProduks()->andWhere(['!=', 'id', $model->id])->orderBy(new \yii\db\Expression('RAND()'))->limit(3)->all();
             $datProv = new \yii\data\ArrayDataProvider(['allModels' => $lainnya, 'pagination' => ['pageSize' => 3]]);
             ?>
             <?= \yii\widgets\ListView::widget(

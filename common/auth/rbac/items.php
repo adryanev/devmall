@@ -10,6 +10,11 @@ return [
     ],
     'admin' => [
         'type' => 1,
+        'children' => [
+            '@app-admin/*',
+            '@app-penjual/*',
+            '@app-frontend/*',
+        ],
     ],
     'penjual' => [
         'type' => 1,

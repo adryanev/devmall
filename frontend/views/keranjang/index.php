@@ -13,8 +13,6 @@ use yii\helpers\StringHelper;
 
 $this->title = 'Keranjang Belanjaan';
 $this->params['breadcrumbs'][] = $this->title;
-
-
 ?>
 
 <!--================================
@@ -49,11 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="single_product clearfix">
                                     <div class="col-lg-5 col-md-7 v_middle">
                                         <div class="product__description">
-                                            <?= Html::img('@.penjual/upload/produk/' . $produk->galeriProduks[0]->nama_berkas, ['width' => '30%', 'height' => 120]) ?>
+                                        <?php
+                                            if (isset($produk->galeriProduks[0])) {
+
+                                                echo Html::img('@.penjual/upload/produk/' . $produk->galeriProduks[0]->nama_berkas, ['width' => '30%', 'height' => 120]);
+
+                                            }else{
+                                                echo Html::img('@.penjual/upload/produk/no_image_alternatig.PNG' , ['width' => '30%', 'height' => 120]);
+                                            }
+ ?>
                                             <div class="short_desc">
-                                                <a href="single-product.html">
-                                                    <h4><?= $produk->nama ?></h4>
-                                                </a>
+                                                <?=Html::a('<h4>'.$produk->nama.'</h4>',['produk/view','id'=>$produk->id])?>
                                                 <?= StringHelper::truncateWords($produk->deskripsi, 20, '...', true) ?>
                                             </div>
                                         </div>
@@ -78,7 +82,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="col-lg-4 col-md-3 v_middle">
                                         <div class="product__price_download">
                                             <div class="item_price v_middle">
-                                                <span><?= Yii::$app->formatter->asCurrency($produk->harga) ?></span>
+
+                                                <span><?= Yii::$app->formatter->asCurrency($produk->getCost()) ?></span>
                                             </div>
                                             <div class="item_action v_middle">
                                                 <?= Html::a('<span class="lnr lnr-trash"></span>', ['keranjang/hapus'], ['class' => 'remove_from_cart', 'data' => [

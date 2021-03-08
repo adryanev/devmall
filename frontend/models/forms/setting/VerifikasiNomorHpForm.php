@@ -30,7 +30,8 @@ class VerifikasiNomorHpForm extends Model
             [['nomor_hp','kode_verifikasi'],'required'],
             [['nomor_hp'], 'string'],
             [['nomor_hp'], PhoneInputValidator::className(),'region' => ['id']],
-            [['kode_verifikasi'],'string','max' => 6,'min' => 6]
+            [['kode_verifikasi'],'string','max' => 6,'min' => 6],
+            [['is_phone_verified'], 'safe'],
             ];
     }
 

@@ -13,7 +13,7 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'formatter' => [
-            'locale' => 'id_ID',
+            'locale' => 'id-ID',
             'decimalSeparator' => ',',
             'thousandSeparator' => '.',
 
@@ -23,6 +23,24 @@ return [
             'itemFile' => '@common/auth/rbac/items.php',
             'assignmentFile' => '@common/auth/rbac/assignments.php',
             'ruleFile' => '@common/auth/rbac/rules.php',
-        ]
+        ],
+        'BitckoMailer'=>[
+            'class'=>'bitcko\mailer\BitckoMailer',
+            'SMTPDebug'=> 0, // 0 to disable, optional
+            'isSMTP'=>true, // default true
+            'Host'=>'smtp.gmail.com', //optional
+            'SMTPAuth'=>true, //optional
+            'Username'=>'petya.orlov14@gmail.com', //optional
+            'Password'=>'Qwerty21+', //optional
+            'SMTPSecure'=>'tls', //optional, tls or ssl
+            'Port'=>587, //optional, smtp server port
+            'isHTML'=>true, // default true
+        ],
+        'cart' => [
+            'class' => 'common\components\shoppingcart\ShoppingCart',
+            'storage' => [
+                'class'=>\common\components\shoppingcart\storages\DatabaseStorage::class,
+            ]
+        ],
     ],
 ];

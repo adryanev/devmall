@@ -30,11 +30,10 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
     <div class="dashboard_contents">
         <div class="container">
 
-
-
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="information_module">
+
                             <a class="toggle_title" href="#collapse-info" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
                                 <h4>Informasi Pribadi
                                     <span class="lnr lnr-chevron-down"></span>
@@ -64,7 +63,6 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                                 <div class="information_wrapper form--fields">
 
                                     <?=$this->render('_ganti_password_form',['model'=>$modelPassword])?>
-
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
@@ -81,7 +79,7 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                             <div class="information__set toggle_module collapse" id="collapse-alamat">
                                 <div class="information_wrapper form--fields">
 
-                                    <?=$this->render('_alamat_form',['model'=>$modelAlamat])?>
+                                    <?=$this->render('_alamat_form',['model'=>$modelAlamat, 'dataProvinsi' => $dataProvinsi])?>
 
                                 </div>
                                 <!-- end /.information_wrapper -->
@@ -91,23 +89,24 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
-
+            
                     <div class="col-lg-6">
                         <div class="information_module">
-                            <a class="toggle_title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+
+                            <a class="toggle_title" href="#collapse4" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse">
                                 <h4>Foto Profil
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
-                            <div class="information__set profile_images toggle_module collapse" id="collapse3">
-                                <div class="information_wrapper">
-                                    <div class="profile_image_area">
-                                       <?=$this->render('_fotoprofil_form',['model'=>$modelProfil])?>
-                                    </div>
+                            <div class="information__set toggle_module collapse" id="collapse4">
+                                <div class="information_wrapper form--fields">
 
+                                    <?=$this->render('_fotoprofil_form',['model'=>$modelProfil])?>
                                 </div>
+                                <!-- end /.information_wrapper -->
                             </div>
+                            <!-- end /.information__set -->
                         </div>
                         <!-- end /.information_module -->
 
@@ -118,37 +117,38 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                                 </h4>
                             </a>
 
-                            <div class="information__set social_profile toggle_module collapse " id="collapse5">
-                                <div class="information_wrapper">
-                                   <?=$this->render('_verifikasi_nomor_hp_form',['model'=>$modelHp])?>
+                            <div class="information__set toggle_module collapse" id="collapse5">
+                                <div class="information_wrapper form--fields">
+
+                                    <?=$this->render('_verifikasi_nomor_hp_form',['model'=>$modelHp, 'is_phone_verified' => $is_phone_verified])?>
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
-                            <!-- end /.social_profile -->
+                            <!-- end /.information__set -->
                         </div>
                         <!-- end /.information_module -->
-
                         <div class="information_module">
-                            <a class="toggle_title" href="#collapse4" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                            <a class="toggle_title" href="#collapse6" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
                                 <h4>Verifikasi Identitas
                                     <span class="lnr lnr-chevron-down"></span>
                                 </h4>
                             </a>
 
-                            <div class="information__set mail_setting toggle_module collapse" id="collapse4">
-                                <div class="information_wrapper">
+                            <div class="information__set toggle_module collapse" id="collapse6">
+                                <div class="information_wrapper form--fields">
 
-                                   <?=$this->render('_verifikasi_form',['model'=>$modelVerifikasi,
-                                       'verifikasiSekarang'=>$verifikasiSekarang])?>
+                                    <?=$this->render('_verifikasi_form',['model'=>$modelVerifikasi, 'verifikasiSekarang' => $verifikasiSekarang])?>
+                                    <input type="file" name="">
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
-                            <!-- end /.information_module -->
+                            <!-- end /.information__set -->
                         </div>
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
-                    <!-- end /.col-md-12 -->
+
+            
                 </div>
                 <!-- end /.row -->
 

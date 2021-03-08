@@ -1,25 +1,34 @@
 <?php
 
-namespace common\models;
+namespace common\components\shoppingcart\models;
 
+use common\models\Promo;
+use common\models\User;
 use yii\behaviors\TimestampBehavior;
 
+/**
+ * items json structure
+ * id=>[
+ *   'produk'=> Produk::class,
+ *   'qty' => 0,
+ *   'nego' => (id_nego)
+ *   'diskon => (id_diskon)
+ *   'subtotal' => 2010002
+ * ]
+ */
 /**
  * This is the model class for table "keranjang".
  *
  * @property int $id
  * @property int $id_user
- * @property int $id_produk
- * @property int $is_nego
- * @property int $id_harga_nego
- * @property int $is_diskon
  * @property int $created_at
  * @property int $updated_at
+ * @property string|null $items
+ * @property boolean $status
+ * @property int $promo
  *
- * @property Produk $produk
  * @property User $user
- * @property HargaNego $hargaNego
- * @property Diskon $diskon
+ * @property Promo $promoProduk
  */
 class Keranjang extends \yii\db\ActiveRecord
 {
@@ -44,8 +53,8 @@ class Keranjang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_produk', 'created_at', 'updated_at'], 'integer'],
-            [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
+            [['id_user', 'created_at', 'updated_at','status'], 'integer'],
+            [['items'], 'safe'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
@@ -58,18 +67,11 @@ class Keranjang extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'Id User',
-            'id_produk' => 'Id Produk',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'items' => 'Items',
+            'status' => 'Status',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProduk()
-    {
-        return $this->hasOne(Produk::className(), ['id' => 'id_produk']);
     }
 
     /**
@@ -80,13 +82,13 @@ class Keranjang extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
-    public function getHargaNego()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPromoProduk()
     {
-        return $this->hasOne(HargaNego::className(), ['id' => 'id_harga_nego']);
+        return $this->hasOne(Promo::className(), ['id' => 'promo']);
     }
 
-    public function getDiskon()
-    {
-        return $this->hasOne(Diskon::className(), ['id_produk' => 'id_produk']);
-    }
+
 }

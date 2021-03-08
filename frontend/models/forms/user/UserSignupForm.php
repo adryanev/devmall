@@ -61,6 +61,7 @@ class UserSignupForm extends Model
         ];
         $user->setAttributes($attributeUser);
         $profil->setAttributes($attributeProfil);
+       
         $profil->avatar = 'user_default.png';
 
         $user->setPassword($this->password);
@@ -77,23 +78,46 @@ class UserSignupForm extends Model
         $userRole = $auth->getRole('pengguna');
         $auth->assign($userRole,$user->id);
 
-        $this->sendEmailVerification($user);
+        $this->sendEmailVerification($user, $profil);
 
         return $user;
     }
 
-    protected function sendEmailVerification($user)
+    protected function sendEmailVerification($user, $profil)
     {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
+
+        $msg = "Hello ".$profil->nama_depan." ".$profil->nama_belakang."<br> Tolong Konfirmasi email anda melalui link ini <a href='http://localhost/devmall/frontend/web/site/verify-email?token=".$user->verification_token."'>Konfirmasi Email</a>";
+
+
+        // $message = Yii::$app->Custom->getMailer($user->email)->compose();
+     // $message = Yii::$app->mailer->compose();
+     //    $message->setTo([$user->email => $profil->nama_depan]);
+     //    $message->setFrom([\Yii::$app->params['supportEmail'] => "Devmall"]);
+     //    $message->setSubject("Email Verification");
+     //    $message->setTextBody($msg);
+
+     //    $headers = $message->getSwiftMessage()->getHeaders();
+
+     //    // message ID header (hide admin panel)
+     //    $msgId = $headers->get('Message-ID');
+     //    $msgId->setId(md5(time()) . '@pelock.com');
+
+     //    $result = $message->send();
+
+         $params = [
+             'from'=>['address'=> 'petya.orlov14@gmail.com','name'=>'Devmall'],
+             'addresses'=>[
+                 ['address'=> $user->email,'name'=>$profil->nama_depan.' '.$profil->nama_belakang]
+             ],
+             'body'=>$msg,
+            
+         ];
+         
+         Yii::$app->BitckoMailer->mail($params);
+
+        // return $result;
+
+
     }
 
 }

@@ -19,8 +19,12 @@ use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
 
 $config = Config::find()->asArray()->all();
+
+
 $configArray = ArrayHelper::map($config,'key','value');
 $configApps = $configArray;
+
+
 ?>
 <!--================================
        START FOOTER AREA

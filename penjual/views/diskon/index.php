@@ -1,12 +1,15 @@
 <?php
 
-use yii\grid\GridView;
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel penjual\models\DiskonSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+\common\assets\metronic\MetronicDashboardPricingAsset::register($this);
+$colsCount = 3;
 
 $this->title = 'Diskon';
 $this->params['breadcrumbs'][] = $this->title;
@@ -35,28 +38,36 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="kt-portlet__body">
-                <div class="diskon-index">
+             <div class="kt-pricing-1">
+                    <div class="kt-pricing-1__items">
+                        <?= \yii\widgets\ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'itemView' => '_items',
+                            'summary' => false,
+                            'itemOptions' => [
+                                'class' => 'kt-pricing-1__item col-lg-3'
 
+                            ],
+                            'beforeItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                                if ($index % $colsCount === 0) {
+                                    return "<div class='row'>";
+                                }
+                                return '';
+                            },
+                            'afterItem' => function ($model, $key, $index, $widget) use ($colsCount) {
+                                $content = '';
+                                if (($index > 0) && ($index % $colsCount === $colsCount - 1)) {
+                                    $content .= "</div>";
+                                }
+                                return $content;
+                            },
+                        ]);
+                        if ($dataProvider->count % $colsCount !== 0) {
+                            echo "</div>";
+                        } ?>
+                        <!-- end /.row -->
 
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn', 'header' => 'No'],
-
-//                            'id',
-                            'produk.nama',
-                            'persentase',
-                            'created_at:datetime',
-                            'updated_at:datetime',
-
-                            ['class' => 'common\widgets\ActionColumn', 'header' => 'Aksi'],
-                        ],
-                    ]); ?>
-
-
+                    </div>
                 </div>
             </div>
         </div>

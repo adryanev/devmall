@@ -38,6 +38,7 @@ class GaleriProduk extends \yii\db\ActiveRecord
     {
         return [
             [['id_produk', 'created_at', 'updated_at'], 'integer'],
+            [['nama_berkas'], 'required', 'on' => 'create'],
             [['nama_berkas'], 'string', 'max' => 255],
             [['jenis_berkas'], 'string', 'max' => 20],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],

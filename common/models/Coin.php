@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property int|null $updated_at
  *
  * @property Booth $booth
+ * @property CoinLedger $ledger
  */
 class Coin extends ActiveRecord
 {
@@ -69,5 +70,12 @@ class Coin extends ActiveRecord
     public function getBooth()
     {
         return $this->hasOne(Booth::className(), ['id' => 'id_booth']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getLedger(){
+        return $this->hasMany(CoinLedger::class,['id_coin'=>'id']);
     }
 }

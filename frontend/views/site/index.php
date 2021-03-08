@@ -156,8 +156,9 @@ START PRODUCTS AREA
                 }
                 return $content;
             },
-        ]);
-        if ($newProdukDataProvider->count % $colsCount !== 0) {
+        ]);?>
+
+        <?php if ($newProdukDataProvider->count % $colsCount !== 0) {
             echo "</div>";
         } ?>
         <!-- end /.row -->

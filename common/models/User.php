@@ -39,13 +39,15 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-    const STATUS_VERIFIED = 3;
-    const STATUS_BANNED = 5;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 0;
+    public const STATUS_VERIFIED = 3;
+    public const STATUS_BANNED = 5;
 
-    const HAS_BOOTH = 1;
-    const STATUS_PHONE_VERIFIED = 1;
+    public const STATUS_NOT_VERIFIED = 2;
+
+    public const HAS_BOOTH = 1;
+    public const STATUS_PHONE_VERIFIED = 1;
 
     /**
      * {@inheritdoc}
@@ -147,7 +149,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             self::STATUS_ACTIVE => 'Aktif',
             self::STATUS_INACTIVE => 'Tidak Aktif',
             self::STATUS_VERIFIED => 'Terverifikasi',
-            self::STATUS_BANNED => 'Banned'
+            self::STATUS_BANNED => 'Banned',
+            self::STATUS_NOT_VERIFIED => 'Belum Terverifikasi'
         ];
 
         return $status[$this->status];

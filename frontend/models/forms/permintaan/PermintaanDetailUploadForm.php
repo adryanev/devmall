@@ -22,7 +22,7 @@ class PermintaanDetailUploadForm extends Model
     public function rules()
     {
         return [
-            ['uploadedFiles', 'file', 'skipOnEmpty' => true, 'extensions' => FileExtension::DOKUMEN, 'maxFiles' => 5]
+            ['uploadedFiles', 'file', 'skipOnEmpty' => false, 'extensions' => FileExtension::DOKUMEN, 'maxFiles' => 5]
         ];
     }
 

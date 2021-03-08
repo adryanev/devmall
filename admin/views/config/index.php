@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'key',
             'value',
 
-                        ['class' => 'common\widgets\ActionColumn','header'=>'Aksi'],
+                        ['class' => 'common\widgets\ActionColumn','template'=> '{view} {update}{delete}', 'header'=>'Aksi'],
                         ],
                         ]); ?>
 

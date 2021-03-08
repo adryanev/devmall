@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','autocomplete'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -30,6 +30,22 @@ return [
                 ],
             ],
         ],
+        'autocomplete' => [
+            'class' => 'iiifx\Yii2\Autocomplete\Component',
+            'config' => [
+                '@common/config/main.php', # <-- config list
+                '@common/config/main-local.php',
+                '@console/config/main.php',
+                '@console/config/main-local.php',
+                '@admin/config/main.php',
+                '@admin/config/main-local.php',
+                '@penjual/config/main.php',
+                '@penjual/config/main-local.php',
+                '@frontend/config/main.php',
+                '@frontend/config/main-local.php',
+            ],
+        ],
+
     ],
     'params' => $params,
 ];

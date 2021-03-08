@@ -43,6 +43,8 @@ class ProdukSearch extends Produk
     {
         $query = Produk::find()->where(['id_booth' => Yii::$app->user->identity->booth->id]);
 
+        $query->joinWith(['diskon']);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

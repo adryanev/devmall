@@ -42,6 +42,9 @@ class ProdukController extends \yii\web\Controller
         $model = $this->findModel($id);
         $modelUlasan = new Ulasan();
 
+        $modelProduk = new Produk();
+        $totalTerjual = $modelProduk->getTerjual($id);
+
         $modelNego = new NegoForm($id);
 
 
@@ -92,7 +95,7 @@ class ProdukController extends \yii\web\Controller
 
         }
 
-        return $this->render('view', compact('model', 'ulasanSearch', 'modelUlasan', 'ulasanDataProvider', 'modelNego'));
+        return $this->render('view', compact('model', 'ulasanSearch', 'modelUlasan', 'ulasanDataProvider', 'modelNego', 'totalTerjual'));
     }
 
     protected function findModel($id)

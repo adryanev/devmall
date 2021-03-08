@@ -159,6 +159,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         </div>
     </div>
 </div>
+<?php 
+if ($model->status == 1 || $model->status == 5) {
+?>
 <div class="row">
     <div class="col-lg-12">
         <div class="kt-portlet">
@@ -258,6 +261,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                 </div>
             </div>
 
+<?php 
+if (isset($dataPembayaranProvider)) {
+ ?>
             <div class="kt-portlet__body">
                 <div class="permintaan-view">
 
@@ -298,11 +304,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         </div>
                     </div>
                     <div class="clearfix"></div>
-
-
                 </div>
             </div>
+<?php
+}
+ ?>
         </div>
     </div>
 </div>
-
+<?php 
+}
+?>

@@ -7,6 +7,8 @@ use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
 use common\models\RiwayatPermintaan;
 use common\models\TransaksiPermintaan;
+use common\models\Notifikasi;
+
 use penjual\models\forms\KeteranganPermintaanForm;
 use penjual\models\forms\ProgressPermintaanForm;
 use penjual\models\PermintaanSearch;
@@ -33,21 +35,30 @@ class PermintaanController extends Controller
 
     public function actionView($id)
     {
+
+
         $progress = new ProgressPermintaanForm();
-
         $model = $this->findModel($id);
-        $progress->id_permintaan = $model->id;
-        $keteranganForm = new KeteranganPermintaanForm($model->id);
-        $dataProgress = RiwayatPermintaan::find()->where(['id_permintaan_produk' => $model->id]);
-        $dataProgressProvider = new ActiveDataProvider(['query' => $dataProgress]);
-        $dataPembayaran = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans();
-        $dataPembayaranProvider =new ActiveDataProvider(['query' => $dataPembayaran]);
-
+        
         if ($model->id_booth !== Yii::$app->user->identity->booth->id) {
             throw new MethodNotAllowedHttpException('Maaf Ini bukan data anda');
         }
 
-        return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider','dataPembayaranProvider'));
+        $progress->id_permintaan = $model->id;
+        $keteranganForm = new KeteranganPermintaanForm($model->id);
+        $dataProgress = RiwayatPermintaan::find()->where(['id_permintaan_produk' => $model->id]);
+        $dataProgressProvider = new ActiveDataProvider(['query' => $dataProgress]);
+
+        if ($model->transaksiPermintaan != NULL) {
+    
+            $dataPembayaran = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans();            
+            $dataPembayaranProvider =new ActiveDataProvider(['query' => $dataPembayaran]);
+
+            return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider','dataPembayaranProvider'));
+        }
+
+
+        return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider'));
     }
 
     protected function findModel($id)
@@ -89,6 +100,7 @@ class PermintaanController extends Controller
                     $db->rollBack();
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
+
                 $transaksi_permintaan = new TransaksiPermintaan();
                 $transaksi_permintaan->id_permintaan = $model->id;
                 $transaksi_permintaan->belum_dibayar = $model->harga;
@@ -111,6 +123,20 @@ class PermintaanController extends Controller
                 }
 
                 $db->commit();
+
+
+                $notif = new Notifikasi();        
+
+                $notif->id_data = $model->id;
+                $notif->sender = Yii::$app->user->identity->getId();
+                $notif->receiver = $model->id_user;
+                $notif->context = ' Menerima Request produk baru dengan id '.$model->id;
+                $notif->jenis_data ='Request Produk';
+                $notif->status ='Belum Dibaca';
+
+                $notif->save(false);
+
+
             } catch (Exception $exception) {
                 $db->rollBack();
                 return $exception;
@@ -129,11 +155,26 @@ class PermintaanController extends Controller
         $data = Yii::$app->request->post();
         $model = $this->findModel($data['id']);
         $keteranganModel = new KeteranganPermintaanForm($data['id']);
+
         if ($keteranganModel->load($data)) {
             $keteranganModel->save();
             $model->status = PermintaanProduk::STATUS_DITOLAK;
             $model->update(false);
+        
+
+            $notif = new Notifikasi();        
+
+            $notif->id_data = $model->id;
+            $notif->sender = Yii::$app->user->identity->getId();
+            $notif->receiver = $model->id_user;
+            $notif->context = ' Menolak Request produk baru dengan id '.$model->id;
+            $notif->jenis_data ='Request Produk';
+            $notif->status ='Belum Dibaca';
+
+            $notif->save(false);
+
         }
+
 
         Yii::$app->session->setFlash('success', Yii::t('app', 'Permintaan Ditolak'));
         return $this->redirect(['permintaan/index']);

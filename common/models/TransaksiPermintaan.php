@@ -22,15 +22,10 @@ use yii\db\ActiveRecord;
  * @property PembayaranTransaksiPermintaan[] $riwayatTransaksiPermintaans
  * @property PermintaanProduk $permintaan
  */
-class TransaksiPermintaan extends ActiveRecord
+class TransaksiPermintaan extends Transaksi
 {
-
-
-    const STATUS_SUCCESS = 1;
-    const STATUS_PENDING = 0;
-    const STATUS_FAILED = 3;
-    const STATUS_EXPIRED = 4;
-
+    public const TRANSAKSI_CODE = 'TRM';
+    public const TRANSAKSI_PERMINTAAN = 'transaksiPermintaan';
 
     /**
      * {@inheritdoc}
@@ -104,5 +99,15 @@ class TransaksiPermintaan extends ActiveRecord
     public function getRiwayatTransaksiPermintaans()
     {
         return $this->hasMany(PembayaranTransaksiPermintaan::className(), ['id_transaksi_permintaan' => 'id']);
+    }
+
+    public function getCode()
+    {
+        // TODO: Implement getCode() method.
+    }
+
+    public function isPaid()
+    {
+        // TODO: Implement isPaid() method.
     }
 }

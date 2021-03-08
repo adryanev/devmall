@@ -37,7 +37,7 @@ class PembayaranCicilan extends \yii\db\ActiveRecord
             'polymorphic'=>[
                 'class'=>RelatedPolymorphicBehavior::class,
                 'polyRelations'=>[
-                    'pembayarans'=>Pembayaran::class
+                    'pembayarans'=>Payment::class
                 ],
                 'polymorphicType' => self::PEMBAYARAN_CICILAN
             ]

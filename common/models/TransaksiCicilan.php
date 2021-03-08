@@ -20,9 +20,11 @@ use yii\behaviors\TimestampBehavior;
  * @property PembayaranCicilan[] $pembayaranCicilans
  * @property TransaksiProduk $transaksi
  */
-class TransaksiCicilan extends \yii\db\ActiveRecord
+class TransaksiCicilan extends Transaksi
 {
 
+    const TRANSAKSI_CODE = 'TRC';
+    const TRANSAKSI_CICILAN = 'transaksiCicilan';
     const STATUS_LUNAS = 1;
     const STATUS_ONGOING = 0;
 
@@ -99,5 +101,15 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
         }
 
         return $this->update(false);
+    }
+
+    public function getCode()
+    {
+        // TODO: Implement getCode() method.
+    }
+
+    public function isPaid()
+    {
+        // TODO: Implement isPaid() method.
     }
 }

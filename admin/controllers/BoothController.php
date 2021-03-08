@@ -35,7 +35,7 @@ class BoothController extends Controller
      */
     public function actionIndex(): string
     {
-        $data = Booth::find();
+        $data = Booth::find(); 
         $dataProvider = new ActiveDataProvider(['query' => $data]);
 
         return $this->render('index', ['dataProvider' => $dataProvider]);

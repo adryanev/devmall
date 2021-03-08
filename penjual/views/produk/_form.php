@@ -98,8 +98,10 @@ use yii\helpers\FileHelper;
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
                                         <?php
-                                        $extensions = FileHelper::getExtensionsByMimeType(FileHelper::getMimeType(Yii::getAlias('@penjual/web/upload/produk/' . $model->manual)))[0];
-                                        echo FileIconHelper::getIconByExtension($extensions) ?>
+                                        // if ($model->manual != NULL) {
+                                            if ($model->manual != NULL):
+                                            $extensions = FileHelper::getExtensionsByMimeType(FileHelper::getMimeType(Yii::getAlias('@penjual/web/upload/produk/' . $model->manual)))[0];
+                                            echo FileIconHelper::getIconByExtension($extensions); ?>
                                     </div>
 
                                 </div>
@@ -133,10 +135,8 @@ use yii\helpers\FileHelper;
                                     </div>
 
                                 </div>
-
-
                             </td>
-
+                                    <?php endif; ?>
                         </tr>
                         </tbody>
                     </table>
@@ -171,7 +171,7 @@ use yii\helpers\FileHelper;
                     'showUpload' => false,
                 ],
             ]
-        ])->label('Galeri Produk')->hint('Ukuran maksimal 5MB, jpeg/png') ?>
+        ])->label('Galeri Produk')->hint('Minimal 1 Foto dan Ukuran maksimal 5MB, jpeg/png') ?>
         <?php if (!empty($dataGaleri)) :
             ?>
 

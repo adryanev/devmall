@@ -6,6 +6,7 @@ namespace frontend\controllers;
 use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
+use common\models\Notifikasi;
 use frontend\helpers\FlashHelper;
 use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
@@ -31,12 +32,29 @@ class PermintaanController extends Controller
         $model->id_user = Yii::$app->user->identity->getId();
 
 
-        if ($model->load(Yii::$app->request->post())) {
+
+        if ($model->load(Yii::$app->request->post()) && $modelDetail->load(Yii::$app->request->post())) {
+
+        // var_dump();
+            if (Yii::$app->request->post('PermintaanProduk')['uang_muka'] > Yii::$app->request->post('PermintaanProduk')['harga'] ) {
+
+                    $flash = FlashHelper::DANGER;
+                    $flash['message'] = 'Uang Muka Tak Boleh Melebihin Harga';
+                    Yii::$app->session->setFlash('danger', $flash);
+                    return $this->redirect(Url::current());
+                
+            }
+
             try {
+
                 $db = Yii::$app->db->beginTransaction();
                 $model->status = PermintaanProduk::STATUS_DIKIRIM;
 
                 if (!$model->save(false)) {
+
+                    echo "Gagal Simpan Request";
+                    exit();
+
                     $flash = FlashHelper::DANGER;
                     $flash['message'] = 'Terjadi kesalahan saat menyimpan permintaan anda';
                     Yii::$app->session->setFlash('danger', $flash);
@@ -44,11 +62,15 @@ class PermintaanController extends Controller
 
                     return $this->redirect(Url::current());
                 }
+
                 $files = UploadedFile::getInstances($modelDetail, 'uploadedFiles');
                 $modelDetail->uploadedFiles = $files;
 
                 if ($uploaded = $modelDetail->upload()) {
                     if (!$modelDetail->save($model)) {
+                        echo "Gagal Uplod";
+                        exit();
+                        
                         $flash = FlashHelper::DANGER;
                         $flash['message'] = 'Terjadi kesalahan saat mengunggah berkas anda.';
                         Yii::$app->session->setFlash('danger', $flash);
@@ -58,6 +80,18 @@ class PermintaanController extends Controller
                     }
 
                     $db->commit();
+
+                    $notif = new Notifikasi();        
+
+                    $notif->id_data = $model->id;
+                    $notif->sender = $model->id_user;
+                    $notif->receiver = $model->id_booth;
+                    $notif->context = ' Request produk baru dengan id '.$model->id;
+                    $notif->jenis_data ='Request Produk';
+                    $notif->status ='Belum Dibaca';
+
+                    $notif->save(false);
+
                     $flash = FlashHelper::SUCCESS;
                     $flash['message'] = 'Berhasil mengirim permintaan anda';
                     Yii::$app->session->setFlash('success', $flash);
@@ -70,6 +104,7 @@ class PermintaanController extends Controller
 //                return $this->redirect(Url::current());
             }
         }
+
         return $this->render('tambah', ['model' => $model, 'modelDetail' => $modelDetail]);
     }
 

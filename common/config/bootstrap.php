@@ -8,9 +8,9 @@ Yii::setAlias('@profilUserPath', '@frontend/web/images/profil');
 Yii::setAlias('@produkPath', '@penjual/web/upload/produk');
 Yii::setAlias('@permintaanPath', '@frontend/web/upload/permintaan');
 
-Yii::setAlias('@.frontend', 'http://devmall.test');
-Yii::setAlias('@.penjual', 'http://booth.devmall.test');
-Yii::setAlias('@.admin', 'http://admin.devmall.test');
+Yii::setAlias('@.frontend', 'http://devmall.test/frontend/web');
+Yii::setAlias('@.penjual', 'http://devmall.test/penjual/web');
+Yii::setAlias('@.admin', 'http://devmall.test/admin/web');
 Yii::setAlias('@.profilUserPath', '@.frontend/images/profil');
 Yii::setAlias('@.produkPath', '@.penjual/upload/produk');
 Yii::setAlias('@.permintaanPath', '@.frontend/upload/permintaan');

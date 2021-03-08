@@ -14,10 +14,14 @@ class DiskonSearch extends Diskon
     /**
      * {@inheritdoc}
      */
+    public $produk;
+    public $galeri_produk;
+
     public function rules()
     {
         return [
             [['id', 'id_produk', 'persentase', 'created_at', 'updated_at'], 'integer'],
+            [['produk','galeri_produk'], 'safe']
         ];
     }
 
@@ -40,7 +44,7 @@ class DiskonSearch extends Diskon
     public function search($params)
     {
         $query = Diskon::find();
-
+        $query->joinWith(['produk']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

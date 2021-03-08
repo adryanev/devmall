@@ -2,10 +2,21 @@
 
 namespace common\models;
 
+use common\components\CartPositionProviderInterface;
+use common\components\NegoTrait;
+use common\components\shoppingcart\CartItemInterface;
+use common\components\shoppingcart\CartItemProviderInterface;
+use common\components\shoppingcart\CartItemTrait;
+use common\components\shoppingcart\events\CostCalculationEvent;
 use dosamigos\taggable\Taggable;
+use hscstudio\cart\CartPositionInterface;
+use hscstudio\cart\ItemInterface;
+use yii\base\Component;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
+use Yii;
+use yii\base\Model;
 /**
  * This is the model class for table "produk".
  *
@@ -21,6 +32,7 @@ use yii\helpers\ArrayHelper;
  * @property int $nego
  * @property int $created_at
  * @property int $updated_at
+ *
  * @property int hargaDiskon
  * @property Favorit[] $favorits
  * @property GaleriProduk[] $galeriProduks
@@ -32,8 +44,10 @@ use yii\helpers\ArrayHelper;
  * @property float $nilaiUlasan
  * @property Diskon $diskon
  */
-class Produk extends \yii\db\ActiveRecord
+class Produk extends \yii\db\ActiveRecord implements CartItemInterface
 {
+    use CartItemTrait, NegoTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -170,8 +184,32 @@ class Produk extends \yii\db\ActiveRecord
         return $this->hasOne(Diskon::class, ['id_produk' => 'id']);
     }
 
+    public function getHargaNego(){
+        return $this->hasOne(HargaNego::class,['id_produk'=>'id']);
+    }
     public function getHargaDiskon()
     {
         return $this->harga - round(($this->harga * ($this->diskon->persentase) / 100));
     }
+
+    public function getTerjual($id_produk)
+    {
+        $command = Yii::$app->db
+                    ->createCommand("SELECT * FROM transaksi_detail WHERE id_produk='".$id_produk."'");
+        return $command->execute();
+    }
+
+
+    public function getPrice()
+    {
+        return $this->harga;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
 }

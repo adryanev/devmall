@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use common\components\shoppingcart\ShoppingCart;
 use frontend\models\forms\search\SearchProductForm;
 use yii\base\Event;
 use yii\web\View;
@@ -11,3 +12,4 @@ Event::on(View::className(), View::EVENT_BEFORE_RENDER, function () {
 });
 
 Carbon::setLocale('id');
+
