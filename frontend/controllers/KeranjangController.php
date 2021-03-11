@@ -6,7 +6,7 @@ namespace frontend\controllers;
 use common\components\shoppingcart\ShoppingCart;
 use common\models\Diskon;
 use common\models\HargaNego;
-use common\models\Keranjang;
+
 use common\models\Produk;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -46,7 +46,7 @@ class KeranjangController extends Controller
 
 
         if($is_nego){
-            $harganego = HargaNego::findOne(['id_produk' => $product->id, 'id_user' => $data['user']]);
+            $harganego = HargaNego::findOne(['id_produk' => $product->id, 'id_user' => Yii::$app->user->id]);
             $cart->getItemById($product->id)->setNegoPrice($harganego);
 
         }

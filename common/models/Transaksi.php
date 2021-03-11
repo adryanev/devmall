@@ -29,6 +29,7 @@ use yii\db\Exception;
  * @property int $cancelled_at
  * @property string cancellation_note
  * @property int $status
+ * @property string $paymentStatus
  */
 abstract class Transaksi extends ActiveRecord
 {
@@ -40,18 +41,31 @@ abstract class Transaksi extends ActiveRecord
     const PAYMENT_STATUS_PAID = 1;
     const PAYMENT_STATUS_UNPAID = 0;
 
-    public const TRANSAKSI_FORMAT = '{transaction_code}/{transaction_date}/{transaction_type}/';
+    public const TRANSAKSI_FORMAT = '{transaction_code}/devmall/{transaction_date}/{transaction_type}/';
     public const TRANSAKSI_CODE = 'TRP';
 
     abstract public function getCode();
     abstract public function isPaid();
 
+    public function getPaymentStatus(){
+        $status = [self::PAYMENT_STATUS_UNPAID => 'Belum Dibayar',
+            self::PAYMENT_STATUS_PAID=>'Dibayar'];
+        return $status[$this->payment_status];
+    }
+    public function getStatusTransaksi(){
+        $status = [self::STATUS_INVOICE => 'Invoice',
+            self::STATUS_COMPLETE => 'Complete',
+            self::STATUS_CONFIRMED=>'Confirmed',
+            self::STATUS_CANCELED => 'Canceled'
+            ];
+        return $status[$this->status];
+    }
     public function genereateTransactionCode($type = null){
         $now = Carbon::now();
 
         $code = strtr(self::TRANSAKSI_FORMAT, [
             '{transaction_code}'=>self::TRANSAKSI_CODE,
-            '{transaction_date}'=> $now->isoFormat('YYYYMMDDkkmmss'),
+            '{transaction_date}'=> $now->isoFormat('YYYYMMDD'),
             '{transaction_type}'=>$type
         ]);
         $lastOrder = self::find()->where(['like','code',$code])->orderBy('id DESC')->one();
@@ -75,7 +89,7 @@ abstract class Transaksi extends ActiveRecord
      *
      * @return boolean
      */
-    private static function isOrderCodeExist($orderCode)
+    protected static function isOrderCodeExist($orderCode)
     {
         return self::find()->where(['code'=>$orderCode])->exists();
     }

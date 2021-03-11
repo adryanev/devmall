@@ -96,7 +96,8 @@ use yii\helpers\Url;
                                 <hr>
                                 <li class="item">
                                     <a>Total</a>
-                                    <span><?= Yii::$app->formatter->asCurrency($keranjang->getCost()) ?></span>
+                                    <?php $total = $keranjang->getCost() ?>
+                                    <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
 
                                 </li>
                             </ul>

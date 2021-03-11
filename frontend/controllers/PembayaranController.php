@@ -55,13 +55,13 @@ class PembayaranController extends Controller
 
     public function beforeAction($action)
     {
-        switch ($action->id){
-            case 'notifikasi': case 'confirm-order':
-            $this->enableCsrfValidation = false;
-            Config::$serverKey = Yii::$app->params['midtrans_server_key'];
+        switch ($action->id) {
+            case 'notifikasi': case 'confirm-order': case 'confirm-permintaan':
+                    $this->enableCsrfValidation = false;
+                    Config::$serverKey = Yii::$app->params['midtrans_server_key'];
 
-            Config::$isSanitized = true;
-            Config::$is3ds = true;
+                    Config::$isSanitized = true;
+                    Config::$is3ds = true;
                 break;
         }
         return parent::beforeAction($action);
@@ -97,40 +97,35 @@ class PembayaranController extends Controller
         $is_nego = filter_var($data['is_nego'], FILTER_VALIDATE_BOOLEAN);
         $is_diskon = filter_var($data['is_diskon'], FILTER_VALIDATE_BOOLEAN);
 
-        $cart = Yii::$app->cart;
+        $keranjang = Yii::$app->cart;
         $product = Produk::findOne($data['produk']);
-        $cart->create($product);
+        $keranjang->create($product);
 
 
 
         if ($is_nego) {
             $harganego = HargaNego::findOne(['id_produk' => $product->id, 'id_user' => $data['user']]);
-            $cart->getItemById($product->id)->setNegoPrice($harganego);
+            $keranjang->getItemById($product->id)->setNegoPrice($harganego);
         }
 
 
         if ($is_diskon) {
             $diskon = $product->diskon;
-            $cart->getItemById($product->id)->setDiscount($diskon);
+            $keranjang->getItemById($product->id)->setDiscount($diskon);
         }
-        $cart->save();
-        $keranjangDataProvider = new ArrayDataProvider(['allModels' => $cart->getItems()]);
+        $keranjang->save();
+        $keranjangDataProvider = new ArrayDataProvider(['allModels' => $keranjang->getItems()]);
 
 
-        // if (empty($user->nomor_hp)) {
-        //     $flash = FlashHelper::DANGER;
-        //     $flash['message'] = 'Untuk bisa bertransaksi, verifikasi dulu nomor hp anda.';
-        //     $flash['title'] = 'Verifikasi Nomor Hp!';
-        //     Yii::$app->session->setFlash('danger', $flash);
-        //     return $this->redirect(['settings/account']);
-        // }
+        if (empty($user->nomor_hp)) {
+            $flash = FlashHelper::DANGER;
+            $flash['message'] = 'Untuk bisa bertransaksi, verifikasi dulu nomor hp anda.';
+            $flash['title'] = 'Verifikasi Nomor Hp!';
+            Yii::$app->session->setFlash('danger', $flash);
+            return $this->redirect(['settings/account']);
+        }
 
-        return $this->render('checkout', compact('user', 'keranjangDataProvider'));
-    }
-
-    public function actionProceedPayment()
-    {
-
+        return $this->render('checkout', compact('user', 'keranjangDataProvider', 'keranjang'));
     }
     public function actionConfirmOrder()
     {
@@ -139,39 +134,34 @@ class PembayaranController extends Controller
         $cart = Yii::$app->cart;
         $db = Yii::$app->db->beginTransaction();
         $req = Yii::$app->request->post('data');
-        $isCicilan = $req['isCicilan'];
+        $isCicilan = filter_var($req['isCicilan'], FILTER_VALIDATE_BOOLEAN);
         $jumlahCicilan = $req['jumlahCicilan'];
+
         $user = Yii::$app->user->identity;
         $now = Carbon::now();
         $jenis = $isCicilan? TransaksiProduk::JENIS_TRANSAKSI_CICIL : TransaksiProduk::JENIS_TRANSAKSI_TUNAI;
 
+        $cicilan = null;
         $transaksi = null;
         try {
             //set up model transaksi
             $transaksi = $this->setUpTransaksiProduk($user, $jenis, $cart, $now);
 
-            // setup transaksi detail
-            $items = $this->setUpDetailTransaksi($transaksi, $cart);
-
             if ($isCicilan) {
                 $cicilan = new TransaksiCicilan();
                 $cicilan->banyak_cicilan = $jumlahCicilan;
                 $cicilan->id_transaksi = $transaksi->id;
-                $cicilan->tanggal_jatuh_tempo = Carbon::now()->day;
+                $cicilan->tanggal_jatuh_tempo = $now->isoFormat('YYYY-MM-DD');
                 $cicilan->jumlah_cicilan = round($transaksi->grand_total/ $jumlahCicilan);
                 $cicilan->status = TransaksiCicilan::STATUS_ONGOING;
                 $cicilan->save(false);
-
-                $bayarCicilan = new PembayaranCicilan();
-                $bayarCicilan->id_transaksi_cicilan = $cicilan->id;
-                $bayarCicilan->jumlah_dibayar = $cicilan->jumlah_cicilan;
-                $bayarCicilan->tanggal_pembayaran = $now;
-                $bayarCicilan->status = PembayaranHelper::STATUS_PENDING;
-                $bayarCicilan->save(false);
             }
 
+            // setup transaksi detail
+            $items = $this->setUpDetailTransaksi($transaksi, $cart);
+
             //set up model pembayaran
-            $this->setupPayment($transaksi, $items, $isCicilan, $jumlahCicilan);
+            $this->setupPayment($transaksi, $items, $isCicilan, $cicilan);
             $db->commit();
         } catch (Exception $exception) {
             $db->rollBack();
@@ -190,6 +180,11 @@ class PembayaranController extends Controller
         return [];
     }
 
+    public function actionProceedPayment()
+    {
+    }
+
+
     /**
      * @throws NotFoundHttpException
      */
@@ -203,33 +198,16 @@ class PembayaranController extends Controller
 //            throw new ForbiddenHttpException('Invalid Signature');
 //        }
 
-       $code = substr($paymentNotification->order_id,0,3);
+        $code = substr($paymentNotification->order_id, 0, 3);
         $statusCode = null;
-
-        $order = null;
-        $type = null;
-        if (TransaksiProduk::TRANSAKSI_CODE === $code) {
-            $order = TransaksiProduk::findOne(['code'=>$paymentNotification->order_id]);
-            $type = TransaksiProduk::class;
-            $jenis = Payment::JENIS_PRODUK;
-        } elseif (TransaksiCicilan::TRANSAKSI_CODE === $code) {
-            $order = TransaksiCicilan::findOne(['code'=>$paymentNotification->order_id]);
-            $type = TransaksiCicilan::class;
-            $jenis = Payment::JENIS_CICILAN;
-        } elseif (TransaksiPermintaan::TRANSAKSI_CODE === $code) {
-            $order = TransaksiPermintaan::findOne(['code'=>$paymentNotification->order_id]);
-            $type = TransaksiPermintaan::class;
-            $jenis = Payment::JENIS_PERMINTAAN;
-        }
-
-        if ($order->isPaid()) {
-            throw new UnprocessableEntityHttpException('Already paid');
-        }
 
         $transaction = $paymentNotification->transaction_status;
         $paymentType = $paymentNotification->payment_type;
         $orderId = $paymentNotification->order_id;
         $fraud = $paymentNotification->fraud_status;
+
+        $order = null;
+        $type = null;
 
         $vaNumber = null;
         $vendorName = null;
@@ -238,10 +216,36 @@ class PembayaranController extends Controller
             $vendorName = $paymentNotification->va_numbers[0]->bank;
         }
 
+        if (TransaksiProduk::TRANSAKSI_CODE === $code) {
+            $order = TransaksiProduk::findOne(['code'=>$orderId]);
+            $type = TransaksiProduk::class;
+            $jenis = Payment::JENIS_PRODUK;
+        } elseif (TransaksiCicilan::TRANSAKSI_CODE === $code) {
+            $order = TransaksiCicilan::findOne(['code'=>$orderId]);
+            $type = TransaksiCicilan::class;
+            $jenis = Payment::JENIS_CICILAN;
+
+            $bayarCicilan = new PembayaranCicilan();
+            $bayarCicilan->id_transaksi_cicilan = $order->id;
+            $bayarCicilan->jumlah_dibayar = $paymentNotification->gross_amount;
+            $bayarCicilan->tanggal_pembayaran = Carbon::now()->isoFormat('YYYY-MM-DD');
+        } elseif (TransaksiPermintaan::TRANSAKSI_CODE === $code) {
+            $order = TransaksiPermintaan::findOne(['code'=>$orderId]);
+            $type = TransaksiPermintaan::class;
+            $jenis = Payment::JENIS_PERMINTAAN;
+
+            $bayarPermintaan = new PembayaranTransaksiPermintaan();
+            $bayarPermintaan->id_transaksi_permintaan = $order->id;
+            $bayarPermintaan->nominal = $paymentNotification->gross_amount;
+            $bayarPermintaan->jenis = substr($orderId, 13, 1);
+        }
+
+        if ($order->isPaid()) {
+            throw new UnprocessableEntityHttpException('Already paid');
+        }
 
         $paymentStatus = null;
         if ($transaction === 'capture') {
-
             // For credit card transaction, we need to check whether transaction is challenge by FDS or not
             if ($paymentType === 'credit_card') {
                 if ($fraud === 'challenge') {
@@ -290,22 +294,28 @@ class PembayaranController extends Controller
         $payment->setAttributes($paymentParams);
 
         $db = Yii::$app->db->beginTransaction();
-            try{
-                $payment->save(false);
-                if ($paymentStatus && $payment) {
-                    if($payment->status === Payment::STATUS_SETTLEMENT || $payment->status === Payment::STATUS_SUCCESS){
+        try {
+            $payment->save(false);
+            if ($paymentStatus && $payment) {
+                if ($payment->status === Payment::STATUS_SETTLEMENT || $payment->status === Payment::STATUS_SUCCESS) {
+                    if ($order instanceof TransaksiProduk) {
                         $order->payment_status = Transaksi::PAYMENT_STATUS_PAID;
                         $order->status = Transaksi::STATUS_CONFIRMED;
                         $order->save(false);
+                    } elseif ($order instanceof TransaksiCicilan) {
+                        $bayarCicilan->status = Payment::STATUS_SUCCESS;
+                        $bayarCicilan->save(false);
+                    } elseif ($order instanceof TransaksiPermintaan) {
+                        $bayarPermintaan->status = Payment::STATUS_SUCCESS;
+                        $bayarPermintaan->save(false);
                     }
                 }
-                $db->commit();
-
-
-            } catch (Exception $exception){
-                $db->rollBack();
-                throw $exception;
             }
+            $db->commit();
+        } catch (Exception $exception) {
+            $db->rollBack();
+            throw $exception;
+        }
         $message = 'Payment status is : ' . $paymentStatus;
 
         $response = [
@@ -325,15 +335,13 @@ class PembayaranController extends Controller
     {
         $code =  Yii::$app->request->get('order_id');
         $order = null;
-        $codeOrder = substr($code,0,3);
+        $codeOrder = substr($code, 0, 3);
         if (TransaksiProduk::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
-
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-
         } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = TransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
@@ -343,7 +351,7 @@ class PembayaranController extends Controller
             return  $this->redirect(['pembayaran/gagal','order_id'=>$code]);
         }
 
-        Yii::$app->session->setFlash('success', "Thank you for completing the payment process!");
+        Yii::$app->session->setFlash('success', 'Thank you for completing the payment process!');
 
         return  $this->redirect(['transaksi/received','jenis'=>$jenis,'id_transaksi'=>$order->id]);
     }
@@ -352,17 +360,15 @@ class PembayaranController extends Controller
     {
         $code = Yii::$app->request->get('order_id');
         $order = null;
-        $codeOrder = substr($code,0,3);
+        $codeOrder = substr($code, 0, 3);
 
         $jenis = null;
         if (TransaksiProduk::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
-
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-
         } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = TransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
@@ -378,17 +384,15 @@ class PembayaranController extends Controller
     {
         $code = Yii::$app->request->get('order_id');
         $order = null;
-        $codeOrder = substr($code,0,3);
+        $codeOrder = substr($code, 0, 3);
 
         $jenis = null;
         if (TransaksiProduk::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
-
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-
         } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = TransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
@@ -411,32 +415,8 @@ class PembayaranController extends Controller
         ]);
     }
 
-    protected function findPermintaan($id)
-    {
-        $permintaan = PermintaanProduk::findOne($id);
-        if (!$permintaan) {
-            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
-        }
-
-        return $permintaan;
-    }
-
-    protected function findTransaksiPermintaan($id)
-    {
-        $transaksi = TransaksiPermintaan::findOne(['id_permintaan' => $id]);
-        if (!$transaksi) {
-            throw new NotFoundHttpException();
-        }
-        return $transaksi;
-    }
-
     public function actionConfirmPermintaan()
     {
-        Config::$serverKey = Yii::$app->params['midtrans_server_key'];
-
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
-
 
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = Yii::$app->request->post();
@@ -444,8 +424,8 @@ class PembayaranController extends Controller
         $user = Yii::$app->user->identity;
 
 
-        $transaksi = PembayaranTransaksiPermintaan::findOne($data['data']['id']);
-        $total = $data['data']['total'];
+        $transaksi = PembayaranTransaksiPermintaan::findOne($data['id']);
+        $total = $data['total'];
 
         $transactionDetail = [
             'order_id' => $transaksi->id,
@@ -480,13 +460,36 @@ class PembayaranController extends Controller
                 ]
 
             ],
+            'jenis_pembayaran_permintaan'=>$transaksi->jenis
         ];
         $snapToken = Snap::getSnapToken($snapPayload);
 
         $transaksi->payment_token = $snapToken;
+        $transaksi->payment_url = $snapToken->redirect_url;
+        $transaksi->save(false);
 
-        return ['snap_token' => $snapToken];
+        return ['payment_url' => $transaksi->payment_url,'payment_token'=>$transaksi->payment_token];
     }
+
+    protected function findPermintaan($id)
+    {
+        $permintaan = PermintaanProduk::findOne($id);
+        if (!$permintaan) {
+            throw new NotFoundHttpException('Data yang anda cari tidak ditemukan');
+        }
+
+        return $permintaan;
+    }
+
+    protected function findTransaksiPermintaan($id)
+    {
+        $transaksi = TransaksiPermintaan::findOne(['id_permintaan' => $id]);
+        if (!$transaksi) {
+            throw new NotFoundHttpException();
+        }
+        return $transaksi;
+    }
+
 
     public function actionConfirmCicilan()
     {
@@ -521,11 +524,12 @@ class PembayaranController extends Controller
 
     private function setUpDetailTransaksi(?TransaksiProduk $transaksi, ShoppingCart $cart)
     {
+
         $items = [];
         foreach ($cart->getItems() as /** @var $produk Produk */ $produk) {
             $item = [
                 'id' => $produk->id,
-                'price' => $produk->getCost(),
+                'price' => $transaksi->transaksiCicilan? $transaksi->transaksiCicilan->jumlah_cicilan : $produk->getCost(),
                 'quantity' => 1,
                 'name' => $produk->nama
             ];
@@ -548,7 +552,7 @@ class PembayaranController extends Controller
         $user = Yii::$app->user->identity;
         $transactionDetail = [
             'order_id' => $transkasi->getCode(),
-            'gross_amount' => $cicilan ? $cicilan->jumlah_cicilan : $transkasi->grand_total
+            'gross_amount' => $isCicilan ? (int) $cicilan->jumlah_cicilan : $transkasi->grand_total
         ];
         $billingAddress = [
             'first_name' => $user->profilUser->nama_depan,

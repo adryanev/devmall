@@ -1,8 +1,9 @@
 <?php
 /**
- * @var $this \yii\web\View
- * @var $order \common\models\Transaksi
+ * @var $this yii\web\View
+ * @var $model common\models\TransaksiProduk
  */
+$this->title = 'Pembelian: '.$model->code;
 ?>
 
 <!--================================
@@ -13,9 +14,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <?=\common\widgets\Alert::widget()?>
-
-                    <h3>Transaksi Anda Sedang Diproses.</h3>
+                    <h3 class="mb-3"><?=$this->title?></h3>
+                    <div class="clearfix"></div>
+                    <?=\yii\widgets\DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'code',
+                            'order_date:datetime',
+                            'paymentStatus',
+                            'statusTransaksi',
+                        ]
+                        ])?>
                 </div>
             </div>
             <!-- end /.information_module-->

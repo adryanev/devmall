@@ -2,6 +2,7 @@
 
 namespace penjual\controllers;
 
+use common\models\Payment;
 use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
@@ -39,7 +40,7 @@ class PermintaanController extends Controller
 
         $progress = new ProgressPermintaanForm();
         $model = $this->findModel($id);
-        
+
         if ($model->id_booth !== Yii::$app->user->identity->booth->id) {
             throw new MethodNotAllowedHttpException('Maaf Ini bukan data anda');
         }
@@ -50,8 +51,8 @@ class PermintaanController extends Controller
         $dataProgressProvider = new ActiveDataProvider(['query' => $dataProgress]);
 
         if ($model->transaksiPermintaan != NULL) {
-    
-            $dataPembayaran = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans();            
+
+            $dataPembayaran = $model->transaksiPermintaan->getRiwayatTransaksiPermintaans();
             $dataPembayaranProvider =new ActiveDataProvider(['query' => $dataPembayaran]);
 
             return $this->render('view', compact('model', 'keteranganForm', 'progress', 'dataProgressProvider','dataPembayaranProvider'));
@@ -104,8 +105,9 @@ class PermintaanController extends Controller
                 $transaksi_permintaan = new TransaksiPermintaan();
                 $transaksi_permintaan->id_permintaan = $model->id;
                 $transaksi_permintaan->belum_dibayar = $model->harga;
+                $transaksi_permintaan->genereateTransactionCode(1);
                 $transaksi_permintaan->sudah_dibayar = 0;
-                $transaksi_permintaan->status = TransaksiPermintaan::STATUS_PENDING;
+                $transaksi_permintaan->status = TransaksiPermintaan::STATUS_INVOICE;
                 if (!$transaksi_permintaan->save(false)) {
                     $db->rollBack();
                     return $this->redirect(['view', 'id' => $model->id]);
@@ -114,7 +116,7 @@ class PermintaanController extends Controller
                 $detail = new PembayaranTransaksiPermintaan();
                 $detail->id_transaksi_permintaan = $transaksi_permintaan->id;
                 $detail->nominal = $transaksi_permintaan->permintaan->uang_muka;
-                $detail->status = PembayaranTransaksiPermintaan::STATUS_PENDING;
+                $detail->status = Payment::STATUS_PENDING;
                 $detail->jenis = PembayaranTransaksiPermintaan::JENIS_UANG_MUKA;
 
                 if (!$detail->save(false)) {
@@ -125,7 +127,7 @@ class PermintaanController extends Controller
                 $db->commit();
 
 
-                $notif = new Notifikasi();        
+                $notif = new Notifikasi();
 
                 $notif->id_data = $model->id;
                 $notif->sender = Yii::$app->user->identity->getId();
@@ -160,9 +162,9 @@ class PermintaanController extends Controller
             $keteranganModel->save();
             $model->status = PermintaanProduk::STATUS_DITOLAK;
             $model->update(false);
-        
 
-            $notif = new Notifikasi();        
+
+            $notif = new Notifikasi();
 
             $notif->id_data = $model->id;
             $notif->sender = Yii::$app->user->identity->getId();
@@ -255,7 +257,7 @@ class PermintaanController extends Controller
         if($model->load(Yii::$app->request->post())){
             $riwayat = new PembayaranTransaksiPermintaan();
             $riwayat->id_transaksi_permintaan = $transaksi->id;
-            $riwayat->status = PembayaranTransaksiPermintaan::STATUS_PENDING;
+            $riwayat->status = Payment::STATUS_PENDING;
             $riwayat->jenis = PembayaranTransaksiPermintaan::JENIS_ANGSURAN;
             $riwayat->nominal = $model->nominal;
 

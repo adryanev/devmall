@@ -42,6 +42,8 @@ class ProdukForm extends Model
     /** @var UploadedFile[] */
     public $galeri;
 
+    public $download_link;
+
     private $_booth;
     private $_produk;
     private $_nego;
@@ -92,8 +94,8 @@ class ProdukForm extends Model
     public function rules()
     {
         return [
-            [['nama', 'deskripsi', 'harga', 'demo', 'fitur', 'manual', 'kategori'], 'required'],
-            [['nama', 'deskripsi', 'fitur', 'spesifikasi'], 'string'],
+            [['nama', 'deskripsi', 'harga', 'demo', 'fitur', 'manual', 'kategori','download_link'], 'required'],
+            [['nama', 'deskripsi', 'fitur', 'spesifikasi','download_link'], 'string'],
             ['nego', 'boolean'],
             [['harga', 'harga_satu', 'harga_dua', 'harga_tiga'], 'integer'],
             ['galeri', 'file', 'extensions' => FileExtension::FOTO],

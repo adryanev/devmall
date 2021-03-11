@@ -3,6 +3,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Payment;
 use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
@@ -42,7 +43,7 @@ class PermintaanController extends Controller
                     $flash['message'] = 'Uang Muka Tak Boleh Melebihin Harga';
                     Yii::$app->session->setFlash('danger', $flash);
                     return $this->redirect(Url::current());
-                
+
             }
 
             try {
@@ -52,8 +53,6 @@ class PermintaanController extends Controller
 
                 if (!$model->save(false)) {
 
-                    echo "Gagal Simpan Request";
-                    exit();
 
                     $flash = FlashHelper::DANGER;
                     $flash['message'] = 'Terjadi kesalahan saat menyimpan permintaan anda';
@@ -68,9 +67,7 @@ class PermintaanController extends Controller
 
                 if ($uploaded = $modelDetail->upload()) {
                     if (!$modelDetail->save($model)) {
-                        echo "Gagal Uplod";
-                        exit();
-                        
+
                         $flash = FlashHelper::DANGER;
                         $flash['message'] = 'Terjadi kesalahan saat mengunggah berkas anda.';
                         Yii::$app->session->setFlash('danger', $flash);
@@ -81,7 +78,7 @@ class PermintaanController extends Controller
 
                     $db->commit();
 
-                    $notif = new Notifikasi();        
+                    $notif = new Notifikasi();
 
                     $notif->id_data = $model->id;
                     $notif->sender = $model->id_user;
@@ -215,7 +212,7 @@ class PermintaanController extends Controller
         $model = $this->findModel($id);
         $unpaid = $model->transaksiPermintaan;
         if ($unpaid) {
-            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => PembayaranTransaksiPermintaan::STATUS_PENDING])->one();
+            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => Payment::STATUS_PENDING])->one();
         }
         if ($model->id_user !== Yii::$app->user->identity->getId()) {
             throw new UnauthorizedHttpException('Oops, permintaan ini bukan milik anda');

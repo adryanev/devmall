@@ -48,14 +48,14 @@ class NegoForm extends Model
 
     public function simpanHarga()
     {
-        if (!$this->validate()) {
-            return false;
-        }
+//        if (!$this->validate()) {
+//            return false;
+//        }
         $hargaNego = HargaNego::findOne(['id_user'=>Yii::$app->user->id,'id_produk'=>$this->_produk->id]) ?? new HargaNego();
         $hargaNego->id_user = Yii::$app->user->identity->id;
         $hargaNego->id_produk = $this->_produk->id;
         $hargaNego->harga = $this->harga;
-        $hargaNego->save();
+        $hargaNego->save(false);
         return $hargaNego ;
     }
 }

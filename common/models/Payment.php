@@ -79,7 +79,7 @@ class Payment extends \yii\db\ActiveRecord
     const TYPE_TRANSAKSI_CICILAN = TransaksiCicilan::class;
     const TYPE_TRANSAKSI_PERMINTAAN = TransaksiPermintaan::class;
 
-    private const PAYMENT_FORMAT = '{payment_code}/{payment_date}/{payment_type}/';
+    private const PAYMENT_FORMAT = '{payment_code}/devmall/{payment_date}/{payment_type}/';
 
     public static function generateKodePembayaran($type)
     {

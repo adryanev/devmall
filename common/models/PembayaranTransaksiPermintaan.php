@@ -20,6 +20,9 @@ use yii\db\ActiveRecord;
  * @property int|null $jenis
  * @property string|null $jenisString
  * @property string|null $statusString
+ * @property string $payment_url
+ * @property string $payment_token
+ * @property int $payment_status
  *
  * @property TransaksiPermintaan $transaksiPermintaan
  */
@@ -27,43 +30,38 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
 {
     const PEMBAYARAN_TRANSAKSI_PERMINTAAN = 'pembayaranTransaksiPermintaan';
 
-    const STATUS_SUCCESS = 1;
-    const STATUS_PENDING = 0;
-    const STATUS_FAILED = 3;
-    const STATUS_EXPIRED = 4;
-
     const JENIS_UANG_MUKA = 1;
     const JENIS_ANGSURAN = 2;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'pembayaran_transaksi_permintaan';
-    }
-
-    public function getStatusString()
-    {
-        $status = $this->status;
-        $string = PembayaranHelper::STATUS;
-        return $string[$status];
-    }
-
-
-    public function getJenisString()
-    {
-        $jenis = $this->jenis;
-        $string = [
+        const   JENIS = [
             self::JENIS_UANG_MUKA => 'Uang Muka',
             self::JENIS_ANGSURAN => 'Angsuran'
         ];
-        return $string[$jenis];
-    }
+    /**
+     * {@inheritdoc}
+     */
+        public static function tableName()
+        {
+            return 'pembayaran_transaksi_permintaan';
+        }
 
-    public function behaviors()
-    {
-        return [
+        public function getStatusString()
+        {
+            $status = $this->status;
+            $string = PembayaranHelper::STATUS;
+            return $string[$status];
+        }
+
+
+        public function getJenisString()
+        {
+            $jenis = $this->jenis;
+
+            return self::JENIS[$jenis];
+        }
+
+        public function behaviors()
+        {
+            return [
             TimestampBehavior::class,
             'polymorphic'=>[
                 'class'=>RelatedPolymorphicBehavior::class,
@@ -72,17 +70,17 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
                 ],
                 'polymorphicType' => self::PEMBAYARAN_TRANSAKSI_PERMINTAAN
             ]
-        ];
-    }
+            ];
+        }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
-        return [
-            [['id_transaksi_permintaan', 'nominal', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['snap_token'], 'string', 'max' => 255],
+        public function rules()
+        {
+            return [
+            [['id_transaksi_permintaan', 'nominal', 'status', 'created_at', 'updated_at','payment_status'], 'integer'],
+            [['payment_token','payment_url'], 'string', 'max' => 255],
             [
                 ['id_transaksi_permintaan'],
                 'exist',
@@ -90,15 +88,15 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
                 'targetClass' => TransaksiPermintaan::className(),
                 'targetAttribute' => ['id_transaksi_permintaan' => 'id']
             ],
-        ];
-    }
+            ];
+        }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
-        return [
+        public function attributeLabels()
+        {
+            return [
             'id' => 'ID',
             'id_transaksi_permintaan' => 'Id TransaksiProduk Permintaan',
             'nominal' => 'Nominal',
@@ -107,16 +105,16 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'jenisString'=>'Jenis TransaksiProduk'
-        ];
-    }
+            ];
+        }
 
     /**
      * Gets query for [[TransaksiPermintaan]].
      *
      * @return ActiveQuery
      */
-    public function getTransaksiPermintaan()
-    {
-        return $this->hasOne(TransaksiPermintaan::className(), ['id' => 'id_transaksi_permintaan']);
-    }
+        public function getTransaksiPermintaan()
+        {
+            return $this->hasOne(TransaksiPermintaan::className(), ['id' => 'id_transaksi_permintaan']);
+        }
 }

@@ -206,7 +206,7 @@ $keranjangTotal = 0;
                                             <?= Html::a('<span class="lnr lnr-cog"></span> Setting', ['settings/account']) ?>
                                         </li>
                                         <li>
-                                            <?= Html::a(' <span class="lnr lnr-cart"></span>Pembelian', ['user/pembelian']) ?>
+                                            <?= Html::a(' <span class="lnr lnr-cart"></span>Pembelian', ['pembelian/index']) ?>
 
                                         </li>
                                         <li>

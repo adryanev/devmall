@@ -19,7 +19,7 @@ use yii\db\Exception;
 
  *
  * @property User $user
- * @property TransaksiCicilan[] $transaksiCicilans
+ * @property TransaksiCicilan $transaksiCicilan
  * @property TransaksiDetail[] $transaksiDetails
  * @property Promo $promoProduk
  */
@@ -108,9 +108,9 @@ class TransaksiProduk extends Transaksi
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTransaksiCicilans()
+    public function getTransaksiCicilan()
     {
-        return $this->hasMany(TransaksiCicilan::className(), ['id_transaksi' => 'id']);
+        return $this->hasOne(TransaksiCicilan::className(), ['id_transaksi' => 'id']);
     }
 
     /**

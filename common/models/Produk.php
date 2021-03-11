@@ -32,6 +32,7 @@ use yii\base\Model;
  * @property int $nego
  * @property int $created_at
  * @property int $updated_at
+ * @property string $download_link
  *
  * @property int hargaDiskon
  * @property Favorit[] $favorits
@@ -77,8 +78,8 @@ class Produk extends \yii\db\ActiveRecord implements CartItemInterface
     {
         return [
             [['id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
-            [['deskripsi', 'spesifikasi', 'fitur', 'nama', 'kategori', 'harga'], 'required'],
-            [['deskripsi', 'spesifikasi', 'fitur'], 'string'],
+            [['deskripsi', 'spesifikasi', 'fitur', 'nama', 'kategori', 'harga','download_link'], 'required'],
+            [['deskripsi', 'spesifikasi', 'fitur','download_link'], 'string'],
             [['nama', 'demo', 'manual'], 'string', 'max' => 255],
             [['id_booth'], 'unique'],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id' => 'id']],
@@ -104,6 +105,7 @@ class Produk extends \yii\db\ActiveRecord implements CartItemInterface
             'nego' => 'Nego',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'downlaoad_link' => 'Link Download',
         ];
     }
 
