@@ -4,6 +4,7 @@ use yii\bootstrap4\Html;
 
 $namaLengkap = Html::encode(Yii::$app->user->identity->profilUser->getNamaLengkap());
 $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
+$booth = Yii::$app->user->identity->booth;
 ?>
     <!-- begin:: Header -->
     <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed ">
@@ -22,7 +23,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
 
         <!-- begin:: Header Topbar -->
         <div class="kt-header__topbar">
-<?php 
+<?php
                 $query= (new \yii\db\Query())
                         ->select("*, notifikasi.id AS idNotif")
                         ->from("notifikasi")
@@ -48,7 +49,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                         <!--begin: Head -->
                         <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"
                              style="background-image: url(<?= Yii::getAlias('@web/media/misc/bg-1.jpg') ?>)">
-                            
+
                             <h3 class="kt-head__title">
                                 User Notifications
                                 &nbsp;
@@ -58,7 +59,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                                 role="tablist">
                                 <li class="nav-item">
                                 </li>
-                                
+
                             </ul>
                         </div>
 
@@ -66,7 +67,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                         <div class="tab-content">
                             <div class="tab-pane active show" id="topbar_notifications_notifications" role="tabpanel">
                                 <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true" data-height="300" data-mobile-height="200">
-<?php 
+<?php
     foreach ($notif as $v) {
 
 
@@ -78,7 +79,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                                             ". $v['context'] ."
                                         </div>
                                         <div class=\"kt-notification__item-time\">
-                                            
+
                                         </div>
                                     </div>", ['/notifikasi/view/'.$v['idNotif']], ['class' => 'kt-notification__item']);
 
@@ -93,7 +94,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                                             Semua Notifikasi
                                         </div>
                                         <div class="kt-notification__item-time">
-                                            
+
                                         </div>
                                     </div>
                                 </a>
@@ -138,7 +139,18 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                         </div>
                         <div class="kt-user-card__name">
                             <?= $namaLengkap ?>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <?= Html::a("
+<span class='text-white'>
+                            <i class=\"flaticon-coins\"></i>
+                       ".Yii::$app->formatter->asCurrency($booth->coin->saldo).'</span>', ['/coin/index']) ?>
+                                </div>
+
+                            </div>
+
                         </div>
+
                     </div>
 
                     <!--end: Head -->
@@ -156,6 +168,7 @@ $inisial = strtoupper(substr(Html::encode($namaLengkap), 0, 1));
                                 Pengaturan akun dan lainnya
                             </div>
                         </div>", ['/profile/index'], ['class' => 'kt-notification__item']) ?>
+
 
                         <div class="kt-notification__custom kt-space-between">
                             <?= \yii\bootstrap4\Html::a('Keluar', ['/site/logout'], ['class' => 'btn btn-label btn-label-brand btn-sm btn-bold', 'data' => ['method' => 'post', 'confirm' => 'Apakah anda ingin keluar?']]) ?>

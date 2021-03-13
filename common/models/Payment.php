@@ -80,6 +80,72 @@ class Payment extends \yii\db\ActiveRecord
     const TYPE_TRANSAKSI_PERMINTAAN = TransaksiPermintaan::class;
 
     private const PAYMENT_FORMAT = '{payment_code}/devmall/{payment_date}/{payment_type}/';
+    public const EVENT_PAYMENT_SUCCESS = 'paymentSuccess';
+
+    public function init()
+    {
+        $this->on(self::EVENT_PAYMENT_SUCCESS,[$this,'sendCoin']);
+        parent::init();
+    }
+
+    public function sendCoin($event){
+
+        $payment = $event->sender;
+        $transaksi = $payment->type;
+        $modelTransaksi =  call_user_func($transaksi.'::findOne',['id'=>$payment->external_id]);
+        if($transaksi === TransaksiProduk::class){
+            $detail =$modelTransaksi->transaksiDetails;
+            foreach ($detail as $item){
+                $coin = Coin::findOne(['id_booth'=>$item->produk->id_booth]);
+                $ledger = new CoinLedger();
+                $currentSaldo = $coin->saldo;
+                $nominal = $item->sub_total;
+                $currentSaldo +=$this->nominal;
+                $coin->saldo = $currentSaldo;
+                $ledger->id_coin = $coin->id;
+                $ledger->type = CoinLedger::TYPE_IN;
+                $ledger->amount = $nominal;
+
+                $coin->save(false);
+                $ledger->save(false);
+            }
+        } elseif ($transaksi === TransaksiCicilan::class) {
+//            $riwayat = $modelTransaksi->getPembayaranCicilans()->andWhere(['status'=>Payment::STATUS_SUCCESS])->orderBy('id DESC')->one();
+            $detail =$modelTransaksi->transaksi->transaksiDetails;
+            foreach ($detail as $item){
+                $coin = Coin::findOne(['id_booth'=>$item->produk->id_booth]);
+                $ledger = new CoinLedger();
+                $currentSaldo = $coin->saldo;
+                $nominal = (int) ceil($item->sub_total/$modelTransaksi->jumlah_cicilan);
+                $currentSaldo +=$this->nominal;
+                $coin->saldo = $currentSaldo;
+                $ledger->id_coin = $coin->id;
+                $ledger->type = CoinLedger::TYPE_IN;
+                $ledger->amount = $nominal;
+
+                $coin->save(false);
+                $ledger->save(false);
+            }
+        }
+        elseif ($transaksi === TransaksiPermintaan::class){
+            $coin  = $modelTransaksi->permintaan->booth->coin;
+            $ledger = new CoinLedger();
+            $currentSaldo = $coin->saldo;
+            $nominal = $payment->nominal;
+            $currentSaldo +=$this->nominal;
+            $coin->saldo = $currentSaldo;
+            $ledger->id_coin = $coin->id;
+            $ledger->type = CoinLedger::TYPE_IN;
+            $ledger->amount = $nominal;
+
+            $coin->save(false);
+            $ledger->save(false);
+
+
+        }
+
+    }
+
 
     public static function generateKodePembayaran($type)
     {

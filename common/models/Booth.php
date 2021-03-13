@@ -129,7 +129,7 @@ class Booth extends \yii\db\ActiveRecord
      */
     public function getCoin()
     {
-        return $this->hasOne(Coin::class, ['id'=>'id_booth']);
+        return $this->hasOne(Coin::class, ['id_booth'=>'id']);
     }
 
     /**
@@ -207,7 +207,7 @@ class Booth extends \yii\db\ActiveRecord
 
     public function getPenjualan($id_booth)
     {
-        
+
     $rows = (new \yii\db\Query())
         ->select(['id_transaksi'])
         ->from('transaksi_detail t_d')
@@ -215,7 +215,7 @@ class Booth extends \yii\db\ActiveRecord
         ->leftJoin('booth bth', 'prd.id_booth=bth.id')
         ->where(['id_booth' => $id_booth])
         ->all();
-        
+
       $rows = count($rows);
     return $rows;
     }

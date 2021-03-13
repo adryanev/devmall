@@ -309,6 +309,8 @@ class PembayaranController extends Controller
                         $bayarPermintaan->status = Payment::STATUS_SUCCESS;
                         $bayarPermintaan->save(false);
                     }
+                    $payment->trigger(Payment::EVENT_PAYMENT_SUCCESS);
+
                 }
             }
             $db->commit();

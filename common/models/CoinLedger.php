@@ -22,6 +22,12 @@ class CoinLedger extends ActiveRecord
 {
     const TYPE_IN = 1;
     const TYPE_OUT = 0;
+
+    const TYPE = [
+        self::TYPE_IN => 'Masuk',
+        self::TYPE_OUT => 'Keluar'
+    ];
+
     /**
      * {@inheritdoc}
      */
