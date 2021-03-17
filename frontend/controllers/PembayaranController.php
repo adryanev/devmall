@@ -545,6 +545,10 @@ class PembayaranController extends Controller
             $transaksiDetail->bargain_price = $produk->getNegoPrice()? $produk->getNegoPrice()->harga: null;
             $transaksiDetail->sub_total = $produk->getCost();
             $transaksiDetail->save(false);
+
+            if($hargaNego = $produk->getNegoPrice()){
+                $hargaNego->delete();
+            }
         }
         return $items;
     }
