@@ -44,6 +44,7 @@ use yii\base\Model;
  * @property string $alamatLengkap
  * @property Produk[] $produkPopuler
  * @property Coin $coin
+ * @property Reimbursement $reimbursement
  */
 class Booth extends \yii\db\ActiveRecord
 {
@@ -218,5 +219,12 @@ class Booth extends \yii\db\ActiveRecord
 
       $rows = count($rows);
     return $rows;
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getReimbursement(){
+        return $this->hasMany(Reimbursement::class,['id_booth'=>'id']);
     }
 }

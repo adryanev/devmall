@@ -23,4 +23,10 @@ class TransaksiController extends \yii\web\Controller
         $model = TransaksiProduk::findOne($id);
         return $this->render('view',['model'=>$model]);
     }
+
+    public function actionReimburse(){
+        $booth = \Yii::$app->user->identity->booth;
+        $reimburseDataProvider = new ActiveDataProvider(['query' => $booth->getReimbursement() ]);
+        return $this->render('reimburse',compact('reimburseDataProvider'));
+    }
 }
