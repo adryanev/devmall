@@ -26,7 +26,7 @@ class TransaksiController extends \yii\web\Controller
 
     public function actionReimburse(){
         $booth = \Yii::$app->user->identity->booth;
-        $reimburseDataProvider = new ActiveDataProvider(['query' => $booth->getReimbursement() ]);
+        $reimburseDataProvider = new ActiveDataProvider(['query' => $booth->getReimbursement()->orderBy('id DESC') ]);
         return $this->render('reimburse',compact('reimburseDataProvider'));
     }
 }

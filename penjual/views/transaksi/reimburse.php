@@ -20,7 +20,15 @@ $this->title = 'Reimbursement';
                 ['class'=>\kartik\grid\SerialColumn::class],
                 'created_at:datetime',
                 'amount:currency',
-                'status'
+                'status',
+                ['attribute' => 'bukti','format' => ['image',['width'=>'100px','height'=>'100px']],
+                    'value'=>function($model){
+            if($model->bukti){
+                return Yii::getAlias('@.reimbursementPath/').$model->bukti;
+            }
+            return null;
+
+                    }],
             ]
         ])?>
     </div>

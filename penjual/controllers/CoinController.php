@@ -17,7 +17,7 @@ class CoinController extends \yii\web\Controller
 
         $booth = $this->findBooth();
         $coin = $this->getCoin($booth);
-        $ledger = new ActiveDataProvider(['query' => $coin->getLedger()]);
+        $ledger = new ActiveDataProvider(['query' => $coin->getLedger()->orderBy('id DESC')]);
 
         return $this->render('index',compact('coin','ledger'));
     }

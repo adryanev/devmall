@@ -16,6 +16,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string|null $status
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property string|null $bukti
  *
  * @property Booth $booth
  */
@@ -48,7 +49,7 @@ class Reimbursement extends \yii\db\ActiveRecord
     {
         return [
             [['id_booth', 'amount', 'created_at', 'updated_at'], 'integer'],
-            [['bank', 'nomor_rekening', 'status'], 'string', 'max' => 255],
+            [['bank', 'nomor_rekening', 'status','bukti'], 'string', 'max' => 255],
             [['id_booth'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id_booth' => 'id']],
         ];
     }
@@ -67,6 +68,7 @@ class Reimbursement extends \yii\db\ActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'bukti'=>'Bukti'
         ];
     }
 
