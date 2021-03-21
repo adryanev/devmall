@@ -157,4 +157,5 @@ class PermintaanProduk extends ActiveRecord
     {
         return $this->hasOne(TransaksiPermintaan::class, ['id_permintaan' => 'id']);
     }
+
 }

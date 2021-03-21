@@ -109,7 +109,8 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
             'snap_token' => 'Snap Token',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'jenisString'=>'Jenis TransaksiProduk'
+            'jenisString'=>'Jenis Pembayaran',
+                'statusString'=>'Status'
             ];
         }
 

@@ -59,7 +59,8 @@
         "linslin/yii2-curl": "*",
         "bitcko/yii2-bitcko-mailer": "dev-master",
         "2amigos/yii2-nexmo-library": "~1.0",
-        "hscstudio/yii2-cart": "dev-master"
+        "hscstudio/yii2-cart": "dev-master",
+        "pusher/pusher-php-server": "^6.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

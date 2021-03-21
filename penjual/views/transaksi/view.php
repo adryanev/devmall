@@ -3,6 +3,9 @@
  * @var $this yii\web\View
  * @var $model common\models\TransaksiProduk
  */
+
+use yii\bootstrap4\Html;
+
 $this->title =$model->code;
 $this->params['breadcrumbs'][]=['label'=>'Transaksi Masuk','url'=>['transaksi/masuk']];
 $this->params['breadcrumbs'][]=['label'=>$this->title];
@@ -14,6 +17,21 @@ $this->params['breadcrumbs'][]=['label'=>$this->title];
             <h3 class="kt-portlet__head-title">
                 <?=\yii\bootstrap4\Html::encode($this->title)?>
             </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <?php if ($model->status === \common\models\TransaksiProduk::STATUS_CONFIRMED) :
+                       ?>
+                    <?= Html::a('<i class="la la-paper-plane-o"></i> Kirim Produk', ['transaksi/kirim-produk'], ['class' => 'btn btn-success btn-elevate btn-elevate-air','data'=>[
+                        'method'=>'POST',
+                        'confirm'=>'Apakah anda ingin mengirimkan produk-produk ini ke pengguna?',
+                        'params'=>['id'=>$model->id]
+                    ]]) ?>
+                    <?php endif?>
+
+                </div>
+            </div>
         </div>
 
     </div>
