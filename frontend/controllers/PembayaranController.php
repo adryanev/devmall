@@ -57,7 +57,7 @@ class PembayaranController extends Controller
     public function beforeAction($action)
     {
         switch ($action->id) {
-            case 'notifikasi': case 'confirm-order': case 'confirm-permintaan':
+            case 'notifikasi': case 'confirm-order': case 'confirm-permintaan':case 'confirm-cicilan':
                     $this->enableCsrfValidation = false;
                     Config::$serverKey = Yii::$app->params['midtrans_server_key'];
 
@@ -156,6 +156,16 @@ class PembayaranController extends Controller
                 $cicilan->jumlah_cicilan = round($transaksi->grand_total/ $jumlahCicilan);
                 $cicilan->status = TransaksiCicilan::STATUS_ONGOING;
                 $cicilan->save(false);
+
+                $bayarCicilan = new PembayaranCicilan();
+                $bayarCicilan->id_transaksi_cicilan = $cicilan->id;
+                $bayarCicilan->jumlah_dibayar = $cicilan->jumlah_cicilan;
+                $bayarCicilan->tanggal_pembayaran = Carbon::now()->timestamp;
+                $bayarCicilan->code = $bayarCicilan->generateCode();
+                $bayarCicilan->payment_status = Transaksi::PAYMENT_STATUS_UNPAID;
+                $bayarCicilan->status = Payment::STATUS_PENDING;
+                $bayarCicilan->save(false);
+
             }
 
             // setup transaksi detail
@@ -222,14 +232,11 @@ class PembayaranController extends Controller
             $type = TransaksiProduk::class;
             $jenis = Payment::JENIS_PRODUK;
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $code) {
-            $order = TransaksiCicilan::findOne(['code'=>$orderId]);
+//            $order = TransaksiCicilan::findOne(['code'=>$orderId]);
+            $bayarCicilan = PembayaranCicilan::findOne(['code'=>$orderId]);
+            $order = $bayarCicilan->transaksiCicilan;
             $type = TransaksiCicilan::class;
             $jenis = Payment::JENIS_CICILAN;
-
-            $bayarCicilan = new PembayaranCicilan();
-            $bayarCicilan->id_transaksi_cicilan = $order->id;
-            $bayarCicilan->jumlah_dibayar = $paymentNotification->gross_amount;
-            $bayarCicilan->tanggal_pembayaran = Carbon::now()->isoFormat('YYYY-MM-DD');
         } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE === $code) {
 
 //            $order = TransaksiPermintaan::findOne(['code'=>$orderId]);
@@ -239,10 +246,7 @@ class PembayaranController extends Controller
             $jenis = Payment::JENIS_PERMINTAAN;
             $order->sudah_dibayar = $order->sudah_dibayar + $paymentNotification->gross_amount;
 
-//            $bayarPermintaan = new PembayaranTransaksiPermintaan();
-//            $bayarPermintaan->id_transaksi_permintaan = $order->id;
-//            $bayarPermintaan->nominal = $paymentNotification->gross_amount;
-//            $bayarPermintaan->jenis = $paymentNotification->jenis_pembayaran_permintaan;
+
         }
 
         if ($order->isPaid()) {
@@ -309,6 +313,7 @@ class PembayaranController extends Controller
                         $order->save(false);
                     } elseif ($order instanceof TransaksiCicilan) {
                         $bayarCicilan->status = Payment::STATUS_SUCCESS;
+                        $bayarCicilan->payment_status = Transaksi::PAYMENT_STATUS_PAID;
                         $bayarCicilan->save(false);
                     } elseif ($order instanceof TransaksiPermintaan) {
                         $bayarPermintaan->status = Payment::STATUS_SUCCESS;
@@ -335,10 +340,6 @@ class PembayaranController extends Controller
         return $response;
     }
 
-    public function actionCicilan()
-    {
-    }
-
 
     public function actionSelesai()
     {
@@ -349,7 +350,7 @@ class PembayaranController extends Controller
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
-            $order = TransaksiCicilan::findOne(['code'=>$code]);
+            $order = PembayaranCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
         } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
@@ -376,7 +377,7 @@ class PembayaranController extends Controller
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
-            $order = TransaksiCicilan::findOne(['code'=>$code]);
+            $order = PembayaranCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
         } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
@@ -400,7 +401,7 @@ class PembayaranController extends Controller
             $order = TransaksiProduk::findOne(['code'=>$code]);
             $jenis = TransaksiProduk::TRANSAKSI_PRODUK;
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
-            $order = TransaksiCicilan::findOne(['code'=>$code]);
+            $order = PembayaranCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
         } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
             $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
@@ -496,6 +497,13 @@ class PembayaranController extends Controller
 
         return $permintaan;
     }
+    protected function findCicilan($id){
+        $cicilan = TransaksiCicilan::findOne($id);
+        if(!$cicilan){
+            throw new NotFoundHttpException();
+        }
+        return $cicilan;
+    }
 
     protected function findTransaksiPermintaan($id)
     {
@@ -507,8 +515,87 @@ class PembayaranController extends Controller
     }
 
 
+    public function actionCicilan()
+    {
+        $post = Yii::$app->request->post();
+        $cicilan = $this->findCicilan($post['id']);
+        $user = Yii::$app->user->identity;
+        $profilUser = $user->profilUser;
+
+        return $this->render('cicilan', [
+           'cicilan'=>$cicilan,
+            'user'=>$user,
+            'profilUser'=>$profilUser
+        ]);
+    }
     public function actionConfirmCicilan()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $data = Yii::$app->request->post();
+
+        $user = Yii::$app->user->identity;
+
+
+
+        $transaksi = TransaksiCicilan::findOne($data['id']);
+
+        $bayarCicilan = new PembayaranCicilan();
+        $bayarCicilan->id_transaksi_cicilan = $transaksi->id;
+        $bayarCicilan->jumlah_dibayar = $transaksi->jumlah_cicilan;
+        $bayarCicilan->tanggal_pembayaran = Carbon::now()->timestamp;
+        $bayarCicilan->code = $bayarCicilan->generateCode();
+        $bayarCicilan->payment_status = Transaksi::PAYMENT_STATUS_UNPAID;
+        $bayarCicilan->status = Payment::STATUS_PENDING;
+        $bayarCicilan->save(false);
+
+
+        $transactionDetail = [
+            'order_id' => $bayarCicilan->code,
+            'gross_amount' => $bayarCicilan->jumlah_dibayar
+        ];
+        $billingAddress = [
+            'first_name' => $user->profilUser->nama_depan,
+            'last_name' => $user->profilUser->nama_belakang,
+            'address' => $user->profilUser->alamat1,
+            'city' => $user->profilUser->kota,
+            'country_code' => 'IDN'
+        ];
+        $customerDetail = [
+            'first_name' => $user->profilUser->nama_depan,
+            'last_name' => $user->profilUser->nama_belakang,
+            'email' => $user->email,
+            'phone' => $user->nomor_hp,
+            'billing_address' => $billingAddress,
+            'shipping_address' => $billingAddress
+        ];
+
+        $snapPayload = [
+            'enabled_payments'=>Payment::PAYMENT_CHANNELS,
+            'transaction_details' => $transactionDetail,
+            'customer_details' => $customerDetail,
+            'item_details' => [
+                [
+                    'id' => $bayarCicilan->id,
+                    'price' => $bayarCicilan->jumlah_dibayar,
+                    'quantity' => 1,
+                    'name' => $transaksi->transaksi->code . '(Cicilan)'
+                ]
+
+            ],
+        ];
+        $snapToken = Snap::createTransaction($snapPayload);
+
+        if($snapToken){
+            $bayarCicilan->payment_token = $snapToken->token;
+            $bayarCicilan->payment_url = $snapToken->redirect_url;
+            $bayarCicilan->save(false);
+            return ['payment_url' => $bayarCicilan->payment_url,'payment_token'=>$bayarCicilan->payment_token];
+        }
+
+        throw new \yii\base\Exception();
+
+
     }
 
     private function setUpTransaksiProduk($user, $jenis, $cart, $now)

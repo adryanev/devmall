@@ -44,7 +44,10 @@ $this->title = 'Pembelian: '.$model->code;
                             'discount_percent',
                             'sub_total:currency',
                             ['attribute' => 'produk.download_link','format' => 'html','value' => function($model){
+                        if(($model->transaksi->jenis_transaksi === \common\models\TransaksiProduk::JENIS_TRANSAKSI_CICIL && $model->transaksi->transaksiCicilan->pembayaranCicilans[0]->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) || $model->transaksi->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID)
                                 return \yii\bootstrap4\Html::a('<i class="lnr lnr-arrow-down-circle"></i> Download',$model->produk->download_link,['class'=>'btn btn-sm btn-success']);
+
+                        return 'Silahkan bayar terlebih dahulu';
                             }]
                         ]
                     ])?>

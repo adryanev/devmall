@@ -110,6 +110,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 ) ?>
                             </div>
                         </div>
+                        <?php if ($model->transaksiPermintaan) :
+
+                            ?>
                         <div class="row">
                             <div class="col-lg-12">
                                 <h4>Progress Pengerjaan</h4>
@@ -127,6 +130,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                     </ul>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <h4>Riwayat Pembayaran</h4>
@@ -145,7 +149,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 ])?>
                             </div>
                         </div>
-
+                        <?php endif;?>
                     </div>
                 </div>
             </div>

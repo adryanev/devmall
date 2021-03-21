@@ -85,9 +85,21 @@ class Payment extends \yii\db\ActiveRecord
     public function init()
     {
         $this->on(self::EVENT_PAYMENT_SUCCESS,[$this,'sendCoin']);
+        $this->on(self::EVENT_PAYMENT_SUCCESS,[$this,'updateStatus']);
         parent::init();
     }
 
+    public function updateStatus($event){
+        $payment = $event->sender;
+        $transaksi = $payment->type;
+        $modelTransaksi =  call_user_func($transaksi.'::findOne',['id'=>$payment->external_id]);
+
+        if($transaksi === TransaksiCicilan::class){
+            //cek jumlah entry riwayat cicilan === banyak cicilan
+           $modelTransaksi->updateStatus();
+        }
+
+    }
     public function sendCoin($event){
 
         $payment = $event->sender;
@@ -100,12 +112,12 @@ class Payment extends \yii\db\ActiveRecord
                 $ledger = new CoinLedger();
                 $currentSaldo = $coin->saldo;
                 $nominal = $item->sub_total;
-                $currentSaldo +=$this->nominal;
+                $currentSaldo +=$nominal;
                 $coin->saldo = $currentSaldo;
                 $ledger->id_coin = $coin->id;
                 $ledger->type = CoinLedger::TYPE_IN;
                 $ledger->amount = $nominal;
-                $ledger->source = $transaksi->id;
+                $ledger->source = $modelTransaksi->id;
                 $ledger->type = TransaksiProduk::class;
 
                 $coin->save(false);
@@ -118,13 +130,13 @@ class Payment extends \yii\db\ActiveRecord
                 $coin = Coin::findOne(['id_booth'=>$item->produk->id_booth]);
                 $ledger = new CoinLedger();
                 $currentSaldo = $coin->saldo;
-                $nominal = (int) ceil($item->sub_total/$modelTransaksi->jumlah_cicilan);
-                $currentSaldo +=$this->nominal;
+                $nominal = (int) ceil($item->sub_total/$modelTransaksi->banyak_cicilan);
+                $currentSaldo +=$nominal;
                 $coin->saldo = $currentSaldo;
                 $ledger->id_coin = $coin->id;
                 $ledger->type = CoinLedger::TYPE_IN;
                 $ledger->amount = $nominal;
-                $ledger->source = $transaksi->id;
+                $ledger->source = $modelTransaksi->id;
                 $ledger->source_type = TransaksiCicilan::class;
 
                 $coin->save(false);
@@ -136,12 +148,12 @@ class Payment extends \yii\db\ActiveRecord
             $ledger = new CoinLedger();
             $currentSaldo = $coin->saldo;
             $nominal = $payment->nominal;
-            $currentSaldo +=$this->nominal;
+            $currentSaldo +=$nominal;
             $coin->saldo = $currentSaldo;
             $ledger->id_coin = $coin->id;
             $ledger->type = CoinLedger::TYPE_IN;
             $ledger->amount = $nominal;
-            $ledger->source = $transaksi->id;
+            $ledger->source = $modelTransaksi->id;
             $ledger->source_type = TransaksiPermintaan::class;
 
             $coin->save(false);
@@ -160,7 +172,7 @@ class Payment extends \yii\db\ActiveRecord
 
         $code = strtr(self::PAYMENT_FORMAT, [
             '{payment_code}'=>self::PAYMENT_CODE,
-            '{payment_date}'=> $now->isoFormat('YYYYMMDDkkmmss'),
+            '{payment_date}'=> $now->isoFormat('YYYYMMDD'),
             '{payment_type}'=>self::JENIS[$type]
         ]);
         $lastOrder = self::find()->where(['like','kode_pembayaran',$code])->orderBy('id DESC')->one();

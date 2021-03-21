@@ -214,6 +214,10 @@ $keranjangTotal = 0;
 
                                         </li>
                                         <li>
+                                            <?= Html::a(' <span class="lnr lnr-license"></span>Cicilan', ['cicilan/index']) ?>
+
+                                        </li>
+                                        <li>
                                             <?= Html::a('<span class="lnr lnr-heart"></span> Favorit', ['user/favorit']) ?>
 
                                         </li>

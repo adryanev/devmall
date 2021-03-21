@@ -40,7 +40,8 @@ abstract class Transaksi extends ActiveRecord
 
     const PAYMENT_STATUS_PAID = 1;
     const PAYMENT_STATUS_UNPAID = 0;
-
+    const PAYMENT_STATUSES = [self::PAYMENT_STATUS_UNPAID => 'Belum Lunas',
+        self::PAYMENT_STATUS_PAID=>'Lunas'];
     public const TRANSAKSI_FORMAT = '{transaction_code}/devmall/{transaction_date}/{transaction_type}/';
     public const TRANSAKSI_CODE = 'TRP';
 
@@ -48,9 +49,8 @@ abstract class Transaksi extends ActiveRecord
     abstract public function isPaid();
 
     public function getPaymentStatus(){
-        $status = [self::PAYMENT_STATUS_UNPAID => 'Belum Dibayar',
-            self::PAYMENT_STATUS_PAID=>'Dibayar'];
-        return $status[$this->payment_status];
+
+        return self::PAYMENT_STATUSES[$this->payment_status];
     }
     public function getStatusTransaksi(){
         $status = [self::STATUS_INVOICE => 'Invoice',
