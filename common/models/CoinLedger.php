@@ -15,6 +15,8 @@ use yii\db\ActiveRecord;
  * @property int|null $amount
  * @property int|null $created_at
  * @property int|null $updated_at
+ * @property string|null $source
+ * @property string|null $source_type
  *
  * @property Coin $ledger
  */
@@ -48,6 +50,7 @@ class CoinLedger extends ActiveRecord
     {
         return [
             [['amount', 'id_coin', 'type', 'created_at', 'updated_at'], 'integer'],
+            [['source','source_type'],'string'],
             [['id_coin'], 'exist', 'skipOnError' => true, 'targetClass' => Coin::className(), 'targetAttribute' => ['id_coin' => 'id']],
         ];
     }
@@ -64,6 +67,8 @@ class CoinLedger extends ActiveRecord
             'type' => 'Type',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'source' => 'Sumber',
+            'source_type' => 'Tipe Sumber',
         ];
     }
 

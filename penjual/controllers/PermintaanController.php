@@ -7,6 +7,7 @@ use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
 use common\models\RiwayatPermintaan;
+use common\models\Transaksi;
 use common\models\TransaksiPermintaan;
 use common\models\Notifikasi;
 
@@ -105,7 +106,7 @@ class PermintaanController extends Controller
                 $transaksi_permintaan = new TransaksiPermintaan();
                 $transaksi_permintaan->id_permintaan = $model->id;
                 $transaksi_permintaan->belum_dibayar = $model->harga;
-                $transaksi_permintaan->genereateTransactionCode(1);
+                $transaksi_permintaan->code = $transaksi_permintaan->genereateTransactionCode(PembayaranTransaksiPermintaan::JENIS_UANG_MUKA);
                 $transaksi_permintaan->sudah_dibayar = 0;
                 $transaksi_permintaan->status = TransaksiPermintaan::STATUS_INVOICE;
                 if (!$transaksi_permintaan->save(false)) {
@@ -114,17 +115,18 @@ class PermintaanController extends Controller
                 }
 
                 $detail = new PembayaranTransaksiPermintaan();
+                $detail->code = $detail->genereateTransactionCode(PembayaranTransaksiPermintaan::JENIS_UANG_MUKA);
                 $detail->id_transaksi_permintaan = $transaksi_permintaan->id;
                 $detail->nominal = $transaksi_permintaan->permintaan->uang_muka;
                 $detail->status = Payment::STATUS_PENDING;
                 $detail->jenis = PembayaranTransaksiPermintaan::JENIS_UANG_MUKA;
+                $detail->payment_status =Transaksi::PAYMENT_STATUS_UNPAID;
 
                 if (!$detail->save(false)) {
                     $db->rollBack();
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
 
-                $db->commit();
 
 
                 $notif = new Notifikasi();
@@ -138,6 +140,7 @@ class PermintaanController extends Controller
 
                 $notif->save(false);
 
+                $db->commit();
 
             } catch (Exception $exception) {
                 $db->rollBack();
@@ -256,10 +259,12 @@ class PermintaanController extends Controller
 
         if($model->load(Yii::$app->request->post())){
             $riwayat = new PembayaranTransaksiPermintaan();
+            $riwayat->code = $riwayat->genereateTransactionCode(PembayaranTransaksiPermintaan::JENIS_ANGSURAN);
             $riwayat->id_transaksi_permintaan = $transaksi->id;
             $riwayat->status = Payment::STATUS_PENDING;
             $riwayat->jenis = PembayaranTransaksiPermintaan::JENIS_ANGSURAN;
             $riwayat->nominal = $model->nominal;
+            $riwayat->payment_status = Transaksi::PAYMENT_STATUS_UNPAID;
 
             if($riwayat->save(false)){
                 if(Yii::$app->request->isAjax){

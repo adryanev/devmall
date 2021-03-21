@@ -88,7 +88,7 @@ class TransaksiPermintaan extends Transaksi
     public function getTransaksiBelumDibayar()
     {
 
-        return $this->getRiwayatTransaksiPermintaans()->andWhere(['payment_status' => Payment::STATUS_PENDING]);
+        return $this->getRiwayatTransaksiPermintaans()->andWhere(['payment_status' => Transaksi::PAYMENT_STATUS_UNPAID]);
     }
 
     /**

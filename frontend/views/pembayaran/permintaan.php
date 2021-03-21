@@ -160,12 +160,12 @@ $('#button-bayar').on('click',function() {
   console.log("bayar function triggered");
   console.log(dataProduk);
      $.post(
-        "$url",{data: dataProduk}
+        "$url",dataProduk
     ).done( function(data, status) {
             console.log(data);
             window.location = data.payment_url
-            });
-        }).error( function(data) {
+            })
+        .error( function(data) {
             console.log(data)
         });
 });

@@ -2,11 +2,13 @@
 
 namespace common\models;
 
+use Carbon\Carbon;
 use common\helpers\PembayaranHelper;
 use oxyaction\behaviors\RelatedPolymorphicBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * This is the model class for table "riwayat_transaksi_permintaan".
@@ -23,6 +25,7 @@ use yii\db\ActiveRecord;
  * @property string $payment_url
  * @property string $payment_token
  * @property int $payment_status
+ * @property string $code
  *
  * @property TransaksiPermintaan $transaksiPermintaan
  */
@@ -30,10 +33,12 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
 {
     const PEMBAYARAN_TRANSAKSI_PERMINTAAN = 'pembayaranTransaksiPermintaan';
 
+    const TRANSAKSI_FORMAT = '{transaction_code}/devmall/{transaction_date}/{transaction_type}/';
+    const TRANSAKSI_CODE = 'PTM';
     const JENIS_UANG_MUKA = 1;
     const JENIS_ANGSURAN = 2;
         const   JENIS = [
-            self::JENIS_UANG_MUKA => 'Uang Muka',
+            self::JENIS_UANG_MUKA => 'UangMuka',
             self::JENIS_ANGSURAN => 'Angsuran'
         ];
     /**
@@ -117,4 +122,38 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
         {
             return $this->hasOne(TransaksiPermintaan::className(), ['id' => 'id_transaksi_permintaan']);
         }
+
+    public function genereateTransactionCode($type = null){
+        $now = Carbon::now();
+
+        $code = strtr(self::TRANSAKSI_FORMAT, [
+            '{transaction_code}'=>self::TRANSAKSI_CODE,
+            '{transaction_date}'=> $now->isoFormat('YYYYMMDD'),
+            '{transaction_type}'=>self::JENIS[$type]
+        ]);
+        $lastOrder = self::find()->where(['like','code',$code])->orderBy('id DESC')->one();
+        $lastOrderCode = $lastOrder->code ?? null;
+        $transactionCode = $code . '00001';
+        if ($lastOrderCode) {
+            $lastOrderNumber = str_replace($code, '', $lastOrderCode);
+            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber +1);
+            $transactionCode = $code . $nextOrderNumber;
+        }
+        if (self::isOrderCodeExist($transactionCode)) {
+            throw new Exception('kode transaksi exists: '.$transactionCode);
+        }
+
+        return $transactionCode;
+    }
+    /**
+     * Check if the generated order code is exists
+     *
+     * @param string $orderCode order code
+     *
+     * @return boolean
+     */
+    protected static function isOrderCodeExist($orderCode)
+    {
+        return self::find()->where(['code'=>$orderCode])->exists();
+    }
 }

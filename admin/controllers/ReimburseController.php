@@ -70,6 +70,8 @@ class ReimburseController extends \yii\web\Controller
                     $coinLedger->id_coin = $coin->id;
                     $coinLedger->type = CoinLedger::TYPE_OUT;
                     $coinLedger->amount = $reimbursement->amount;
+                    $coinLedger->source_type = Reimbursement::class;
+                    $coinLedger->source = $reimbursement->id;
                     $coinLedger->save(false);
 
 

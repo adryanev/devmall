@@ -105,6 +105,8 @@ class Payment extends \yii\db\ActiveRecord
                 $ledger->id_coin = $coin->id;
                 $ledger->type = CoinLedger::TYPE_IN;
                 $ledger->amount = $nominal;
+                $ledger->source = $transaksi->id;
+                $ledger->type = TransaksiProduk::class;
 
                 $coin->save(false);
                 $ledger->save(false);
@@ -122,6 +124,8 @@ class Payment extends \yii\db\ActiveRecord
                 $ledger->id_coin = $coin->id;
                 $ledger->type = CoinLedger::TYPE_IN;
                 $ledger->amount = $nominal;
+                $ledger->source = $transaksi->id;
+                $ledger->source_type = TransaksiCicilan::class;
 
                 $coin->save(false);
                 $ledger->save(false);
@@ -137,6 +141,8 @@ class Payment extends \yii\db\ActiveRecord
             $ledger->id_coin = $coin->id;
             $ledger->type = CoinLedger::TYPE_IN;
             $ledger->amount = $nominal;
+            $ledger->source = $transaksi->id;
+            $ledger->source_type = TransaksiPermintaan::class;
 
             $coin->save(false);
             $ledger->save(false);

@@ -47,7 +47,8 @@ class PembayaranController extends Controller
                 'actions' => [
                     'cicilan' => ['POST'],
                     'permintaan' => ['POST'],
-                    'confirm-order' => ['POST']
+                    'confirm-order' => ['POST'],
+                    'confirm-permintaan' => ['POST']
                 ]
             ],
         ];
@@ -229,15 +230,19 @@ class PembayaranController extends Controller
             $bayarCicilan->id_transaksi_cicilan = $order->id;
             $bayarCicilan->jumlah_dibayar = $paymentNotification->gross_amount;
             $bayarCicilan->tanggal_pembayaran = Carbon::now()->isoFormat('YYYY-MM-DD');
-        } elseif (TransaksiPermintaan::TRANSAKSI_CODE === $code) {
-            $order = TransaksiPermintaan::findOne(['code'=>$orderId]);
+        } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE === $code) {
+
+//            $order = TransaksiPermintaan::findOne(['code'=>$orderId]);
+            $bayarPermintaan = PembayaranTransaksiPermintaan::findOne(['code'=>$orderId]);
+            $order = $bayarPermintaan->transaksiPermintaan;
             $type = TransaksiPermintaan::class;
             $jenis = Payment::JENIS_PERMINTAAN;
+            $order->sudah_dibayar = $order->sudah_dibayar + $paymentNotification->gross_amount;
 
-            $bayarPermintaan = new PembayaranTransaksiPermintaan();
-            $bayarPermintaan->id_transaksi_permintaan = $order->id;
-            $bayarPermintaan->nominal = $paymentNotification->gross_amount;
-            $bayarPermintaan->jenis = substr($orderId, 13, 1);
+//            $bayarPermintaan = new PembayaranTransaksiPermintaan();
+//            $bayarPermintaan->id_transaksi_permintaan = $order->id;
+//            $bayarPermintaan->nominal = $paymentNotification->gross_amount;
+//            $bayarPermintaan->jenis = $paymentNotification->jenis_pembayaran_permintaan;
         }
 
         if ($order->isPaid()) {
@@ -307,8 +312,10 @@ class PembayaranController extends Controller
                         $bayarCicilan->save(false);
                     } elseif ($order instanceof TransaksiPermintaan) {
                         $bayarPermintaan->status = Payment::STATUS_SUCCESS;
+                        $bayarPermintaan->payment_status = Transaksi::PAYMENT_STATUS_PAID;
                         $bayarPermintaan->save(false);
                     }
+                    $order->save(false);
                     $payment->trigger(Payment::EVENT_PAYMENT_SUCCESS);
 
                 }
@@ -344,8 +351,8 @@ class PembayaranController extends Controller
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-        } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
-            $order = TransaksiPermintaan::findOne(['code'=>$code]);
+        } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
+            $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
         }
 
@@ -371,8 +378,8 @@ class PembayaranController extends Controller
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-        } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
-            $order = TransaksiPermintaan::findOne(['code'=>$code]);
+        } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
+            $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
         }
 
@@ -395,8 +402,8 @@ class PembayaranController extends Controller
         } elseif (TransaksiCicilan::TRANSAKSI_CODE === $codeOrder) {
             $order = TransaksiCicilan::findOne(['code'=>$code]);
             $jenis = TransaksiCicilan::TRANSAKSI_CICILAN;
-        } elseif (TransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
-            $order = TransaksiPermintaan::findOne(['code'=>$code]);
+        } elseif (PembayaranTransaksiPermintaan::TRANSAKSI_CODE=== $codeOrder) {
+            $order = PembayaranTransaksiPermintaan::findOne(['code'=>$code]);
             $jenis = TransaksiPermintaan::TRANSAKSI_PERMINTAAN;
         }
 
@@ -426,12 +433,13 @@ class PembayaranController extends Controller
         $user = Yii::$app->user->identity;
 
 
+
         $transaksi = PembayaranTransaksiPermintaan::findOne($data['id']);
-        $total = $data['total'];
+
 
         $transactionDetail = [
-            'order_id' => $transaksi->id,
-            'gross_amount' => $total
+            'order_id' => $transaksi->code,
+            'gross_amount' => $transaksi->nominal
         ];
         $billingAddress = [
             'first_name' => $user->profilUser->nama_depan,
@@ -456,7 +464,7 @@ class PembayaranController extends Controller
             'item_details' => [
                 [
                     'id' => $transaksi->id,
-                    'price' => $total,
+                    'price' => $transaksi->nominal,
                     'quantity' => 1,
                     'name' => $transaksi->transaksiPermintaan->permintaan->nama . '(' . $transaksi->jenisString . ')'
                 ]
@@ -464,13 +472,19 @@ class PembayaranController extends Controller
             ],
             'jenis_pembayaran_permintaan'=>$transaksi->jenis
         ];
-        $snapToken = Snap::getSnapToken($snapPayload);
+        $snapToken = Snap::createTransaction($snapPayload);
 
-        $transaksi->payment_token = $snapToken;
-        $transaksi->payment_url = $snapToken->redirect_url;
-        $transaksi->save(false);
+        if($snapToken){
+//            var_dump($snapToken);
+            $transaksi->payment_token = $snapToken->token;
+            $transaksi->payment_url = $snapToken->redirect_url;
+            $transaksi->save(false);
+            return ['payment_url' => $transaksi->payment_url,'payment_token'=>$transaksi->payment_token];
+        }
 
-        return ['payment_url' => $transaksi->payment_url,'payment_token'=>$transaksi->payment_token];
+        throw new \yii\base\Exception();
+
+
     }
 
     protected function findPermintaan($id)
