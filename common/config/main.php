@@ -7,7 +7,7 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'timeZone' => 'Asia/Jakarta',
     'language' => 'id-ID',
-    'sourceLanguage' => 'id-ID',
+    'sourceLanguage' => 'en',
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -41,6 +41,17 @@ return [
             'storage' => [
                 'class'=>\common\components\shoppingcart\storages\DatabaseStorage::class,
             ]
+        ],
+        'i18n' => [
+            'translations' => [
+                'notification' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/components/notifications/messages',
+                    'fileMap' => [
+                        'notification' => 'notification.php',
+                    ],
+                ],
+            ],
         ],
     ],
 ];

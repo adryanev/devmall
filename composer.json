@@ -60,7 +60,9 @@
         "bitcko/yii2-bitcko-mailer": "dev-master",
         "2amigos/yii2-nexmo-library": "~1.0",
         "hscstudio/yii2-cart": "dev-master",
-        "pusher/pusher-php-server": "5.*"
+        "pusher/pusher-php-server": "5.*",
+        "nahid/jsonq": "^6.0",
+        "yii2mod/collection": "^1.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",

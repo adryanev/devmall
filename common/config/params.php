@@ -39,4 +39,8 @@ return [
             ],
         ],
     ],
+    'pusher.app_id'=>$ini['pusher_app_id'],
+    'pusher.key'=>$ini['pusher_key'],
+    'pusher.secret'=>$ini['pusher_secret'],
+    'pusher.cluster'=>$ini['pusher_cluster']
 ];

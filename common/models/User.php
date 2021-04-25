@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\notifications\models\NotificationReceive;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -33,7 +34,7 @@ use yii\web\IdentityInterface;
  * @property Follow[] $follows
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
- * @property Keranjang[] $keranjangs
+ * @property NotificationReceive[] $notifications
 
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
@@ -354,6 +355,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFavorits()
     {
         return $this->hasMany(Favorit::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getNotifications(){
+        return $this->hasMany(NotificationReceive::className(),['notifier_id'=>'id']);
     }
 
 }
