@@ -48,18 +48,18 @@ class UserController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {   
+    {
         //fix update assignment
         // $model = new Assignment(19);
         // $items = array('admin' => 'admin' );
         // $success = $model->assign($items);
 
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->searchUser(Yii::$app->request->queryParams, 'bukan_admin');
+//        $searchModel = new UserSearch();
+        $dataProvider = new ActiveDataProvider([]);
 
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+//            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

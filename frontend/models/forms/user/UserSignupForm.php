@@ -61,7 +61,7 @@ class UserSignupForm extends Model
         ];
         $user->setAttributes($attributeUser);
         $profil->setAttributes($attributeProfil);
-       
+
         $profil->avatar = 'user_default.png';
 
         $user->setPassword($this->password);
@@ -69,7 +69,7 @@ class UserSignupForm extends Model
         $user->generateEmailVerificationToken();
 
         $user->status = User::STATUS_INACTIVE;
-
+        $user->level_akses = 'pengguna';
         $user->save(false);
         $profil->id_user = $user->id;
         $profil->save(false);
@@ -110,9 +110,9 @@ class UserSignupForm extends Model
                  ['address'=> $user->email,'name'=>$profil->nama_depan.' '.$profil->nama_belakang]
              ],
              'body'=>$msg,
-            
+
          ];
-         
+
          Yii::$app->BitckoMailer->mail($params);
 
         // return $result;
