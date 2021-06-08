@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php Pjax::begin(); ?>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn', 'header' => 'No'],
 
@@ -45,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'class'=>'form-control',
                                     'placeholder'=>'Pencarian Username'
                                 ],
-                              'contentOptions'=> ['style'=>'width:20%'] 
+                              'contentOptions'=> ['style'=>'width:20%']
                             ],
 
                             ['attribute' => 'email',
@@ -71,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'filter' => [
                                 ]
                             ],
-                                    
+
                             ['attribute' => 'status',
                              'value' => function($model){
                                 return $model->status == 0 ? 'Inactive':'Active';

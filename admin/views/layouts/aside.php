@@ -37,11 +37,11 @@ if ($role=='superadmin') {
                 ['label' => 'Kategori', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/kategori/index'],],
 
                 ['label' => 'Produk', 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>', 'url' => ['/produk/index'],],
-                [
-                    'label' => 'Promo',
-                    'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
-                    'url' => ['/promo/index'],
-                ],
+//                [
+//                    'label' => 'Promo',
+//                    'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
+//                    'url' => ['/promo/index'],
+//                ],
 
             ],
         ],

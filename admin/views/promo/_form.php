@@ -18,7 +18,7 @@ use yii\helpers\Html;
     <div class="promo-form">
 
         <?php $form = ActiveForm::begin(['id' => 'promo-form']); ?>
-        
+
         <?= $form->field($modelPromo, 'promo')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($modelPromo, 'persentase')->textInput() ?>
@@ -45,31 +45,32 @@ use yii\helpers\Html;
 
             <div class="card-body">
                 <?php DynamicFormWidget::begin([
+                    'id'=>'booth-form',
                     'widgetContainer' => 'dynamicform_wrapper',
-                    'widgetBody' => '.container-items',
-                    'widgetItem' => '.item',
+                    'widgetBody' => '.container-items-booth',
+                    'widgetItem' => '.item-booth',
                     'min' => 1,
-                    'insertButton' => '.add-item',
-                    'deleteButton' => '.remove-item',
+                    'insertButton' => '.add-item-booth',
+                    'deleteButton' => '.remove-item-booth',
                     'model' => $modelsBooth[0],
                     'formId' => 'promo-form',
                     'formFields' => [
                         'id_booth'
                     ]
                 ]) ?>
-                <div class="container-items">
-                    <?php 
-                    
+                <div class="container-items-booth">
+                    <?php
+
                     foreach ($modelsBooth as $i => $promoBooth): ?>
-                        <div class="item card">
+                        <div class="item-booth card">
                             <div class="card-header">
                                 <h5 class="card-title pull-left">Booth</h5>
                                 <div class="pull-right">
                                     <button type="button"
-                                            class="add-item btn btn-success btn-xs btn-pill btn-elevate btn-elevate-air">
+                                            class="add-item-booth btn btn-success btn-xs btn-pill btn-elevate btn-elevate-air">
                                         <i class="la la-plus"></i></button>
                                     <button type="button"
-                                            class="remove-item btn btn-danger btn-xs btn-pill btn-elevate btn-elevate-air">
+                                            class="remove-item-booth btn btn-danger btn-xs btn-pill btn-elevate btn-elevate-air">
                                         <i class="la la-minus"></i></button>
                                 </div>
 
@@ -85,9 +86,9 @@ use yii\helpers\Html;
                                 }
                                 ?>
 
-                                <?= $form->field($promoBooth, "[{$i}]id_booth")->widget(Select2::class, ['data' => $boothList]) 
+                                <?= $form->field($promoBooth, "[{$i}]id_booth")->widget(Select2::class, ['data' => $boothList])
                                 ?>
-   
+
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -104,31 +105,32 @@ use yii\helpers\Html;
 
             <div class="card-body">
                 <?php DynamicFormWidget::begin([
+                    'id' => 'product-form',
                     'widgetContainer' => 'dynamicform_wrapper',
-                    'widgetBody' => '.container-items',
-                    'widgetItem' => '.item',
+                    'widgetBody' => '.container-items-product',
+                    'widgetItem' => '.item-product',
                     'min' => 1,
-                    'insertButton' => '.add-item',
-                    'deleteButton' => '.remove-item',
+                    'insertButton' => '.add-item-product',
+                    'deleteButton' => '.remove-item-product',
                     'model' => $modelsProduk[0],
                     'formId' => 'promo-form',
                     'formFields' => [
                         'id_produk'
                     ]
                 ]) ?>
-                <div class="container-items">
-                    <?php 
-                    
+                <div class="container-items-product">
+                    <?php
+
                     foreach ($modelsProduk as $i => $promoProduk): ?>
-                        <div class="item card">
+                        <div class="item-product card">
                             <div class="card-header">
                                 <h5 class="card-title pull-left">Produk</h5>
                                 <div class="pull-right">
                                     <button type="button"
-                                            class="add-item btn btn-success btn-xs btn-pill btn-elevate btn-elevate-air">
+                                            class="add-item-product btn btn-success btn-xs btn-pill btn-elevate btn-elevate-air">
                                         <i class="la la-plus"></i></button>
                                     <button type="button"
-                                            class="remove-item btn btn-danger btn-xs btn-pill btn-elevate btn-elevate-air">
+                                            class="remove-item-product btn btn-danger btn-xs btn-pill btn-elevate btn-elevate-air">
                                         <i class="la la-minus"></i></button>
                                 </div>
 
@@ -145,9 +147,9 @@ use yii\helpers\Html;
                                 }
                                 ?>
 
-                                <?= $form->field($promoProduk, "[{$i}]id_produk")->widget(Select2::class, ['data' => $produkList]) 
+                                <?= $form->field($promoProduk, "[{$i}]id_produk")->widget(Select2::class, ['data' => $produkList])
                                 ?>
-   
+
                             </div>
                         </div>
                     <?php endforeach; ?>

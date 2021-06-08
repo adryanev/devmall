@@ -5,12 +5,23 @@
  */
 $this->title = 'Reimbursement';
 ?>
+<h4>
+    <?="Saldo: ".Yii::$app->formatter->asCurrency(Yii::$app->user->identity->booth->coin->saldo)?>
+</h4>
 <div class="kt-portlet">
     <div class="kt-portlet__head">
         <div class="kt-portlet__head-label">
             <h3 class="kt-portlet__head-title">
                 <?=$this->title?>
             </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <?=\yii\bootstrap4\Html::button('<i class="la la-money"></i>Reimburse',['class'=>'btn btn-primary btn-elevate btn-elevate-air showModalButton','value'=>\yii\helpers\Url::to(['coin/reimbursement']),'title'=>'Reimbursement'])?>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="kt-portlet__body">

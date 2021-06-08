@@ -52,7 +52,7 @@ class PembayaranTransaksiPermintaan extends ActiveRecord
         public function getStatusString()
         {
             $status = $this->status;
-            $string = PembayaranHelper::STATUS;
+            $string = Payment::STATUS;
             return $string[$status];
         }
 

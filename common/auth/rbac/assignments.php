@@ -168,4 +168,10 @@ return [
     62 => [
         'pengguna',
     ],
+    63 => [
+        'pengguna',
+    ],
+    64 => [
+        'pengguna',
+    ],
 ];

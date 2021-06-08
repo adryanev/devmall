@@ -1,4 +1,5 @@
 <?php
+
 return [
     'superadmin' => [
         'type' => 1,
@@ -35,6 +36,9 @@ return [
         'type' => 2,
     ],
     '@app-frontend/*' => [
+        'type' => 2,
+    ],
+    '@app-frontend/permintaan/*' => [
         'type' => 2,
     ],
 ];

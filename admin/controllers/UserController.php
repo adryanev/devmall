@@ -3,6 +3,7 @@
 namespace admin\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use common\models\User;
 use mdm\admin\models\searchs\User as UserSearch;
@@ -55,7 +56,7 @@ class UserController extends Controller
         // $success = $model->assign($items);
 
 //        $searchModel = new UserSearch();
-        $dataProvider = new ActiveDataProvider([]);
+        $dataProvider = new ActiveDataProvider(['query'=>User::find()->where(['<>','id',1])]);
 
 
         return $this->render('index', [

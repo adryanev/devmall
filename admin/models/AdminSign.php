@@ -26,7 +26,7 @@ class AdminSign extends Model
 
     public function rules(){
         return[
-            [['username','email', 'nama_depan','level_akses'],'required'],
+            [['username','email', 'nama_depan','level_akses','password'],'required'],
             [['nama_belakang'], 'safe'],
             ['username','trim'],
             ['email','trim'],
@@ -62,7 +62,7 @@ class AdminSign extends Model
         $user->level_akses = $this->level_akses;
 
         $user->setAttributes($attributeUser);
-        $profil->setAttributes($attributeProfil);        
+        $profil->setAttributes($attributeProfil);
 
         $profil->avatar = 'user_default.png';
 
@@ -83,7 +83,7 @@ class AdminSign extends Model
     }
 
     public function update($id){
- 
+
 
         $query= (new \yii\db\Query())
         ->select("*")
@@ -102,7 +102,7 @@ class AdminSign extends Model
 
         $command = Yii::$app->db->createCommand("UPDATE profil_user SET nama_depan='".$this->nama_depan."', nama_belakang='".$this->nama_belakang."' WHERE id_user='".$id."'");
         $command->execute();
-        
+
     }
 
 }

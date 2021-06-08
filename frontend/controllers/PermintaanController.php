@@ -14,6 +14,7 @@ use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -24,6 +25,21 @@ use yii\web\UploadedFile;
 
 class PermintaanController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access'=>[
+                'class'=>AccessControl::class,
+                'rules'=>[
+                    [
+                     'allow'=>true,
+                     'roles'=>['@']
+                    ]
+                ]
+            ]
+        ];
+    }
 
     public function actionTambah($id)
     {

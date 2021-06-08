@@ -135,8 +135,8 @@ class PembayaranController extends Controller
         $cart = Yii::$app->cart;
         $db = Yii::$app->db->beginTransaction();
         $req = Yii::$app->request->post('data');
-        $isCicilan = filter_var($req['isCicilan'], FILTER_VALIDATE_BOOLEAN);
-        $jumlahCicilan = $req['jumlahCicilan'];
+        $isCicilan = filter_var($req['isCicilan'], FILTER_VALIDATE_BOOLEAN); //true
+        $jumlahCicilan = $req['jumlahCicilan']; // 6
 
         $user = Yii::$app->user->identity;
         $now = Carbon::now();
@@ -144,6 +144,7 @@ class PembayaranController extends Controller
 
         $cicilan = null;
         $transaksi = null;
+        $bayarCicilan = null;
         try {
             //set up model transaksi
             $transaksi = $this->setUpTransaksiProduk($user, $jenis, $cart, $now);
@@ -153,13 +154,14 @@ class PembayaranController extends Controller
                 $cicilan->banyak_cicilan = $jumlahCicilan;
                 $cicilan->id_transaksi = $transaksi->id;
                 $cicilan->tanggal_jatuh_tempo = $now->isoFormat('YYYY-MM-DD');
-                $cicilan->jumlah_cicilan = round($transaksi->grand_total/ $jumlahCicilan);
+                $cicilan->jumlah_cicilan = round($transaksi->grand_total/ $jumlahCicilan); //1833
+                //TODO: tambahakan jumlah_cicilan_non_pajak
                 $cicilan->status = TransaksiCicilan::STATUS_ONGOING;
                 $cicilan->save(false);
 
                 $bayarCicilan = new PembayaranCicilan();
                 $bayarCicilan->id_transaksi_cicilan = $cicilan->id;
-                $bayarCicilan->jumlah_dibayar = $cicilan->jumlah_cicilan;
+                $bayarCicilan->jumlah_dibayar = $cicilan->jumlah_cicilan; //1833
                 $bayarCicilan->tanggal_pembayaran = Carbon::now()->timestamp;
                 $bayarCicilan->code = $bayarCicilan->generateCode();
                 $bayarCicilan->payment_status = Transaksi::PAYMENT_STATUS_UNPAID;
@@ -172,7 +174,7 @@ class PembayaranController extends Controller
             $items = $this->setUpDetailTransaksi($transaksi, $cart);
 
             //set up model pembayaran
-            $this->setupPayment($transaksi, $items, $isCicilan, $cicilan);
+            $this->setupPayment($transaksi, $items, $isCicilan, $cicilan, $bayarCicilan);
             $db->commit();
         } catch (Exception $exception) {
             $db->rollBack();
@@ -632,7 +634,7 @@ class PembayaranController extends Controller
         foreach ($cart->getItems() as /** @var $produk Produk */ $produk) {
             $item = [
                 'id' => $produk->id,
-                'price' => $transaksi->transaksiCicilan? $transaksi->transaksiCicilan->jumlah_cicilan : $produk->getCost(),
+                'price' => $transaksi->transaksiCicilan? $transaksi->transaksiCicilan->jumlah_cicilan : $produk->getCost() + ($produk->getCost() * TransaksiProduk::TAX_PERCENTAGE) ,
                 'quantity' => 1,
                 'name' => $produk->nama
             ];
@@ -647,18 +649,18 @@ class PembayaranController extends Controller
             $transaksiDetail->sub_total = $produk->getCost();
             $transaksiDetail->save(false);
 
-            if($hargaNego = $produk->getNegoPrice()){
+            if($hargaNego = $produk->getNegoPrice()){ // delete harga nego yang sudah disepakati
                 $hargaNego->delete();
             }
         }
         return $items;
     }
 
-    private function setupPayment(Transaksi $transkasi, array $items, $isCicilan = false, $cicilan = null)
+    private function setupPayment(Transaksi $transkasi, array $items, $isCicilan = false, $cicilan = null, $bayarCicilan = null)
     {
         $user = Yii::$app->user->identity;
         $transactionDetail = [
-            'order_id' => $transkasi->getCode(),
+            'order_id' => $isCicilan? $bayarCicilan->code : $transkasi->getCode(), // kalo cicilan, kodenya TRC, jika tidak Kodenya TRP
             'gross_amount' => $isCicilan ? (int) $cicilan->jumlah_cicilan : $transkasi->grand_total
         ];
         $billingAddress = [

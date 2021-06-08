@@ -112,7 +112,7 @@ use yii\helpers\Url;
 
 
                             <div class="payment_info modules__content">
-                                <form action="" class="form">
+                                <form action="" class="form <?=$total < 1_000_000? 'd-none':''?>">
                                     <div class="form-group">
                                         <div class="custom_checkbox">
                                             <?= Html::checkbox('cicilan', false, ['id' => 'cicilan-checkbox']) ?>

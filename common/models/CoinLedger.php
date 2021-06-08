@@ -26,8 +26,9 @@ class CoinLedger extends ActiveRecord
     const TYPE_OUT = 0;
 
     const TYPE = [
+        self::TYPE_OUT => 'Keluar',
         self::TYPE_IN => 'Masuk',
-        self::TYPE_OUT => 'Keluar'
+
     ];
 
     /**
