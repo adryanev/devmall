@@ -67,6 +67,7 @@ class PermintaanController extends Controller
 
                 $db = Yii::$app->db->beginTransaction();
                 $model->status = PermintaanProduk::STATUS_DIKIRIM;
+                $model->keterangan = 'Menunggu Konfirmasi';
 
                 if (!$model->save(false)) {
 
@@ -213,13 +214,13 @@ class PermintaanController extends Controller
         $flash['message'] = 'Berhasil menghapus dokumen permintaan';
         Yii::$app->session->setFlash('success', $flash);
 
-        return $this->redirect(['permintaan/update', 'id' => $modelId]);
+        return $this->redirect(['permintaan/view', 'id' => $modelId]);
     }
 
     public function actionIndex()
     {
         $model = PermintaanProduk::find()->where(['id_user' => Yii::$app->user->identity->id]);
-        $dataProvider = new ActiveDataProvider(['query' => $model]);
+        $dataProvider = new ActiveDataProvider(['query' => $model, 'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],]);
 
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }

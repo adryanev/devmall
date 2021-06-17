@@ -29,6 +29,7 @@ $booth = Yii::$app->user->identity->booth;
                         ->from("notifikasi")
                         ->leftJoin("user", "user.id = notifikasi.receiver")
                         ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=". Yii::$app->user->identity->id)
+                    ->orderBy('idNotif DESC')
                         ->all();
 
                 $notif = $query;

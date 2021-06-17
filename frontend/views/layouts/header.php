@@ -57,7 +57,7 @@ $keranjangTotal = 0;
                                     ->select('*')
                                     ->from('notifikasi')
                                     ->leftJoin('user', 'user.id = notifikasi.sender')
-                                    ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=" . Yii::$app->user->identity->id)
+                                    ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=" . Yii::$app->user->identity->id)->orderBy('notifikasi.id DESC')
                                     ->all();
 
                             $notif = $query;

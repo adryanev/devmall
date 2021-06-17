@@ -32,13 +32,13 @@ $role = ucfirst(array_keys($roles)[0]);
 
     <!-- begin:: Header Topbar -->
     <div class="kt-header__topbar">
-<?php 
+<?php
 
             $query= (new \yii\db\Query())
                     ->select("*, notifikasi.id AS idNotif")
                     ->from("notifikasi")
                     ->leftJoin("user", "user.id = notifikasi.sender")
-                    ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=". Yii::$app->user->identity->id)
+                    ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=". Yii::$app->user->identity->id)->orderBy('idNotif DESC')
                     ->all();
 
             $notif = $query;
@@ -86,7 +86,7 @@ Use dot badge instead of animated pulse effect:
                     <div class="tab-content">
                         <div class="tab-pane active show" id="topbar_notifications_notifications" role="tabpanel">
                             <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true" data-height="300" data-mobile-height="200">
-<?php 
+<?php
     foreach ($notif as $v) {
 
                         echo Html::a("<div class=\"kt-notification__item-icon\">
@@ -97,10 +97,10 @@ Use dot badge instead of animated pulse effect:
                                             ". $v['context'] ."
                                         </div>
                                         <div class=\"kt-notification__item-time\">
-                                            
+
                                         </div>
                                     </div>", ['/notifikasi/view/'.$v['idNotif']], ['class' => 'kt-notification__item']);
-                               
+
     }
  ?>
                                 <a href="http://localhost/devmall/admin/web/notifikasi/index" class="kt-notification__item">
@@ -112,7 +112,7 @@ Use dot badge instead of animated pulse effect:
                                             Semua Notifikasi
                                         </div>
                                         <div class="kt-notification__item-time">
-                                            
+
                                         </div>
                                     </div>
                                 </a>

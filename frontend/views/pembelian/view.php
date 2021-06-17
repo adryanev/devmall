@@ -48,6 +48,9 @@ $this->title = 'Pembelian: '.$model->code;
                                 return \yii\bootstrap4\Html::a('<i class="lnr lnr-arrow-down-circle"></i> Download',$model->produk->download_link,['class'=>'btn btn-sm btn-success']);
 
                         return 'Silahkan bayar terlebih dahulu';
+                            }],
+                             ['label' => 'Ulas','format' => 'html','value' => function($model){
+                       return \yii\bootstrap4\Html::a('Ulas',['ulasan/create','produk'=>$model->produk->id],['class'=>'btn btn-md btn-round btn-warning']);
                             }]
                         ]
                     ])?>

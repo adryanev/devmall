@@ -103,7 +103,13 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                                         Yii::getAlias('@.permintaanPath/'.$model->nama_berkas));
                                                 },
                                                 'format' => 'html'
-                                            ]
+                                            ],
+                                            ['class'=>\common\widgets\ActionColumn::class,'template' => '{delete}',
+                                                'buttons' =>[
+                                                    'delete'=> function ($url, $model, $key){
+                                                        return Html::a('Hapus',['permintaan/delete-file','id'=>$model->id],['class'=>'btn btn-danger btn-round btn-md','data-method'=>'POST','data-confirm'=>'Apakah anda yakin menghapus item ini?']);
+                                                    }
+                                                ]]
                                         ],
                                         'summary' => false
                                     ]
