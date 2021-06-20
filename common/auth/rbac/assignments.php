@@ -174,4 +174,7 @@ return [
     64 => [
         'pengguna',
     ],
+    65 => [
+        'pengguna',
+    ],
 ];

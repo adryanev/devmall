@@ -18,7 +18,11 @@ class PembelianController extends Controller
     public function actionIndex(){
 
         $userID = \Yii::$app->user->id;
-        $transaksiProduk = new ActiveDataProvider(['query' => TransaksiProduk::find()->where(['id_user'=>$userID])]);
+        $transaksiProduk = new ActiveDataProvider(['query' => TransaksiProduk::find()->where(['id_user'=>$userID]),'sort'=>[
+            'defaultOrder' => [
+                'id' => SORT_DESC
+            ]
+        ]]);
         return $this->render('index',['transaksiProduk'=>$transaksiProduk]);
     }
 

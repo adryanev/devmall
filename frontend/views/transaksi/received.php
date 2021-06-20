@@ -16,7 +16,7 @@
                     <?=\common\widgets\Alert::widget()?>
 
                     <h3>Transaksi Anda Sedang Diproses.</h3>
-                    <?=\yii\bootstrap4\Html::a('Kembali ke halaman utama',['site/index'],['class'=>'btn btn-md btn-success btn-round'])?>
+                    <?=\yii\bootstrap4\Html::a('Lihat Pembelian',['pembelian/index'],['class'=>'btn btn-md btn-success btn-round'])?>
                 </div>
             </div>
             <!-- end /.information_module-->

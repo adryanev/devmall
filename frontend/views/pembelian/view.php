@@ -3,7 +3,12 @@
  * @var $this yii\web\View
  * @var $model common\models\TransaksiProduk
  */
+
+use yii\bootstrap4\Html;
+
 $this->title = 'Pembelian: '.$model->code;
+$this->params['breadcrumbs'][] = ['label'=>'Pembelian','url'=>['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <!--================================
@@ -15,6 +20,9 @@ $this->title = 'Pembelian: '.$model->code;
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="mb-3"><?=$this->title?></h3>
+                    <?=$model->payment_status === \common\models\Transaksi::PAYMENT_STATUS_UNPAID?
+                        Html::a('Lanjutkan Pembayaran',$model->payment_url,['class'=>'btn btn-round btn-md btn-success mb-3','targer'=>'_blank']):
+                        '' ?>
                     <div class="clearfix"></div>
                     <?=\yii\widgets\DetailView::widget([
                         'model' => $model,
@@ -45,12 +53,14 @@ $this->title = 'Pembelian: '.$model->code;
                             'sub_total:currency',
                             ['attribute' => 'produk.download_link','format' => 'html','value' => function($model){
                         if(($model->transaksi->jenis_transaksi === \common\models\TransaksiProduk::JENIS_TRANSAKSI_CICIL && $model->transaksi->transaksiCicilan->pembayaranCicilans[0]->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) || $model->transaksi->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID)
-                                return \yii\bootstrap4\Html::a('<i class="lnr lnr-arrow-down-circle"></i> Download',$model->produk->download_link,['class'=>'btn btn-sm btn-success']);
+                                return Html::a('<i class="lnr lnr-arrow-down-circle"></i> Download',$model->produk->download_link,['class'=>'btn btn-sm btn-success']);
 
                         return 'Silahkan bayar terlebih dahulu';
                             }],
                              ['label' => 'Ulas','format' => 'html','value' => function($model){
-                       return \yii\bootstrap4\Html::a('Ulas',['ulasan/create','produk'=>$model->produk->id],['class'=>'btn btn-md btn-round btn-warning']);
+                                 if(($model->transaksi->jenis_transaksi === \common\models\TransaksiProduk::JENIS_TRANSAKSI_CICIL && $model->transaksi->transaksiCicilan->pembayaranCicilans[0]->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) || $model->transaksi->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID)
+                       return Html::a('Ulas',['ulasan/create','produk'=>$model->produk->id],['class'=>'btn btn-md btn-round btn-warning']);
+                                 return 'Silahkan bayar terlebih dahulu';
                             }]
                         ]
                     ])?>
