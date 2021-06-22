@@ -51,9 +51,6 @@ return [
         '@app-frontend/*',
         'superadmin',
     ],
-    '' => [
-        'superadmin',
-    ],
     24 => [
         'superadmin',
     ],

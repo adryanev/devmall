@@ -121,13 +121,7 @@ class SiteController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
-?>
-                <script>
-                  window.history.go(-2);
-                </script>
-<?php                
-
-                    // return $this->goBack();
+                     return $this->goBack();
                 }
             }
         }
@@ -205,7 +199,7 @@ class SiteController extends Controller
                       'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
                       'title' => 'Pendaftaran Berhasil!',
                   ]);
-                    
+
                 }
             }
         }
@@ -285,8 +279,8 @@ class SiteController extends Controller
              ],
 
              'body'=>'email body here',
-             
-              //optional              
+
+              //optional
               'subject'=>'email subject here',
                //optional
               'altBody'=>'email alt body here',
@@ -307,8 +301,8 @@ class SiteController extends Controller
               //    // ['path'=>'','name'=>'']
               // ],
          ];
-         
-         return Yii::$app->BitckoMailer->mail($params); 
+
+         return Yii::$app->BitckoMailer->mail($params);
     }
 
     public function actionVerifyEmail($token)
