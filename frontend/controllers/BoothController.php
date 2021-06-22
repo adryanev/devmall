@@ -110,10 +110,9 @@ class BoothController extends \yii\web\Controller
 
     public function actionReview($booth)
     {
-        $searchModel = new UlasanSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider(['query'=>$this->findModel($booth)->getProduks()->innerJoinWith('ulasans')]);
 
-        return $this->render('review', compact('searchModel', 'dataProvider'));
+        return $this->render('review', compact('dataProvider'));
     }
 
 }

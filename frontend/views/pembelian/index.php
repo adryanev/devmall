@@ -37,10 +37,6 @@ $this->title = 'Pembelian';
     </div>
     <!-- end /.row -->
     <!-- end /form -->
-    </div>
-    <!-- end /.container -->
-    </div>
-    <!-- end /.dashboard_menu_area -->
 </section>
 <!--================================
         END DASHBOARD AREA

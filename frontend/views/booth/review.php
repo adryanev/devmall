@@ -10,19 +10,33 @@ use yii\widgets\ListView;
 $this->title = 'Ulasan';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ulasan-index">
+<section class="dashboard-area">
+    <div class="dashboard_contents">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ulasan-index">
 
 
 
-<!--    --><?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+                        <!--    --><?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->id), ['view', 'id' => $model->id]);
-        },
-    ]) ?>
+                        <?= ListView::widget([
+                            'summary' => false,
+                            'dataProvider' => $dataProvider,
+                            'itemOptions' => ['class' => 'item'],
+                            'itemView' => '_item_review'
+                        ]) ?>
 
 
-</div>
+                    </div>
+                </div>
+            </div>
+            <!-- end /.information_module-->
+        </div>
+        <!-- end /.col-md-6 -->
+    </div>
+    <!-- end /.row -->
+    <!-- end /form -->
+</section>
+
