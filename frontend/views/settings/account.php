@@ -89,7 +89,7 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                         <!-- end /.information_module -->
                     </div>
                     <!-- end /.col-md-6 -->
-            
+
                     <div class="col-lg-6">
                         <div class="information_module">
 
@@ -138,7 +138,6 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                                 <div class="information_wrapper form--fields">
 
                                     <?=$this->render('_verifikasi_form',['model'=>$modelVerifikasi, 'verifikasiSekarang' => $verifikasiSekarang])?>
-                                    <input type="file" name="">
                                 </div>
                                 <!-- end /.information_wrapper -->
                             </div>
@@ -148,7 +147,7 @@ use frontend\models\forms\setting\VerifikasiNomorHpForm;
                     </div>
                     <!-- end /.col-md-6 -->
 
-            
+
                 </div>
                 <!-- end /.row -->
 
