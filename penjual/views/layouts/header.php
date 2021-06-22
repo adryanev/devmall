@@ -140,6 +140,7 @@ $booth = Yii::$app->user->identity->booth;
                         </div>
                         <div class="kt-user-card__name">
                             <?= $namaLengkap ?>
+                            <?php if($booth): ?>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <?= Html::a("
@@ -149,7 +150,7 @@ $booth = Yii::$app->user->identity->booth;
                                 </div>
 
                             </div>
-
+                            <?php endif ?>
                         </div>
 
                     </div>
