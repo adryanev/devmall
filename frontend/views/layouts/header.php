@@ -43,7 +43,7 @@ $keranjangTotal = 0;
                         <?php if (Yii::$app->user->isGuest): ?>
                             <?= Html::a('<i class="fa fa-sign-in"></i> Log in', ['site/login'], ['class' => 'author-area__seller-btn inline']) ?>
                         <?php else: ?>
-                            <?php if (Yii::$app->user->identity->status === User::STATUS_VERIFIED): ?>
+                            <?php if (Yii::$app->user->identity->status === User::STATUS_VERIFIED && Yii::$app->user->identity->getHasBooth()): ?>
                                 <?= Html::a('Menjadi Booth', Yii::getAlias('@.penjual'), ['class' => 'author-area__seller-btn inline ']) ?>
 
                             <?php endif; ?>
