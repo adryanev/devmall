@@ -1,12 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
-///* @var $jumlahProdi integer */
-///* @var $jumlahPengguna integer */
-///* @var $apt integer */
-///* @var $aps integer */
-///* @var $persenAps float */
-///* @var $persenApt float */
+/* @var $jumlahPengguna int */
+/* @var $jumlahBooth int */
+/* @var $jumlahProduk int */
+/* @var $jumlahTransaksi */
+
 
 $this->title = 'Beranda';
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <span class="kt-widget24__desc">Jumlah Penjual</span>
                         </div>
                         <span class="kt-widget24__stats kt-font-brand">
-                            <span class="counter">153</span>
+                            <span class="counter"><?=$jumlahBooth?></span>
                         </span>
                     </div>
                 </div>
@@ -46,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </h4>
                             <span class="kt-widget24__desc">Jumlah Akun Pengguna</span>
                         </div>
-                        <span class="kt-widget24__stats kt-font-warning"><span class="counter">86786</span></span>
+                        <span class="kt-widget24__stats kt-font-warning"><span class="counter"><?=$jumlahPengguna?></span></span>
                     </div>
                 </div>
 
@@ -61,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <h4 class="kt-widget24__title">Produk</h4>
                             <span class="kt-widget24__desc">Jumlah Produk</span>
                         </div>
-                        <span class="kt-widget24__stats kt-font-danger"><span class="counter">47</span></span>
+                        <span class="kt-widget24__stats kt-font-danger"><span class="counter"><?=$jumlahProduk?></span></span>
                     </div>
 
                 </div>
@@ -79,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </h4>
                             <span class="kt-widget24__desc">Jumlah Transaksi</span>
                         </div>
-                        <span class="kt-widget24__stats kt-font-success"><span class="counter">7896</span></span>
+                        <span class="kt-widget24__stats kt-font-success"><span class="counter"><?=$jumlahTransaksi?></span></span>
                     </div>
                 </div>
 
