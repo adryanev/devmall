@@ -20,7 +20,7 @@ START HERO AREA
 =================================-->
 <section class="hero-area bgimage">
     <div class="bg_image_holder">
-        <?= Html::img('@web/images/hero_area_bg1.jpg') ?>
+        <?= Html::img('@web/images/devmall-banner.jpg') ?>
     </div>
     <!-- start hero-content -->
     <div class="hero-content content_above">
@@ -29,21 +29,7 @@ START HERO AREA
             <!-- start .container -->
             <div class="container">
                 <!-- start row -->
-                <div class="row">
-                    <!-- start col-md-12 -->
-                    <div class="col-md-12">
-                        <div class="hero__content__title">
-                            <h1>
-                                <span class="light">Devmall</span>
-                                <span class="bold">Marketplace Aplikasi Anda</span>
-                            </h1>
 
-                        </div>
-
-
-                    </div>
-                    <!-- end /.col-md-12 -->
-                </div>
                 <!-- end /.row -->
             </div>
             <!-- end /.container -->
