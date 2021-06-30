@@ -178,17 +178,17 @@ Use dot badge instead of animated pulse effect:
 
                 <!--begin: Navigation -->
                 <div class="kt-notification">
-                    <?= Html::a("<div class=\"kt-notification__item-icon\">
-                            <i class=\"flaticon2-calendar-3 kt-font-success\"></i>
-                        </div>
-                        <div class=\"kt-notification__item-details\">
-                            <div class=\"kt-notification__item-title kt-font-bold\">
-                                Profil Saya
-                            </div>
-                            <div class=\"kt-notification__item-time\">
-                                Pengaturan akun dan lainnya
-                            </div>
-                        </div>", ['/profile'], ['class' => 'kt-notification__item']) ?>
+<!--                    --><?php //echo Html::a("<div class=\"kt-notification__item-icon\">
+//                            <i class=\"flaticon2-calendar-3 kt-font-success\"></i>
+//                        </div>
+//                        <div class=\"kt-notification__item-details\">
+//                            <div class=\"kt-notification__item-title kt-font-bold\">
+//                                Profil Saya
+//                            </div>
+//                            <div class=\"kt-notification__item-time\">
+//                                Pengaturan akun dan lainnya
+//                            </div>
+//                        </div>", ['/profile'], ['class' => 'kt-notification__item']) ?>
 
                     <div class="kt-notification__custom kt-space-between">
                         <?= \yii\bootstrap4\Html::a('Keluar', ['/site/logout'], [
