@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => function($model){
                                    // var_dump(array_keys(Yii::$app->authManager->getRolesByUser($model->id)));
                                    // exit();
+                                    if (!Yii::$app->authManager->getRolesByUser($model->id)) return null;
                                     $role = array_keys(Yii::$app->authManager->getRolesByUser($model->id))[0];
 
                                     if (isset(array_keys(Yii::$app->authManager->getRolesByUser($model->id))[1])) {
