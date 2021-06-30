@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 'value'=>function($model){
                                     return \yii\bootstrap4\Html::a($model->transaksi->code,['pembelian/view','id'=>$model->transaksi->id]);
                                 }],
-                            'tanggal_jatuh_tempo:date',
+                            ['attribute' => 'tanggal_jatuh_tempo',
+                                'format' => ['date','d']],
                             'jumlah_cicilan:currency',
                             'banyak_cicilan',
                             'statusString',

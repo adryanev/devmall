@@ -185,16 +185,17 @@ class PermintaanController extends Controller
     {
         $model = $this->findModel($id);
         $flash = [];
-        if (!$model->status === PermintaanProduk:: STATUS_DIKERJAKAN || !$model->status === PermintaanProduk::STATUS_DITERIMA || !$model->status === PermintaanProduk::STATUS_SELESAI) {
+        if ($model->status !== PermintaanProduk:: STATUS_DIKERJAKAN || $model->status !== PermintaanProduk::STATUS_DITERIMA || $model->status !== PermintaanProduk::STATUS_SELESAI) {
             $model->delete();
-            $flash = FlashHelper::DANGER;
-            $flash['message'] = 'Maaf terjadi kesalahan';
-            Yii::$app->session->setFlash('danger', $flash);
+            $flash = FlashHelper::SUCCESS;
+            $flash['message'] = 'Berhasil menghapus permintaan';
+            Yii::$app->session->setFlash('success', $flash);
             return $this->redirect(['permintaan/index']);
+
         }
-        $flash = FlashHelper::SUCCESS;
-        $flash['message'] = 'Berhasil menghapus permintaan';
-        Yii::$app->session->setFlash('success', $flash);
+        $flash = FlashHelper::DANGER;
+        $flash['message'] = 'Maaf terjadi kesalahan';
+        Yii::$app->session->setFlash('danger', $flash);
         return $this->redirect(['permintaan/index']);
     }
 

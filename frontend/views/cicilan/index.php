@@ -19,7 +19,6 @@ $this->params['breadcrumbs'][]= ['label'=>$this->title];
                         'columns' => [
                             ['class'=>\yii\grid\SerialColumn::class,'header' => 'No'],
                             'transaksi.code',
-                            'tanggal_jatuh_tempo:date',
                             'jumlah_cicilan:currency',
                             'banyak_cicilan',
                             'statusString',
