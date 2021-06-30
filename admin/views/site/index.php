@@ -88,34 +88,5 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
-<!--End::Section-->
-<div class="row">
-    <div class="col-lg-12">
-        <!--begin::Portlet-->
-        <div class="kt-portlet">
-            <div class="kt-portlet__head">
-                <div class="kt-portlet__head-label">
-												<span class="kt-portlet__head-icon">
-													<i class="flaticon2-dashboard"></i>
-												</span>
-                    <h3 class="kt-portlet__head-title">
-                        Selamat Datang
-                        <small>di Dashboard Admin</small>
-                    </h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                type and scrambled.
-            </div>
-        </div>
-
-        <!--end::Portlet-->
-    </div>
-</div>
-
 
 
