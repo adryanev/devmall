@@ -31,9 +31,13 @@ class ReimburseController extends \yii\web\Controller
     }
 
     public function actionIndex(){
-        $dataProvider = new ActiveDataProvider(['query' => Reimbursement::find()->where(['like','status',Reimbursement::STATUS_CREATED])->orWhere(['like','status',Reimbursement::STATUS_PROGRESS])->orderBy('id DESC')]);
+        $dataProvider = new ActiveDataProvider(['query' => Reimbursement::find()->where(['like','status',Reimbursement::STATUS_CREATED])->orWhere(['like','status',Reimbursement::STATUS_PROGRESS])->orderBy('id ASC')]);
 
-        $completeDataProvider = new ActiveDataProvider(['query' => Reimbursement::find()->where(['like','status',Reimbursement::STATUS_COMPLETED])]);
+        $completeDataProvider = new ActiveDataProvider(['query' => Reimbursement::find()->where(['like','status',Reimbursement::STATUS_COMPLETED]),'sort'=>[
+            'defaultOrder' => [
+                'created_at' => SORT_DESC,
+            ]
+        ]]);
         return $this->render('index',compact('dataProvider','completeDataProvider'));
     }
 
