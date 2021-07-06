@@ -82,6 +82,23 @@ foreach ($dataGambar as $gamber) {
                                     <?php endif; ?>
 
                                     <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
+                                    <?php Modal::begin([
+                                        'title' => 'Video Produk',
+                                        'toggleButton' => ['label'=>'<i class="fab fa-youtube"></i> Video','class'=>'btn btn--round btn-lg btn--icon btn-danger'],
+                                        'size' => 'xl'
+
+                                    ]) ?>
+
+                                    <div class="content">
+                                        <div class="embed-responsive embed-responsive-16by9">
+
+                                        <iframe class="embed-responsive-item"
+                                                src="https://www.youtube.com/embed/<?=$model->video?>">
+                                        </iframe>
+                                        </div>
+                                    </div>
+
+                                    <?php Modal::end() ?>
                                 </div>
                             </div>
                             <!-- end /.item__action -->

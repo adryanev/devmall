@@ -214,6 +214,7 @@ use yii\helpers\FileHelper;
 
         <?php endif; ?>
         <?=$form->field($model,'download_link')->textInput(['placeholder'=>'https://google.com'])->hint('Sertakan https:// atau http://',)?>
+        <?=$form->field($model,'video')->textInput(['placeholder'=>'https://youtube.com'])->hint('Harus dari Youtube.',)?>
 
         <div class="form-group">
             <?= Html::submitButton('<i class=\'la la-save\'></i> Simpan', ['class' => 'btn btn-pill btn-elevate btn-elevate-air btn-brand']) ?>

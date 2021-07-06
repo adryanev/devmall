@@ -94,6 +94,7 @@ foreach ($dataGambar as $gamber) {
                             ['attribute' => 'nego0.harga_satu', 'visible' => $model->nego, 'format' => 'currency'],
                             ['attribute' => 'nego0.harga_dua', 'visible' => $model->nego, 'format' => 'currency'],
                             ['attribute' => 'nego0.harga_tiga', 'visible' => $model->nego, 'format' => 'currency'],
+                            'video',
 //                            'created_at:datetime',
 //                            'updated_at:datetime',
                         ],

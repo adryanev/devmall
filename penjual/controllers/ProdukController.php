@@ -97,7 +97,7 @@ class ProdukController extends Controller
     public function actionCreate()
     {
 
-        $notif = new Notifikasi();        
+        $notif = new Notifikasi();
         $model = new Produk();
         $negoModel = new Nego();
         $galeriModel = new GaleriProduk();
@@ -107,6 +107,8 @@ class ProdukController extends Controller
 
         $booth = Yii::$app->user->identity->booth;
         if ($model->load(Yii::$app->request->post()) && $negoModel->load(Yii::$app->request->post()) && $galeriModel->load(Yii::$app->request->post())) {
+            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $model->video, $matches);
+            $model->video = $matches[1];
 
             $manual = UploadedFile::getInstance($model, 'manual');
             $galeri = UploadedFile::getInstances($galeriModel, 'nama_berkas');
@@ -133,10 +135,10 @@ class ProdukController extends Controller
                 $notif->jenis_data ='Produk';
                 $notif->status ='Belum Dibaca';
 
-                $notif->save(false);   
+                $notif->save(false);
 
             if ($model->nego) {
-               
+
                 if ( $model->harga > $negoModel->harga_satu && $negoModel->harga_satu > $negoModel->harga_dua && $negoModel->harga_dua > $negoModel->harga_tiga ) {
 
                     $nego = new Nego();
@@ -144,11 +146,11 @@ class ProdukController extends Controller
                     $nego->harga_produk = $model->harga;
                     $nego->id_produk = $model->id;;
                     $nego->save(false);
-                    
+
                 }else{
 
                     Yii::$app->session->setFlash('danger', 'Harga Nego Harus Lebih Kecil Dari Harga Normal. Dan Hara Nego Dua Harus Lebih Kecil Dari Harga Nego Satu');
-                       
+
                     return $this->render('create', [
                         'model' => $model,
                         'negoModel' => $negoModel,
@@ -187,7 +189,7 @@ class ProdukController extends Controller
             }
 
             Yii::$app->session->setFlash('success', 'Berhasil menambahkan Produk.');
-               
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -223,6 +225,11 @@ class ProdukController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $negoModel->load(Yii::$app->request->post()) && $galeriModel->load(Yii::$app->request->post())) {
 
+            preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $model->video, $matches);
+            if($matches){
+                $model->video = $matches[1];
+            }
+
             $manual = UploadedFile::getInstance($model, 'manual');
             $galeri = UploadedFile::getInstances($galeriModel, 'nama_berkas');
             $transaction = Yii::$app->db->beginTransaction();
@@ -247,7 +254,7 @@ class ProdukController extends Controller
             $notif->jenis_data ='Produk';
             $notif->status ='Belum Dibaca';
 
-            $notif->save(false);   
+            $notif->save(false);
 
             if ($model->nego) {
                 if($negoModel){
@@ -260,8 +267,8 @@ class ProdukController extends Controller
 
                     if (is_null($nego)) {
 
-                        $negoModel->save(false);                   
-                   
+                        $negoModel->save(false);
+
                     }else{
 
                         $negoModel->update(false);
@@ -294,7 +301,7 @@ class ProdukController extends Controller
                 $notif->jenis_data ='Produk';
                 $notif->status ='Belum Dibaca';
 
-                $notif->save();   
+                $notif->save();
 
                 Yii::$app->session->setFlash('success', 'Berhasil mengubah Produk.');
                 return $this->redirect(['produk/view', 'id' => $model->id]);
