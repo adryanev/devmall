@@ -115,7 +115,8 @@ Use dot badge instead of animated pulse effect:
 
                                 }
                                 ?>
-                                <a href="http://localhost/devmall/admin/web/notifikasi/index"
+
+                                <a href="<?=\yii\helpers\Url::to(['notifikasi/index'])?>"
                                    class="kt-notification__item">
                                     <div class="kt-notification__item-icon">
                                         <i class="flaticon2-box-1 kt-font-brand"></i>

@@ -17,7 +17,8 @@ $arrayGambar = \yii\helpers\ArrayHelper::map($gambar, 'id', 'nama_berkas');
 $dataGambar = array_values($arrayGambar);
 $gams = [];
 foreach ($dataGambar as $gamber) {
-    $gams[] = Html::img(Yii::getAlias('@.produkPath/' . $gamber), ['width' => '50%', 'class' => 'rounded mx-auto d-block carousel']);
+    $gams[] = Html::img(Yii::getAlias('@.produkPath/' . $gamber),
+        ['width' => '50%', 'class' => 'rounded mx-auto d-block carousel']);
 }
 
 ?>
@@ -63,7 +64,13 @@ foreach ($dataGambar as $gamber) {
                         <div class="kt-portlet__head-actions">
 
 
-                            <?= Html::a('<i class=flaticon2-edit></i> Edit', ['update', 'id' => $model->id], ['class' => 'btn btn-warning btn-elevate btn-elevate-air']) ?>
+                            <?= Html::button('<i class=flaticon2-up></i> Update Versi', [
+                                'value' => \yii\helpers\Url::to(['versi-produk/create', 'id' => $model->id]),
+                                'title' => 'Update Versi Produk',
+                                'class' => 'showModalButton btn btn-dark btn-elevate btn-elevate-air'
+                            ]) ?>
+                            <?= Html::a('<i class=flaticon2-edit></i> Edit', ['update', 'id' => $model->id],
+                                ['class' => 'btn btn-warning btn-elevate btn-elevate-air']) ?>
                             <?= Html::a('<i class=flaticon2-delete></i> Hapus', ['delete', 'id' => $model->id], [
                                 'class' => 'btn btn-danger btn-elevate btn-elevate-air',
                                 'data' => [
@@ -89,12 +96,19 @@ foreach ($dataGambar as $gamber) {
                             'fitur:html',
                             'harga:currency',
                             'demo:url',
-                            ['attribute' => 'manual', 'value' => Yii::getAlias('@.produkPath/' . $model->manual), 'format' => 'url'],
+                            [
+                                'attribute' => 'manual',
+                                'value' => Yii::getAlias('@.produkPath/' . $model->manual),
+                                'format' => 'url'
+                            ],
                             'nego:boolean',
                             ['attribute' => 'nego0.harga_satu', 'visible' => $model->nego, 'format' => 'currency'],
                             ['attribute' => 'nego0.harga_dua', 'visible' => $model->nego, 'format' => 'currency'],
                             ['attribute' => 'nego0.harga_tiga', 'visible' => $model->nego, 'format' => 'currency'],
                             'video',
+                            ['attribute'=>'download_link','format'=>'raw','value'=>function($model){
+                        return Html::a($model->download_link, $model->download_link,['target'=>'_blank']);
+                            }],
 //                            'created_at:datetime',
 //                            'updated_at:datetime',
                         ],

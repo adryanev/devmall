@@ -74,8 +74,7 @@ $keranjangTotal = 0;
 
                                             <div class="dropdown_module_header">
                                                 <h4>My Notifications</h4>
-                                                <a href="http://localhost/devmall/frontend/web/notifikasi/index">Semua
-                                                    Notifikasi</a>
+                                                <?=Html::a('Semua Notifikasi',['notifikasi/index'])?>
                                             </div>
 
                                             <div class="notifications_module">

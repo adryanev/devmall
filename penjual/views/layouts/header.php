@@ -86,7 +86,7 @@ $booth = Yii::$app->user->identity->booth;
 
     }
  ?>
-                                <a href="http://localhost/devmall/penjual/web/notifikasi/index" class="kt-notification__item">
+                                <a href="<?=\yii\helpers\Url::to(['notifikasi/index'])?>" class="kt-notification__item">
                                     <div class="kt-notification__item-icon">
                                         <i class="flaticon2-box-1 kt-font-brand"></i>
                                     </div>

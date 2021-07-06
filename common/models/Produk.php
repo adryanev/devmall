@@ -39,6 +39,7 @@ use yii\helpers\ArrayHelper;
  * @property float $nilaiUlasan
  * @property Diskon $diskon
  * @property Keluhan[] $keluhans
+ * @property TransaksiDetail[] $transaksiDetails
  */
 class Produk extends \yii\db\ActiveRecord implements CartItemInterface
 {
@@ -228,5 +229,9 @@ class Produk extends \yii\db\ActiveRecord implements CartItemInterface
 
     public function getKeluhans(){
         return $this->hasMany(Keluhan::className(),['id_produk'=>'id']);
+    }
+
+    public function getTransaksiDetails(){
+        return $this->hasMany(TransaksiDetail::className(),['id_produk'=>'id']);
     }
 }
