@@ -47,7 +47,7 @@ class NotifikasiController extends Controller
      */
     public function actionIndex()
     {
-        
+
         $searchModel = new NotifikasiSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -75,7 +75,9 @@ class NotifikasiController extends Controller
             case 'Request Produk':
                 return $this->redirect(['permintaan/'.$model['id_data']]);
                 break;
-            
+            case 'Keluhan':
+                return $this->redirect(['keluhan/view','id'=>$model->id_data]);
+
         }
 
     }
@@ -91,7 +93,7 @@ class NotifikasiController extends Controller
      * Finds the Kategori model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Kategori the loaded model
+     * @return Notifikasi the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

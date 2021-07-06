@@ -18,6 +18,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Notifikasi extends \yii\db\ActiveRecord
 {
+    const STATUS_NOT_READ = 'Belum Dibaca';
+    const STATUS_READ = 'Sudah Dibaca';
     /**
      * {@inheritdoc}
      */
@@ -65,4 +67,6 @@ class Notifikasi extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'sender']);
     }
+
+
 }

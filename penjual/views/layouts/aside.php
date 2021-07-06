@@ -24,6 +24,11 @@ $menuItems = [
                 'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
                 'url' => ['/diskon/index'],
             ],
+            [
+                'label' => 'Keluhan',
+                'icon' => '<i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>',
+                'url' => ['/keluhan/index'],
+            ],
 
         ],
     ],

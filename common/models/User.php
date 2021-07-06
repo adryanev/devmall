@@ -35,6 +35,7 @@ use yii\web\IdentityInterface;
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
  * @property NotificationReceive[] $notifications
+ * @property Keluhan[] $keluhans
 
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
@@ -362,6 +363,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getNotifications(){
         return $this->hasMany(NotificationReceive::className(),['notifier_id'=>'id']);
+    }
+
+    public function getKeluhans(){
+        return $this->hasMany(Keluhan::className(),['id_user'=>'id']);
     }
 
 }

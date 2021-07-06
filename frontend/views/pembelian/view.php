@@ -61,6 +61,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                  if(($model->transaksi->jenis_transaksi === \common\models\TransaksiProduk::JENIS_TRANSAKSI_CICIL && $model->transaksi->transaksiCicilan->pembayaranCicilans[0]->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) || $model->transaksi->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID)
                        return Html::a('Ulas',['ulasan/create','produk'=>$model->produk->id],['class'=>'btn btn-md btn-round btn-warning']);
                                  return 'Silahkan bayar terlebih dahulu';
+                            }],
+                            ['label'=>'Masalah','format' => 'raw', 'value' => function($model) {
+                                if (($model->transaksi->jenis_transaksi === \common\models\TransaksiProduk::JENIS_TRANSAKSI_CICIL && $model->transaksi->transaksiCicilan->pembayaranCicilans[0]->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) || $model->transaksi->payment_status === \common\models\Transaksi::PAYMENT_STATUS_PAID) {
+                                    return Html::button('Laporkan', [
+                                        'value' => \yii\helpers\Url::to(['keluhan/create','produk'=>$model->produk->id]),
+                                        'title' => 'Laporkan Masalah',
+                                        'class' => 'showModalButton btn btn-md btn-round btn-danger'
+                                    ]);
+                                }
+                                return 'Silahkan bayar terlebih dahulu';
                             }]
                         ]
                     ])?>
