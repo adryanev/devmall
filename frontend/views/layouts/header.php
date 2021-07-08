@@ -243,6 +243,11 @@ $keranjangTotal = 0;
 
                                         </li>
                                         <li>
+                                            <?= Html::a('<span class="lnr lnr-strikethrough"></span> Keluhan',
+                                                ['keluhan/index']) ?>
+
+                                        </li>
+                                        <li>
                                             <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>', ['site/logout'],
                                                 [
                                                     'data' => [
