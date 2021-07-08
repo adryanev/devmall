@@ -79,6 +79,7 @@ class KeluhanController extends Controller
         $notif->context = "Keluhan anda dengan pada produk: {$keluhan->produk->nama} $keluhan->statusString";
         $notif->id_data = $keluhan->id;
         $notif->jenis_data = 'Keluhan';
+        $notif->status = Notifikasi::STATUS_NOT_READ;
         $notif->save(false);
     }
 

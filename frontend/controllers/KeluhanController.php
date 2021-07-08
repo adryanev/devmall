@@ -10,6 +10,7 @@ use frontend\models\forms\KeluhanUploadForm;
 use Yii;
 use common\models\Keluhan;
 use frontend\models\KeluhanSearch;
+use yii\base\BaseObject;
 use yii\bootstrap4\ActiveForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -98,6 +99,35 @@ class KeluhanController extends Controller
             'model' => $model,
         ]);
     }
+
+    /**
+     * Updates an existing Keluhan model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        $uploadModel = new KeluhanUploadForm();
+
+        if ($model->load(Yii::$app->request->post()) && $uploadModel->load(Yii::$app->request->post()) ) {
+            $uploadModel->dokumen = UploadedFile::getInstance($uploadModel,'dokumen');
+            if($result = $uploadModel->upload()){
+                $model->dokumen = $result;
+            }
+            $model->save(false);
+            $this->sendNotification($model,$model->user, $model->produk->booth, $model->produk);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'uploadModel'=>$uploadModel
+        ]);
+    }
+
 
     /**
      * Deletes an existing Keluhan model.

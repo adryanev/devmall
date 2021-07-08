@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="keluhan-view">
 
                     <p>
+                        <?= $model->status !== \common\models\Keluhan::STATUS_DIKIRIM? '': Html::a('Update', ['update',
+                            'id' => $model->id], [
+                            'class' => 'btn btn-round btn-md btn-info',
+                        ]) ?>
                         <?= $model->status !== \common\models\Keluhan::STATUS_DIKIRIM? '': Html::a('Delete', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-round btn-md btn-danger',
                             'data' => [
