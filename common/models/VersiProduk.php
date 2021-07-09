@@ -71,6 +71,6 @@ class VersiProduk extends \yii\db\ActiveRecord
      */
     public function getProduk()
     {
-        return $this->hasOne(Produk::className(), ['id_produk' => 'id']);
+        return $this->hasOne(Produk::className(), ['id' => 'id_produk']);
     }
 }
