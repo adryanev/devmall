@@ -7,6 +7,7 @@ use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\VersiProduk */
+/* @var $uploadModel \penjual\models\forms\VersiProdukUploadForm */
 /* @var $form yii\bootstrap4\ActiveForm;
 */
 ?>
@@ -20,7 +21,7 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'catatan_perubahan')->widget(TinyMce::className()) ?>
 
-    <?= $form->field($model, 'cara_instalasi')->widget(TinyMce::class) ?>
+    <?= $form->field($uploadModel, 'cara_instalasi')->widget(\kartik\file\FileInput::class) ?>
 
     <div class="form-group">
         <?= Html::submitButton('<i class=\'la la-save\'></i> Simpan', ['class' => 'btn btn-pill btn-elevate btn-elevate-air btn-brand']) ?>

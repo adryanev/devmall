@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\VersiProduk */
+/* @var $uploadModel \penjual\models\forms\VersiProdukUploadForm */
 
 $this->title = 'Ubah Versi Produk: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Versi Produk', 'url' => ['index']];
@@ -31,6 +32,7 @@ $this->params['breadcrumbs'][] = 'Ubah';
 
                     <?= $this->render('_form', [
                     'model' => $model,
+                        'uploadModel'=>$uploadModel
                     ]) ?>
 
                 </div>

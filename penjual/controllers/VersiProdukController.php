@@ -5,16 +5,17 @@ namespace penjual\controllers;
 use common\models\Booth;
 use common\models\Notifikasi;
 use common\models\Produk;
-use common\models\User;
-use Yii;
-use yii\filters\AccessControl;
 use common\models\VersiProduk;
+use penjual\models\forms\VersiProdukUploadForm;
 use penjual\models\VersiProdukSearch;
+use Yii;
+use yii\bootstrap4\ActiveForm;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
-use yii\bootstrap4\ActiveForm;
+use yii\web\UploadedFile;
 
 
 /**
@@ -28,12 +29,13 @@ class VersiProdukController extends Controller
     public function behaviors()
     {
         return [
-            'access'=>[
-                'class'=>AccessControl::className(),
-                'rules'=>[
-                    ['actions'=>['index','create','update','view','delete'],
-                     'allow'=>true,
-                     'roles'=>['@']
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@']
                     ]
                 ]
             ],
@@ -75,97 +77,6 @@ class VersiProdukController extends Controller
     }
 
     /**
-     * Creates a new VersiProduk model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate($id)
-    {
-        $model = new VersiProduk();
-        $produk = $this->findProduk($id);
-        $model->id_produk =$produk->id;
-        $model->link_lama = $produk->download_link;
-
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post())) {
-
-
-            $model->save();
-            Yii::$app->session->setFlash('success','Berhasil menambahkan VersiProduk.');
-            $produk->download_link = $model->link_baru;
-            $produk->save(false);
-
-            $detail = $produk->transaksiDetails;
-            $user = [];
-            foreach ($detail as $d){
-                $tp = $d->transaksi->getUser()->distinct()->one();
-                $user[] = $tp;
-            }
-            $this->sendNotification($produk->booth, $user, $produk);
-            return $this->redirect(['produk/view', 'id' => $model->produk->id]);
-        }
-
-        elseif (Yii::$app->request->isAjax){
-            return $this->renderAjax('_form',['model'=>$model]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing VersiProduk model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-        $produk = $model->produk;
-
-        if(Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $produk->download_link = $model->link_baru;
-            $produk->save(false);
-            Yii::$app->session->setFlash('success','Berhasil mengubah VersiProduk.');
-
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing VersiProduk model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $model= $this->findModel($id);
-        $produk = $model->produk;
-        $produk->download_link = $model->link_lama;
-        $produk->save(false);
-        $model->delete();
-        Yii::$app->session->setFlash('success','Berhasil menghapus VersiProduk.');
-
-        return $this->redirect(['index']);
-    }
-
-    /**
      * Finds the VersiProduk model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -180,6 +91,51 @@ class VersiProdukController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    /**
+     * Creates a new VersiProduk model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate($id)
+    {
+        $model = new VersiProduk();
+        $uploadModel = new VersiProdukUploadForm();
+        $produk = $this->findProduk($id);
+        $model->id_produk = $produk->id;
+        $model->link_lama = $produk->download_link;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post()) && $uploadModel->load(Yii::$app->request->post())) {
+            $uploadModel->dokumen = UploadedFile::getInstances($uploadModel, 'dokumen');
+            if ($filename = $uploadModel->upload($model->produk)) {
+                $model->cara_instalasi = $filename;
+            }
+            $model->save();
+            Yii::$app->session->setFlash('success', 'Berhasil menambahkan VersiProduk.');
+            $produk->download_link = $model->link_baru;
+            $produk->save(false);
+
+            $detail = $produk->transaksiDetails;
+            $user = [];
+            foreach ($detail as $d) {
+                $tp = $d->transaksi->getUser()->distinct()->one();
+                $user[] = $tp;
+            }
+            $this->sendNotification($produk->booth, $user, $produk);
+            return $this->redirect(['produk/view', 'id' => $model->produk->id]);
+        } elseif (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', ['model' => $model, 'uploadModel' => $uploadModel]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Finds the VersiProduk model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -196,8 +152,9 @@ class VersiProdukController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    private function sendNotification(Booth $booth, array $users, Produk $produk){
-        foreach ($users as $user){
+    private function sendNotification(Booth $booth, array $users, Produk $produk)
+    {
+        foreach ($users as $user) {
             $notif = new Notifikasi();
             $notif->sender = $booth->id;
             $notif->receiver = $user->id;
@@ -208,5 +165,59 @@ class VersiProdukController extends Controller
             $notif->save(false);
         }
 
+    }
+
+    /**
+     * Updates an existing VersiProduk model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+        $uploadModel = new VersiProdukUploadForm();
+        $produk = $model->produk;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $uploadModel->load(Yii::$app->request->post())) {
+            $uploadModel->dokumen = UploadedFile::getInstance($uploadModel, 'dokumen');
+            if ($filename = $uploadModel->upload($model->produk)) {
+                $model->cara_instalasi = $filename;
+            }
+            $produk->download_link = $model->link_baru;
+            $produk->save(false);
+            Yii::$app->session->setFlash('success', 'Berhasil mengubah VersiProduk.');
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+            'uploadModel' => $uploadModel
+        ]);
+    }
+
+    /**
+     * Deletes an existing VersiProduk model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $produk = $model->produk;
+        $produk->download_link = $model->link_lama;
+        $produk->save(false);
+        $model->delete();
+        Yii::$app->session->setFlash('success', 'Berhasil menghapus VersiProduk.');
+
+        return $this->redirect(['index']);
     }
 }
