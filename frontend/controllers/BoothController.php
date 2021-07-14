@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Booth;
 use common\models\Follow;
+use common\models\TransaksiProduk;
 use frontend\models\BoothSearch;
 use frontend\models\ProdukSearch;
 use frontend\models\UlasanSearch;
@@ -49,7 +50,12 @@ class BoothController extends \yii\web\Controller
         $produkPopuler = $model->getProdukPopuler();
         $produkPopulerDataProvider = new ActiveDataProvider(['query' => $produkPopuler]);
 
-        return $this->render('view', ['model' => $model, 'produkPopulerDataProvider' => $produkPopulerDataProvider]);
+        $modelBooth = new Booth();
+        $totalPenjualan = $modelBooth->getPenjualan($id);
+        $getTotalUlasan = $modelBooth->getTotalUlasan();
+
+
+        return $this->render('view', ['model' => $model, 'produkPopulerDataProvider' => $produkPopulerDataProvider, 'totalPenjualan' => $totalPenjualan, 'getTotalUlasan' => $getTotalUlasan] );
     }
 
     protected function findModel($id)
@@ -104,10 +110,9 @@ class BoothController extends \yii\web\Controller
 
     public function actionReview($booth)
     {
-        $searchModel = new UlasanSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider(['query'=>$this->findModel($booth)->getProduks()->innerJoinWith('ulasans')]);
 
-        return $this->render('review', compact('searchModel', 'dataProvider'));
+        return $this->render('review', compact('dataProvider'));
     }
 
 }

@@ -16,7 +16,7 @@ use yii\helpers\Html;
 class ActionColumn extends \yii\grid\ActionColumn
 {
 
-    public $template = '{view} {update} {delete}';
+    public $template = '{view} {update} {delete} {change}';
     /**
      * Initializes the default button rendering callbacks.
      */
@@ -29,6 +29,8 @@ class ActionColumn extends \yii\grid\ActionColumn
             'data-confirm' => Yii::t('yii', 'Apakah anda yakin untuk menghapus item ini?'),
             'data-method' => 'post',
         ]);
+
+        $this->initDefaultButton('change', 'information',['class'=>' btn btn-sm btn-pill btn-elevate btn-elevate-air btn-info']);
     }
 
     /**
@@ -51,6 +53,9 @@ class ActionColumn extends \yii\grid\ActionColumn
                         break;
                     case 'delete':
                         $title = Yii::t('yii', 'Hapus');
+                        break;
+                    case 'change':
+                        $title = Yii::t('yii', 'Ubah Password');
                         break;
                     default:
                         $title = ucfirst($name);

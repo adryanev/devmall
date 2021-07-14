@@ -102,7 +102,7 @@ use yii\bootstrap4\Html;
                     <div class="col-md-4 col-sm-4">
                         <div class="author-info pcolorbg">
                             <p>Total Penjualan</p>
-                            <h3>36,957</h3>
+                            <h3><?= $totalPenjualan ?></h3>
                         </div>
                     </div>
                     <!-- end /.col-md-4 -->
@@ -113,7 +113,7 @@ use yii\bootstrap4\Html;
                             <div class="rating product--rating">
                                 <?= StarRating::widget([
                                     'name' => 'total_ulasan_booth',
-                                    'value' => $model->avgUlasan,
+                                    'value' => $getTotalUlasan,
                                     'pluginOptions' => [
                                         'displayOnly' => true,
                                         'showCaption' => false,
@@ -121,7 +121,7 @@ use yii\bootstrap4\Html;
                                         'size' => 'xs',
                                         'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
                                         'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>']]) ?>
-                                <span class="rating__count">(<?= $model->totalUlasan ?>)</span>
+                                <span class="rating__count">(<?= $getTotalUlasan ?>)</span>
                             </div>
                         </div>
                     </div>

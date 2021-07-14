@@ -9,9 +9,13 @@ $this->title = 'Pembayaran';
 $total = 0;
 
 use common\models\Keranjang;
+use common\models\Produk;
 use yii\bootstrap4\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
+
+
+
 
 ?>
 
@@ -79,19 +83,20 @@ use yii\helpers\Url;
                             <ul>
                                 <?php
 
-                                foreach ($keranjangDataProvider->models as /** @var $model Keranjang */
-                                         $model) :?>
+                                foreach ($keranjangDataProvider->models as /** @var $produk Produk */
+                                         $produk) :?>
+
                                     <li class="item">
-                                        <?= Html::a($model->produk->nama, ['produk/view', 'id' => $model->produk->id], ['target' => '_blank']) ?>
-                                        <span><?= Yii::$app->formatter->asCurrency($model->produk->harga) ?></span>
+                                        <?= Html::a($produk->nama, ['produk/view', 'id' => $produk->id], ['target' => '_blank']) ?>
+                                        <span><?= Yii::$app->formatter->asCurrency($produk->getCost()) ?></span>
                                     </li>
 
                                     <?php
-                                    $total += $model->produk->harga;
                                 endforeach; ?>
                                 <hr>
                                 <li class="item">
                                     <a>Total</a>
+                                    <?php $total = $keranjang->getCost() ?>
                                     <span><?= Yii::$app->formatter->asCurrency($total) ?></span>
 
                                 </li>
@@ -107,7 +112,7 @@ use yii\helpers\Url;
 
 
                             <div class="payment_info modules__content">
-                                <form action="" class="form">
+                                <form action="" class="form <?=$total < 1_000_000? 'd-none':''?>">
                                     <div class="form-group">
                                         <div class="custom_checkbox">
                                             <?= Html::checkbox('cicilan', false, ['id' => 'cicilan-checkbox']) ?>
@@ -184,13 +189,11 @@ use yii\helpers\Url;
 
 \common\assets\MidtransAsset::register($this);
 
-$datakeranjang = Json::encode($keranjangDataProvider->models);
 $url = Url::to(['pembayaran/confirm-order']);
-$user = Json::encode(Yii::$app->user->identity);
 $js = <<<JS
 var cicil = 0;
 var cicilan = 0;
-var dataProduk = {keranjang:$datakeranjang,total:$total,user:$user,isCicilan: cicil,jumlahCicilan:cicilan};
+var dataProduk = {isCicilan: cicil,jumlahCicilan:cicilan};
 
 $('#cicilan-checkbox').on('change',function() {
     var checked = $('#cicilan-checkbox').prop('checked');
@@ -214,21 +217,14 @@ $('#button-bayar').on('click',function() {
   console.log("bayar function triggered");
   console.log(dataProduk);
      $.post(
-        "$url",{data: dataProduk},
-        function(data, status) {
-            snap.pay(data.snap_token,{
-                onSuccess: function(result){
-                   console.log(result);
-                },
-                onPending: function(result) {
-                    console.log(result);
-                },
-                onError: function(result) {
-                    console.log(result);
-                }
-            });
-        }
-    );
+        "$url",{data: dataProduk}
+    ).done(
+        function(data) {
+            console.log(data);
+           window.location = data.payment_url;
+        }).fail(function (error){
+            console.log(error)
+        });
 });
 JS;
 

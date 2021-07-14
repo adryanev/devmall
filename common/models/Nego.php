@@ -4,6 +4,7 @@ namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
 
+
 /**
  * This is the model class for table "nego".
  *
@@ -38,8 +39,13 @@ class Nego extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_produk', 'harga_satu', 'harga_dua', 'harga_tiga', 'created_at', 'updated_at'], 'integer'],
-            [['id_produk'], 'unique'],
+            [['id_produk','harga_satu' ,'harga_dua', 'harga_tiga', 'created_at', 'updated_at'], 'integer'],
+
+            // ['harga_satu', 'compare', 'compareAttribute' => 'harga_produk', 'operator' => '<', 'type' => 'number', 'message'=>'invalide'],
+
+            // ['harga_tiga', 'compare', 'compareValue' => 'harga_dua', 'operator' => '<' , 'message'=> 'Harga Tidak valide'],
+
+            [['id_produk'], 'unique'],  
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
         ];
     }
@@ -52,6 +58,7 @@ class Nego extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_produk' => 'Id Produk',
+            'harga_produk' => 'Harga Produk',
             'harga_satu' => 'Harga Satu',
             'harga_dua' => 'Harga Dua',
             'harga_tiga' => 'Harga Tiga',

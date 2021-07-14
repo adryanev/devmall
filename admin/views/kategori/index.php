@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                            'created_at:datetime',
 //                            'updated_at:datetime',
 
-                            ['class' => 'common\widgets\ActionColumn', 'header' => 'Aksi'],
+                            ['class' => 'common\widgets\ActionColumn' ,'template'=> '{view} {update}{delete}', 'header' => 'Aksi'],
                         ],
                     ]); ?>
 

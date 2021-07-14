@@ -1,4 +1,5 @@
 <?php
+
 return [
     'superadmin' => [
         'type' => 1,
@@ -10,6 +11,11 @@ return [
     ],
     'admin' => [
         'type' => 1,
+        'children' => [
+            '@app-admin/*',
+            '@app-penjual/*',
+            '@app-frontend/*',
+        ],
     ],
     'penjual' => [
         'type' => 1,
@@ -30,6 +36,9 @@ return [
         'type' => 2,
     ],
     '@app-frontend/*' => [
+        'type' => 2,
+    ],
+    '@app-frontend/permintaan/*' => [
         'type' => 2,
     ],
 ];

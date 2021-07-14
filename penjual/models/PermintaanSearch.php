@@ -51,11 +51,12 @@ class PermintaanSearch extends PermintaanProduk
         $query = PermintaanProduk::find()->joinWith('user');
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]]
         ]);
 
 
-        $dataProvider->sort->attributes['user'] = [
+        $dataProvider->sort->attributes['batas'] = [
             'asc' => ['user.username' => SORT_ASC],
             'desc' => ['user.username' => SORT_DESC]
         ];

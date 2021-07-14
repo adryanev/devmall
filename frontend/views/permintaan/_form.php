@@ -10,6 +10,7 @@
 use dosamigos\tinymce\TinyMce;
 use kartik\datecontrol\DateControl;
 use kartik\datecontrol\Module;
+use common\models\constants\FileExtension;
 use kartik\file\FileInput;
 use kartik\grid\GridView;
 use yii\bootstrap4\ActiveForm;
@@ -27,50 +28,31 @@ use yii\data\ActiveDataProvider;
     <?= $form->field($model, 'deadline')->widget(DateControl::class, [
         'type' => Module::FORMAT_DATE,
         'widgetOptions' => [
-            'pluginOptions' => ['autoclose' => true, 'placeholder' => 'Tanggal Deadline']
+            'pluginOptions' => ['autoclose' => true, 'placeholder' => 'Tanggal Deadline', 'startDate' =>date('d-m-Y')]
         ]
     ]) ?>
     <?= $form->field($model, 'harga')->textInput(['type' => 'number']) ?>
     <?= $form->field($model, 'uang_muka')->textInput(['type' => 'number']) ?>
-    <?php if (!$model->isNewRecord): ?>
-        <?= GridView::widget([
-            'dataProvider' => new ActiveDataProvider(['query' => $dataDetail]),
-            'summary' => false,
-            'columns' => [
-                ['class' => 'kartik\grid\SerialColumn', 'header' => 'No'],
-                'nama_berkas',
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'header' => 'Aksi',
-                    'template' => '{delete-file}',
-                    'contentOptions' => ['class' => 'action'],
-                    'buttons' => [
-                        'delete-file' => function ($url, $model, $key) {
-                            return Html::a(
-                                '<i class="fas fa-trash"></i>',
-                                ['permintaan/delete-file', 'id' => $model->id]
-                            );
-                        }
-                    ]
-                ]
+   
+        <?= $form->field($modelDetail, 'uploadedFiles[]')->widget(FileInput::class, [
+            'options' => [
+                'multiple' => true
+            ],
+            'pluginOptions' => [
+                'allowedFileExtensions' => FileExtension::DOKUMEN,
+                'showUpload' => false,
+                'previewFileType' => 'any',
+                'fileActionSettings' => [
+                    'showZoom' => true,
+                    'showRemove' => false,
+                    'showUpload' => false,
+                ],
             ]
         ]) ?>
-    <?php endif; ?>
-    <?= $form->field($modelDetail, 'uploadedFiles[]')->widget(FileInput::class, [
-        'options' => [
-            'multiple' => true,
-        ],
-        'pluginOptions' => [
-            'maxFileCount' => 5,
-            'showPreview' => false,
-            'showCaption' => true,
-            'showRemove' => true,
-            'showUpload' => false,
-            'theme' => 'explorer-fas',
-            'browseClass' => 'btn btn-primary btn-sm',
-            'cancelClass' => 'btn btn-secondary btn-sm'
-        ]
-    ]) ?>
+
+
+
+
     <div class="form-group">
         <?= Html::submitButton('Simpan', ['class' => 'btn btn-lg btn--round']) ?>
     </div>

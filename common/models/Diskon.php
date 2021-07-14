@@ -63,4 +63,9 @@ class Diskon extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Produk::className(), ['id' => 'id_produk']);
     }
+
+    public function getGaleriProduk()
+    {
+        return $this->hasOne(GaleriProduk::className(), ['id_produk' => 'id_produk']);
+    }
 }

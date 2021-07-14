@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\notifications\models\NotificationReceive;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -33,19 +34,22 @@ use yii\web\IdentityInterface;
  * @property Follow[] $follows
  * @property Ulasan[] $ulasans
  * @property VerifikasiUser $verifikasiUser
- * @property Keranjang[] $keranjangs
+ * @property NotificationReceive[] $notifications
+ * @property Keluhan[] $keluhans
 
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
 
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
-    const STATUS_VERIFIED = 3;
-    const STATUS_BANNED = 5;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 0;
+    public const STATUS_VERIFIED = 3;
+    public const STATUS_BANNED = 5;
 
-    const HAS_BOOTH = 1;
-    const STATUS_PHONE_VERIFIED = 1;
+    public const STATUS_NOT_VERIFIED = 2;
+
+    public const HAS_BOOTH = 1;
+    public const STATUS_PHONE_VERIFIED = 1;
 
     /**
      * {@inheritdoc}
@@ -147,7 +151,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             self::STATUS_ACTIVE => 'Aktif',
             self::STATUS_INACTIVE => 'Tidak Aktif',
             self::STATUS_VERIFIED => 'Terverifikasi',
-            self::STATUS_BANNED => 'Banned'
+            self::STATUS_BANNED => 'Banned',
+            self::STATUS_NOT_VERIFIED => 'Belum Terverifikasi'
         ];
 
         return $status[$this->status];
@@ -351,6 +356,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFavorits()
     {
         return $this->hasMany(Favorit::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getNotifications(){
+        return $this->hasMany(NotificationReceive::className(),['notifier_id'=>'id']);
+    }
+
+    public function getKeluhans(){
+        return $this->hasMany(Keluhan::className(),['id_user'=>'id']);
     }
 
 }

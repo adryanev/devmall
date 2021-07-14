@@ -52,6 +52,19 @@ MartplaceAsset::register($this);
 <?= $this->render('content', ['content' => $content]) ?>
 <?= $this->render('footer') ?>
 <?php $this->endBody() ?>
+<?php
+yii\bootstrap4\Modal::begin([
+    'title' => '<span id="modalHeaderTitle"></span>',
+    'headerOptions' => ['id' => 'modalHeader'],
+    'id' => 'modal',
+    'size' => 'modal-lg',
+    'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
+
+
+]);
+echo "<div id='modalContent'></div>";
+yii\bootstrap4\Modal::end();
+?>
 </body>
 </html>
 <?php $this->endPage() ?>

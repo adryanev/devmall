@@ -84,7 +84,7 @@ class SiteController extends Controller
         $this->layout = 'main-index';
         $kategori = Kategori::find()->all();
         $dataKategori = ArrayHelper::map($kategori, 'nama', 'nama');
-        $produkDataProvider = new ActiveDataProvider(['query' => Produk::find()->orderBy(new Expression('rand()'))->limit(10),'pagination' => false]);
+        $produkDataProvider = new ActiveDataProvider(['query' => Produk::find()->orderBy(new Expression('rand()'))->limit(6)]);
 
         $modelPencarian = new SearchProductIndexForm();
         if ($modelPencarian->load(Yii::$app->request->post())) {
@@ -115,11 +115,13 @@ class SiteController extends Controller
         }
         $model = new UserLoginForm();
 
+
+
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
                     $model->login();
-                    return $this->goBack();
+                     return $this->goBack();
                 }
             }
         }
@@ -189,21 +191,24 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                $model->signup();
+                if ($user = $model->signup()) {
+
+                  Yii::$app->session->setFlash('success', [
+                      'type' => 'success',
+                      'icon' => 'fas fa-check',
+                      'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
+                      'title' => 'Pendaftaran Berhasil!',
+                  ]);
+
+                }
             }
-            Yii::$app->session->setFlash('success', [
-                'type' => 'success',
-                'icon' => 'fas fa-check',
-                'message' => 'Silahkan cek email anda untuk melakukan verifikasi.',
-                'title' => 'Pendaftaran Berhasil!',
-            ]);
-            return $this->redirect(['site/check-verification-email','email'=>$model->email]);
         }
 
         return $this->render('/common-forms/user-signup-form', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Requests password reset.
@@ -237,6 +242,8 @@ class SiteController extends Controller
      */
     public function actionResetPassword($token)
     {
+
+
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidArgumentException $e) {
@@ -261,13 +268,52 @@ class SiteController extends Controller
      * @return yii\web\Response
      * @throws BadRequestHttpException
      */
+    // gHlB4DShguJKQpUjHx7zGlHQSqM2_nPs_1610599520
+
+    public function actionSend()
+    {
+        $params = [
+             'from'=>['address'=>'petya.orlov14@gmail.com','name'=>'Devmall'],
+             'addresses'=>[
+                 ['address'=>'ondripku14@gmail.com','name'=>'Ondri']
+             ],
+
+             'body'=>'email body here',
+
+              //optional
+              'subject'=>'email subject here',
+               //optional
+              'altBody'=>'email alt body here',
+               //optional
+              // 'addReplyTo'=>[
+              //     ['address'=>'email address','information'=>'info here']
+              // ],
+              //  //optional
+              // 'cc'=>[
+              //     'email address'
+              // ],
+              //  //optional
+              // 'bcc'=>[
+              //     'email address'
+              // ],
+              //optional
+              // 'attachments'=>[
+              //    // ['path'=>'','name'=>'']
+              // ],
+         ];
+
+         return Yii::$app->BitckoMailer->mail($params);
+    }
+
     public function actionVerifyEmail($token)
     {
+
         try {
             $model = new VerifyEmailForm($token);
         } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
+
         if ($user = $model->verifyEmail()) {
                 Yii::$app->session->setFlash('success', [
                     'type' => 'success',

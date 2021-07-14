@@ -7,6 +7,11 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 
+use Yii\db\Query;
+
+use Yii;
+use yii\base\Model;
+
 /**
  * This is the model class for table "booth".
  *
@@ -39,6 +44,7 @@ use yii\helpers\ArrayHelper;
  * @property string $alamatLengkap
  * @property Produk[] $produkPopuler
  * @property Coin $coin
+ * @property Reimbursement $reimbursement
  */
 class Booth extends \yii\db\ActiveRecord
 {
@@ -124,7 +130,7 @@ class Booth extends \yii\db\ActiveRecord
      */
     public function getCoin()
     {
-        return $this->hasOne(Coin::class, ['id'=>'id_booth']);
+        return $this->hasOne(Coin::class, ['id_booth'=>'id']);
     }
 
     /**
@@ -169,6 +175,12 @@ class Booth extends \yii\db\ActiveRecord
         return $this->hasMany(Produk::className(), ['id_booth' => 'id']);
     }
 
+    public function getAllProduks(){
+
+        return $this->hasMany(Produk::className());
+    }
+
+
     public function getTotalUlasan()
     {
         $produk = $this->produks;
@@ -192,5 +204,27 @@ class Booth extends \yii\db\ActiveRecord
     public function getProdukPopuler()
     {
         return $this->getProduks()->select(['produk.*', 'count(favorit.id_produk) as jumlah_favorit'])->joinWith('favorits', true, 'right join')->groupBy('produk.id')->orderBy('jumlah_favorit DESC');
+    }
+
+    public function getPenjualan($id_booth)
+    {
+
+    $rows = (new \yii\db\Query())
+        ->select(['id_transaksi'])
+        ->from('transaksi_detail t_d')
+        ->leftJoin('produk prd','t_d.id_produk=prd.id' )
+        ->leftJoin('booth bth', 'prd.id_booth=bth.id')
+        ->where(['id_booth' => $id_booth])
+        ->all();
+
+      $rows = count($rows);
+    return $rows;
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getReimbursement(){
+        return $this->hasMany(Reimbursement::class,['id_booth'=>'id']);
     }
 }

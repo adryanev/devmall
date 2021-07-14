@@ -2,6 +2,8 @@
 
 namespace penjual\controllers;
 
+use common\models\Notifikasi;
+
 use common\models\Diskon;
 use common\models\Produk;
 use penjual\models\DiskonSearch;
@@ -95,6 +97,7 @@ class DiskonController extends Controller
      */
     public function actionCreate()
     {
+        $notif = new Notifikasi();
         $model = new Diskon();
         $dataProduk = $this->getProduk();
 
@@ -103,12 +106,27 @@ class DiskonController extends Controller
             return ActiveForm::validate($model);
         }
         if ($model->load(Yii::$app->request->post())) {
+            
+            Yii::$app->request->post()['Diskon']['persentase'] = 10;
+
+            if ($model->save()) {
+            
+                Yii::$app->session->setFlash('success', 'Berhasil menambahkan Diskon.');
+
+                // $notif->id_data = Yii::$app->db->getLastInsertId();
+                // $notif->sender = Yii::$app->user->identity->booth->id;
+                // $notif->receiver = 1;
+                // $notif->context = 'Booth menambahkan Diskon baru dengan id';
+                // $notif->jenis_data ='Diskon';
+                // $notif->status ='Belum Dibaca';
+
+                // $notif->save();
 
 
-            $model->save();
-            Yii::$app->session->setFlash('success', 'Berhasil menambahkan Diskon.');
+                return $this->redirect(['view', 'id' => $model->id]);
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         } elseif (Yii::$app->request->isAjax) {
             return $this->renderAjax('_form', ['model' => $model, 'dataProduk' => $dataProduk]);
         }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "harga_nego".
@@ -25,6 +26,10 @@ class HargaNego extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'harga_nego';
+    }
+    public function behaviors()
+    {
+        return [TimestampBehavior::class];
     }
 
     /**

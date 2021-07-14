@@ -153,30 +153,21 @@ $total = $riwayat->nominal;
 MidtransAsset::register($this);
 
 $url = Url::to(['pembayaran/confirm-permintaan']);
-$user = Json::encode(Yii::$app->user->identity);
 $id = $riwayat->id;
 $js = <<<JS
-var dataProduk = {id:$id,total:$total,user:$user}
-
+var dataProduk = {id:$id,total:$total}
 $('#button-bayar').on('click',function() {
   console.log("bayar function triggered");
   console.log(dataProduk);
      $.post(
-        "$url",{data: dataProduk},
-        function(data, status) {
-            snap.pay(data.snap_token,{
-                onSuccess: function(result){
-                   console.log(result);
-                },
-                onPending: function(result) {
-                    console.log(result);
-                },
-                onError: function(result) {
-                    console.log(result);
-                }
-            });
-        }
-    );
+        "$url",dataProduk
+    ).done( function(data, status) {
+            console.log(data);
+            window.location = data.payment_url
+            })
+        .error( function(data) {
+            console.log(data)
+        });
 });
 JS;
 

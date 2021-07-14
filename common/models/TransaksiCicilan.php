@@ -20,12 +20,19 @@ use yii\behaviors\TimestampBehavior;
  * @property PembayaranCicilan[] $pembayaranCicilans
  * @property TransaksiProduk $transaksi
  */
-class TransaksiCicilan extends \yii\db\ActiveRecord
+class TransaksiCicilan extends Transaksi
 {
 
+    const TRANSAKSI_CODE = 'TRC';
+    const TRANSAKSI_CICILAN = 'transaksiCicilan';
     const STATUS_LUNAS = 1;
     const STATUS_ONGOING = 0;
 
+    const STATUS = [
+        self::STATUS_ONGOING => 'Berlangsung',self::STATUS_LUNAS => 'Lunas'];
+    public function getStatusString(){
+        return self::STATUS[$this->status];
+    }
     /**
      * {@inheritdoc}
      */
@@ -65,6 +72,7 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'statusString'=>'Status'
         ];
     }
 
@@ -88,16 +96,26 @@ class TransaksiCicilan extends \yii\db\ActiveRecord
         $pembayaran = $this->pembayaranCicilans;
         $sum = 0;
         foreach ($pembayaran as $bayar){
-            $sum = $bayar->jumlah_dibayar;
+            $sum += $bayar->jumlah_dibayar;
         }
-        if($sum >= $this->jumlah_cicilan){
+        if($sum >= $this->transaksi->grand_total){
             $this->status = self::STATUS_LUNAS;
-            $this->transaksi->status = PembayaranHelper::STATUS_SUCCESS;
+            $this->transaksi->payment_status = Transaksi::PAYMENT_STATUS_PAID;
         }
         else {
             $this->status = self::STATUS_ONGOING;
         }
 
-        return $this->update(false);
+        return $this->save(false) && $this->transaksi->save(false);
+    }
+
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function isPaid()
+    {
+        return $this->transaksi->status === self::PAYMENT_STATUS_PAID;
     }
 }

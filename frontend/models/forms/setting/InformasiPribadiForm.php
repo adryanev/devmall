@@ -62,7 +62,7 @@ class InformasiPribadiForm extends Model
 
             ['email','string','max' => 255],
             ['email','trim'],
-            ['email','email'],
+            ['email','email'],            
             [['jenis_kelamin','pekerjaan','tanggal_lahir'],'safe']
         ];
     }

@@ -122,8 +122,10 @@ class PromoController extends Controller
         $modelPromo = new Promo();
         $modelPromo->id_booth = Yii::$app->user->identity->booth->id;
         $modelsProduk = [new PromoProduk()];
+
         if ($modelPromo->load(Yii::$app->request->post())) {
             $modelsProduk = Model::createMultiple(PromoProduk::class);
+
             Model::loadMultiple($modelsProduk, Yii::$app->request->post());
 
             //ajax validation
@@ -171,7 +173,15 @@ class PromoController extends Controller
 
     protected function getProduks()
     {
-        return ArrayHelper::map(Yii::$app->user->identity->booth->produks, 'id', 'nama');
+
+        $query= (new \yii\db\Query())
+                    ->select('id, nama')
+                    ->from('produk')
+                    ->all();
+        // var_dump(ArrayHelper::map($query1, 'id', 'nama'));
+        // var_dump(ArrayHelper::map(Yii::$app->user->identity->booth->produks, 'id', 'nama'));
+
+        return ArrayHelper::map($query, 'id', 'nama');
     }
 
     /**
@@ -201,6 +211,7 @@ class PromoController extends Controller
         $modelPromo = $this->findModel($id);
         $modelPromo->id_booth = Yii::$app->user->identity->booth->id;
         $modelsProduk = $modelPromo->promoProduks;
+
         if ($modelPromo->load(Yii::$app->request->post())) {
             $oldIds = ArrayHelper::map($modelsProduk, 'id', 'id');
             $modelsProduk = Model::createMultiple(PromoProduk::class, $modelsProduk);

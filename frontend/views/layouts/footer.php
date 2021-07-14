@@ -19,8 +19,12 @@ use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
 
 $config = Config::find()->asArray()->all();
+
+
 $configArray = ArrayHelper::map($config,'key','value');
 $configApps = $configArray;
+
+
 ?>
 <!--================================
        START FOOTER AREA
@@ -179,9 +183,7 @@ $configApps = $configArray;
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright-text">
-                        <p>&copy; 2019
-                            <a href="#">MartPlace</a>. All rights reserved. Created by
-                            <a href="#">AazzTech</a>
+                        <p>Devmall &copy; <?=date('Y')?>
                         </p>
                     </div>
 

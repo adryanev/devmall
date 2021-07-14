@@ -18,8 +18,20 @@ use yii\bootstrap4\Html;
 <div class="product product--card">
 
     <div class="product__thumbnail">
+        <?php 
+            if (count($model->galeriProduks)>0) {
+?>
         <?= Html::img('@.penjual/upload/produk/' . $model->galeriProduks[0]->nama_berkas,
             ['alt' => 'Gambar Produk', 'height' => 250]) ?>
+<?php                
+            }else{
+?>
+        <?= Html::img('@.penjual/upload/produk/no_image_alternatig.PNG',
+            ['alt' => 'Gambar Produk', 'height' => 250]) ?>
+<?php                
+            }
+         ?>
+
         <div class="prod_btn">
             <?= Html::a('Lebih Lanjut', ['produk/view', 'id' => $model->id], ['class' => 'transparent btn--sm btn--round']) ?>
             <?= Html::a('Demo Langsung', $model->demo, ['class' => 'transparent btn--sm btn--round', 'target' => '_blank']) ?>

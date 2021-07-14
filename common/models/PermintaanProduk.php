@@ -78,6 +78,7 @@ class PermintaanProduk extends ActiveRecord
             [['kriteria', 'keterangan'], 'string'],
             [['progres'], 'number'],
             [['nama'], 'string', 'max' => 255],
+            ['uang_muka','compare','compareAttribute' => 'harga','operator' => '<','type' => 'number','message' => 'Uang muka harus kurang dari Harga'],
             [
                 ['id_booth'],
                 'exist',
@@ -157,4 +158,5 @@ class PermintaanProduk extends ActiveRecord
     {
         return $this->hasOne(TransaksiPermintaan::class, ['id_permintaan' => 'id']);
     }
+
 }

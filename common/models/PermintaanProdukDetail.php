@@ -40,7 +40,7 @@ class PermintaanProdukDetail extends \yii\db\ActiveRecord
         return [
             [['id_permintaan', 'created_at', 'updated_at'], 'integer'],
             [['nama_berkas', 'jenis_berkas'], 'string', 'max' => 255],
-            [['id_permintaan'], 'exist', 'skipOnError' => true, 'targetClass' => PermintaanProduk::className(), 'targetAttribute' => ['id_permintaan' => 'id']],
+            [['id_permintaan'], 'exist', 'skipOnError' => false, 'targetClass' => PermintaanProduk::className(), 'targetAttribute' => ['id_permintaan' => 'id']],
         ];
     }
 

@@ -1,6 +1,10 @@
 <?php
 namespace admin\controllers;
 
+use common\models\Booth;
+use common\models\Payment;
+use common\models\Produk;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -60,7 +64,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        /* @var $jumlahPengguna int */
+        $jumlahPengguna = User::find()->count();
+        /* @var $jumlahBooth int */
+        $jumlahBooth = Booth::find()->count();
+        /* @var $jumlahProduk int */
+        $jumlahProduk = Produk::find()->count();
+        /* @var $jumlahTransaksi */
+        $jumlahTransaksi = Payment::find()->count();
+        return $this->render('index',compact('jumlahPengguna','jumlahBooth','jumlahProduk','jumlahTransaksi'));
     }
 
     /**

@@ -2,7 +2,11 @@
 
 namespace common\models;
 
+use common\components\NegoTrait;
+use common\components\shoppingcart\CartItemInterface;
+use common\components\shoppingcart\CartItemTrait;
 use dosamigos\taggable\Taggable;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
@@ -21,6 +25,9 @@ use yii\helpers\ArrayHelper;
  * @property int $nego
  * @property int $created_at
  * @property int $updated_at
+ * @property string $download_link
+ * @property string $video
+ *
  * @property int hargaDiskon
  * @property Favorit[] $favorits
  * @property GaleriProduk[] $galeriProduks
@@ -31,46 +38,12 @@ use yii\helpers\ArrayHelper;
  * @property Ulasan[] $ulasans
  * @property float $nilaiUlasan
  * @property Diskon $diskon
+ * @property Keluhan[] $keluhans
+ * @property TransaksiDetail[] $transaksiDetails
  */
-class Produk extends \yii\db\ActiveRecord
+class Produk extends \yii\db\ActiveRecord implements CartItemInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'produk';
-    }
-
-    public function behaviors()
-    {
-        return
-            [
-                TimestampBehavior::class,
-                ['class' => Taggable::class,
-                    'attribute' => 'kategori',
-                    'name' => 'nama',
-                    'frequency' => 'frekuensi',
-                    'relation' => 'kategoriProduk'
-                ]
-            ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
-            [['deskripsi', 'spesifikasi', 'fitur', 'nama', 'kategori', 'harga'], 'required'],
-            [['deskripsi', 'spesifikasi', 'fitur'], 'string'],
-            [['nama', 'demo', 'manual'], 'string', 'max' => 255],
-            [['id_booth'], 'unique'],
-            [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Booth::className(), 'targetAttribute' => ['id' => 'id']],
-            ['kategori', 'safe']
-        ];
-    }
+    use CartItemTrait, NegoTrait;
 
     /**
      * {@inheritdoc}
@@ -90,7 +63,62 @@ class Produk extends \yii\db\ActiveRecord
             'nego' => 'Nego',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'downlaoad_link' => 'Link Download',
         ];
+    }
+
+    public function behaviors()
+    {
+        return
+            [
+                TimestampBehavior::class,
+                [
+                    'class' => Taggable::class,
+                    'attribute' => 'kategori',
+                    'name' => 'nama',
+                    'frequency' => 'frekuensi',
+                    'relation' => 'kategoriProduk'
+                ]
+            ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['id_booth', 'harga', 'nego', 'created_at', 'updated_at'], 'integer'],
+            [['deskripsi', 'spesifikasi', 'fitur', 'nama', 'kategori', 'harga', 'download_link'], 'required'],
+            [['deskripsi', 'spesifikasi', 'fitur', 'download_link'], 'string'],
+            [['nama', 'demo', 'manual', 'video'], 'string', 'max' => 255],
+            ['video','filter','filter'=>[$this,'filterVideo'] ],
+            [['id_booth'], 'unique'],
+            [
+                ['id_produk'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Booth::className(),
+                'targetAttribute' => ['id' => 'id']
+            ],
+            [['kategori'], 'safe']
+        ];
+    }
+
+    function filterVideo($value) {
+        //get only the video id
+        preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $value, $matches);
+        var_dump($matches);
+        exit();
+        return trim($matches[1]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'produk';
     }
 
     /**
@@ -114,7 +142,8 @@ class Produk extends \yii\db\ActiveRecord
      */
     public function getKategoriProduk()
     {
-        return $this->hasMany(Kategori::class, ['id' => 'id_kategori'])->viaTable(KategoriProduk::tableName(), ['id_produk' => 'id']);
+        return $this->hasMany(Kategori::class, ['id' => 'id_kategori'])->viaTable(KategoriProduk::tableName(),
+            ['id_produk' => 'id']);
     }
 
     /**
@@ -170,8 +199,39 @@ class Produk extends \yii\db\ActiveRecord
         return $this->hasOne(Diskon::class, ['id_produk' => 'id']);
     }
 
+    public function getHargaNego()
+    {
+        return $this->hasOne(HargaNego::class, ['id_produk' => 'id']);
+    }
+
     public function getHargaDiskon()
     {
         return $this->harga - round(($this->harga * ($this->diskon->persentase) / 100));
+    }
+
+    public function getTerjual($id_produk)
+    {
+        $command = Yii::$app->db
+            ->createCommand("SELECT * FROM transaksi_detail WHERE id_produk='" . $id_produk . "'");
+        return $command->execute();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getPrice()
+    {
+        return $this->harga;
+    }
+
+
+    public function getKeluhans(){
+        return $this->hasMany(Keluhan::className(),['id_produk'=>'id']);
+    }
+
+    public function getTransaksiDetails(){
+        return $this->hasMany(TransaksiDetail::className(),['id_produk'=>'id']);
     }
 }

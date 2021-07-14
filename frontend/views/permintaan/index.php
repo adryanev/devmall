@@ -12,9 +12,9 @@ use kartik\grid\GridView;
 
 ?>
 
-<section class="dashboard-area">
+<section class="section--padding">
 
-    <div class="dashboard_contents dashboard_statement_area">
+    <div class="">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

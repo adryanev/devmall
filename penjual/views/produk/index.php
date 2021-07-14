@@ -6,10 +6,12 @@ use yii\helpers\Html;
 /* @var $searchModel penjual\models\ProdukSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 \common\assets\metronic\MetronicDashboardPricingAsset::register($this);
-$colsCount = 3;
+$colsCount = 4;
 
 $this->title = 'Produk';
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?>
 <div class="row">
     <div class="col-lg-12">

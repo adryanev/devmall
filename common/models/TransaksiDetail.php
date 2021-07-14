@@ -10,10 +10,15 @@ use yii\behaviors\TimestampBehavior;
  * @property int $id
  * @property int $id_transaksi
  * @property int $id_produk
- * @property int $harga_transaksi
- * @property int $is_promo
+ * @property int $base_price
  * @property int $created_at
  * @property int $updated_at
+ * @property int $tax_amount
+ * @property double $tax_percent
+ * @property int $discount_amount
+ * @property double $discount_percent
+ * @property int $bargain_price
+ * @property int $sub_total
  *
  * @property Produk $produk
  * @property TransaksiProduk $transaksi
@@ -39,7 +44,8 @@ class TransaksiDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_transaksi', 'id_produk', 'harga_transaksi', 'is_promo', 'created_at', 'updated_at'], 'integer'],
+            [['id_transaksi', 'id_produk', 'base_price', 'created_at', 'updated_at','base_price','tax_amount','discount_amount','bargain_price','sub_total'], 'integer'],
+            [['tax_percent','discount_percent'], 'double'],
             [['id_produk'], 'exist', 'skipOnError' => true, 'targetClass' => Produk::className(), 'targetAttribute' => ['id_produk' => 'id']],
             [['id_transaksi'], 'exist', 'skipOnError' => true, 'targetClass' => TransaksiProduk::className(), 'targetAttribute' => ['id_transaksi' => 'id']],
         ];
@@ -54,8 +60,7 @@ class TransaksiDetail extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_transaksi' => 'Id TransaksiProduk',
             'id_produk' => 'Id Produk',
-            'harga_transaksi' => 'Harga TransaksiProduk',
-            'is_promo' => 'Is Promo',
+            'base_price' => 'Harga TransaksiProduk',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

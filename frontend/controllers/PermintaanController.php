@@ -3,14 +3,18 @@
 
 namespace frontend\controllers;
 
+use common\models\Payment;
 use common\models\PembayaranTransaksiPermintaan;
 use common\models\PermintaanProduk;
 use common\models\PermintaanProdukDetail;
+use common\models\Notifikasi;
+use common\models\TransaksiPermintaan;
 use frontend\helpers\FlashHelper;
 use frontend\models\forms\permintaan\PermintaanDetailUploadForm;
 use Yii;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -22,6 +26,21 @@ use yii\web\UploadedFile;
 class PermintaanController extends Controller
 {
 
+    public function behaviors()
+    {
+        return [
+            'access'=>[
+                'class'=>AccessControl::class,
+                'rules'=>[
+                    [
+                     'allow'=>true,
+                     'roles'=>['@']
+                    ]
+                ]
+            ]
+        ];
+    }
+
     public function actionTambah($id)
     {
         $model = new PermintaanProduk();
@@ -31,12 +50,28 @@ class PermintaanController extends Controller
         $model->id_user = Yii::$app->user->identity->getId();
 
 
-        if ($model->load(Yii::$app->request->post())) {
+
+        if ($model->load(Yii::$app->request->post()) && $modelDetail->load(Yii::$app->request->post())) {
+
+        // var_dump();
+            if (Yii::$app->request->post('PermintaanProduk')['uang_muka'] > Yii::$app->request->post('PermintaanProduk')['harga'] ) {
+
+                    $flash = FlashHelper::DANGER;
+                    $flash['message'] = 'Uang Muka Tak Boleh Melebihin Harga';
+                    Yii::$app->session->setFlash('danger', $flash);
+                    return $this->redirect(Url::current());
+
+            }
+
             try {
+
                 $db = Yii::$app->db->beginTransaction();
                 $model->status = PermintaanProduk::STATUS_DIKIRIM;
+                $model->keterangan = 'Menunggu Konfirmasi';
 
                 if (!$model->save(false)) {
+
+
                     $flash = FlashHelper::DANGER;
                     $flash['message'] = 'Terjadi kesalahan saat menyimpan permintaan anda';
                     Yii::$app->session->setFlash('danger', $flash);
@@ -44,11 +79,13 @@ class PermintaanController extends Controller
 
                     return $this->redirect(Url::current());
                 }
+
                 $files = UploadedFile::getInstances($modelDetail, 'uploadedFiles');
                 $modelDetail->uploadedFiles = $files;
 
                 if ($uploaded = $modelDetail->upload()) {
                     if (!$modelDetail->save($model)) {
+
                         $flash = FlashHelper::DANGER;
                         $flash['message'] = 'Terjadi kesalahan saat mengunggah berkas anda.';
                         Yii::$app->session->setFlash('danger', $flash);
@@ -58,6 +95,18 @@ class PermintaanController extends Controller
                     }
 
                     $db->commit();
+
+                    $notif = new Notifikasi();
+
+                    $notif->id_data = $model->id;
+                    $notif->sender = $model->id_user;
+                    $notif->receiver = $model->id_booth;
+                    $notif->context = ' Request produk baru dengan id '.$model->id;
+                    $notif->jenis_data ='Request Produk';
+                    $notif->status ='Belum Dibaca';
+
+                    $notif->save(false);
+
                     $flash = FlashHelper::SUCCESS;
                     $flash['message'] = 'Berhasil mengirim permintaan anda';
                     Yii::$app->session->setFlash('success', $flash);
@@ -70,6 +119,7 @@ class PermintaanController extends Controller
 //                return $this->redirect(Url::current());
             }
         }
+
         return $this->render('tambah', ['model' => $model, 'modelDetail' => $modelDetail]);
     }
 
@@ -135,16 +185,17 @@ class PermintaanController extends Controller
     {
         $model = $this->findModel($id);
         $flash = [];
-        if (!$model->status === PermintaanProduk:: STATUS_DIKERJAKAN || !$model->status === PermintaanProduk::STATUS_DITERIMA || !$model->status === PermintaanProduk::STATUS_SELESAI) {
+        if ($model->status !== PermintaanProduk:: STATUS_DIKERJAKAN || $model->status !== PermintaanProduk::STATUS_DITERIMA || $model->status !== PermintaanProduk::STATUS_SELESAI) {
             $model->delete();
-            $flash = FlashHelper::DANGER;
-            $flash['message'] = 'Maaf terjadi kesalahan';
-            Yii::$app->session->setFlash('danger', $flash);
+            $flash = FlashHelper::SUCCESS;
+            $flash['message'] = 'Berhasil menghapus permintaan';
+            Yii::$app->session->setFlash('success', $flash);
             return $this->redirect(['permintaan/index']);
+
         }
-        $flash = FlashHelper::SUCCESS;
-        $flash['message'] = 'Berhasil menghapus permintaan';
-        Yii::$app->session->setFlash('success', $flash);
+        $flash = FlashHelper::DANGER;
+        $flash['message'] = 'Maaf terjadi kesalahan';
+        Yii::$app->session->setFlash('danger', $flash);
         return $this->redirect(['permintaan/index']);
     }
 
@@ -164,13 +215,13 @@ class PermintaanController extends Controller
         $flash['message'] = 'Berhasil menghapus dokumen permintaan';
         Yii::$app->session->setFlash('success', $flash);
 
-        return $this->redirect(['permintaan/update', 'id' => $modelId]);
+        return $this->redirect(['permintaan/view', 'id' => $modelId]);
     }
 
     public function actionIndex()
     {
         $model = PermintaanProduk::find()->where(['id_user' => Yii::$app->user->identity->id]);
-        $dataProvider = new ActiveDataProvider(['query' => $model]);
+        $dataProvider = new ActiveDataProvider(['query' => $model, 'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],]);
 
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }
@@ -180,7 +231,7 @@ class PermintaanController extends Controller
         $model = $this->findModel($id);
         $unpaid = $model->transaksiPermintaan;
         if ($unpaid) {
-            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->where(['status' => PembayaranTransaksiPermintaan::STATUS_PENDING])->one();
+            $unpaid = $unpaid->getRiwayatTransaksiPermintaans()->andWhere(['payment_status' =>TransaksiPermintaan::PAYMENT_STATUS_UNPAID])->one();
         }
         if ($model->id_user !== Yii::$app->user->identity->getId()) {
             throw new UnauthorizedHttpException('Oops, permintaan ini bukan milik anda');

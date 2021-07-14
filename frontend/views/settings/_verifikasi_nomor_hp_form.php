@@ -9,6 +9,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model VerifikasiNomorHpForm*/
 /* @var $form ActiveForm */
+
 ?>
 <div class="verifikasi_nomor_hp_form">
 
@@ -22,7 +23,15 @@ use yii\helpers\Url;
                 ],
                 'options' => ['placeholder'=>'62xxxxxxxxxxxx']
             ]) ?>
+
         </div>
+<?php  
+        if ($is_phone_verified) {
+?>
+            <span style="margin-left: 20px;">Nomor HP Ini Telah Diverifikasi</span>
+<?php
+        }
+?>
         <div class="col-lg-4">
             <br>
             <br>

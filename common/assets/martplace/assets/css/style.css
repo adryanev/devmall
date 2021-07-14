@@ -7447,20 +7447,14 @@ ul.nav-tabs.nav--tabs2 li a::before {
   height: 100%;
   width: 100%;
   content: '';
-  background: -webkit-gradient(linear, right top, left top, from(#0030de), to(#0030de));
-  background: -webkit-linear-gradient(right, #0030de, #0030de);
-  background: -o-linear-gradient(right, #0030de, #0030de);
-  background: linear-gradient(to left, #0030de, #0030de);
+
   top: 0;
   left: 0;
   opacity: 0.8;
 }
 
 .hero-area.hero--1:before {
-  background: -webkit-gradient(linear, right top, left top, from(#7347c1), to(#0674ec));
-  background: -webkit-linear-gradient(right, #7347c1, #0674ec);
-  background: -o-linear-gradient(right, #7347c1, #0674ec);
-  background: linear-gradient(to left, #7347c1, #0674ec);
+
   opacity: .9;
 }
 

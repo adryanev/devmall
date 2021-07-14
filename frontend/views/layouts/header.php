@@ -10,7 +10,8 @@
 use common\models\User;
 use frontend\models\forms\search\SearchProductForm;
 use yii\bootstrap4\Html;
-use yii\helpers\ArrayHelper;
+
+$keranjangTotal = 0;
 
 ?>
 
@@ -29,7 +30,8 @@ use yii\helpers\ArrayHelper;
                 <!-- start .col-md-3 -->
                 <div class="col-lg-3 col-md-3 col-6 v_middle">
                     <div class="logo">
-                        <?= Html::a(Html::img('@web/images/logo-devmall.png', ['class' => 'img-fluid']), ['site/index']) ?>
+                        <?= Html::a(Html::img('@web/images/logo-devmall.png', ['class' => 'img-fluid']),
+                            ['site/index']) ?>
                     </div>
                 </div>
                 <!-- end /.col-md-3 -->
@@ -39,10 +41,12 @@ use yii\helpers\ArrayHelper;
                     <!-- start .author-area -->
                     <div class="author-area">
                         <?php if (Yii::$app->user->isGuest): ?>
-                            <?= Html::a('<i class="fa fa-sign-in"></i> Log in', ['site/login'], ['class' => 'author-area__seller-btn inline']) ?>
+                            <?= Html::a('<i class="fa fa-sign-in"></i> Log in', ['site/login'],
+                                ['class' => 'author-area__seller-btn inline']) ?>
                         <?php else: ?>
-                            <?php if (Yii::$app->user->identity->status === User::STATUS_VERIFIED): ?>
-                                <?= Html::a('Menjadi Booth', Yii::getAlias('@.penjual'), ['class' => 'author-area__seller-btn inline ']) ?>
+                            <?php if (Yii::$app->user->identity->status === User::STATUS_VERIFIED && (!Yii::$app->user->identity->booth)): ?>
+                                <?= Html::a('Menjadi Booth', Yii::getAlias('@.penjual'),
+                                    ['class' => 'author-area__seller-btn inline ']) ?>
 
                             <?php endif; ?>
 
@@ -50,103 +54,142 @@ use yii\helpers\ArrayHelper;
                         <?php endif; ?>
                         <div class="author__notification_area">
                             <ul>
+                                <?php if (!Yii::$app->user->isGuest):
+                                    $query = (new \yii\db\Query())
+                                        ->select('*')
+                                        ->from('notifikasi')
+                                        ->leftJoin('user', 'user.id = notifikasi.sender')
+                                        ->where("notifikasi.status= 'Belum Dibaca' AND notifikasi.receiver=" . Yii::$app->user->identity->id)->orderBy('notifikasi.id DESC')
+                                        ->all();
 
-                                <li class="has_dropdown">
-                                    <?php if (!Yii::$app->user->isGuest): ?>
+                                    $notif = $query;
+                                    ?>
+                                    <li class="has_dropdown">
                                         <div class="icon_wrap">
                                             <span class="lnr lnr-alarm"></span>
-                                            <span class="notification_count noti">25</span>
+                                            <span class="notification_count noti"><?= count($notif) ?></span>
                                         </div>
 
                                         <div class="dropdowns notification--dropdown">
 
                                             <div class="dropdown_module_header">
                                                 <h4>My Notifications</h4>
-                                                <a href="notification.html">View All</a>
+                                                <?=Html::a('Semua Notifikasi',['notifikasi/index'])?>
                                             </div>
 
                                             <div class="notifications_module">
                                                 <div class="notification">
-                                                    <div class="notification__info">
-                                                        <div class="info_avatar">
-                                                            <?= Html::img('@web/images/notification_head.png') ?>
-                                                        </div>
-                                                        <div class="info">
-                                                            <p>
-                                                                <span>Anderson</span> added to Favourite
-                                                                <a href="#">Mccarther Coffee Shop</a>
-                                                            </p>
-                                                            <p class="time">Just now</p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end /.notifications -->
 
-                                                    <div class="notification__icons ">
-                                                        <span class="lnr lnr-heart loved noti_icon"></span>
-                                                    </div>
-                                                    <!-- end /.notifications -->
+                                                    <?php
+                                                    foreach ($notif as $v) {
+                                                        ?>
+                                                        <a href="/notif/view/<?= $v['id'] ?>"
+                                                           class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-box-1 kt-font-brand"></i>
+                                                            </div>
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    <?= $v['username'] . ' ' . $v['context'] ?>
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <?php
+                                                    }
+                                                    ?>
+
+
                                                 </div>
                                             </div>
                                             <!-- end /.dropdown -->
                                         </div>
-                                    <?php endif; ?>
-
-                                </li>
+                                    </li>
+                                <?php endif; ?>
 
 
                                 <li class="has_dropdown">
                                     <?php if (!Yii::$app->user->isGuest):
-                                        $cart = Yii::$app->user->identity->getKeranjangs();
+                                        $cart = Yii::$app->cart;
 
                                         ?>
 
                                         <div class="icon_wrap">
                                             <span class="lnr lnr-cart"></span>
-                                            <span class="notification_count purch"><?= $cart->count() ?></span>
+                                            <span class="notification_count purch"><?= $cart->getCount() ?></span>
                                         </div>
 
                                         <div class="dropdowns dropdown--cart">
                                             <div class="cart_area">
-                                                <?php foreach ($cart->limit(3)->all() as $produkKeranjang): ?>
+                                                <?php foreach ($cart->getItems() as $produkKeranjang): ?>
                                                     <div class="cart_product">
                                                         <div class="product__info">
                                                             <div class="thumbn">
 
-                                                                <?= Html::img('@.penjual/upload/produk/' . $produkKeranjang->galeriProduks[0]->nama_berkas, ['height' => 70, 'width' => 80]) ?>
+
+                                                                <?php
+                                                                if (count($produkKeranjang->galeriProduks) > 0) {
+                                                                    ?>
+                                                                    <?php echo Html::img(
+                                                                        '@.penjual/upload/produk/' . $produkKeranjang->galeriProduks[0]['nama_berkas'],
+                                                                        ['alt' => 'Gambar Produk', 'height' => 100]
+                                                                    ); ?>
+                                                                    <?php
+                                                                } else {
+                                                                    ?>
+                                                                    <?= Html::img(
+                                                                        '@.penjual/upload/produk/no_image_alternatig.PNG',
+                                                                        ['alt' => 'Gambar Produk', 'height' => 100]
+                                                                    ) ?>
+                                                                    <?php
+                                                                }
+                                                                ?>
+
+
                                                             </div>
 
                                                             <div class="info">
-                                                                <?= Html::a($produkKeranjang->nama, ['produk/view', 'id' => $produkKeranjang->id], ['class' => 'title']) ?>
+                                                                <?= Html::a($produkKeranjang->nama,
+                                                                    ['produk/view', 'id' => $produkKeranjang->id],
+                                                                    ['class' => 'title']) ?>
                                                                 <div class="cat">
                                                                     <?php foreach ($produkKeranjang->kategoriProduk as $kategori): ?>
-                                                                        <?= Html::a($kategori->nama, ['produk/search', 'SearchProdukForm[kategori]' => $kategori->nama]) ?>
+                                                                        <?= Html::a($kategori->nama, [
+                                                                            'produk/search',
+                                                                            'SearchProdukForm[kategori]' => $kategori->nama
+                                                                        ]) ?>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="product__action">
-                                                            <?= Html::a('<span class="lnr lnr-trash"></span>', ['keranjang/hapus'], ['data' => [
-                                                                'method' => 'POST',
-                                                                'params' => ['user' => Yii::$app->user->identity->getId(),
-                                                                    'produk' => $produkKeranjang->id]
-                                                            ]]) ?>
-                                                            <p><?= Yii::$app->formatter->asCurrency($produkKeranjang->harga) ?></p>
+                                                            <?= Html::a('<span class="lnr lnr-trash"></span>',
+                                                                ['keranjang/hapus'], [
+                                                                    'data' => [
+                                                                        'method' => 'POST',
+                                                                        'params' => [
+                                                                            'user' => Yii::$app->user->identity->getId(),
+                                                                            'produk' => $produkKeranjang->id
+                                                                        ]
+                                                                    ]
+                                                                ]) ?>
+                                                            <p><?= Yii::$app->formatter->asCurrency($produkKeranjang->getCost()) ?></p>
                                                         </div>
                                                     </div>
                                                 <?php endforeach; ?>
-                                                <?php
-                                                $keranjangTotal = array_sum(array_values(ArrayHelper::map($cart->all(), 'harga', 'harga')));
-
-                                                ?>
                                                 <div class="total">
                                                     <p>
-                                                        <span>Total :</span><?= Yii::$app->formatter->asCurrency($keranjangTotal) ?>
+                                                        <span>Total :</span><?= Yii::$app->formatter->asCurrency(Yii::$app->cart->getCost()) ?>
                                                     </p>
                                                 </div>
                                                 <div class="cart_action">
-                                                    <?= Html::a('Lihat Keranjang', ['keranjang/index'], ['class' => 'go_cart']) ?>
-                                                    <?= Html::a('Bayar', ['pembayaran/checkout'], ['class' => 'go_checkout']) ?>
+                                                    <?= Html::a('Lihat Keranjang', ['keranjang/index'],
+                                                        ['class' => 'go_cart']) ?>
+                                                    <?= Html::a('Bayar', ['pembayaran/checkout'],
+                                                        ['class' => 'go_checkout']) ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,7 +206,8 @@ use yii\helpers\ArrayHelper;
                             <?php if (!Yii::$app->user->isGuest): ?>
                                 <div class="author__avatar">
 
-                                    <?= Html::img('@.frontend/images/profil/' . Yii::$app->user->identity->profilUser->avatar, ['height' => 50, 'width' => 50]) ?>
+                                    <?= Html::img('@.frontend/images/profil/' . Yii::$app->user->identity->profilUser->avatar,
+                                        ['height' => 50, 'width' => 50]) ?>
                                 </div>
                                 <div class="autor__info">
                                     <p class="name">
@@ -175,25 +219,42 @@ use yii\helpers\ArrayHelper;
                                 <div class="dropdowns dropdown--author">
                                     <ul>
                                         <li>
-                                            <?= Html::a('<span class="lnr lnr-cog"></span> Setting', ['settings/account']) ?>
+                                            <?= Html::a('<span class="lnr lnr-cog"></span> Setting',
+                                                ['settings/account']) ?>
                                         </li>
                                         <li>
-                                            <?= Html::a(' <span class="lnr lnr-cart"></span>Pembelian', ['user/pembelian']) ?>
+                                            <?= Html::a(' <span class="lnr lnr-cart"></span>Pembelian',
+                                                ['pembelian/index']) ?>
 
                                         </li>
                                         <li>
-                                            <?= Html::a(' <span class="lnr lnr-hand"></span>Permintaan', ['permintaan/index']) ?>
+                                            <?= Html::a(' <span class="lnr lnr-hand"></span>Permintaan',
+                                                ['permintaan/index']) ?>
 
                                         </li>
                                         <li>
-                                            <?= Html::a('<span class="lnr lnr-heart"></span> Favorit', ['user/favorit']) ?>
+                                            <?= Html::a(' <span class="lnr lnr-license"></span>Cicilan',
+                                                ['cicilan/index']) ?>
 
                                         </li>
                                         <li>
-                                            <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>', ['site/logout'], ['data' => [
-                                                'confirm' => 'Apakah anda ingin keluar?',
-                                                'method' => 'POST',
-                                            ]]) ?>
+                                            <?= Html::a('<span class="lnr lnr-heart"></span> Favorit',
+                                                ['user/favorit']) ?>
+
+                                        </li>
+                                        <li>
+                                            <?= Html::a('<span class="lnr lnr-strikethrough"></span> Keluhan',
+                                                ['keluhan/index']) ?>
+
+                                        </li>
+                                        <li>
+                                            <?= Html::a('<span class="lnr lnr-exit"></span>Logout</a>', ['site/logout'],
+                                                [
+                                                    'data' => [
+                                                        'confirm' => 'Apakah anda ingin keluar?',
+                                                        'method' => 'POST',
+                                                    ]
+                                                ]) ?>
 
                                         </li>
                                     </ul>

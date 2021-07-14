@@ -28,6 +28,8 @@ use yii\web\View;
  * @var $modelNego \frontend\models\forms\nego\NegoForm
  */
 
+
+
 $this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Produk', 'url' => ['produk/index', 'kategori' => '']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -80,6 +82,23 @@ foreach ($dataGambar as $gamber) {
                                     <?php endif; ?>
 
                                     <?= Html::a('<i class="fab fa-whatsapp"></i> Hubungi Penjual', 'https://api.whatsapp.com/send?phone=' . $model->booth->nomor_telepon, ['class' => 'btn btn--round btn--lg btn--icon btn-success', 'target' => '_blank']) ?>
+                                    <?php Modal::begin([
+                                        'title' => 'Video Produk',
+                                        'toggleButton' => ['label'=>'<i class="fab fa-youtube"></i> Video','class'=>'btn btn--round btn-lg btn--icon btn-danger'],
+                                        'size' => 'xl'
+
+                                    ]) ?>
+
+                                    <div class="content">
+                                        <div class="embed-responsive embed-responsive-16by9">
+
+                                        <iframe class="embed-responsive-item"
+                                                src="https://www.youtube.com/embed/<?=$model->video?>">
+                                        </iframe>
+                                        </div>
+                                    </div>
+
+                                    <?php Modal::end() ?>
                                 </div>
                             </div>
                             <!-- end /.item__action -->
@@ -141,7 +160,6 @@ foreach ($dataGambar as $gamber) {
                             <div class="sidebar-card card-pricing card--pricing2">
                                 <div class="price">
                                     <h1>
-                                        <sup>Diskon</sup>
                                         <span><?= Yii::$app->formatter->asCurrency($model->hargaDiskon) ?></span>
                                     </h1>
                                 </div>
@@ -159,9 +177,12 @@ foreach ($dataGambar as $gamber) {
                             </div>
 
                             <div class="purchase-button">
+
+
                                 <?php if (!Yii::$app->user->isGuest): ?>
-                                    <?php if ($model->nego): ?>
+                                    <?php if ($model->nego && !$model->diskon): ?>
                                         <?php Modal::begin([
+                                            'id' => 'modalNego',
                                             'title' => 'Negosiasi',
                                             'toggleButton' => ['label' => '<span class="fas fa-comments-dollar"></span> Nego', 'class' => 'btn btn--lg btn--round cart-btn btn-warning']
                                         ]) ?>
@@ -169,37 +190,60 @@ foreach ($dataGambar as $gamber) {
                                         <?php $form = ActiveForm::begin(['id' => 'nego-form', 'action' => ['nego/add']]) ?>
                                         <?= $form->field($modelNego, 'produk')->hiddenInput()->label(false) ?>
 
-                                        <?= $form->field($modelNego, 'harga')->textInput(['type' => 'number']) ?>
 
+                                        <?= $form->field($modelNego, 'harga')->textInput(['type' => 'number']) ?>
+<?php
+
+                                if (isset(Yii::$app->session['jumlahNego'])) {
+
+                                    if (Yii::$app->session['jumlahNego'] != 4) {
+    ?>
+                                        <span class="text-danger">Harga Terlalu Rendah !</span>
+    <?php
+                                    }else{
+    ?>
+                                        <span class="text-danger">Batas Nego Produk Telah Habis Utk Hari Ini !</span>
+    <?php
+                                    }
+                                }
+ ?>
 
                                         <div class="form-group">
-                                            <?php
-                                            AjaxSubmitButton::begin([
-                                                'label' => 'Nego',
-                                                'options' => ['class' => 'btn btn-primary'],
-                                                'useWithActiveForm' => 'nego-form',
-                                                'ajaxOptions' => [
-                                                    'type' => 'POST',
-                                                    'success' => new \yii\web\JsExpression("function(data){
-                                                        console.log(data);
-                                                    }")
-                                                ]
-                                            ]) ?>
-                                            <?php AjaxSubmitButton::end() ?>
+                                            <?= Html::submitButton('<i class=\'la la-save\'></i> Nego', ['class' => 'btn btn-pill btn-elevate btn-elevate-air btn-brand']) ?>
                                         </div>
 
                                         <?php ActiveForm::end() ?>
                                         <?php Modal::end() ?>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <a href="#" class="btn btn--lg btn--round btn-info"><span
-                                            class="fas fa-shopping-bag"></span>
-                                    Beli Sekarang</a>
+
+<?php
+                                if (!Yii::$app->user->isGuest){
+
+                                    echo Html::a(' <span class="fas fa-shopping-bag"></span> Beli Sekarang', ['pembayaran/belisekarang'], ['class' => 'btn btn--lg btn--round btn-info', 'data' => [
+                                        'method' => 'POST',
+                                        'params' => [
+                                            'produk' => $model->id,
+                                            'user' => Yii::$app->user->identity->getId(),
+                                            'is_diskon' => isset($model->diskon->id),
+                                            'is_nego' => isset($model->nego0->id)
+                                        ]
+                                    ]]);
+
+                                }else{
+
+                                    echo  Html::a('<span class="fas fa-shopping-bag">Beli Sekarang</span>', ['site/login'], ['class' => 'btn btn--lg btn--round btn-info']);
+
+
+
+                                }
+?>
+
+
                                 <?php if (!Yii::$app->user->isGuest): ?>
                                     <?php
-                                    /** @var $cart yii\db\ActiveQuery */
-                                    $cart = Yii::$app->user->identity->getKeranjang();
-                                    $keranjs = $cart->andHaving(['id_produk' => $model->id])->one();
+                                    $cart = Yii::$app->cart;
+                                    $keranjs = $cart->getItemById($model->id);
                                     if (!$keranjs): ?>
                                         <?= Html::a(' <span class="lnr lnr-cart"></span> Tambah ke Keranjang', ['keranjang/tambah'], ['class' => 'btn btn--lg btn--round cart-btn', 'data' => [
                                             'method' => 'POST',
@@ -223,12 +267,12 @@ foreach ($dataGambar as $gamber) {
                                 <li>
                                     <p>
                                         <span class="lnr lnr-cart pcolor"></span>Total Terjual</p>
-                                    <span>426</span>
+                                    <span><?= $totalTerjual ?></span>
                                 </li>
                                 <li>
                                     <p>
                                         <span class="lnr lnr-heart scolor"></span>Difavoritkan</p>
-                                    <span>240</span>
+                                    <span><?= $model->getFavorits()->count() ?></span>
                                 </li>
                             </ul>
 
@@ -320,4 +364,26 @@ foreach ($dataGambar as $gamber) {
     <!--===========================================
         END SINGLE PRODUCT DESCRIPTION AREA
     ===============================================-->
+<?php
+
+if (isset(Yii::$app->session['jumlahNego'])) {
+
+    $js = <<<JS
+
+    $(document).ready(function(){
+
+            $('#modalNego').modal();
+
+        });
+
+    JS;
+
+    $this->registerJs($js);
+
+}
+
+    unset($_SESSION['jumlahNego']);
+
+?>
+
 <?= $this->render('_view_more', ['model' => $model]) ?>

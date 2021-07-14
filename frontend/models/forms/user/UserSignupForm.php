@@ -61,6 +61,7 @@ class UserSignupForm extends Model
         ];
         $user->setAttributes($attributeUser);
         $profil->setAttributes($attributeProfil);
+
         $profil->avatar = 'user_default.png';
 
         $user->setPassword($this->password);
@@ -68,7 +69,7 @@ class UserSignupForm extends Model
         $user->generateEmailVerificationToken();
 
         $user->status = User::STATUS_INACTIVE;
-
+        $user->level_akses = 'pengguna';
         $user->save(false);
         $profil->id_user = $user->id;
         $profil->save(false);
@@ -77,13 +78,14 @@ class UserSignupForm extends Model
         $userRole = $auth->getRole('pengguna');
         $auth->assign($userRole,$user->id);
 
-        $this->sendEmailVerification($user);
+        $this->sendEmailVerification($user, $profil);
 
         return $user;
     }
 
-    protected function sendEmailVerification($user)
+    protected function sendEmailVerification($user, $profil)
     {
+
         return Yii::$app
             ->mailer
             ->compose(
@@ -94,6 +96,8 @@ class UserSignupForm extends Model
             ->setTo($this->email)
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
+
+
     }
 
 }

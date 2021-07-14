@@ -42,6 +42,7 @@ class Kategori extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'integer'],
             [['nama', 'deskripsi'], 'string', 'max' => 255],
             [['nama'], 'unique'],
+            [['nama'],'required']
         ];
     }
 
