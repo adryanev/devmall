@@ -8,10 +8,11 @@ Yii::setAlias('@profilUserPath', '@frontend/web/images/profil');
 Yii::setAlias('@produkPath', '@penjual/web/upload/produk');
 Yii::setAlias('@permintaanPath', '@frontend/web/upload/permintaan');
 Yii::setAlias('@keluhanPath','@frontend/web/upload/keluhan');
+$ini = parse_ini_file(dirname(__DIR__, 2) . '/system-configuration.ini');
 
-Yii::setAlias('@.frontend', 'http://devmall.test/frontend/web');
-Yii::setAlias('@.penjual', 'http://devmall.test/penjual/web');
-Yii::setAlias('@.admin', 'http://devmall.test/admin/web');
+Yii::setAlias('@.frontend', $ini['url_frontend']);
+Yii::setAlias('@.penjual', $ini['url_penjual']);
+Yii::setAlias('@.admin', $ini['url_admin']);
 Yii::setAlias('@.profilUserPath', '@.frontend/images/profil');
 Yii::setAlias('@.produkPath', '@.penjual/upload/produk');
 Yii::setAlias('@.permintaanPath', '@.frontend/upload/permintaan');
