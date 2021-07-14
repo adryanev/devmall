@@ -62,7 +62,10 @@
         "hscstudio/yii2-cart": "dev-master",
         "pusher/pusher-php-server": "5.*",
         "nahid/jsonq": "^6.0",
-        "yii2mod/collection": "^1.3"
+        "yii2mod/collection": "^1.3",
+        "boundstate/yii2-mailgun": "^1.4",
+        "kriswallsmith/buzz": "^1.2",
+        "nyholm/psr7": "^1.4"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
