@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'judul',
                             'deskripsi:html',
                             ['attribute'=>'dokumen',
+                            'format'=>'raw',
                                 'value'=>function ($model) {
                                     return Html::a($model->dokumen, Yii::getAlias('@.keluhanPath/' . Yii::$app->user->identity->id . '/' . $model->dokumen), ['target'=>'_blank']);
                                 }
