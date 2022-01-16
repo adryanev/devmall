@@ -133,6 +133,7 @@ class VersiProdukController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'uploadModel'=>$uploadModel
         ]);
     }
 
