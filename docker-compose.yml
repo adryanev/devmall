@@ -12,8 +12,10 @@ services:
             - ./:/app
         networks:
           - devmall-networks
+        depends_on:
+            - mysql
 
-    backend:
+    admin:
         build: admin
         ports:
             - 21080:80
@@ -24,7 +26,22 @@ services:
             - ./:/app
         networks:
           - devmall-networks
+        depends_on:
+            - mysql
+    penjual:
+        build: penjual
+        ports:
+            - 22080:80
+        volumes:
+            # Re-use local composer cache via host-volume
+            - ~/.composer-docker/cache:/root/.composer/cache:delegated
+            # Mount source-code for development
+            - ./:/app
+        networks:
+          - devmall-networks
 
+        depends_on:
+          - mysql
     mysql:
         image: mysql:5.7
         environment:
