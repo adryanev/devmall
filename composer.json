@@ -32,7 +32,7 @@
         "kartik-v/yii2-mpdf": "dev-master",
         "phpoffice/phpspreadsheet": "^1.9",
         "phpoffice/phpword": "^0.16.0",
-        "dompdf/dompdf": "^0.8.3",
+        "dompdf/dompdf": "^1.2.1",
         "2amigos/yii2-tinymce-widget": "~1.1",
         "yii2mod/yii2-bootstrap-notify": "*",
         "yiisoft/yii2-jui": "^2.0",
